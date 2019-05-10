@@ -1,0 +1,36 @@
+[
+  {
+    "layout": "heading",
+    "values": {
+      "title": "hello"
+    }
+  },
+  {
+    "layout": "paragraph",
+    "values": {
+      "content": "paragraph text"
+    }
+  },
+  {
+    "layout": "paragraph",
+    "values": {
+      "content": "another paragraph text"
+    }
+  },
+  {
+    "layout": "image",
+    "values": {
+      "src": "https://i.ytimg.com/vi/YCaGYUIfdy4/maxresdefault.jpg",
+      "width": 100,
+      "height": 100,
+      "alt": "scary cat"
+    }
+  },
+  {
+    "layout": "paragraph",
+    "values": {
+      "content": "more paragraph text"
+    }
+  }
+]
+

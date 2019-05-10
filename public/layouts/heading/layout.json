@@ -1,0 +1,15 @@
+{
+  "id": "heading",
+  "icon": "icon.svg",
+  "description": "단순 제목",
+  "params": [
+    {
+      "name": "title",
+      "type": "text",
+      "description": "title text"
+    }
+  ],
+  "values": {
+    "title": "제목"
+  }
+}
