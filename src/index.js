@@ -3,7 +3,7 @@
 //
 import Vue from 'vue';
 
-import Composer from './composer.vue';
+import Composer from './views/composer.vue';
 
 Vue.component('fast-composer', Composer);
 
