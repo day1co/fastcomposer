@@ -5,7 +5,7 @@
       <layer :layers="layers" :width="`18rem`" @select="onSelectLayer" @save="save"/>
     </div>
     <div class="preview-area">
-      <preview-pane :layers="layers" :selectedLayer="selectedLayer"/>
+      <preview :layers="layers" :selectedLayer="selectedLayer"/>
     </div>
     <div class="side-area" v-if="isActiveEditor">
       <editor :layer="selectedLayer"/>
@@ -18,18 +18,18 @@
   import { template, cloneDeep } from 'lodash';
   import marked from 'marked';
 
-  import Layout from './layout.vue';
+  import Layout from '../components/layout.vue';
   import Layer from './layer.vue';
-  import editor from './editor.vue';
-  import PreviewPane from './preview.vue';
+  import Editor from '../components/editor.vue';
+  import Preview from '../components/preview.vue';
 
   export default {
     name: 'composer',
     components: {
       Layout,
       Layer,
-      editor,
-      PreviewPane,
+      Editor,
+      Preview,
     },
     props: {
       value: {
@@ -97,22 +97,20 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
         this.editorLayoutIndex = selectLayerIndex;
       },
       save() {
-        const html = this.layerHtml;
+        const layerHtml = this.layerHtml;
         // replace layout object => layout id
         const layers = this.layers.map(layer => Object.assign({}, layer, { layout: layer.layout.id }));
-        const json = JSON.stringify(layers, null, 2);
+        const layerJson = JSON.stringify(layers, null, 2);
         // TODO: save html only!
         // AS-IS: save generated html with source json
-        this.$emit('save', html, json);
+        this.$emit('save', layerHtml, layerJson);
       },
       openLayouts(layouts) {
         console.log('open layouts', layouts);
         return Promise.resolve(layouts)
           .then(layouts => {
             // precompile all layout templates
-            this.layoutArray = layouts.map(layout => {
-              return Object.assign(layout, { templateFunc: template(layout.template) });
-            });
+            this.layoutArray = layouts.map(layout => Object.assign(layout, { templateFunc: template(layout.template)}));
             // lookup table for layout id => layout object
             this.layoutMap = this.layoutArray.reduce((layoutMap, layout) => {
               layoutMap[layout.id] = layout;

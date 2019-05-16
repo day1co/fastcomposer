@@ -38,8 +38,8 @@
 
 <script>
   import debounce from 'lodash/debounce';
-  import FileUpload from '../components/file-upload.vue';
-  import Pane from '../components/pane.vue';
+  import FileUpload from './file-upload.vue';
+  import Pane from './pane.vue';
 
 
   export default {

@@ -10,8 +10,8 @@
 </template>
 
 <script>
-  import ListItem from '../components/list-item.vue';
-  import Pane from '../components/pane.vue';
+  import ListItem from './list-item.vue';
+  import Pane from './pane.vue';
 
   export default {
     name: 'layout',
