@@ -14,8 +14,8 @@
 </template>
 
 <script>
-  import BlockPreview from '../components/layer-preview.vue';
-  import pane from '../components/pane.vue';
+  import BlockPreview from './layer-preview.vue';
+  import pane from './pane.vue';
 
   export default {
     name: 'preview',

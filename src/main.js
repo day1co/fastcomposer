@@ -3,7 +3,7 @@
 //
 import Vue from 'vue';
 import axios from 'axios';
-import Composer from './composer.vue';
+import Composer from './views/composer.vue';
 
 // sample layouts with es6 module:
 import layouts from '../public/layouts';
@@ -41,11 +41,9 @@ new Vue({
       },
     });
   },
-  created() {
-    axios.get('/sample.json').then(res => {
-      console.log(res);
-      this.$refs.composer.openJson(JSON.stringify(res.data));
-    });
+  async created() {
+    const res = await axios.get('/sample.json');
+    this.$refs.composer.openJson(JSON.stringify(res.data));
     this.$root.$on('fc-upload', event => console.log('GLOBAL fc-upload', event));
   },
 });
