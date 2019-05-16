@@ -7,24 +7,24 @@
          <small>({{ param.type }})</small>
        </label>
        <template v-if="param.type === 'text'">
-         <input type="text" :name="param.name" :placeholder="param.description" v-model="values[param.name]" />
+         <input type="text" :name="param.name" :placeholder="param.description" v-model="layer.values[param.name]" />
        </template>
        <template v-if="param.type === 'textarea'">
         <textarea
           :name="param.name"
           :placeholder="param.description"
-          v-model="values[param.name]"
+          v-model="layer.values[param.name]"
           @keyup="resize">
         </textarea>
        </template>
        <template v-if="param.type === 'url'">
-         <input type="url" :name="param.name" :placeholder="param.description" v-model="values[param.name]" />
+         <input type="url" :name="param.name" :placeholder="param.description" v-model="layer.values[param.name]" />
        </template>
        <template v-if="param.type === 'number'">
-         <input type="number" :name="param.name" :placeholder="param.description" v-model="values[param.name]" />
+         <input type="number" :name="param.name" :placeholder="param.description" v-model="layer.values[param.name]" />
        </template>
        <template v-if="param.type === 'image'">
-         <input type="url" :name="param.name" :placeholder="param.description" v-model="values[param.name]" />
+         <input type="url" :name="param.name" :placeholder="param.description" v-model="layer.values[param.name]" />
          <file-upload :name="param.name" accept="image/*" @upload="upload"/>
        </template>
      </fieldset>
@@ -37,7 +37,6 @@
 </template>
 
 <script>
-  import debounce from 'lodash/debounce';
   import FileUpload from './file-upload.vue';
   import Pane from './pane.vue';
 
@@ -56,19 +55,13 @@
         }
       },
     },
-    data() {
-      return {
-        values: this.layer.values, // ref. for live-update
-        // view: Object.assign({}, this.block.value) // clone for manual apply/reset
-      };
-    },
     methods: {
-      resize: debounce(event => {
+      resize(event){
         event.target.style.height = 'auto';
         event.target.style.height = `${event.target.scrollHeight}px`;
-      }, 100),
+      },
       upload(name, url) {
-        this.values[name] = url;
+        this.layer.values[name] = url;
       },
     },
   };
