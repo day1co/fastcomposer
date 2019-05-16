@@ -1,12 +1,12 @@
 <template>
   <pane :title="`preview`">
     <main :style="{ zoom }">
-      <block-preview
+      <layer-preview
         v-for="(layer, layerIndex) in layers"
         :key="'layer-' + layerIndex"
-        :block="layer"
+        :layer="layer"
         :active="selectedLayer.id === layer.id">
-      </block-preview>
+      </layer-preview>
     </main>
   </pane>
   <!--<button @click="zoomIn"><i class="fas fa-search-plus"></i></button>
@@ -14,13 +14,13 @@
 </template>
 
 <script>
-  import BlockPreview from './layer-preview.vue';
+  import LayerPreview from './layer-preview.vue';
   import pane from './pane.vue';
 
   export default {
     name: 'preview',
     components: {
-      BlockPreview,
+      LayerPreview,
       pane,
     },
     props: {
