@@ -1,6 +1,6 @@
 <template>
-  <div class="fc-list-item" :class="{ active }">
-    <button @click="$emit('onClick')">
+  <div class="fc-list-item" >
+    <button :class="{ active }" @click="$emit('onClick')">
       <img :src="icon" alt=""/>
       <p>{{ title }}</p>
       <p>
@@ -62,8 +62,8 @@
       }
     }
 
-    &.active button {
-      background-color: darkgray;
-    }
+  }
+  .active {
+    background-color: darkgray;
   }
 </style>

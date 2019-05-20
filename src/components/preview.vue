@@ -5,6 +5,7 @@
         v-for="(layer, layerIndex) in layers"
         :key="'layer-' + layerIndex"
         :layer="layer"
+        @selectPreview="$emit('select',layer)"
         :active="selectedLayer.id === layer.id">
       </layer-preview>
     </main>

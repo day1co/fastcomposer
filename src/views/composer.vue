@@ -1,11 +1,18 @@
 <template>
   <div class="fc-composer">
     <div class="side-area">
-      <Layout :layouts="layoutArray" :width="`18rem`" @select="onSelectLayout"/>
-      <layer :layers="layers" :width="`18rem`" @select="onSelectLayer" @save="save"/>
+      <Layout :layouts="layoutArray" :width="`18rem`"
+              @select="onSelectLayout"/>
+      <layer :layers="layers" :width="`18rem`" :selectedLayer="selectedLayer"
+             @select="onSelectLayer"
+             @upLayer="upLayer"
+             @downLayer="downLayer"
+             @removeLayer="removeLayer"
+             @toggleLayer="toggleLayer"
+             @save="save"/>
     </div>
     <div class="preview-area">
-      <preview :layers="layers" :selectedLayer="selectedLayer"/>
+      <preview :layers="layers" :selectedLayer="selectedLayer" @select="onSelectLayer" />
     </div>
     <div class="side-area" v-if="isActiveEditor">
       <editor :layer="selectedLayer"/>
@@ -19,7 +26,7 @@
   import marked from 'marked';
 
   import Layout from '../components/layout.vue';
-  import Layer from './layer.vue';
+  import Layer from '../components/layer.vue';
   import Editor from '../components/editor.vue';
   import Preview from '../components/preview.vue';
 
@@ -80,6 +87,38 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
           .substr(2, 9);
         return `fc-block-${seq}-${nonce}`;
       },
+     // 레이터 data 컨트롤 영역
+      onSelectLayer(selectLayer) {
+        const selectLayerIndex = this.layers.indexOf(selectLayer);
+        this.editorLayoutIndex = selectLayerIndex;
+      },
+      addLayer(layer) {
+        this.layers.push(layer);
+      },
+      removeLayer(layer, layerIndex) {
+        if (layerIndex!== -1) {
+          this.layers.splice(layerIndex, 1);
+          this.onSelectLayer(layer);
+        }
+      },
+      upLayer(layer, layerIndex) {
+        if (layerIndex > 0) {
+          const tempLayer = this.layers[layerIndex];
+          this.$set(this.layers, layerIndex, this.layers[layerIndex - 1]);
+          this.$set(this.layers, layerIndex - 1, tempLayer);
+        }
+      },
+      downLayer(layer, layerIndex) {
+        if (layerIndex!== -1 && layerIndex < this.layers.length - 1) {
+          const tempLayer = this.layers[layerIndex];
+          this.$set(this.layers, layerIndex, this.layers[layerIndex + 1]);
+          this.$set(this.layers, layerIndex + 1, tempLayer);
+        }
+      },
+      toggleLayer(layerIndex, isShow) {
+        this.$set(this.layers[layerIndex], 'hidden', isShow);
+      },
+      // 레이아웃 컨트롤 영역
       onSelectLayout(layout) {
         const layer = {
           id: this.nextLayerId(),
@@ -88,22 +127,6 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
         };
         this.addLayer(layer);
         this.onSelectLayer(layer);
-      },
-      addLayer(layer) {
-        this.layers.push(layer);
-      },
-      onSelectLayer(selectLayer) {
-        const selectLayerIndex = this.layers.indexOf(selectLayer);
-        this.editorLayoutIndex = selectLayerIndex;
-      },
-      save() {
-        const layerHtml = this.layerHtml;
-        // replace layout object => layout id
-        const layers = this.layers.map(layer => Object.assign({}, layer, { layout: layer.layout.id }));
-        const layerJson = JSON.stringify(layers, null, 2);
-        // TODO: save html only!
-        // AS-IS: save generated html with source json
-        this.$emit('save', layerHtml, layerJson);
       },
       openLayouts(layouts) {
         console.log('open layouts', layouts);
@@ -139,6 +162,15 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
             console.error('bad or missing value', err);
             this.layers = [];
           });
+      },
+      save() {
+        const layerHtml = this.layerHtml;
+        // replace layout object => layout id
+        const layers = this.layers.map(layer => Object.assign({}, layer, { layout: layer.layout.id }));
+        const layerJson = JSON.stringify(layers, null, 2);
+        // TODO: save html only!
+        // AS-IS: save generated html with source json
+        this.$emit('save', layerHtml, layerJson);
       },
     },
     async created() {
