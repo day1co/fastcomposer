@@ -215,6 +215,7 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
   .preview-area {
     width: 100%;
     height: 100%;
+    overflow-y: scroll;
   }
 
   .save-btn {
