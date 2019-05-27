@@ -1,20 +1,28 @@
 <template>
   <div class="fc-composer">
-    <div class="side-area">
+    <div class="side-area" v-if="isLayerKit || isLayer">
       <Layout :layouts="layoutArray" :width="`18rem`"
+              v-if="isLayerKit"
               @select="onSelectLayout"/>
-      <layer :layers="layers" :width="`18rem`" :selectedLayer="selectedLayer"
+      <layer :layers="layers" :width="`18rem`"
+             :selectedLayer="selectedLayer"
+             v-if="isLayer"
              @select="onSelectLayer"
              @upLayer="upLayer"
              @downLayer="downLayer"
              @removeLayer="removeLayer"
-             @toggleLayer="toggleLayer"
              @save="save"/>
     </div>
     <div class="preview-area">
-      <preview :layers="layers" :selectedLayer="selectedLayer" @select="onSelectLayer" />
+      <preview
+        :layers="layers"
+        :selectedLayer="selectedLayer"
+        @select="onSelectLayer"
+        @toggleLayerKit="onToggleLayerKit"
+        @toggleLayer="onToggleLayer"
+      />
     </div>
-    <div class="side-area" v-if="isActiveEditor">
+    <div class="editor-draggable-area" v-if="isActiveEditor">
       <editor :layer="selectedLayer"/>
     </div>
     <button class="save-btn" @click="save"><i class="fas fa-save"></i></button>
@@ -77,6 +85,8 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
         layers: [],
         editorLayout: {},
         editorLayoutIndex: -1,
+        isLayerKit: true,
+        isLayer: true,
       };
     },
     methods: {
@@ -163,6 +173,12 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
             this.layers = [];
           });
       },
+      onToggleLayerKit() {
+        this.isLayerKit = !this.isLayerKit;
+      },
+      onToggleLayer() {
+        this.isLayer = !this.isLayer;
+      },
       save() {
         const layerHtml = this.layerHtml;
         // replace layout object => layout id
@@ -188,7 +204,12 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
   }
 
   .side-area {
+    /*position: absolute;*/
     width: 20rem;
+    /*.pane-form {*/
+    /*  border: 0.1rem solid;*/
+    /*  background: #ffffff;*/
+    /*}*/
   }
 
   .preview-area {

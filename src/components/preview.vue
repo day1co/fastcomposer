@@ -1,17 +1,24 @@
 <template>
-  <pane :title="`preview`">
-    <main :style="{ zoom }">
-      <layer-preview
-        v-for="(layer, layerIndex) in layers"
-        :key="'layer-' + layerIndex"
-        :layer="layer"
-        @selectPreview="$emit('select',layer)"
-        :active="selectedLayer.id === layer.id">
-      </layer-preview>
-    </main>
-  </pane>
-  <!--<button @click="zoomIn"><i class="fas fa-search-plus"></i></button>
-    <button @click="zoomOut"><i class="fas fa-search-minus"></i></button>-->
+  <div>
+    <!--구조상 btn-group영역을 이곳에 두는것이 맞는지...-->
+    <div class="btn-group-toggle" data-toggle="buttons">
+      <button type="button" class="btn btn-primary" @click="toggleLayerKits">Layer Kits on/off</button>
+      <button type="button" class="btn btn-primary" @click="toggleLayers">Layers on/off</button>
+    </div>
+    <pane :title="`preview`">
+      <main :style="{ zoom }">
+        <layer-preview
+          v-for="(layer, layerIndex) in layers"
+          :key="'layer-' + layerIndex"
+          :layer="layer"
+          @selectPreview="$emit('select',layer)"
+          :active="selectedLayer.id === layer.id">
+        </layer-preview>
+      </main>
+    </pane>
+    <!--<button @click="zoomIn"><i class="fas fa-search-plus"></i></button>
+      <button @click="zoomOut"><i class="fas fa-search-minus"></i></button>-->
+  </div>
 </template>
 
 <script>
@@ -41,6 +48,8 @@
     data() {
       return {
         zoom: 1,
+        isLayerKit: true,
+        isLayer: true
       };
     },
     methods: {
@@ -49,6 +58,12 @@
       },
       zoomOut() {
         this.zoom = Math.max(this.zoom - 0.25, 0.25);
+      },
+      toggleLayerKits() {
+        this.$emit('toggleLayerKit');
+      },
+      toggleLayers() {
+        this.$emit('toggleLayer');
       },
     },
   };
