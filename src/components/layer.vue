@@ -1,42 +1,54 @@
 <template>
   <pane :title="`layer`" :width="width" :height="'50%'">
-    <div v-for="(layer, index) in layers" :key="index">
-      <list-item
-        :title="layer.layout.id"
-        :description="layer.layout.description"
-        :icon="layer.layout.icon"
-        :active="selectedLayer.id === layer.id"
-        @onClick="selectLayer(layer)"
-      >
-        <button v-if="layer.hidden" @click="toggleLayer(index, false)">
-          <i class="fas fa-eye-slash"></i>
-        </button>
-        <button v-if="!layer.hidden" @click="toggleLayer(index, true)">
-          <i class="fas fa-eye"></i>
-        </button>
-        <button @click="removeLayer(layer, index)">
-          <i class="fas fa-trash-alt"></i>
-        </button>
-        <button @click="upLayer(layer, index)">
-          <i class="fas fa-arrow-up"></i>
-        </button>
-        <button @click="downLayer(layer, index)">
-          <i class="fas fa-arrow-down"></i>
-        </button>
-      </list-item>
-    </div>
+    <Container @drop="onDrop" drag-handle-selector=".row-drag-handle">
+      <Draggable v-for="(layer, index) in layers" :key="layer.id">
+        <list-item
+          :title="layer.layout.id"
+          :description="layer.layout.description"
+          :icon="layer.layout.icon"
+          :active="selectedLayer.id === layer.id"
+          @onClick="selectLayer(layer)"
+        >
+          <button @click="removeLayer(layer, index)">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+          <button class="row-drag-handle"><i class="fas fa-bars"></i></button>
+        </list-item>
+      </Draggable>
+    </Container>
   </pane>
 </template>
 
 <script>
+  import { Container, Draggable } from "vue-smooth-dnd";
   import Pane from './pane.vue';
   import ListItem from './list-item.vue';
+
+  const applyDrag = (arr, dragResult) => {
+    const { removedIndex, addedIndex, payload } = dragResult;
+    if (removedIndex === null && addedIndex === null) return arr;
+
+    const result = arr;
+    let itemToAdd = payload;
+
+    if (removedIndex !== null) {
+      itemToAdd = result.splice(removedIndex, 1)[0];
+    }
+
+    if (addedIndex !== null) {
+      result.splice(addedIndex, 0, itemToAdd);
+    }
+
+    return result;
+  };
 
   export default {
     name: 'layer',
     components: {
       Pane,
       ListItem,
+      Container,
+      Draggable,
     },
     props: {
       layers: {
@@ -57,8 +69,17 @@
       },
     },
     methods: {
+      onDrop(dropResult) {
+        this.layers = applyDrag(this.layers, dropResult);
+      },
       selectLayer(layer) {
         this.$emit('select', layer);
+      },
+      removeLayer(layer, layerIndex) {
+        if (layerIndex!== -1) {
+          this.layers.splice(layerIndex, 1);
+          this.selectLayer(layer);
+        }
       },
     },
   };

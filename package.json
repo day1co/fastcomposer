@@ -14,7 +14,8 @@
     "lodash": "^4.17.11",
     "marked": "^0.6.2",
     "moment": "^2.24.0",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-smooth-dnd": "^0.8.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.7.0",
