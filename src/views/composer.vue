@@ -22,7 +22,12 @@
         @toggleLayer="onToggleLayer"
       />
     </div>
-    <div class="editor-draggable-area" v-if="isActiveEditor">
+    <div class="editor-draggable-area" v-if="isActiveEditor" v-draggable>
+      <div style="position:relative;">
+        <div class="btn-group" style="position: absolute; right: 0;">
+          <button type="button" class="btn"><i class="far fa-window-close"></i></button>
+        </div>
+      </div>
       <editor :layer="selectedLayer"/>
     </div>
     <button class="save-btn" @click="save"><i class="fas fa-save"></i></button>
@@ -37,9 +42,13 @@
   import Layer from '../components/layer.vue';
   import Editor from '../components/editor.vue';
   import Preview from '../components/preview.vue';
+  import { Draggable } from 'draggable-vue-directive';
 
   export default {
     name: 'composer',
+    directives: {
+      Draggable,
+    },
     components: {
       Layout,
       Layer,
@@ -198,18 +207,22 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
 <style lang="scss" scoped>
   .fc-composer {
     display: flex;
+    position: relative;
     overflow: hidden;
     height: 100vh;
     margin: 1rem;
+
+    .editor-draggable-area {
+      position: absolute;
+      left: calc(50% - 95px);
+      top: calc(50% - 57px);
+      border: 1px solid #bbb;
+      background-color: #ffffff;
+    }
   }
 
   .side-area {
-    /*position: absolute;*/
     width: 20rem;
-    /*.pane-form {*/
-    /*  border: 0.1rem solid;*/
-    /*  background: #ffffff;*/
-    /*}*/
   }
 
   .preview-area {
