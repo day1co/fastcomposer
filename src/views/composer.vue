@@ -1,17 +1,8 @@
 <template>
   <div class="fc-composer">
-    <div class="side-area" v-if="isLayerKit || isLayer">
+    <div class="side-area" v-if="isLayerKit">
       <Layout :layouts="layoutArray" :width="`18rem`"
-              v-if="isLayerKit"
               @select="onSelectLayout"/>
-      <layer :layers="layers" :width="`18rem`"
-             :selectedLayer="selectedLayer"
-             v-if="isLayer"
-             @select="onSelectLayer"
-             @upLayer="upLayer"
-             @downLayer="downLayer"
-             @removeLayer="removeLayer"
-             @save="save"/>
     </div>
     <div class="preview-area">
       <preview
@@ -19,7 +10,6 @@
         :selectedLayer="selectedLayer"
         @select="onSelectLayer"
         @toggleLayerKit="onToggleLayerKit"
-        @toggleLayer="onToggleLayer"
       />
     </div>
     <div class="editor-draggable-area" v-if="isActiveEditor" v-draggable>
@@ -39,7 +29,6 @@
   import marked from 'marked';
 
   import Layout from '../components/layout.vue';
-  import Layer from '../components/layer.vue';
   import Editor from '../components/editor.vue';
   import Preview from '../components/preview.vue';
   import { Draggable } from 'draggable-vue-directive';
@@ -51,7 +40,6 @@
     },
     components: {
       Layout,
-      Layer,
       Editor,
       Preview,
     },
@@ -95,7 +83,6 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
         editorLayout: {},
         editorLayoutIndex: -1,
         isLayerKit: true,
-        isLayer: true,
       };
     },
     methods: {
@@ -184,9 +171,6 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
       },
       onToggleLayerKit() {
         this.isLayerKit = !this.isLayerKit;
-      },
-      onToggleLayer() {
-        this.isLayer = !this.isLayer;
       },
       unSelectedLayer() {
         this.editorLayoutIndex = -1;

@@ -3,7 +3,6 @@
     <!--구조상 btn-group영역을 이곳에 두는것이 맞는지...-->
     <div class="btn-group-toggle" data-toggle="buttons">
       <button type="button" class="btn btn-primary" @click="toggleLayerKits">Layer Kits on/off</button>
-      <button type="button" class="btn btn-primary" @click="toggleLayers">Layers on/off</button>
     </div>
     <pane :title="`preview`">
       <template>
@@ -75,7 +74,6 @@
       return {
         zoom: 1,
         isLayerKit: true,
-        isLayer: true
       };
     },
     methods: {
@@ -90,9 +88,6 @@
       },
       toggleLayerKits() {
         this.$emit('toggleLayerKit');
-      },
-      toggleLayers() {
-        this.$emit('toggleLayer');
       },
       onRemoveLayer(layer, layerIndex) {
         if (layerIndex!== -1) {
