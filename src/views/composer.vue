@@ -25,7 +25,7 @@
     <div class="editor-draggable-area" v-if="isActiveEditor" v-draggable>
       <div style="position:relative;">
         <div class="btn-group" style="position: absolute; right: 0;">
-          <button type="button" class="btn"><i class="far fa-window-close"></i></button>
+          <button type="button" class="btn" @click="unSelectedLayer"><i class="far fa-window-close"></i></button>
         </div>
       </div>
       <editor :layer="selectedLayer"/>
@@ -187,6 +187,9 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
       },
       onToggleLayer() {
         this.isLayer = !this.isLayer;
+      },
+      unSelectedLayer() {
+        this.editorLayoutIndex = -1;
       },
       save() {
         const layerHtml = this.layerHtml;
