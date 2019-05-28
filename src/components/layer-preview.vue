@@ -2,8 +2,7 @@
   <!--css로 hover걸어서 처리해보는걸로...-->
   <div class="layer-preview-container">
     <div class="btn-group">
-      <button type="button" class="btn"><i class="far fa-edit"></i></button>
-      <button type="button" class="btn"><i class="fas fa-trash-alt"></i></button>
+      <button type="button" class="btn" @click="removeLayer"><i class="fas fa-trash-alt"></i></button>
       <button type="button" class="btn row-drag-handle"><i class="fas fa-bars"></i></button>
     </div>
     <div
@@ -36,6 +35,7 @@ export default {
       type: Boolean,
       default:  false
     },
+    index: Number,
   },
   computed: {
     html() {
@@ -47,6 +47,11 @@ export default {
       value && this.$el.scrollIntoViewIfNeeded();
     },
   },
+  methods: {
+    removeLayer() {
+      this.$emit('removeLayer', this.layer, this.index);
+    }
+  }
 };
 </script>
 

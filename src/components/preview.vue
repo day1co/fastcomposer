@@ -13,7 +13,9 @@
               <layer-preview
                 :key="'layer-' + layerIndex"
                 :layer="layer"
+                :index="layerIndex"
                 @selectPreview="$emit('select',layer)"
+                @removeLayer="onRemoveLayer"
                 :active="selectedLayer.id === layer.id">
               </layer-preview>
             </Draggable>
@@ -92,6 +94,11 @@
       toggleLayers() {
         this.$emit('toggleLayer');
       },
+      onRemoveLayer(layer, layerIndex) {
+        if (layerIndex!== -1) {
+          this.layers.splice(layerIndex, 1);
+        }
+      }
     },
   };
 </script>
