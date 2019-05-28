@@ -1,11 +1,19 @@
 <template>
-  <div
-    :id="layer.id"
-    @click="$emit('selectPreview')"
-    class="fc-layer-preview fc-block fc-layout"
-    :class="['fc-layout-' + layer.layout.id, { active: active }, { hidden: this.layer.hidden }]"
-    v-html="html"
-  ></div>
+  <!--css로 hover걸어서 처리해보는걸로...-->
+  <div class="layer-preview-container">
+    <div class="btn-group">
+      <button type="button" class="btn"><i class="far fa-edit"></i></button>
+      <button type="button" class="btn"><i class="fas fa-trash-alt"></i></button>
+      <button type="button" class="btn row-drag-handle"><i class="fas fa-bars"></i></button>
+    </div>
+    <div
+      :id="layer.id"
+      @click="$emit('selectPreview')"
+      class="fc-layer-preview fc-block fc-layout"
+      :class="['fc-layout-' + layer.layout.id, { active: active }, { hidden: this.layer.hidden }]"
+      v-html="html"
+    ></div>
+  </div>
 </template>
 
 <script>
@@ -43,6 +51,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.layer-preview-container {
+  position: relative;
+  .btn-group {
+    visibility: hidden;
+    opacity: 0;
+    /*transition: visibility 0s 0.1s;*/
+    position: absolute;
+    top:0;
+    right: 0;
+  }
+  &:hover {
+    .btn-group {
+      visibility: visible!important;
+      opacity: 1!important;
+      transition: opacity 250ms linear;
+    }
+  }
+}
 .fc-layer-preview {
   flex: 0 0 0;
   width: 100%;
