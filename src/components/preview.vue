@@ -6,30 +6,54 @@
       <button type="button" class="btn btn-primary" @click="toggleLayers">Layers on/off</button>
     </div>
     <pane :title="`preview`">
-      <main :style="{ zoom }">
-        <layer-preview
-          v-for="(layer, layerIndex) in layers"
-          :key="'layer-' + layerIndex"
-          :layer="layer"
-          @selectPreview="$emit('select',layer)"
-          :active="selectedLayer.id === layer.id">
-        </layer-preview>
-      </main>
+      <template>
+        <main :style="{ zoom }">
+          <Container @drop="onDrop" drag-handle-selector=".row-drag-handle" :animation-duration="200">
+            <Draggable v-for="(layer, layerIndex) in layers" :key="layer.id">
+              <layer-preview
+                :key="'layer-' + layerIndex"
+                :layer="layer"
+                @selectPreview="$emit('select',layer)"
+                :active="selectedLayer.id === layer.id">
+              </layer-preview>
+            </Draggable>
+          </Container>
+        </main>
+      </template>
     </pane>
-    <!--<button @click="zoomIn"><i class="fas fa-search-plus"></i></button>
-      <button @click="zoomOut"><i class="fas fa-search-minus"></i></button>-->
   </div>
 </template>
 
 <script>
   import LayerPreview from './layer-preview.vue';
   import pane from './pane.vue';
+  import { Container, Draggable } from "vue-smooth-dnd";
+
+  const applyDrag = (arr, dragResult) => {
+    const { removedIndex, addedIndex, payload } = dragResult;
+    if (removedIndex === null && addedIndex === null) return arr;
+
+    const result = arr;
+    let itemToAdd = payload;
+
+    if (removedIndex !== null) {
+      itemToAdd = result.splice(removedIndex, 1)[0];
+    }
+
+    if (addedIndex !== null) {
+      result.splice(addedIndex, 0, itemToAdd);
+    }
+
+    return result;
+  };
 
   export default {
     name: 'preview',
     components: {
       LayerPreview,
       pane,
+      Container,
+      Draggable,
     },
     props: {
       layers: {
@@ -58,6 +82,9 @@
       },
       zoomOut() {
         this.zoom = Math.max(this.zoom - 0.25, 0.25);
+      },
+      onDrop(dropResult) {
+        this.layers = applyDrag(this.layers, dropResult);
       },
       toggleLayerKits() {
         this.$emit('toggleLayerKit');
