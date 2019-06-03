@@ -6,18 +6,6 @@
     }
   },
   {
-    "layout": "paragraph",
-    "values": {
-      "content": "paragraph text"
-    }
-  },
-  {
-    "layout": "paragraph",
-    "values": {
-      "content": "another paragraph text"
-    }
-  },
-  {
     "layout": "image",
     "values": {
       "src": "https://i.ytimg.com/vi/YCaGYUIfdy4/maxresdefault.jpg",

@@ -6,7 +6,7 @@ import axios from 'axios';
 import Composer from './views/composer.vue';
 
 // sample layouts with es6 module:
-import layouts from '../public/layouts';
+import layoutKits from '../public/layouts';
 
 // sample layouts with commonjs bundle
 // need to build with `npm run build-layouts` or else
@@ -16,7 +16,6 @@ import layouts from '../public/layouts';
 Vue.config.productionTip = false;
 
 const el = document.querySelector('#app');
-const value = el.dataset.value || el.value;
 
 // sample layouts with commonjs bundle:
 // FIXME: resolve icons automatically...
@@ -24,14 +23,10 @@ const value = el.dataset.value || el.value;
 //   layout.icon = require(`../public/layouts/${layout.id}/icon.svg`);
 // });
 
-new Vue({
+const app = new Vue({
   el,
   render(createElement) {
     return createElement(Composer, {
-      props: {
-        value,
-        layouts,
-      },
       ref: 'composer',
       on: {
         save(html, json) {
@@ -41,9 +36,17 @@ new Vue({
       },
     });
   },
-  async created() {
-    const res = await axios.get('/sample.json');
-    this.$refs.composer.openJson(JSON.stringify(res.data));
-    this.$root.$on('fc-upload', event => console.log('GLOBAL fc-upload', event));
+  mounted() {
+    this.$refs.composer.setLayoutKits(layoutKits);
   },
 });
+/**
+ * vue 라이프사이클에서 layout과 data를 구성하기보단 밖에서 별도로 분리하여 설정
+ */
+axios.get('/sample.json').then((res) => {
+  app.$refs.composer.setLayerBlockData(res.data);
+});
+
+// console.log(layoutKits); // 실제 layout 도구들...
+// console.log(res.data); // layoutKits들을 이용하여 data와 결합하여 preview에 보여준다
+
