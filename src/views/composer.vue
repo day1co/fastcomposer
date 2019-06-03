@@ -1,7 +1,7 @@
 <template>
   <div class="fc-composer">
     <div class="side-area" v-if="isLayerKit">
-      <Layout :layouts="layoutArray" :width="`18rem`"
+      <Layout :layouts="newLayoutKits" :width="`18rem`"
               @select="onSelectLayout"/>
     </div>
     <div class="preview-area">
@@ -25,13 +25,13 @@
 </template>
 
 <script>
-  import { template, cloneDeep } from 'lodash';
+  import {template, cloneDeep} from 'lodash';
   import marked from 'marked';
 
   import Layout from '../components/layout.vue';
   import Editor from '../components/editor.vue';
   import Preview from '../components/preview.vue';
-  import { Draggable } from 'draggable-vue-directive';
+  import {Draggable} from 'draggable-vue-directive';
 
   export default {
     name: 'composer',
@@ -43,23 +43,11 @@
       Editor,
       Preview,
     },
-    props: {
-      value: {
-        type: String,
-        default: '[]',
-      },
-      layouts: {
-        type: Array,
-        default() {
-          return [];
-        },
-      },
-    },
     computed: {
       selectedLayer() {
         return this.layers[this.editorLayoutIndex];
       },
-      isActiveEditor(){
+      isActiveEditor() {
         return this.editorLayoutIndex >= 0;
       },
       layerHtml() {
@@ -67,7 +55,7 @@
           .map(
             layer => `
 <section class="fc-block fc-layout fc-layout-${layer.layout.id}">
-${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
+${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
 </section>`,
           )
           .join('\n');
@@ -77,7 +65,7 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
     },
     data() {
       return {
-        layoutArray: [],
+        newLayoutKits: [],
         layoutMap: {},
         layers: [],
         editorLayout: {},
@@ -87,13 +75,13 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
     },
     methods: {
       nextLayerId() {
-        const seq = (this._blockIdSeq = this._blockIdSeq ? ++this._blockIdSeq:1);
+        const seq = (this._blockIdSeq = this._blockIdSeq ? ++this._blockIdSeq : 1);
         const nonce = Math.random()
           .toString(36)
           .substr(2, 9);
         return `fc-block-${seq}-${nonce}`;
       },
-     // 레이터 data 컨트롤 영역
+      // 레이터 data 컨트롤 영역
       onSelectLayer(selectLayer) {
         const selectLayerIndex = this.layers.indexOf(selectLayer);
         this.editorLayoutIndex = selectLayerIndex;
@@ -102,7 +90,7 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
         this.layers.push(layer);
       },
       removeLayer(layer, layerIndex) {
-        if (layerIndex!== -1) {
+        if (layerIndex !== -1) {
           this.layers.splice(layerIndex, 1);
           this.onSelectLayer(layer);
         }
@@ -115,7 +103,7 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
         }
       },
       downLayer(layer, layerIndex) {
-        if (layerIndex!== -1 && layerIndex < this.layers.length - 1) {
+        if (layerIndex !== -1 && layerIndex < this.layers.length - 1) {
           const tempLayer = this.layers[layerIndex];
           this.$set(this.layers, layerIndex, this.layers[layerIndex + 1]);
           this.$set(this.layers, layerIndex + 1, tempLayer);
@@ -134,40 +122,24 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
         this.addLayer(layer);
         this.onSelectLayer(layer);
       },
-      openLayouts(layouts) {
-        console.log('open layouts', layouts);
-        return Promise.resolve(layouts)
-          .then(layouts => {
-            // precompile all layout templates
-            this.layoutArray = layouts.map(layout => Object.assign(layout, { templateFunc: template(layout.template)}));
-            // lookup table for layout id => layout object
-            this.layoutMap = this.layoutArray.reduce((layoutMap, layout) => {
-              layoutMap[layout.id] = layout;
-              return layoutMap;
-            }, {});
-          })
-          .catch(err => {
-            console.error('bad or missing layouts', err);
-            this.layoutArray = [];
-            this.layoutMap = {};
-          });
+      setLayoutKits(layoutKits) {
+        /**
+         * 아래 항목을 utils항목으로 빼서 하면 더 좋을것같은데....
+         * templateFunc추가함
+         */
+        this.newLayoutKits = layoutKits.map(layoutKit => Object.assign(layoutKit, {templateFunc: template(layoutKit.template)}));
       },
-      openJson(json) {
-        console.log('open json', json);
-        return Promise.resolve(json)
-          .then(json => {
-            // TODO: parse html!
-            // AS-IS: parse source json string
-            // replace layout id => layout object, give id if absent
-            this.layers = JSON.parse(json).map(layer => {
-              return Object.assign({ id: this.nextLayerId() }, layer, { layout: this.layoutMap[layer.layout] });
-            });
-            console.log('open', this.layers);
-          })
-          .catch(err => {
-            console.error('bad or missing value', err);
-            this.layers = [];
-          });
+      setLayerBlockData(layerBlockData) {
+        /**
+         * layoutMap은 LayerBlackData에서 사용하니 사용구간으로 이동
+         */
+        this.layoutMap = this.newLayoutKits.reduce((layoutMap, layout) => {
+          layoutMap[layout.id] = layout;
+          return layoutMap;
+        }, {});
+
+        this.layers = Object.assign([], layerBlockData.map(layer => Object.assign({id: this.nextLayerId()}, layer, {layout: this.layoutMap[layer.layout]})));
+
       },
       onToggleLayerKit() {
         this.isLayerKit = !this.isLayerKit;
@@ -178,15 +150,12 @@ ${layer.layout.templateFunc({ $markdown: marked, ...layer.values })}
       save() {
         const layerHtml = this.layerHtml;
         // replace layout object => layout id
-        const layers = this.layers.map(layer => Object.assign({}, layer, { layout: layer.layout.id }));
+        const layers = this.layers.map(layer => Object.assign({}, layer, {layout: layer.layout.id}));
         const layerJson = JSON.stringify(layers, null, 2);
         // TODO: save html only!
         // AS-IS: save generated html with source json
         this.$emit('save', layerHtml, layerJson);
       },
-    },
-    async created() {
-      return Promise.all([this.openLayouts(this.layouts), this.openJson(this.value)]);
     },
   };
 </script>
