@@ -1,6 +1,6 @@
 <template>
   <li>
-    <button class="fc-layout-kit__item" @click="$emit('select', layoutKit)">
+    <button class="fc-layout-kit__item" @click="selected(layoutKit)">
       <img :src="layoutKit.icon" alt="" />
       <span class="fc-layout-kit__item__info">
         <strong class="fc-layout-kit__item__name">{{ layoutKit.id }}</strong>
@@ -11,6 +11,7 @@
 </template>
 
 <script>
+  import EventBus from './../../../../event-bus/event-bus';
   export default {
     name: 'layout-kit',
     props: {
@@ -21,6 +22,11 @@
         }
       }
     },
+    methods: {
+      selected() {
+        EventBus.$emit('selected', this.layoutKit);
+      }
+    }
   }
 </script>
 

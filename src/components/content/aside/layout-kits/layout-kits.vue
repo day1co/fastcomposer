@@ -4,7 +4,7 @@
       <layout-kit
         :key="index"
         :layoutKit="layoutKit"
-        @onClick="$emit('select', layoutKit)"/>
+      />
     </template>
   </ul>
 </template>
