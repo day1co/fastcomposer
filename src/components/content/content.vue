@@ -6,36 +6,36 @@
 <!--      @select="onSelectLayer"-->
 <!--      @toggleLayerKit="onToggleLayerKit"-->
 <!--    />-->
-<!--    <Layout :layouts="layoutArray" :width="`18rem`"-->
+<!--    <sidebar-pane :layoutKits="layoutKits" :width="`18rem`"-->
 <!--            @removeSelectedLayer="onRemoveSelectedLayer"-->
 <!--            @select="onSelectLayout"-->
 <!--    />-->
+    <composer-aside
+      :layoutKits="layoutKits"
+      @toggleMenu="onToggleMenu"
+      @removeSelectedLayer="onRemoveSelectedLayer"
+      @select="onSelectLayout"
+    />
   </div>
 </template>
 
 <script>
   import { cloneDeep } from 'lodash';
   // import Preview from '../../components/content/preview.vue';
-  // import Layout from '../../components/layout.vue';
   import { Draggable } from 'draggable-vue-directive';
+  import ComposerAside from './aside/aside';
   export default {
     name: 'composer-content',
     directives: {
       Draggable
     },
     components: {
+      ComposerAside,
       // Preview,
-      // Layout,
+      // SidebarPane,
     },
-    /**
-     * 중복
-     */
     props: {
-      value: {
-        type: String,
-        default: '[]',
-      },
-      layouts: {
+      layoutKits: {
         type: Array,
         default() {
           return [];
@@ -48,25 +48,41 @@
       }
     },
     methods: {
+      addLayer() {
+        console.log('addLayer!!!');
+        // this.layers.push(layer);
+      },
+      nextLayerId() {
+        const seq = (this._blockIdSeq = this._blockIdSeq ? ++this._blockIdSeq : 1);
+        const nonce = Math.random()
+          .toString(36)
+          .substr(2, 9);
+        return `fc-block-${seq}-${nonce}`;
+      },
+      // 레이터 data 컨트롤 영역
       onSelectLayer(selectLayer) {
-        const selectLayerIndex = this.layers.indexOf(selectLayer);
+        const selectLayerIndex = this.layoutKits.indexOf(selectLayer);
         this.editorLayoutIndex = selectLayerIndex;
       },
       onToggleLayerKit() {
-
+        this.isLayerKit = !this.isLayerKit;
       },
       onRemoveSelectedLayer() {
         this.editorLayoutIndex = -1;
       },
-      onSelectLayout(layout) {
+      // 레이아웃 컨트롤 영역
+      onSelectLayout(layoutKits) {
         const layer = {
           id: this.nextLayerId(),
-          layout: layout,
-          values: cloneDeep(layout.values) || {}, // clone!! not ref!
+          layout: layoutKits,
+          values: cloneDeep(layoutKits.values) || {}, // clone!! not ref!
         };
         this.addLayer(layer);
         this.onSelectLayer(layer);
       },
+      onToggleMenu() {
+        this.$emit('toggleMenu');
+      }
     }
   }
 </script>

@@ -1,0 +1,48 @@
+#back-to-top {
+  position: fixed;
+  //display: block;
+  z-index: 200;
+  width: 45px;
+  height: 45px;
+  right: 15px;
+  bottom: 15px;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 45px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.sr-only {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+.keep-all {
+  word-break: keep-all;
+}
+
+.hide {
+  display: none!important;
+}
+
+.touchable {
+  cursor: pointer;
+}
+
+.debug {
+  outline: 1px dashed fuchsia;
+}
+
+.a11y {
+  @include a11y;
+}
+
+.material-icons {
+  @include transition(null, 0.2s);
+}
+
+[v-cloak] {
+  display: none;
+}

@@ -1,0 +1,169 @@
+/*
+* base styles
+*/
+
+html {
+  font-size: 62.5%;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  font-size: 1em;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+ul, ol, dl,
+dt, dd {
+  margin: 0;
+  padding: 0;
+}
+
+ul, ol, li {
+  list-style: none;
+}
+
+em, address {
+  font-style: normal;
+}
+
+figure, form {
+  margin: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0 none;
+  vertical-align: top;
+}
+
+label {
+  cursor: pointer;
+}
+
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+  margin: 0;
+  vertical-align: baseline;
+}
+
+button {
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  border: 0 none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  vertical-align: middle;
+}
+
+input[type="search"] {
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+textarea {
+  vertical-align: top;
+  resize: vertical;
+}
+
+input:invalid,
+textarea:invalid {
+  background-color: transparent;
+}
+
+table {
+  width: 100%;
+  empty-cells: show;
+}
+
+td {
+  vertical-align: middle;
+}
+
+select {
+  vertical-align: middle;
+  border-radius: 0;
+}
+
+em,
+mark {
+  //background-color: $primary;
+  //color: $white;
+}
+
+a,
+a:link,
+a:hover,
+a:active,
+a:visited {
+  //color: #424242;
+  text-decoration: none;
+}
+
+::selection {
+  background: $primary;
+  color: $white;
+  text-shadow: none;
+}
+::-webkit-input-placeholder {
+  color: $color-veiled;
+}
+::-ms-input-placeholder {
+  color: $color-veiled;
+}
+:-moz-placeholder {
+  color: $color-veiled;
+}
+
+/*
+* base guide
+*/
+body,
+input,
+textarea,
+select,
+button {
+  font-family: $font-base;
+  line-height: 1.5;
+  color: $color-body;
+}
+
+html, body {
+  background-color: $primary;
+}
+
+body {
+  min-width: 320px;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+
+button {
+  box-sizing: border-box;
+  padding: 0;
+}

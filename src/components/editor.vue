@@ -1,51 +1,47 @@
 <template>
- <pane :title="`editor`">
-   <form class="fc-block-form" @submit="$emit('apply', block)">
-     <fieldset v-for="param in layer.layout.params" :key="param.name">
-       <label>
-         {{ param.name }}
-         <small>({{ param.type }})</small>
-       </label>
-       <template v-if="param.type === 'text'">
-         <input type="text" :name="param.name" :placeholder="param.description" v-model="layer.values[param.name]" />
-       </template>
-       <template v-if="param.type === 'textarea'">
+  <form class="fc-block-form" @submit="$emit('apply', block)">
+    <fieldset v-for="param in layer.layout.params" :key="param.name">
+      <label>
+        {{ param.name }}
+        <small>({{ param.type }})</small>
+      </label>
+      <template v-if="param.type === 'text'">
+        <input type="text" :name="param.name" :placeholder="param.description" v-model="layer.values[param.name]" />
+      </template>
+      <template v-if="param.type === 'textarea'">
         <textarea
           :name="param.name"
           :placeholder="param.description"
           v-model="layer.values[param.name]"
           @keyup="resize">
         </textarea>
-       </template>
-       <template v-if="param.type === 'url'">
-         <input type="url" :name="param.name" :placeholder="param.description" v-model="layer.values[param.name]" />
-       </template>
-       <template v-if="param.type === 'number'">
-         <input type="number" :name="param.name" :placeholder="param.description" v-model="layer.values[param.name]" />
-       </template>
-       <template v-if="param.type === 'image'">
-         <input type="url" :name="param.name" :placeholder="param.description" v-model="layer.values[param.name]" />
-         <file-upload :name="param.name" accept="image/*" @upload="upload"/>
-       </template>
-     </fieldset>
-     <!--
-     <button type="reset" @click="$emit('reset', block)">reset</button>
-     <button type="submit">apply</button>
-     -->
-   </form>
- </pane>
+      </template>
+      <template v-if="param.type === 'url'">
+        <input type="url" :name="param.name" :placeholder="param.description" v-model="layer.values[param.name]" />
+      </template>
+      <template v-if="param.type === 'number'">
+        <input type="number" :name="param.name" :placeholder="param.description" v-model="layer.values[param.name]" />
+      </template>
+      <template v-if="param.type === 'image'">
+        <input type="url" :name="param.name" :placeholder="param.description" v-model="layer.values[param.name]" />
+        <file-upload :name="param.name" accept="image/*" @upload="upload"/>
+      </template>
+    </fieldset>
+    <!--
+    <button type="reset" @click="$emit('reset', block)">reset</button>
+    <button type="submit">apply</button>
+    -->
+  </form>
 </template>
 
 <script>
   import FileUpload from './file-upload.vue';
-  import Pane from './pane.vue';
 
 
   export default {
     name: 'editor',
     components: {
       FileUpload,
-      Pane
     },
     props: {
       layer: {

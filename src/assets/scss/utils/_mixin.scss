@@ -1,0 +1,114 @@
+@mixin mobile {
+  @media screen and (max-width: $mobile-max-width) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: $desktop-min-width) {
+    @content;
+  }
+}
+
+@mixin break-word {
+  word-break: keep-all;
+  word-wrap: break-word;
+}
+
+@mixin full-pos {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@mixin container($size: null) {
+  padding-left: $pad-small;
+  padding-right: $pad-small;
+
+  @include mq(large) {
+    margin-left: auto;
+    margin-right: auto;
+
+    @if ($size) {
+      padding-left: percentage($pad-large/$size);
+      padding-right: percentage($pad-large/$size);
+      max-width: $size;
+    } @else {
+      padding-left: percentage($pad-large/$w-small);
+      padding-right: percentage($pad-large/$w-small);
+      max-width: $w-small;
+    }
+  }
+}
+
+@mixin transition($prop: null, $time: null, $func: null) {
+  @if ($prop) {
+    transition-property: $prop;
+  } @else {
+    transition-property: all;
+  }
+
+  @if ($time) {
+    transition-duration: $time;
+  } @else {
+    transition-duration: $dur;
+  }
+
+  @if ($func) {
+    transition-timing-function: $func;
+  } @else {
+    transition-timing-function: $ease-basic;
+  }
+}
+
+@mixin ellipsis($lines) {
+  @if ($lines) {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    word-wrap: normal;
+
+  } @else {
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+  }
+}
+
+@mixin middle($child:'&-cell') {
+  white-space: nowrap;
+
+  #{$child} {
+    display: inline-block;
+    vertical-align: middle;
+    white-space: normal;
+    @content;
+  }
+
+  &:after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+}
+
+@mixin a11y {
+  position: absolute !important;
+  overflow: hidden;
+  height: 1px;
+  width: 1px;
+  // clip: rect(1px 1px 1px 1px); // for IE6, IE7
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+@mixin fontawesome {
+  font-family: 'Font Awesome 5 Free', sans-serif;
+  font-weight: 900;
+}

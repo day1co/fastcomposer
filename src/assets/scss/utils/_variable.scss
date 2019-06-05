@@ -1,0 +1,105 @@
+// breakpoints
+$mq-breakpoints: (
+  mobile:  321px,
+  desktop: 980px,
+
+  // Tweakpoints
+  x-small:  400px,
+  small:  560px,
+  medium:  720px,
+  large:  960px,
+  x-large: 1280px,
+  xx-large: 1600px
+);
+
+// layout
+$w-mobile: 375px;
+$w-small: 980px;
+$w-default: 1140px;
+$w-large: 1280px;
+$w-max: 1920px;
+
+$p-small: 20px;
+$p-large: 80px;
+
+$gutter-small: 10px;
+$gutter-large: 20px;
+
+$header-size: 6rem;
+$sidebar-size: 24rem;
+
+$font-base: 'Montserrat', 'Noto Sans KR', sans-serif;
+$font-size: 1.4rem;
+
+//$mobile-max-width: 1023px;
+//$desktop-min-width: 1024px;
+//$container-nav-width: 1140px;
+
+// gnb
+//$gnb-height: 72px;
+$gnb-height: 55px;
+//$gnb-nav-hover: #ed234b;
+$gnb-nav-hover: #f97352;
+//$gnb-font-size: 14px;
+$gnb-nav-hover-panel: 270px;
+$gnb-font-size: 13px;
+$gnb-font-size-sub: 12px;
+
+/*
+* transition
+*/
+$dur: 0.2s;
+$ease-basic: ease-out;
+
+/*
+* color platte
+*/
+$red: #ed234b;
+$pink: #ffcfd9;
+$orange: #ff7450;
+$yellow: #ffe812;
+$lime: #e4ff18;
+$green: #02bf3a;
+$blue: #2196f3;
+$brown: #391f1f;
+$grey: #cbcbd4;
+
+$white: #fff;
+$black: #000;
+
+// color variant
+$red-l1: #f74982;
+
+$blue-d1: #1976d2;
+$blue-l1: #03a9f4;
+$blue-l2: #bbdefb;
+
+$grey-l5: #d8d8d8;
+$grey-l4: #dcdce6;
+$grey-l3: #ccced2;
+$grey-l2: #e6e8eb;
+$grey-l1: #d3d3d3;
+$grey-d1: #6e6e73;
+$grey-d2: #aaaaaf;
+$grey-d3: #9b9ba0;
+$grey-d4: #565656;
+$grey-d5: #374046;
+
+$white-d1: #f8f8f8;
+$white-d2: #f2f2f2;
+
+// color schemes (temporary)
+$primary: $blue;
+$secondary: $blue-d1;
+$accent: $blue-l1;
+$dimmed: $white-d1;
+$placehold: $grey-d2;
+
+$surface: $blue;
+$background: $blue-d1;
+
+$color-body: $grey-d4;
+$color-accent: $red;
+$color-veiled: $grey;
+
+$error: $red;

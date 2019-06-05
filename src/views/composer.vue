@@ -1,54 +1,56 @@
+
 <template>
   <div class="fc-composer">
-    <div class="side-area" v-if="isLayerKit">
-      <Layout :layouts="newLayoutKits" :width="`18rem`"
-              @select="onSelectLayout"/>
-    </div>
-    <div class="preview-area">
-      <preview
-        :layers="layers"
-        :selectedLayer="selectedLayer"
-        @select="onSelectLayer"
-        @toggleLayerKit="onToggleLayerKit"
-      />
-    </div>
-    <div class="editor-draggable-area" v-if="isActiveEditor" v-draggable>
-      <div style="position:relative;">
-        <div class="btn-group" style="position: absolute; right: 0;">
-          <button type="button" class="btn" @click="unSelectedLayer"><i class="far fa-window-close"></i></button>
-        </div>
-      </div>
-      <editor :layer="selectedLayer"/>
-    </div>
-    <button class="save-btn" @click="save"><i class="fas fa-save"></i></button>
+    <composer-header/>
+    <composer-content
+      :class="[
+      isVisible && 'fc-composer--aside'
+    ]"
+      @toggleMenu="onToggleMenu"
+      :layoutKits="layoutKits"
+    />
+
+    <!--    <div class="side-area" v-if="isLayerKit">-->
+<!--      <Layout :layouts="newLayoutKits" :width="`18rem`"-->
+<!--              @select="onSelectLayout"/>-->
+<!--    </div>-->
+<!--    <div class="preview-area">-->
+<!--      <preview-->
+<!--        :layers="layers"-->
+<!--        :selectedLayer="selectedLayer"-->
+<!--        @select="onSelectLayer"-->
+<!--        @toggleLayerKit="onToggleLayerKit"-->
+<!--      />-->
+<!--    </div>-->
+<!--    <div class="editor-draggable-area" v-if="isActiveEditor" v-draggable>-->
+<!--      <div style="position:relative;">-->
+<!--        <div class="btn-group" style="position: absolute; right: 0;">-->
+<!--          <button type="button" class="btn" @click="unSelectedLayer"><i class="far fa-window-close"></i></button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <editor :layer="selectedLayer"/>-->
+<!--    </div>-->
+<!--    <button class="save-btn" @click="save"><i class="fas fa-save"></i></button>-->
   </div>
 </template>
 
 <script>
-  import {template, cloneDeep} from 'lodash';
   import marked from 'marked';
-
-  import Layout from '../components/layout.vue';
-  import Editor from '../components/editor.vue';
-  import Preview from '../components/preview.vue';
-  import {Draggable} from 'draggable-vue-directive';
+  import ComposerHeader from '../components/header.vue';
+  import ComposerContent from '../components/content/content.vue';
 
   export default {
     name: 'composer',
-    directives: {
-      Draggable,
-    },
     components: {
-      Layout,
-      Editor,
-      Preview,
+      ComposerHeader,
+      ComposerContent,
+      // Layout,
+      // Editor,
+      // Preview,
     },
     computed: {
       selectedLayer() {
         return this.layers[this.editorLayoutIndex];
-      },
-      isActiveEditor() {
-        return this.editorLayoutIndex >= 0;
       },
       layerHtml() {
         const html = this.layers
@@ -65,29 +67,19 @@ ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
     },
     data() {
       return {
-        newLayoutKits: [],
+        layoutKits: [],
         layoutMap: {},
         layers: [],
         editorLayout: {},
         editorLayoutIndex: -1,
         isLayerKit: true,
+
+        isVisible: true, // 작업 편의를 위해 임시로
       };
     },
     methods: {
-      nextLayerId() {
-        const seq = (this._blockIdSeq = this._blockIdSeq ? ++this._blockIdSeq : 1);
-        const nonce = Math.random()
-          .toString(36)
-          .substr(2, 9);
-        return `fc-block-${seq}-${nonce}`;
-      },
-      // 레이터 data 컨트롤 영역
-      onSelectLayer(selectLayer) {
-        const selectLayerIndex = this.layers.indexOf(selectLayer);
-        this.editorLayoutIndex = selectLayerIndex;
-      },
-      addLayer(layer) {
-        this.layers.push(layer);
+      onToggleMenu() {
+        this.isVisible = !this.isVisible;
       },
       removeLayer(layer, layerIndex) {
         if (layerIndex !== -1) {
@@ -95,57 +87,30 @@ ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
           this.onSelectLayer(layer);
         }
       },
-      upLayer(layer, layerIndex) {
-        if (layerIndex > 0) {
-          const tempLayer = this.layers[layerIndex];
-          this.$set(this.layers, layerIndex, this.layers[layerIndex - 1]);
-          this.$set(this.layers, layerIndex - 1, tempLayer);
-        }
-      },
-      downLayer(layer, layerIndex) {
-        if (layerIndex !== -1 && layerIndex < this.layers.length - 1) {
-          const tempLayer = this.layers[layerIndex];
-          this.$set(this.layers, layerIndex, this.layers[layerIndex + 1]);
-          this.$set(this.layers, layerIndex + 1, tempLayer);
-        }
-      },
-      toggleLayer(layerIndex, isShow) {
-        this.$set(this.layers[layerIndex], 'hidden', isShow);
-      },
-      // 레이아웃 컨트롤 영역
-      onSelectLayout(layout) {
-        const layer = {
-          id: this.nextLayerId(),
-          layout: layout,
-          values: cloneDeep(layout.values) || {}, // clone!! not ref!
-        };
-        this.addLayer(layer);
-        this.onSelectLayer(layer);
-      },
       setLayoutKits(layoutKits) {
-        /**
-         * 아래 항목을 utils항목으로 빼서 하면 더 좋을것같은데....
-         * templateFunc추가함
-         */
-        this.newLayoutKits = layoutKits.map(layoutKit => Object.assign(layoutKit, {templateFunc: template(layoutKit.template)}));
+        this.layoutKits = layoutKits;
+      },
+      nextLayerId() {
+        const seq = (this._blockIdSeq = this._blockIdSeq ? ++this._blockIdSeq : 1);
+        const nonce = Math.random()
+          .toString(36)
+          .substr(2, 9);
+        return `fc-block-${seq}-${nonce}`;
       },
       setLayerBlockData(layerBlockData) {
         /**
          * layoutMap은 LayerBlackData에서 사용하니 사용구간으로 이동
          */
-        this.layoutMap = this.newLayoutKits.reduce((layoutMap, layout) => {
+        this.layoutMap = this.layoutKits.reduce((layoutMap, layout) => {
           layoutMap[layout.id] = layout;
           return layoutMap;
         }, {});
 
+        /**
+         * nextLayerId -> 밖으로 빼서처리해도 될거같은데...
+         * @type {any}
+         */
         this.layers = Object.assign([], layerBlockData.map(layer => Object.assign({id: this.nextLayerId()}, layer, {layout: this.layoutMap[layer.layout]})));
-
-      },
-      onToggleLayerKit() {
-        this.isLayerKit = !this.isLayerKit;
-      },
-      unSelectedLayer() {
-        this.editorLayoutIndex = -1;
       },
       save() {
         const layerHtml = this.layerHtml;
@@ -160,13 +125,77 @@ ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
   };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+  @import './../assets/scss/style.scss';
+
   .fc-composer {
-    display: flex;
-    position: relative;
     overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: $header-size;
+    padding-bottom: 2rem;
+    max-width: percentage(1);
+    width: percentage(1);
     height: 100vh;
-    margin: 1rem;
+    font-size: $font-size;
+    @include transition(null, 0.3s);
+
+    &--flush {
+      padding: 0;
+
+      .fc-preview {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+
+    &--landscape {
+      padding-right: 0;
+    }
+
+    &--openmenu {
+      padding-right: $sidebar-size;
+    }
+
+    &--portrait {
+      width: percentage(1);
+      max-width: $w-mobile;
+      padding-right: 0;
+    }
+
+    &__header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 101;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: 1.8rem;
+      padding-right: 1.8rem;
+      width: percentage(1);
+      height: $header-size;
+      &__h {
+        font-size: 1.8rem;
+        color: $white;
+      }
+
+      &__utils {
+        display: flex;
+
+        .fc-utils__btn {
+          flex: 1;
+          display: flex;
+          margin-left: 0.8rem;
+          color: $white;
+          align-items: center;
+        }
+      }
+    }
 
     .editor-draggable-area {
       position: absolute;
