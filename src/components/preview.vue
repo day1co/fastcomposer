@@ -4,30 +4,27 @@
     <div class="btn-group-toggle" data-toggle="buttons">
       <button type="button" class="btn btn-primary" @click="toggleLayerKits">Layer Kits on/off</button>
     </div>
-    <pane :title="`preview`">
-      <template>
-        <main :style="{ zoom }">
-          <Container @drop="onDrop" drag-handle-selector=".row-drag-handle" :animation-duration="200">
-            <Draggable v-for="(layer, layerIndex) in layers" :key="layer.id">
-              <layer-preview
-                :key="'layer-' + layerIndex"
-                :layer="layer"
-                :index="layerIndex"
-                @selectPreview="$emit('select',layer)"
-                @removeLayer="onRemoveLayer"
-                :active="selectedLayer.id === layer.id">
-              </layer-preview>
-            </Draggable>
-          </Container>
-        </main>
-      </template>
-    </pane>
+    <template>
+      <main>
+        <Container @drop="onDrop" drag-handle-selector=".row-drag-handle" :animation-duration="200">
+          <Draggable v-for="(layer, layerIndex) in layers" :key="layer.id">
+            <layer-preview
+              :key="'layer-' + layerIndex"
+              :layer="layer"
+              :index="layerIndex"
+              @selectPreview="$emit('select',layer)"
+              @removeLayer="onRemoveLayer"
+              :active="selectedLayer.id === layer.id">
+            </layer-preview>
+          </Draggable>
+        </Container>
+      </main>
+    </template>
   </div>
 </template>
 
 <script>
   import LayerPreview from './layer-preview.vue';
-  import pane from './pane.vue';
   import { Container, Draggable } from "vue-smooth-dnd";
 
   const applyDrag = (arr, dragResult) => {
@@ -52,7 +49,6 @@
     name: 'preview',
     components: {
       LayerPreview,
-      pane,
       Container,
       Draggable,
     },
