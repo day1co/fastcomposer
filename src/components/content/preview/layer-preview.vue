@@ -55,7 +55,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+  @import '../../../assets/scss/utils/utilities.scss';
 .layer-preview-container {
   position: relative;
   .btn-group {

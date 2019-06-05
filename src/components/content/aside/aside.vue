@@ -6,12 +6,13 @@
     <button
       type="button"
       class="fc-aside__btn"
-      @click="$emit('toggleMenu')">
+      @click="toggleMenu">
       <i class="material-icons">&#xE3E8;</i>
     </button>
   </div>
 </template>
 <script>
+  import EventBus from './../../../event-bus/event-bus';
   import LayoutKits from './layout-kits/layout-kits';
   export default {
     name: 'composer-aside',
@@ -26,6 +27,11 @@
         }
       }
     },
+    methods: {
+      toggleMenu() {
+        EventBus.$emit('toggleMenu');
+      }
+    }
   }
 </script>
 <style lang="scss">

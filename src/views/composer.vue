@@ -1,13 +1,15 @@
 
 <template>
-  <div class="fc-composer">
+  <div class="fc-composer"
+   :class="[
+    viewport ? { ['fc-composer--' + viewport]: viewport } : 'fc-composer--landscape',
+    isVisible && 'fc-composer--aside'
+  ]"
+  >
     <composer-header/>
     <composer-content
-      :class="[
-      isVisible && 'fc-composer--aside'
-    ]"
-      @toggleMenu="onToggleMenu"
       :layoutKits="layoutKits"
+      :layers="layers"
     />
 
     <!--    <div class="side-area" v-if="isLayerKit">-->
@@ -35,6 +37,8 @@
 </template>
 
 <script>
+  import { cloneDeep } from 'lodash';
+  import { uniqueId } from './../utils/utils';
   import EventBus from './../event-bus/event-bus';
   import marked from 'marked';
   import ComposerHeader from '../components/header.vue';
@@ -45,19 +49,23 @@
     components: {
       ComposerHeader,
       ComposerContent,
-      // Layout,
-      // Editor,
-      // Preview,
     },
     mounted() {
       EventBus.$on('selected', (layoutKit) => {
-        console.log(layoutKit);
+        const layer = {
+          id: uniqueId(),
+          layout: layoutKit,
+          values: cloneDeep(layoutKit.values) || {},
+        };
+
+        this.layers.push(layer);
+      });
+
+      EventBus.$on('toggleMenu', () => {
+        this.isVisible = !this.isVisible;
       });
     },
     computed: {
-      selectedLayer() {
-        return this.layers[this.editorLayoutIndex];
-      },
       layerHtml() {
         const html = this.layers
           .map(
@@ -78,19 +86,15 @@ ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
         layers: [],
         editorLayout: {},
         editorLayoutIndex: -1,
-        isLayerKit: true,
 
+        viewport: '',
         isVisible: true, // 작업 편의를 위해 임시로
       };
     },
     methods: {
-      onToggleMenu() {
-        this.isVisible = !this.isVisible;
-      },
       removeLayer(layer, layerIndex) {
         if (layerIndex !== -1) {
           this.layers.splice(layerIndex, 1);
-          this.onSelectLayer(layer);
         }
       },
       setLayoutKits(layoutKits) {
@@ -152,7 +156,7 @@ ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
     &--flush {
       padding: 0;
 
-      .fc-preview {
+      .fc-composer__content {
         margin-left: 0;
         margin-right: 0;
       }
@@ -162,7 +166,7 @@ ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
       padding-right: 0;
     }
 
-    &--openmenu {
+    &--aside {
       padding-right: $sidebar-size;
     }
 
