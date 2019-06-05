@@ -35,6 +35,7 @@
 </template>
 
 <script>
+  import EventBus from './../event-bus/event-bus';
   import marked from 'marked';
   import ComposerHeader from '../components/header.vue';
   import ComposerContent from '../components/content/content.vue';
@@ -47,6 +48,11 @@
       // Layout,
       // Editor,
       // Preview,
+    },
+    mounted() {
+      EventBus.$on('selected', (layoutKit) => {
+        console.log(layoutKit);
+      });
     },
     computed: {
       selectedLayer() {
