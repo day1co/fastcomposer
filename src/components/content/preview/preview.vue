@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="preview-container">
     <main>
       <Container @drop="onDrop" drag-handle-selector=".row-drag-handle" :animation-duration="200">
         <Draggable v-for="(layer, layerIndex) in layers" :key="layerIndex">
@@ -71,6 +71,11 @@
       0.16);
     @include transition(null, 0.3s);
 
+    .preview-container {
+      background: -moz-linear-gradient(top,  rgba(135,224,253,1) 0%, rgba(83,203,241,1) 40%, rgba(5,171,224,1) 100%);
+      background: -webkit-linear-gradient(top,  rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
+      background: linear-gradient(to bottom,  rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
+    }
     &__checkbox {
       &:checked {
         + .fc-preview__label {
