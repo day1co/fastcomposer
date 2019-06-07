@@ -58,6 +58,7 @@ export default {
 @import '../../../assets/scss/utils/utilities.scss';
 .layer-preview-container {
   position: relative;
+  border-bottom: 1px solid #bbb;
   .btn-group {
     visibility: hidden;
     opacity: 0;
