@@ -1,10 +1,5 @@
 <template>
-  <!--css로 hover걸어서 처리해보는걸로...-->
   <div class="layer-preview-container">
-    <div class="btn-group">
-      <button type="button" class="btn" @click="removeLayer"><i class="fas fa-trash-alt"></i></button>
-      <button type="button" class="btn row-drag-handle"><i class="fas fa-bars"></i></button>
-    </div>
     <div
       :id="layer.id"
       @click="selectedLayer(layer)"
@@ -12,6 +7,11 @@
       :class="['fc-layout-' + layer.layout.id, { active: active }, { hidden: this.layer.hidden }]"
       v-html="html"
     ></div>
+    <div class="fc-block__utils">
+      <button class="fc-block__utils__btn row-drag-handle">
+        <i class="material-icons">drag_handle</i>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -55,22 +55,26 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '../../../assets/scss/utils/utilities.scss';
+@import '../../../assets/scss/utils/utilities.scss';
 .layer-preview-container {
   position: relative;
   .btn-group {
     visibility: hidden;
     opacity: 0;
-    /*transition: visibility 0s 0.1s;*/
-    position: absolute;
-    top:0;
-    right: 0;
   }
   &:hover {
     .btn-group {
       visibility: visible!important;
       opacity: 1!important;
       transition: opacity 250ms linear;
+    }
+  }
+  .fc-block {
+    &__utils {
+      position: absolute;
+      right: 0;
+      top: 0;
+      background-color: #bbbbbb;
     }
   }
 }
