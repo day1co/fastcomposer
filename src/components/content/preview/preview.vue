@@ -52,7 +52,14 @@
       onDrop(dropResult) {
         this.layers = applyDrag(this.layers, dropResult);
       },
+      selectedLayer(layer) {
+        console.log(layer)
+        // EventBus.$emit('selectedLayer', layer);
+      }
     },
+    created() {
+      console.log('999');
+    }
   };
 </script>
 
@@ -108,6 +115,99 @@
 
       .fc-composer--aside & {
         right: $sidebar-size + 2.8rem;
+      }
+    }
+  }
+  .fc-block {
+    position: relative;
+
+    &__item {
+    }
+
+    &__edit {
+      /*display: none;*/
+      position: relative;
+      margin: 0 1.8rem 1.2rem;
+    }
+
+    &__form {
+      padding: 1.2rem 1.2rem;
+      background-color: $dimmed;
+
+      &__fieldset {
+        padding: 1.8rem 1.8rem;
+        border-radius: 0.5rem;
+        background-color: $white;
+
+        & + & {
+          margin-top: 1rem;
+        }
+      }
+
+      &__label {
+        display: block;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        border-bottom: 0.1rem solid $grey-l5;
+      }
+
+      &__name {
+        display: inline-block;
+        font-size: 1.4rem;
+        text-transform: uppercase;
+        margin-bottom: -0.1rem;
+        border-bottom: 0.1rem solid $secondary;
+      }
+
+      &__input {
+        box-sizing: border-box;
+        display: block;
+        border: 0 none;
+        padding-left: 0.8rem;
+        padding-right: 0.8rem;
+        width: percentage(1);
+        height: 4.2rem;
+        font-size: 1.6rem;
+        background-color: $blue-l2;
+        border-radius: 0.5rem;
+        color: $white;
+        outline: 0 none;
+        @include transition(null, 0.2s);
+
+        &:focus {
+          background-color: $accent;
+          color: $white;
+        }
+      }
+    }
+
+    &__utils {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 10;
+      display: flex;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+      background-color: $dimmed;
+      transform: translateY(-100%);
+
+      &__btn {
+        display: flex;
+        flex: 1;
+        padding: 0.4rem 0.2rem;
+
+        &:hover {
+          .material-icons {
+            color: $primary;
+          }
+        }
+      }
+
+      .material-icons {
+        color: $placehold;
       }
     }
   }

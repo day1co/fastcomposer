@@ -29,7 +29,7 @@
     },
     methods: {
       toggleMenu() {
-        EventBus.$emit('toggleMenu');
+        EventBus.$emit('toggleAsideMenu');
       }
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="fc-list-item" >
-    <button :class="{ active }" @click="$emit('onClick')">
+    <button :class="{ active }">
       <img :src="icon" alt=""/>
       <p>{{ title }}</p>
       <p>

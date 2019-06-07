@@ -1,47 +1,51 @@
 <template>
-  <form class="fc-block-form" @submit="$emit('apply', block)">
-    <fieldset v-for="param in layer.layout.params" :key="param.name">
-      <label>
-        {{ param.name }}
-        <small>({{ param.type }})</small>
+  <form class="fc-block__form" @submit="$emit('apply', layer)">
+    <fieldset
+      v-for="param in layer.layout.params"
+      :key="param.name"
+      class="fc-block__form__fieldset"
+    >
+      <label class="fc-block__form__label" :for="layer.id + '--' + param.type">
+        <strong class="fc-block__form__name">{{ param.name }}</strong>
+        ({{ param.type }})
       </label>
-      <template v-if="param.type === 'text'">
-        <input type="text" :name="param.name" :placeholder="param.description" v-model="layer.values[param.name]" />
-      </template>
-      <template v-if="param.type === 'textarea'">
-        <textarea
+
+      <template v-if="param.type === 'image'">
+        <input
+          type="url"
+          :id="layer.id + '--' + param.type"
           :name="param.name"
           :placeholder="param.description"
           v-model="layer.values[param.name]"
-          @keyup="resize">
-        </textarea>
+        />
+<!--        <preview-edit-->
+<!--          :name="param.name"-->
+<!--          accept="image/*"-->
+<!--          @upload="upload"-->
+<!--        ></preview-edit>-->
       </template>
-      <template v-if="param.type === 'url'">
-        <input type="url" :name="param.name" :placeholder="param.description" v-model="layer.values[param.name]" />
-      </template>
-      <template v-if="param.type === 'number'">
-        <input type="number" :name="param.name" :placeholder="param.description" v-model="layer.values[param.name]" />
-      </template>
-      <template v-if="param.type === 'image'">
-        <input type="url" :name="param.name" :placeholder="param.description" v-model="layer.values[param.name]" />
-        <file-upload :name="param.name" accept="image/*" @upload="upload"/>
+
+      <template v-else>
+        <input
+          class="fc-block__form__input"
+          :id="layer.id + '--' + param.type"
+          :type="param.type"
+          :name="param.name"
+          :placeholder="param.description"
+          v-model="layer.values[param.name]"
+        />
       </template>
     </fieldset>
-    <!--
-    <button type="reset" @click="$emit('reset', block)">reset</button>
-    <button type="submit">apply</button>
-    -->
   </form>
 </template>
 
 <script>
-  import FileUpload from './file-upload.vue';
-
+  // import FileUpload from './file-upload.vue';
 
   export default {
     name: 'editor',
     components: {
-      FileUpload,
+      // FileUpload,
     },
     props: {
       layer: {
@@ -63,34 +67,6 @@
   };
 </script>
 
-<style lang="scss" scoped>
-  .fc-block-form {
-    /*flex: 1 1 0;*/
-    width: 100%;
-
-    fieldset {
-      border: none;
-      & + fieldset {
-        margin-top: 0.5rem;
-      }
-      label {
-        display: block;
-      }
-      input {
-        display: block;
-        width: 100%;
-        height: 2em;
-      }
-      textarea {
-        display: block;
-        width: 100%;
-        min-height: 5em;
-        overflow: hidden;
-      }
-      label + input,
-      label + textarea {
-        margin-top: 0.25em;
-      }
-    }
-  }
+<style lang="scss">
+  @import '../assets/scss/utils/utilities.scss';
 </style>

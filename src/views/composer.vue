@@ -1,4 +1,3 @@
-
 <template>
   <div class="fc-composer"
    :class="[
@@ -12,27 +11,14 @@
       :layers="layers"
     />
 
-    <!--    <div class="side-area" v-if="isLayerKit">-->
-<!--      <Layout :layouts="newLayoutKits" :width="`18rem`"-->
-<!--              @select="onSelectLayout"/>-->
-<!--    </div>-->
-<!--    <div class="preview-area">-->
-<!--      <preview-->
-<!--        :layers="layers"-->
-<!--        :selectedLayer="selectedLayer"-->
-<!--        @select="onSelectLayer"-->
-<!--        @toggleLayerKit="onToggleLayerKit"-->
-<!--      />-->
-<!--    </div>-->
-<!--    <div class="editor-draggable-area" v-if="isActiveEditor" v-draggable>-->
-<!--      <div style="position:relative;">-->
-<!--        <div class="btn-group" style="position: absolute; right: 0;">-->
-<!--          <button type="button" class="btn" @click="unSelectedLayer"><i class="far fa-window-close"></i></button>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <editor :layer="selectedLayer"/>-->
-<!--    </div>-->
-<!--    <button class="save-btn" @click="save"><i class="fas fa-save"></i></button>-->
+    <div class="fc-block__edit" v-if="getCurrentLayer" v-draggable style="position: absolute;top:50%;left: 50%;">
+      <div class="draggablePopupTools">
+        <button @click="closePopup()">
+          <i class="material-icons">close</i>
+        </button>
+      </div>
+      <editor :layer="getCurrentLayer" />
+    </div>
   </div>
 </template>
 
@@ -43,15 +29,31 @@
   import marked from 'marked';
   import ComposerHeader from '../components/header.vue';
   import ComposerContent from '../components/content/content.vue';
+  import Editor from '../components/editor';
+  import { Draggable } from 'draggable-vue-directive';
 
   export default {
     name: 'composer',
+    directives: {
+      Draggable
+    },
     components: {
       ComposerHeader,
       ComposerContent,
+      Editor,
     },
     mounted() {
-      EventBus.$on('selected', (layoutKit) => {
+      const getSelectedIndex = layer => this.layers.indexOf(layer);
+
+      // function0
+      EventBus.$on('selectedLayer', (layer) => {
+        this.currentLayerIndex = getSelectedIndex(layer);
+        this.currentLayer = this.layers[this.currentLayerIndex];
+        // console.log(this.getCurrentLayer());
+      });
+
+      // function1
+      EventBus.$on('addLayer', (layoutKit) => {
         const layer = {
           id: uniqueId(),
           layout: layoutKit,
@@ -59,17 +61,21 @@
         };
 
         this.layers.push(layer);
+        this.currentLayerIndex = getSelectedIndex(layer);
       });
 
-      EventBus.$on('toggleMenu', () => {
+      // function 2
+      EventBus.$on('toggleAsideMenu', () => {
         this.isVisible = !this.isVisible;
       });
     },
     computed: {
+      getCurrentLayer() {
+        return this.layers[this.currentLayerIndex];
+      },
       layerHtml() {
         const html = this.layers
-          .map(
-            layer => `
+          .map(layer => `
 <section class="fc-block fc-layout fc-layout-${layer.layout.id}">
 ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
 </section>`,
@@ -82,16 +88,16 @@ ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
     data() {
       return {
         layoutKits: [],
-        layoutMap: {},
         layers: [],
-        editorLayout: {},
-        editorLayoutIndex: -1,
-
+        currentLayerIndex: -1,
         viewport: '',
         isVisible: true, // 작업 편의를 위해 임시로
       };
     },
     methods: {
+      closePopup() {
+        this.currentLayerIndex = -1;
+      },
       removeLayer(layer, layerIndex) {
         if (layerIndex !== -1) {
           this.layers.splice(layerIndex, 1);
@@ -99,13 +105,6 @@ ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
       },
       setLayoutKits(layoutKits) {
         this.layoutKits = layoutKits;
-      },
-      nextLayerId() {
-        const seq = (this._blockIdSeq = this._blockIdSeq ? ++this._blockIdSeq : 1);
-        const nonce = Math.random()
-          .toString(36)
-          .substr(2, 9);
-        return `fc-block-${seq}-${nonce}`;
       },
       setLayerBlockData(layerBlockData) {
         /**
@@ -117,10 +116,10 @@ ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
         }, {});
 
         /**
-         * nextLayerId -> 밖으로 빼서처리해도 될거같은데...
+         * uniqueId -> 밖으로 빼서처리해도 될거같은데...
          * @type {any}
          */
-        this.layers = Object.assign([], layerBlockData.map(layer => Object.assign({id: this.nextLayerId()}, layer, {layout: this.layoutMap[layer.layout]})));
+        this.layers = Object.assign([], layerBlockData.map(layer => Object.assign({id: uniqueId()}, layer, {layout: this.layoutMap[layer.layout]})));
       },
       save() {
         const layerHtml = this.layerHtml;
@@ -213,6 +212,14 @@ ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
       top: calc(50% - 57px);
       border: 1px solid #bbb;
       background-color: #ffffff;
+    }
+
+    .fc-block__edit {
+      border: 0.8rem solid ;
+      padding: 1.2rem 1.2rem;
+      .draggablePopupTools {
+        text-align: right;
+      }
     }
   }
 

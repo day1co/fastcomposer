@@ -12,13 +12,9 @@
 
 <script>
   import Preview from '../../components/content/preview/preview';
-  import { Draggable } from 'draggable-vue-directive';
   import ComposerAside from './aside/aside';
   export default {
     name: 'composer-content',
-    directives: {
-      Draggable
-    },
     components: {
       ComposerAside,
       Preview,
