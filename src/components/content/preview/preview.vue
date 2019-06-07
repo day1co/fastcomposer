@@ -1,14 +1,16 @@
 <template>
-  <main>
-    <Container @drop="onDrop" drag-handle-selector=".row-drag-handle" :animation-duration="200">
-      <Draggable v-for="(layer, layerIndex) in layers" :key="layerIndex">
-        <layer-preview
-          :key="'layer-' + layerIndex"
-          :layer="layer"
-        />
-      </Draggable>
-    </Container>
-  </main>
+  <div>
+    <main>
+      <Container @drop="onDrop" drag-handle-selector=".row-drag-handle" :animation-duration="200">
+        <Draggable v-for="(layer, layerIndex) in layers" :key="layerIndex">
+          <layer-preview
+            :key="'layer-' + layerIndex"
+            :layer="layer"
+          />
+        </Draggable>
+      </Container>
+    </main>
+  </div>
 </template>
 
 <script>
@@ -52,14 +54,7 @@
       onDrop(dropResult) {
         this.layers = applyDrag(this.layers, dropResult);
       },
-      selectedLayer(layer) {
-        console.log(layer)
-        // EventBus.$emit('selectedLayer', layer);
-      }
     },
-    created() {
-      console.log('999');
-    }
   };
 </script>
 
@@ -182,33 +177,6 @@
     }
 
     &__utils {
-      position: absolute;
-      top: 0;
-      right: 0;
-      z-index: 10;
-      display: flex;
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
-      border-top-left-radius: 0.5rem;
-      border-top-right-radius: 0.5rem;
-      background-color: $dimmed;
-      transform: translateY(-100%);
-
-      &__btn {
-        display: flex;
-        flex: 1;
-        padding: 0.4rem 0.2rem;
-
-        &:hover {
-          .material-icons {
-            color: $primary;
-          }
-        }
-      }
-
-      .material-icons {
-        color: $placehold;
-      }
     }
   }
 </style>
