@@ -7,7 +7,7 @@
     </div>
     <div
       :id="layer.id"
-      @click="$emit('selectPreview')"
+      @click="selectedLayer(layer)"
       class="fc-layer-preview fc-block fc-layout"
       :class="['fc-layout-' + layer.layout.id, { active: active }, { hidden: this.layer.hidden }]"
       v-html="html"
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import EventBus from './../../../event-bus/event-bus';
 import marked from 'marked';
 
 export default {
@@ -42,14 +43,12 @@ export default {
       return this.layer.layout.templateFunc({ $markdown: marked, ...this.layer.values });
     },
   },
-  watch: {
-    active(value) {
-      value && this.$el.scrollIntoViewIfNeeded();
-    },
-  },
   methods: {
     removeLayer() {
       this.$emit('removeLayer', this.layer, this.index);
+    },
+    selectedLayer(layer) {
+      EventBus.$emit('selectedLayer', layer);
     }
   }
 };

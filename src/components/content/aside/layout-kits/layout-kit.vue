@@ -24,7 +24,10 @@
     },
     methods: {
       selected() {
-        EventBus.$emit('selected', this.layoutKit);
+        /**
+         * composer에서 layers에 push가 일어나며, 추가된 layer가 선택된다.
+         */
+        EventBus.$emit('addLayer', this.layoutKit);
       }
     }
   }
