@@ -71,6 +71,14 @@
         this.isVisible = !this.isVisible;
       });
 
+      // function 3
+      EventBus.$on('removeLayer', (layer, layerIndex) => {
+        if (layerIndex !== -1) {
+          this.layers.splice(layerIndex, 1);
+        }
+      });
+
+      // function 4
       EventBus.$on('save', (html) => {
         console.log(html);
       });
@@ -106,11 +114,6 @@ ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
       },
       closePopup() {
         this.currentLayerIndex = -1;
-      },
-      removeLayer(layer, layerIndex) {
-        if (layerIndex !== -1) {
-          this.layers.splice(layerIndex, 1);
-        }
       },
       setLayoutKits(layoutKits) {
         this.layoutKits = layoutKits;
