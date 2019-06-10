@@ -1,0 +1,13 @@
+@import '../common';
+
+.fc-layout-002 {
+  @extend %fc-layout;
+
+  p {
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 42px;
+    text-align: center;
+    color: #ffffff;
+  }
+}

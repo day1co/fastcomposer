@@ -1,0 +1,28 @@
+@import '../common';
+
+.fc-layout-008 {
+  @extend %fc-layout;
+
+  background-color: $bg-alt;
+
+  .vbox:last-child {
+    margin-top: 20px;
+  }
+
+  h6 + p {
+    margin-top: 30px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  img + p {
+    font-size: 14px;
+    line-height: 22px;
+    color: #78787d;
+  }
+
+  img {
+    width: 230px;
+    height: 152px;
+  }
+}

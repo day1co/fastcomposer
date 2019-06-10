@@ -1,0 +1,61 @@
+@import '../common';
+
+.fc-layout-012 {
+  @extend %fc-layout;
+
+  .card-list {
+    align-items: stretch;
+  }
+
+  .card + .card {
+    margin-left: 22px;
+  }
+
+  .card {
+    padding: 30px 20px;
+    width: 312px; /* ~33.33% 980 = 312 + 22 + 312 + 22 + 312 */
+    box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.1);
+    border: solid 1px #e6e8eb;
+    background-color: #ffffff;
+  }
+
+  .card img {
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+  }
+
+  .card img + hr {
+    margin-top: 30px;
+  }
+
+  .card hr {
+    margin: 0 auto;
+    width: 60px;
+    height: 1px;
+    background-color: #000000;
+    border: none;
+  }
+
+  .card hr + h5 {
+    margin-top: 30px;
+  }
+
+  .card h5 {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 24px;
+    min-height: 48px;
+  }
+
+  .card h5 + p {
+    margin-top: 12px;
+  }
+
+  .card p {
+    flex: 1;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: -0.5px;
+  }
+}

@@ -1,0 +1,18 @@
+@import '../common';
+
+.fc-layout-011 {
+  @extend %fc-layout;
+
+  background-color: $bg-alt;
+
+  img,
+  iframe {
+    width: 980px;
+    height: 552px;
+  }
+
+  .half img {
+    width: 480px;
+    height: 270px;
+  }
+}

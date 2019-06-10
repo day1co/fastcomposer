@@ -1,0 +1,69 @@
+{
+  "id": "012",
+  "description": "3단 [이미지/제목/본문]x3",
+  "icon": "icon.svg",
+  "params": [
+    {
+      "name": "sectionTitle",
+      "type": "text",
+      "description": "section title text"
+    },
+    {
+      "name": "image1",
+      "type": "image",
+      "description": "image1"
+    },
+    {
+      "name": "title1",
+      "type": "textarea",
+      "description": "title1 text"
+    },
+    {
+      "name": "content1",
+      "type": "textarea",
+      "description": "content1 text"
+    },
+    {
+      "name": "image2",
+      "type": "image",
+      "description": "image2"
+    },
+    {
+      "name": "title2",
+      "type": "textarea",
+      "description": "title2 text"
+    },
+    {
+      "name": "content2",
+      "type": "textarea",
+      "description": "content2 text"
+    },
+    {
+      "name": "image3",
+      "type": "image",
+      "description": "image3"
+    },
+    {
+      "name": "title3",
+      "type": "textarea",
+      "description": "title3 text"
+    },
+    {
+      "name": "content3",
+      "type": "textarea",
+      "description": "content3 text"
+    }
+  ],
+  "values": {
+    "sectionTitle": "섹션 제목",
+    "image1": "https://via.placeholder.com/100x96.png/00c?text=image1",
+    "title1": "효과적인 화면 구성, 연출 팁, 컴포지팅(합성) 방법!",
+    "content1": "모션그래픽은 많은 요소들이 얽혀있습니다. 진입 장벽이 높지만, 방법만 안다면 보다 효과적으로 합성하여 더 멋진 장면을 연출할 수 있습니다.",
+    "image2": "https://via.placeholder.com/100x96.png/0c0?text=image2",
+    "title2": "눈이 즐거워지는\n트랜지션(장면 전환) 노하우!",
+    "content2": "이야기의 흐름을 자연스럽게 이어주는 것은 기본,\n다양하고 화려한 트랜지션(장면 전환)으로\n시청자들의 시선을 압도하세요!",
+    "image3": "https://via.placeholder.com/100x96.png/c00?text=image3",
+    "title3": "부드럽고 쫀득한 캐릭터 애니메이션!",
+    "content3": "눈을 떼기 힘들정도로 정도로 부드럽고 쫀득한\n캐릭터 애니메이션을 다양하게 표현해보세요.\n영상의 퀄리티가 비교할 수 없을만큼 올라갑니다."
+  }
+}

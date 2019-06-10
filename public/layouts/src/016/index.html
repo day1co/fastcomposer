@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lodash/lodash.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/marked/marked.min.js"></script>
+</head>
+<body>
+<header>
+  <h1>preview - layout - 016</h1>
+  <p>커리큘럼 : 3단(표) [클래스/날짜 + 제목 + 본문/더보기]</p>
+</header>
+<main>
+  <section>
+    <h3>preview</h3>
+    <div class="fc-block fc-layout fc-layout-016" style="outline: 2px dashed fuchsia">
+      <div class="container">
+  
+    <div class="vbox">
+      <h6>커리큘럼</h6>
+    </div>
+  
+  <table>
+    <tbody>
+    
+    <tr>
+      <td>
+        <h5>Class 1.</h5>
+        <p>2018.10.05 (목)</p>
+      </td>
+      <td>
+        <h3>UX Design이란?</h3>
+      </td>
+      <td class="collapse-container">
+        
+          <ul>
+<li>강사 소개</li>
+<li>커리큘럼 소개</li>
+<li>UX개념소개</li>
+</ul>
+
+        
+        
+          <div class="more">
+            <ul>
+<li>더더더</li>
+<li>보보보</li>
+<li>기기기</li>
+</ul>
+
+          </div>
+        
+        <label class="collapse" data-collapse-target=".more"><input type="checkbox"></label>
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>
+        <h5>Class 2.</h5>
+        <p>2018.10.12 (목)</p>
+      </td>
+      <td>
+        <h3>모바일 앱 디자인을 위한 실무 Process-1</h3>
+      </td>
+      <td class="collapse-container">
+        
+          <ul>
+<li>강사 소개</li>
+<li>커리큘럼 소개</li>
+<li>UX개념소개</li>
+</ul>
+
+        
+        
+          <div class="more">
+            <ul>
+<li>더더더</li>
+<li>보보보</li>
+<li>기기기</li>
+</ul>
+
+          </div>
+        
+        <label class="collapse" data-collapse-target=".more"><input type="checkbox"></label>
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>
+        <h5>Class 3.</h5>
+        <p>2018.10.12 (목)</p>
+      </td>
+      <td>
+        <h3>모바일 앱 디자인을 위한 실무 Process-2</h3>
+      </td>
+      <td class="collapse-container">
+        
+          <ul>
+<li>조편성</li>
+<li>실무에 필요한 UX/UI용어</li>
+<li>모바일 UI 역사, 트렌드</li>
+</ul>
+
+        
+        
+          <div class="more">
+            <ul>
+<li>애자일과 워터폴 프로세스</li>
+<li>LEAN UX, MVP</li>
+<li>UX 목표 수립(BIZ 목표 – 시장환경/조건 – UX 챌린지)</li>
+<li>정량적, 정성적 분석 방법</li>
+<li>사용자 인터뷰(IDI – FGI)</li>
+<li>CONTECTUAL INQUIRY</li>
+<li>카드소팅</li>
+<li>다이어리 스터디</li>
+<li>인터뷰 계획 및 이슈도출</li>
+</ul>
+
+          </div>
+        
+        <label class="collapse" data-collapse-target=".more"><input type="checkbox"></label>
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>
+        <h5>Class 4.</h5>
+        <p>2018.10.19 (목)</p>
+      </td>
+      <td>
+        <h3>Journey Map을 활용한 어플리케이션 분석 (실습1)</h3>
+      </td>
+      <td class="collapse-container">
+        
+          <ul>
+<li>강사 소개</li>
+<li>커리큘럼 소개</li>
+<li>UX개념소개</li>
+</ul>
+
+        
+        
+          <div class="more">
+            <ul>
+<li>더더더</li>
+<li>보보보</li>
+<li>기기기</li>
+</ul>
+
+          </div>
+        
+        <label class="collapse" data-collapse-target=".more"><input type="checkbox"></label>
+      </td>
+    </tr>
+    
+    
+    
+    
+    
+    
+    </tbody>
+  </table>
+</div>
+
+    </div>
+  </section>
+  <section>
+    <h3>config</h3>
+    <pre><code>{
+  &quot;id&quot;: &quot;016&quot;,
+  &quot;description&quot;: &quot;커리큘럼 : 3단(표) [클래스/날짜 + 제목 + 본문/더보기]&quot;,
+  &quot;icon&quot;: &quot;icon.svg&quot;,
+  &quot;params&quot;: [
+    {
+      &quot;name&quot;: &quot;sectionTitle&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;section title text&quot;
+    },
+    {
+      &quot;name&quot;: &quot;class1&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;class1&quot;
+    },
+    {
+      &quot;name&quot;: &quot;date1&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;date1&quot;
+    },
+    {
+      &quot;name&quot;: &quot;title1&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;title1&quot;
+    },
+    {
+      &quot;name&quot;: &quot;content1&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;content1&quot;
+    },
+    {
+      &quot;name&quot;: &quot;more1&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;more1&quot;
+    },
+    {
+      &quot;name&quot;: &quot;class2&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;class2&quot;
+    },
+    {
+      &quot;name&quot;: &quot;date2&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;date2&quot;
+    },
+    {
+      &quot;name&quot;: &quot;title2&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;title2&quot;
+    },
+    {
+      &quot;name&quot;: &quot;content2&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;content2&quot;
+    },
+    {
+      &quot;name&quot;: &quot;class3&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;class3&quot;
+    },
+    {
+      &quot;name&quot;: &quot;date3&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;date3&quot;
+    },
+    {
+      &quot;name&quot;: &quot;title3&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;title3&quot;
+    },
+    {
+      &quot;name&quot;: &quot;content3&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;content3&quot;
+    },
+    {
+      &quot;name&quot;: &quot;class4&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;class4&quot;
+    },
+    {
+      &quot;name&quot;: &quot;date4&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;date4&quot;
+    },
+    {
+      &quot;name&quot;: &quot;title4&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;title4&quot;
+    },
+    {
+      &quot;name&quot;: &quot;content4&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;content4&quot;
+    },
+    {
+      &quot;name&quot;: &quot;class5&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;class5&quot;
+    },
+    {
+      &quot;name&quot;: &quot;date5&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;date5&quot;
+    },
+    {
+      &quot;name&quot;: &quot;title5&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;title5&quot;
+    },
+    {
+      &quot;name&quot;: &quot;content5&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;content5&quot;
+    },
+    {
+      &quot;name&quot;: &quot;class6&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;class6&quot;
+    },
+    {
+      &quot;name&quot;: &quot;date6&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;date6&quot;
+    },
+    {
+      &quot;name&quot;: &quot;title6&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;title6&quot;
+    },
+    {
+      &quot;name&quot;: &quot;content6&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;content6&quot;
+    },
+    {
+      &quot;name&quot;: &quot;class7&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;class7&quot;
+    },
+    {
+      &quot;name&quot;: &quot;date7&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;date7&quot;
+    },
+    {
+      &quot;name&quot;: &quot;title7&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;title7&quot;
+    },
+    {
+      &quot;name&quot;: &quot;content7&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;content7&quot;
+    },
+    {
+      &quot;name&quot;: &quot;class8&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;class8&quot;
+    },
+    {
+      &quot;name&quot;: &quot;date8&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;date8&quot;
+    },
+    {
+      &quot;name&quot;: &quot;title8&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;title8&quot;
+    },
+    {
+      &quot;name&quot;: &quot;content8&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;content8&quot;
+    },
+    {
+      &quot;name&quot;: &quot;class9&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;class9&quot;
+    },
+    {
+      &quot;name&quot;: &quot;date9&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;date9&quot;
+    },
+    {
+      &quot;name&quot;: &quot;title9&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;title9&quot;
+    },
+    {
+      &quot;name&quot;: &quot;content9&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;content9&quot;
+    }
+  ],
+  &quot;values&quot;: {
+    &quot;sectionTitle&quot;: &quot;커리큘럼&quot;,
+    &quot;class1&quot;: &quot;Class 1.&quot;,
+    &quot;date1&quot;: &quot;2018.10.05 (목)&quot;,
+    &quot;title1&quot;: &quot;UX Design이란?&quot;,
+    &quot;content1&quot;: &quot;- 강사 소개\n- 커리큘럼 소개\n- UX개념소개&quot;,
+    &quot;more1&quot;: &quot;- 더더더\n- 보보보\n- 기기기&quot;,
+    &quot;class2&quot;: &quot;Class 2.&quot;,
+    &quot;date2&quot;: &quot;2018.10.12 (목)&quot;,
+    &quot;title2&quot;: &quot;모바일 앱 디자인을 위한 실무 Process-1&quot;,
+    &quot;content2&quot;: &quot;- 강사 소개\n- 커리큘럼 소개\n- UX개념소개&quot;,
+    &quot;more2&quot;: &quot;- 더더더\n- 보보보\n- 기기기&quot;,
+    &quot;class3&quot;: &quot;Class 3.&quot;,
+    &quot;date3&quot;: &quot;2018.10.12 (목)&quot;,
+    &quot;title3&quot;: &quot;모바일 앱 디자인을 위한 실무 Process-2&quot;,
+    &quot;content3&quot;: &quot;- 조편성\n- 실무에 필요한 UX/UI용어\n- 모바일 UI 역사, 트렌드&quot;,
+    &quot;more3&quot;: &quot;- 애자일과 워터폴 프로세스\n- LEAN UX, MVP\n- UX 목표 수립(BIZ 목표 – 시장환경/조건 – UX 챌린지)\n- 정량적, 정성적 분석 방법\n- 사용자 인터뷰(IDI – FGI)\n- CONTECTUAL INQUIRY\n- 카드소팅\n- 다이어리 스터디\n- 인터뷰 계획 및 이슈도출&quot;,
+    &quot;class4&quot;: &quot;Class 4.&quot;,
+    &quot;date4&quot;: &quot;2018.10.19 (목)&quot;,
+    &quot;title4&quot;: &quot;Journey Map을 활용한 어플리케이션 분석 (실습1)&quot;,
+    &quot;content4&quot;: &quot;- 강사 소개\n- 커리큘럼 소개\n- UX개념소개&quot;,
+    &quot;more4&quot;: &quot;- 더더더\n- 보보보\n- 기기기&quot;,
+    &quot;class5&quot;: &quot;&quot;,
+    &quot;date5&quot;: &quot;&quot;,
+    &quot;title5&quot;: &quot;&quot;,
+    &quot;content5&quot;: &quot;&quot;,
+    &quot;more5&quot;: &quot;&quot;,
+    &quot;class6&quot;: &quot;&quot;,
+    &quot;date6&quot;: &quot;&quot;,
+    &quot;title6&quot;: &quot;&quot;,
+    &quot;content6&quot;: &quot;&quot;,
+    &quot;more6&quot;: &quot;&quot;,
+    &quot;class7&quot;: &quot;&quot;,
+    &quot;date7&quot;: &quot;&quot;,
+    &quot;title7&quot;: &quot;&quot;,
+    &quot;content7&quot;: &quot;&quot;,
+    &quot;more7&quot;: &quot;&quot;,
+    &quot;class8&quot;: &quot;&quot;,
+    &quot;date8&quot;: &quot;&quot;,
+    &quot;title8&quot;: &quot;&quot;,
+    &quot;content8&quot;: &quot;&quot;,
+    &quot;more8&quot;: &quot;&quot;,
+    &quot;class9&quot;: &quot;&quot;,
+    &quot;date9&quot;: &quot;&quot;,
+    &quot;title9&quot;: &quot;&quot;,
+    &quot;content9&quot;: &quot;&quot;,
+    &quot;more9&quot;: &quot;&quot;
+  }
+}</code></pre>
+  </section>
+  <section>
+    <h3>template</h3>
+    <pre><code>&lt;div class=&quot;container&quot;&gt;
+  &lt;% if (sectionTitle) { %&gt;
+    &lt;div class=&quot;vbox&quot;&gt;
+      &lt;h6&gt;&lt;%= sectionTitle %&gt;&lt;/h6&gt;
+    &lt;/div&gt;
+  &lt;% } %&gt;
+  &lt;table&gt;
+    &lt;tbody&gt;
+    &lt;% if (class1) { %&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;h5&gt;&lt;%= class1 %&gt;&lt;/h5&gt;
+        &lt;p&gt;&lt;%= date1 %&gt;&lt;/p&gt;
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;h3&gt;&lt;%= title1 %&gt;&lt;/h3&gt;
+      &lt;/td&gt;
+      &lt;td class=&quot;collapse-container&quot;&gt;
+        &lt;% if (content1) { %&gt;
+          &lt;%= $markdown(content1) %&gt;
+        &lt;% } %&gt;
+        &lt;% if (more1) { %&gt;
+          &lt;div class=&quot;more&quot;&gt;
+            &lt;%= $markdown(more1) %&gt;
+          &lt;/div&gt;
+        &lt;% } %&gt;
+        &lt;label class=&quot;collapse&quot; data-collapse-target=&quot;.more&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt;&lt;/label&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;% } %&gt;
+    &lt;% if (class2) { %&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;h5&gt;&lt;%= class2 %&gt;&lt;/h5&gt;
+        &lt;p&gt;&lt;%= date2 %&gt;&lt;/p&gt;
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;h3&gt;&lt;%= title2 %&gt;&lt;/h3&gt;
+      &lt;/td&gt;
+      &lt;td class=&quot;collapse-container&quot;&gt;
+        &lt;% if (content2) { %&gt;
+          &lt;%= $markdown(content2) %&gt;
+        &lt;% } %&gt;
+        &lt;% if (more2) { %&gt;
+          &lt;div class=&quot;more&quot;&gt;
+            &lt;%= $markdown(more2) %&gt;
+          &lt;/div&gt;
+        &lt;% } %&gt;
+        &lt;label class=&quot;collapse&quot; data-collapse-target=&quot;.more&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt;&lt;/label&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;% } %&gt;
+    &lt;% if (class3) { %&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;h5&gt;&lt;%= class3 %&gt;&lt;/h5&gt;
+        &lt;p&gt;&lt;%= date3 %&gt;&lt;/p&gt;
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;h3&gt;&lt;%= title3 %&gt;&lt;/h3&gt;
+      &lt;/td&gt;
+      &lt;td class=&quot;collapse-container&quot;&gt;
+        &lt;% if (content3) { %&gt;
+          &lt;%= $markdown(content3) %&gt;
+        &lt;% } %&gt;
+        &lt;% if (more3) { %&gt;
+          &lt;div class=&quot;more&quot;&gt;
+            &lt;%= $markdown(more3) %&gt;
+          &lt;/div&gt;
+        &lt;% } %&gt;
+        &lt;label class=&quot;collapse&quot; data-collapse-target=&quot;.more&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt;&lt;/label&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;% } %&gt;
+    &lt;% if (class4) { %&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;h5&gt;&lt;%= class4 %&gt;&lt;/h5&gt;
+        &lt;p&gt;&lt;%= date4 %&gt;&lt;/p&gt;
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;h3&gt;&lt;%= title4 %&gt;&lt;/h3&gt;
+      &lt;/td&gt;
+      &lt;td class=&quot;collapse-container&quot;&gt;
+        &lt;% if (content4) { %&gt;
+          &lt;%= $markdown(content4) %&gt;
+        &lt;% } %&gt;
+        &lt;% if (more4) { %&gt;
+          &lt;div class=&quot;more&quot;&gt;
+            &lt;%= $markdown(more4) %&gt;
+          &lt;/div&gt;
+        &lt;% } %&gt;
+        &lt;label class=&quot;collapse&quot; data-collapse-target=&quot;.more&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt;&lt;/label&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;% } %&gt;
+    &lt;% if (class5) { %&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;h5&gt;&lt;%= class5 %&gt;&lt;/h5&gt;
+        &lt;p&gt;&lt;%= date5 %&gt;&lt;/p&gt;
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;h3&gt;&lt;%= title5 %&gt;&lt;/h3&gt;
+      &lt;/td&gt;
+      &lt;td class=&quot;collapse-container&quot;&gt;
+        &lt;% if (content5) { %&gt;
+          &lt;%= $markdown(content5) %&gt;
+        &lt;% } %&gt;
+        &lt;% if (more5) { %&gt;
+          &lt;div class=&quot;more&quot;&gt;
+            &lt;%= $markdown(more5) %&gt;
+          &lt;/div&gt;
+        &lt;% } %&gt;
+        &lt;label class=&quot;collapse&quot; data-collapse-target=&quot;.more&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt;&lt;/label&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;% } %&gt;
+    &lt;% if (class6) { %&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;h5&gt;&lt;%= class6 %&gt;&lt;/h5&gt;
+        &lt;p&gt;&lt;%= date6 %&gt;&lt;/p&gt;
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;h3&gt;&lt;%= title6 %&gt;&lt;/h3&gt;
+      &lt;/td&gt;
+      &lt;td class=&quot;collapse-container&quot;&gt;
+        &lt;% if (content6) { %&gt;
+          &lt;%= $markdown(content6) %&gt;
+        &lt;% } %&gt;
+        &lt;% if (more6) { %&gt;
+          &lt;div class=&quot;more&quot;&gt;
+            &lt;%= $markdown(more6) %&gt;
+          &lt;/div&gt;
+        &lt;% } %&gt;
+        &lt;label class=&quot;collapse&quot; data-collapse-target=&quot;.more&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt;&lt;/label&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;% } %&gt;
+    &lt;% if (class7) { %&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;h5&gt;&lt;%= class7 %&gt;&lt;/h5&gt;
+        &lt;p&gt;&lt;%= date7 %&gt;&lt;/p&gt;
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;h3&gt;&lt;%= title7 %&gt;&lt;/h3&gt;
+      &lt;/td&gt;
+      &lt;td class=&quot;collapse-container&quot;&gt;
+        &lt;% if (content7) { %&gt;
+          &lt;%= $markdown(content7) %&gt;
+        &lt;% } %&gt;
+        &lt;% if (more7) { %&gt;
+          &lt;div class=&quot;more&quot;&gt;
+            &lt;%= $markdown(more7) %&gt;
+          &lt;/div&gt;
+        &lt;% } %&gt;
+        &lt;label class=&quot;collapse&quot; data-collapse-target=&quot;.more&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt;&lt;/label&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;% } %&gt;
+    &lt;% if (class8) { %&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;h5&gt;&lt;%= class8 %&gt;&lt;/h5&gt;
+        &lt;p&gt;&lt;%= date8 %&gt;&lt;/p&gt;
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;h3&gt;&lt;%= title8 %&gt;&lt;/h3&gt;
+      &lt;/td&gt;
+      &lt;td class=&quot;collapse-container&quot;&gt;
+        &lt;% if (content8) { %&gt;
+          &lt;%= $markdown(content8) %&gt;
+        &lt;% } %&gt;
+        &lt;% if (more8) { %&gt;
+          &lt;div class=&quot;more&quot;&gt;
+            &lt;%= $markdown(more8) %&gt;
+          &lt;/div&gt;
+        &lt;% } %&gt;
+        &lt;label class=&quot;collapse&quot; data-collapse-target=&quot;.more&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt;&lt;/label&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;% } %&gt;
+    &lt;% if (class9) { %&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;h5&gt;&lt;%= class9 %&gt;&lt;/h5&gt;
+        &lt;p&gt;&lt;%= date9 %&gt;&lt;/p&gt;
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;h3&gt;&lt;%= title9 %&gt;&lt;/h3&gt;
+      &lt;/td&gt;
+      &lt;td class=&quot;collapse-container&quot;&gt;
+        &lt;% if (content9) { %&gt;
+          &lt;%= $markdown(content9) %&gt;
+        &lt;% } %&gt;
+        &lt;% if (more9) { %&gt;
+          &lt;div class=&quot;more&quot;&gt;
+            &lt;%= $markdown(more9) %&gt;
+          &lt;/div&gt;
+        &lt;% } %&gt;
+        &lt;label class=&quot;collapse&quot; data-collapse-target=&quot;.more&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt;&lt;/label&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;% } %&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+</code></pre>
+  </section>
+  <section>
+    <h3>style</h3>
+    <pre><code>@charset &quot;UTF-8&quot;;
+/* 100% */
+/* 480px = 50% */
+/* 230px = 25% */
+.fc-layout-016 * {
+  box-sizing: border-box; }
+
+.fc-layout-016 .container {
+  padding: 90px 0;
+  background: no-repeat center;
+  background-size: cover;
+  width: 100%; }
+  @media screen and (max-width: 1024px) {
+    .fc-layout-016 .container {
+      margin: 0; } }
+  @media screen and (min-width: 1024px) {
+    .fc-layout-016 .container {
+      max-width: 980px;
+      margin: 0 auto; } }
+  .fc-layout-016 .container.dark {
+    background-color: #282828; }
+
+.fc-layout-016 .container-fluid {
+  padding: 90px 0;
+  background: no-repeat center;
+  background-size: cover;
+  width: 100%; }
+  @media screen and (max-width: 1024px) {
+    .fc-layout-016 .container-fluid {
+      margin: 0; } }
+  @media screen and (min-width: 1024px) {
+    .fc-layout-016 .container-fluid {
+      max-width: 1920px;
+      margin: 0 auto; } }
+  .fc-layout-016 .container-fluid .container {
+    padding: 0; }
+
+.fc-layout-016 h1,
+.fc-layout-016 h2,
+.fc-layout-016 h3,
+.fc-layout-016 h4,
+.fc-layout-016 h5,
+.fc-layout-016 h6,
+.fc-layout-016 p,
+.fc-layout-016 blockquote,
+.fc-layout-016 ul,
+.fc-layout-016 ol,
+.fc-layout-016 li,
+.fc-layout-016 dl,
+.fc-layout-016 dt,
+.fc-layout-016 dd {
+  margin: 0;
+  padding: 0;
+  word-break: break-all; }
+
+
+.fc-layout-016 h6 {
+  display: inline-block;
+  margin: 0;
+  padding: 3px 14px;
+  line-height: 18px;
+  /* 28(height) - 2x2(border) - 2x3(padding) */
+  font-size: 14px;
+  font-weight: bold;
+  color: #ed234b;
+  border: 2px solid #ed234b; }
+
+.fc-layout-016 h6:after {
+  content: &#39;.&#39;;
+  color: #ed234b; }
+
+.fc-layout-016 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; }
+
+.fc-layout-016 .vbox,
+.fc-layout-016 .hbox {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between; }
+
+.fc-layout-016 .vbox {
+  flex-direction: row; }
+
+
+.fc-layout-016 .hbox {
+  flex-direction: column; }
+
+.fc-layout-016 .hbox.full {
+  flex: 0 1 980px; }
+
+.fc-layout-016 .hbox.quarter {
+  flex: 0 1 230px; }
+
+.fc-layout-016 .hbox.half {
+  flex: 0 1 480px; }
+
+.fc-layout-016 .hbox.expand {
+  flex: 1 1 0; }
+
+.fc-layout-016 .hbox + .hbox {
+  margin-left: 20px; }
+
+.fc-layout-016 .vbox + .vbox {
+  margin-top: 30px; }
+
+.fc-layout-016 .collapse {
+  position: relative;
+  margin: 0;
+  padding: 0; }
+
+.fc-layout-016 .collapse-indicator {
+  /* FIXME: buggy on IE */
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: #ffffff no-repeat; }
+
+.fc-layout-016 .collapse-indicator:focus {
+  outline: none; }
+
+.fc-layout-016 table {
+  margin-top: 30px;
+  width: 100%;
+  box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.1);
+  border: solid 1px #e6e8eb;
+  background-color: #ffffff;
+  border-collapse: collapse; }
+
+.fc-layout-016 tr + tr {
+  border-top: 1px solid #e6e8eb; }
+
+.fc-layout-016 td {
+  vertical-align: top;
+  padding: 30px 20px;
+  width: 190px; }
+
+.fc-layout-016 td + td {
+  padding-left: 30px; }
+
+.fc-layout-016 td:last-child {
+  width: 440px; }
+
+.fc-layout-016 h5:before {
+  display: inline-block;
+  position: relative;
+  left: -20px;
+  width: 4px;
+  height: 12px;
+  content: &#39; &#39;;
+  background-color: #aeaeae; }
+
+.fc-layout-016 h5 {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 22px;
+  color: #aeaeae; }
+
+.fc-layout-016 p {
+  font-size: 12px;
+  line-height: 18px;
+  color: #aeaeae; }
+
+.fc-layout-016 h3 {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 22px; }
+
+.fc-layout-016 td ul {
+  list-style: none; }
+
+.fc-layout-016 td ul li {
+  font-size: 12px;
+  line-height: 18px; }
+
+.fc-layout-016 td ul li:before {
+  content: &#39;- &#39;; }
+
+.fc-layout-016 .more {
+  display: none; }
+
+.fc-layout-016 .collapse {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 18px; }
+
+.fc-layout-016 .collapse input {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  font-family: &#39;Font Awesome 5 Free&#39;;
+  font-weight: bold;
+  font-size: 12px;
+  color: #aeaeae; }
+
+.fc-layout-016 .collapse input::-ms-expand {
+  display: none; }
+
+.fc-layout-016 .collapse input:focus {
+  outline: none; }
+
+.fc-layout-016 .collapse input:after {
+  content: &#39;더 보기 \f078&#39;;
+  /* fas fa-chevron-down */ }
+
+.fc-layout-016 .collapse input:checked:after {
+  content: &#39;접어서 보기 \f077&#39;;
+  /* fas fa-chevron-up */ }
+</code></pre>
+  </section>
+</main>
+<script src="_carousel.js" defer></script>
+<script src="_collapse.js" defer></script>
+</body>
+</html>
