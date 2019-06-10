@@ -5,7 +5,9 @@
     isVisible && 'fc-composer--aside'
   ]"
   >
-    <composer-header/>
+    <composer-header
+      @toggleViewport="onToggleViewport"
+    />
     <composer-content
       :layoutKits="layoutKits"
       :layers="layers"
@@ -68,6 +70,10 @@
       EventBus.$on('toggleAsideMenu', () => {
         this.isVisible = !this.isVisible;
       });
+
+      EventBus.$on('save', (html) => {
+        console.log(html);
+      });
     },
     computed: {
       getCurrentLayer() {
@@ -95,6 +101,9 @@ ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
       };
     },
     methods: {
+      onToggleViewport(viewport) {
+        this.viewport = viewport;
+      },
       closePopup() {
         this.currentLayerIndex = -1;
       },
