@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lodash/lodash.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/marked/marked.min.js"></script>
+</head>
+<body>
+<header>
+  <h1>preview - layout - 018</h1>
+  <p>강사소개 : 2단 [이미지 + [제목/본문/인용(말풍선)]</p>
+</header>
+<main>
+  <section>
+    <h3>preview</h3>
+    <div class="fc-block fc-layout fc-layout-018" style="outline: 2px dashed fuchsia">
+      <div class="container-fluid">
+  <div class="container">
+    
+      <div class="vbox">
+        <h6>강사 소개</h6>
+      </div>
+    
+    <div class="vbox">
+      <div class="hbox quarter">
+        <img src="https://via.placeholder.com/320x320.png/0c0?text=image1">
+      </div>
+      <div class="hbox card">
+        <h5>홍길동 강사님</h5>
+        
+          <div>
+            <ul>
+<li>한양대학교 경영학과 박사과정 재학 중, 데이터 마이닝 전공</li>
+<li>서울대학교 경영학과 석사 졸업, 마케팅 전공</li>
+<li>고려대학교 식량자원학과 학사 졸업</li>
+<li>S화재, H캐피탈, H카드, H은행에서 데이터 분석가로 근무 중 (16년 경력)</li>
+</ul>
+
+          </div>
+        
+        
+          <blockquote>부동산 업계에서 구인난과 구직난이 동시에 있는 이유는 대체투자시장을 다루는 전문 교육기관 및 프로그램이 부족했기 때문이라고 생각됩니다. 지금까지 여러 곳에서 개별 강의 위주의 전문 교육이 산발적으로 있었으나, 이를 통합하여 기초부터 튼튼하게 다지는 제대로 된 프로그램이 없었고, 이에 필요성을 느껴 본 강의를 시작하게 되었습니다.</blockquote>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    </div>
+  </section>
+  <section>
+    <h3>config</h3>
+    <pre><code>{
+  &quot;id&quot;: &quot;018&quot;,
+  &quot;description&quot;: &quot;강사소개 : 2단 [이미지 + [제목/본문/인용(말풍선)]&quot;,
+  &quot;icon&quot;: &quot;icon.svg&quot;,
+  &quot;params&quot;: [
+    {
+      &quot;name&quot;: &quot;sectionTitle&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;section title text&quot;
+    },
+    {
+      &quot;name&quot;: &quot;image1&quot;,
+      &quot;type&quot;: &quot;image&quot;,
+      &quot;description&quot;: &quot;image1 url&quot;
+    },
+    {
+      &quot;name&quot;: &quot;name1&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;name1 text&quot;
+    },
+    {
+      &quot;name&quot;: &quot;about1&quot;,
+      &quot;type&quot;: &quot;textarea&quot;,
+      &quot;description&quot;: &quot;about1 text&quot;
+    },
+    {
+      &quot;name&quot;: &quot;quote1&quot;,
+      &quot;type&quot;: &quot;textarea&quot;,
+      &quot;description&quot;: &quot;quote1 text&quot;
+    }
+  ],
+  &quot;values&quot;: {
+    &quot;sectionTitle&quot;: &quot;강사 소개&quot;,
+    &quot;image1&quot;: &quot;https://via.placeholder.com/320x320.png/0c0?text=image1&quot;,
+    &quot;name1&quot;: &quot;홍길동 강사님&quot;,
+    &quot;about1&quot;: &quot;- 한양대학교 경영학과 박사과정 재학 중, 데이터 마이닝 전공\n- 서울대학교 경영학과 석사 졸업, 마케팅 전공\n- 고려대학교 식량자원학과 학사 졸업\n- S화재, H캐피탈, H카드, H은행에서 데이터 분석가로 근무 중 (16년 경력)&quot;,
+    &quot;quote1&quot;: &quot;부동산 업계에서 구인난과 구직난이 동시에 있는 이유는 대체투자시장을 다루는 전문 교육기관 및 프로그램이 부족했기 때문이라고 생각됩니다. 지금까지 여러 곳에서 개별 강의 위주의 전문 교육이 산발적으로 있었으나, 이를 통합하여 기초부터 튼튼하게 다지는 제대로 된 프로그램이 없었고, 이에 필요성을 느껴 본 강의를 시작하게 되었습니다.&quot;
+  }
+}</code></pre>
+  </section>
+  <section>
+    <h3>template</h3>
+    <pre><code>&lt;div class=&quot;container-fluid&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;% if (sectionTitle) { %&gt;
+      &lt;div class=&quot;vbox&quot;&gt;
+        &lt;h6&gt;&lt;%= sectionTitle %&gt;&lt;/h6&gt;
+      &lt;/div&gt;
+    &lt;% } %&gt;
+    &lt;div class=&quot;vbox&quot;&gt;
+      &lt;div class=&quot;hbox quarter&quot;&gt;
+        &lt;img src=&quot;&lt;%= image1 %&gt;&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;hbox card&quot;&gt;
+        &lt;h5&gt;&lt;%= name1 %&gt;&lt;/h5&gt;
+        &lt;% if (about1) { %&gt;
+          &lt;div&gt;
+            &lt;%= $markdown(about1) %&gt;
+          &lt;/div&gt;
+        &lt;% } %&gt;
+        &lt;% if (quote1) { %&gt;
+          &lt;blockquote&gt;&lt;%= quote1 %&gt;&lt;/blockquote&gt;
+        &lt;% } %&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+  </section>
+  <section>
+    <h3>style</h3>
+    <pre><code>/* 100% */
+/* 480px = 50% */
+/* 230px = 25% */
+.fc-layout-018 * {
+  box-sizing: border-box; }
+
+.fc-layout-018 .container {
+  padding: 90px 0;
+  background: no-repeat center;
+  background-size: cover;
+  width: 100%; }
+  @media screen and (max-width: 1024px) {
+    .fc-layout-018 .container {
+      margin: 0; } }
+  @media screen and (min-width: 1024px) {
+    .fc-layout-018 .container {
+      max-width: 980px;
+      margin: 0 auto; } }
+  .fc-layout-018 .container.dark {
+    background-color: #282828; }
+
+.fc-layout-018 .container-fluid {
+  padding: 90px 0;
+  background: no-repeat center;
+  background-size: cover;
+  width: 100%; }
+  @media screen and (max-width: 1024px) {
+    .fc-layout-018 .container-fluid {
+      margin: 0; } }
+  @media screen and (min-width: 1024px) {
+    .fc-layout-018 .container-fluid {
+      max-width: 1920px;
+      margin: 0 auto; } }
+  .fc-layout-018 .container-fluid .container {
+    padding: 0; }
+
+.fc-layout-018 h1,
+.fc-layout-018 h2,
+.fc-layout-018 h3,
+.fc-layout-018 h4,
+.fc-layout-018 h5,
+.fc-layout-018 h6,
+.fc-layout-018 p,
+.fc-layout-018 blockquote,
+.fc-layout-018 ul,
+.fc-layout-018 ol,
+.fc-layout-018 li,
+.fc-layout-018 dl,
+.fc-layout-018 dt,
+.fc-layout-018 dd {
+  margin: 0;
+  padding: 0;
+  word-break: break-all; }
+
+
+.fc-layout-018 h6 {
+  display: inline-block;
+  margin: 0;
+  padding: 3px 14px;
+  line-height: 18px;
+  /* 28(height) - 2x2(border) - 2x3(padding) */
+  font-size: 14px;
+  font-weight: bold;
+  color: #ed234b;
+  border: 2px solid #ed234b; }
+
+.fc-layout-018 h6:after {
+  content: &#39;.&#39;;
+  color: #ed234b; }
+
+.fc-layout-018 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; }
+
+.fc-layout-018 .vbox,
+.fc-layout-018 .hbox {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between; }
+
+.fc-layout-018 .vbox {
+  flex-direction: row; }
+
+
+.fc-layout-018 .hbox {
+  flex-direction: column; }
+
+.fc-layout-018 .hbox.full {
+  flex: 0 1 980px; }
+
+.fc-layout-018 .hbox.quarter {
+  flex: 0 1 230px; }
+
+.fc-layout-018 .hbox.half {
+  flex: 0 1 480px; }
+
+.fc-layout-018 .hbox.expand {
+  flex: 1 1 0; }
+
+.fc-layout-018 .hbox + .hbox {
+  margin-left: 20px; }
+
+.fc-layout-018 .vbox + .vbox {
+  margin-top: 30px; }
+
+.fc-layout-018 {
+  background-color: #f8f8f8; }
+  .fc-layout-018 img {
+    width: 230px;
+    height: 230px; }
+  .fc-layout-018 .vbox + .vbox {
+    margin-top: 60px; }
+  .fc-layout-018 .card {
+    padding: 30px 20px;
+    box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.1);
+    border: solid 1px #e6e8eb;
+    background-color: #ffffff; }
+  .fc-layout-018 h5 {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 30px; }
+  .fc-layout-018 h5:after {
+    content: &#39;.&#39;;
+    color: #ed234b; }
+  .fc-layout-018 ul {
+    margin-top: 12px;
+    list-style: none;
+    font-size: 16px;
+    line-height: 24px; }
+  .fc-layout-018 li:before {
+    content: &#39;- &#39;; }
+  .fc-layout-018 blockquote {
+    margin-top: 30px;
+    padding: 30px 20px 30px 0;
+    font-size: 14px;
+    line-height: 22px;
+    background-color: #e6e6e6;
+    border-top: 20px solid #ffffff;
+    /* hack: triange on top-left cornder */
+    border-left: 20px solid #e6e6e6; }
+</code></pre>
+  </section>
+</main>
+<script src="_carousel.js" defer></script>
+<script src="_collapse.js" defer></script>
+</body>
+</html>

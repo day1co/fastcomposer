@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lodash/lodash.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/marked/marked.min.js"></script>
+</head>
+<body>
+<header>
+  <h1>preview - layout - 003</h1>
+  <p>1단 [이미지] / 2단 [제목+본문]</p>
+</header>
+<main>
+  <section>
+    <h3>preview</h3>
+    <div class="fc-block fc-layout fc-layout-003" style="outline: 2px dashed fuchsia">
+      <div class="container">
+  
+    <div class="vbox">
+      <h6>강의 개요</h6>
+    </div>
+  
+  <div class="vbox">
+    <img src="https://via.placeholder.com/980x360.png/00c?text=image1">
+  </div>
+  <div class="vbox">
+    <div class="hbox half">
+      <h3>최신 모델에 대한 이해와
+탄탄한 노하우를 얻어가세요</h3>
+    </div>
+    <div class="hbox half">
+      <p>Natural Language Processing (자연어처리)는 사람의 언어를 이해하고 처리할 수 있도록 해 줍니다. 즉, 컴퓨터와 사람 사이의 인터페이스를 연결해 주는 기술로서, 실제 필드에서 필요성이 높은 분야이기도 합니다.
+하지만, 기본적인 Classification이 아닌 실제 서비스(번역, 요약, 챗봇 등)를 상용화하기 위해 필요한 딥러닝 알고리즘, 언어모델, 강화학습 등 심화된 내용에 대해 제대로 배울 수 있는 자료는 턱없이 부족합니다.
+
+그래서 만들게된 본 강의는 NLP의 정점에 있는 최신 모델에 대한 깊이있는 커리큘럼 구성과 실무를 방불케하는 실습으로 구성되어 있습니다. 이 모든 내용은 기계번역, NLP의 분야의 전문가이신 현업 강사님이 진행하시기 때문에 직접 해보지 않으면 알 수 없는 생생한 노하우도 함께 얻어가실 수 있습니다.</p>
+    </div>
+  </div>
+</div>
+
+    </div>
+  </section>
+  <section>
+    <h3>config</h3>
+    <pre><code>{
+  &quot;id&quot;: &quot;003&quot;,
+  &quot;description&quot;: &quot;1단 [이미지] / 2단 [제목+본문]&quot;,
+  &quot;icon&quot;: &quot;icon.svg&quot;,
+  &quot;params&quot;: [
+    {
+      &quot;name&quot;: &quot;sectionTitle&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;section title text&quot;
+    },
+    {
+      &quot;name&quot;: &quot;image1&quot;,
+      &quot;type&quot;: &quot;image&quot;,
+      &quot;description&quot;: &quot;image1 url&quot;
+    },
+    {
+      &quot;name&quot;: &quot;title1&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;title1 text&quot;
+    },
+    {
+      &quot;name&quot;: &quot;content1&quot;,
+      &quot;type&quot;: &quot;textarea&quot;,
+      &quot;description&quot;: &quot;content1 text&quot;
+    }
+  ],
+  &quot;values&quot;: {
+    &quot;sectionTitle&quot;: &quot;강의 개요&quot;,
+    &quot;image1&quot;: &quot;https://via.placeholder.com/980x360.png/00c?text=image1&quot;,
+    &quot;title1&quot;: &quot;최신 모델에 대한 이해와\n탄탄한 노하우를 얻어가세요&quot;,
+    &quot;content1&quot;: &quot;Natural Language Processing (자연어처리)는 사람의 언어를 이해하고 처리할 수 있도록 해 줍니다. 즉, 컴퓨터와 사람 사이의 인터페이스를 연결해 주는 기술로서, 실제 필드에서 필요성이 높은 분야이기도 합니다.\n하지만, 기본적인 Classification이 아닌 실제 서비스(번역, 요약, 챗봇 등)를 상용화하기 위해 필요한 딥러닝 알고리즘, 언어모델, 강화학습 등 심화된 내용에 대해 제대로 배울 수 있는 자료는 턱없이 부족합니다.\n\n그래서 만들게된 본 강의는 NLP의 정점에 있는 최신 모델에 대한 깊이있는 커리큘럼 구성과 실무를 방불케하는 실습으로 구성되어 있습니다. 이 모든 내용은 기계번역, NLP의 분야의 전문가이신 현업 강사님이 진행하시기 때문에 직접 해보지 않으면 알 수 없는 생생한 노하우도 함께 얻어가실 수 있습니다.&quot;
+  }
+}</code></pre>
+  </section>
+  <section>
+    <h3>template</h3>
+    <pre><code>&lt;div class=&quot;container&quot;&gt;
+  &lt;% if (sectionTitle) { %&gt;
+    &lt;div class=&quot;vbox&quot;&gt;
+      &lt;h6&gt;&lt;%= sectionTitle %&gt;&lt;/h6&gt;
+    &lt;/div&gt;
+  &lt;% } %&gt;
+  &lt;div class=&quot;vbox&quot;&gt;
+    &lt;img src=&quot;&lt;%= image1 %&gt;&quot;&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;vbox&quot;&gt;
+    &lt;div class=&quot;hbox half&quot;&gt;
+      &lt;h3&gt;&lt;%= title1 %&gt;&lt;/h3&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;hbox half&quot;&gt;
+      &lt;p&gt;&lt;%= content1 %&gt;&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+  </section>
+  <section>
+    <h3>style</h3>
+    <pre><code>/* 100% */
+/* 480px = 50% */
+/* 230px = 25% */
+.fc-layout-003 * {
+  box-sizing: border-box; }
+
+.fc-layout-003 .container {
+  padding: 90px 0;
+  background: no-repeat center;
+  background-size: cover;
+  width: 100%; }
+  @media screen and (max-width: 1024px) {
+    .fc-layout-003 .container {
+      margin: 0; } }
+  @media screen and (min-width: 1024px) {
+    .fc-layout-003 .container {
+      max-width: 980px;
+      margin: 0 auto; } }
+  .fc-layout-003 .container.dark {
+    background-color: #282828; }
+
+.fc-layout-003 .container-fluid {
+  padding: 90px 0;
+  background: no-repeat center;
+  background-size: cover;
+  width: 100%; }
+  @media screen and (max-width: 1024px) {
+    .fc-layout-003 .container-fluid {
+      margin: 0; } }
+  @media screen and (min-width: 1024px) {
+    .fc-layout-003 .container-fluid {
+      max-width: 1920px;
+      margin: 0 auto; } }
+  .fc-layout-003 .container-fluid .container {
+    padding: 0; }
+
+.fc-layout-003 h1,
+.fc-layout-003 h2,
+.fc-layout-003 h3,
+.fc-layout-003 h4,
+.fc-layout-003 h5,
+.fc-layout-003 h6,
+.fc-layout-003 p,
+.fc-layout-003 blockquote,
+.fc-layout-003 ul,
+.fc-layout-003 ol,
+.fc-layout-003 li,
+.fc-layout-003 dl,
+.fc-layout-003 dt,
+.fc-layout-003 dd {
+  margin: 0;
+  padding: 0;
+  word-break: break-all; }
+
+
+.fc-layout-003 h6 {
+  display: inline-block;
+  margin: 0;
+  padding: 3px 14px;
+  line-height: 18px;
+  /* 28(height) - 2x2(border) - 2x3(padding) */
+  font-size: 14px;
+  font-weight: bold;
+  color: #ed234b;
+  border: 2px solid #ed234b; }
+
+.fc-layout-003 h6:after {
+  content: &#39;.&#39;;
+  color: #ed234b; }
+
+.fc-layout-003 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; }
+
+.fc-layout-003 .vbox,
+.fc-layout-003 .hbox {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between; }
+
+.fc-layout-003 .vbox {
+  flex-direction: row; }
+
+
+.fc-layout-003 .hbox {
+  flex-direction: column; }
+
+.fc-layout-003 .hbox.full {
+  flex: 0 1 980px; }
+
+.fc-layout-003 .hbox.quarter {
+  flex: 0 1 230px; }
+
+.fc-layout-003 .hbox.half {
+  flex: 0 1 480px; }
+
+.fc-layout-003 .hbox.expand {
+  flex: 1 1 0; }
+
+.fc-layout-003 .hbox + .hbox {
+  margin-left: 20px; }
+
+.fc-layout-003 .vbox + .vbox {
+  margin-top: 30px; }
+
+.fc-layout-003 img {
+  width: 980px;
+  height: 360px; }
+
+.fc-layout-003 h3 {
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 48px; }
+</code></pre>
+  </section>
+</main>
+<script src="_carousel.js" defer></script>
+<script src="_collapse.js" defer></script>
+</body>
+</html>

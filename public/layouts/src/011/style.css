@@ -1,0 +1,115 @@
+/* 100% */
+/* 480px = 50% */
+/* 230px = 25% */
+.fc-layout-011 * {
+  box-sizing: border-box; }
+
+.fc-layout-011 .container {
+  padding: 90px 0;
+  background: no-repeat center;
+  background-size: cover;
+  width: 100%; }
+  @media screen and (max-width: 1024px) {
+    .fc-layout-011 .container {
+      margin: 0; } }
+  @media screen and (min-width: 1024px) {
+    .fc-layout-011 .container {
+      max-width: 980px;
+      margin: 0 auto; } }
+  .fc-layout-011 .container.dark {
+    background-color: #282828; }
+
+.fc-layout-011 .container-fluid {
+  padding: 90px 0;
+  background: no-repeat center;
+  background-size: cover;
+  width: 100%; }
+  @media screen and (max-width: 1024px) {
+    .fc-layout-011 .container-fluid {
+      margin: 0; } }
+  @media screen and (min-width: 1024px) {
+    .fc-layout-011 .container-fluid {
+      max-width: 1920px;
+      margin: 0 auto; } }
+  .fc-layout-011 .container-fluid .container {
+    padding: 0; }
+
+.fc-layout-011 h1,
+.fc-layout-011 h2,
+.fc-layout-011 h3,
+.fc-layout-011 h4,
+.fc-layout-011 h5,
+.fc-layout-011 h6,
+.fc-layout-011 p,
+.fc-layout-011 blockquote,
+.fc-layout-011 ul,
+.fc-layout-011 ol,
+.fc-layout-011 li,
+.fc-layout-011 dl,
+.fc-layout-011 dt,
+.fc-layout-011 dd {
+  margin: 0;
+  padding: 0;
+  word-break: break-all; }
+
+
+.fc-layout-011 h6 {
+  display: inline-block;
+  margin: 0;
+  padding: 3px 14px;
+  line-height: 18px;
+  /* 28(height) - 2x2(border) - 2x3(padding) */
+  font-size: 14px;
+  font-weight: bold;
+  color: #ed234b;
+  border: 2px solid #ed234b; }
+
+.fc-layout-011 h6:after {
+  content: '.';
+  color: #ed234b; }
+
+.fc-layout-011 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; }
+
+.fc-layout-011 .vbox,
+.fc-layout-011 .hbox {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between; }
+
+.fc-layout-011 .vbox {
+  flex-direction: row; }
+
+
+.fc-layout-011 .hbox {
+  flex-direction: column; }
+
+.fc-layout-011 .hbox.full {
+  flex: 0 1 980px; }
+
+.fc-layout-011 .hbox.quarter {
+  flex: 0 1 230px; }
+
+.fc-layout-011 .hbox.half {
+  flex: 0 1 480px; }
+
+.fc-layout-011 .hbox.expand {
+  flex: 1 1 0; }
+
+.fc-layout-011 .hbox + .hbox {
+  margin-left: 20px; }
+
+.fc-layout-011 .vbox + .vbox {
+  margin-top: 30px; }
+
+.fc-layout-011 {
+  background-color: #f8f8f8; }
+  .fc-layout-011 img,
+  .fc-layout-011 iframe {
+    width: 980px;
+    height: 552px; }
+  .fc-layout-011 .half img {
+    width: 480px;
+    height: 270px; }

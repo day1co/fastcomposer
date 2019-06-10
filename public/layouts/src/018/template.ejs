@@ -1,0 +1,25 @@
+<div class="container-fluid">
+  <div class="container">
+    <% if (sectionTitle) { %>
+      <div class="vbox">
+        <h6><%= sectionTitle %></h6>
+      </div>
+    <% } %>
+    <div class="vbox">
+      <div class="hbox quarter">
+        <img src="<%= image1 %>">
+      </div>
+      <div class="hbox card">
+        <h5><%= name1 %></h5>
+        <% if (about1) { %>
+          <div>
+            <%= $markdown(about1) %>
+          </div>
+        <% } %>
+        <% if (quote1) { %>
+          <blockquote><%= quote1 %></blockquote>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>

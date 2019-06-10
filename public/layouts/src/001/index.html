@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lodash/lodash.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/marked/marked.min.js"></script>
+</head>
+<body>
+<header>
+  <h1>preview - layout - 001</h1>
+  <p>1단 [본문]</p>
+</header>
+<main>
+  <section>
+    <h3>preview</h3>
+    <div class="fc-block fc-layout fc-layout-001" style="outline: 2px dashed fuchsia">
+      <div class="container">
+  <div class="vbox">
+    
+      <div class="hbox quarter">
+        <h6>강의 목표</h6>
+      </div>
+    
+    <div class="hbox expand"><p>기본적인 Classification을 넘어 <em>번역, 요약, 문장 생성에 필요한</em> 알고리즘을 이해하고, 언어 모델등을 구현하는 실습을 통해 <em>상품화 가능한 수준의 자연어처리 역량</em>을 기르는 것.</p></div>
+  </div>
+</div>
+
+    </div>
+  </section>
+  <section>
+    <h3>config</h3>
+    <pre><code>{
+  &quot;id&quot;: &quot;001&quot;,
+  &quot;description&quot;: &quot;1단 [본문]&quot;,
+  &quot;icon&quot;: &quot;icon.svg&quot;,
+  &quot;params&quot;: [
+    {
+      &quot;name&quot;: &quot;sectionTitle&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;description&quot;: &quot;section title text&quot;
+    },
+    {
+      &quot;name&quot;: &quot;content&quot;,
+      &quot;type&quot;: &quot;textarea&quot;,
+      &quot;description&quot;: &quot;content text&quot;
+    }
+  ],
+  &quot;values&quot;: {
+    &quot;sectionTitle&quot;: &quot;강의 목표&quot;,
+    &quot;content&quot;: &quot;기본적인 Classification을 넘어 &lt;em&gt;번역, 요약, 문장 생성에 필요한&lt;/em&gt; 알고리즘을 이해하고, 언어 모델등을 구현하는 실습을 통해 &lt;em&gt;상품화 가능한 수준의 자연어처리 역량&lt;/em&gt;을 기르는 것.&quot;
+  }
+}</code></pre>
+  </section>
+  <section>
+    <h3>template</h3>
+    <pre><code>&lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;vbox&quot;&gt;
+    &lt;% if (sectionTitle) { %&gt;
+      &lt;div class=&quot;hbox quarter&quot;&gt;
+        &lt;h6&gt;&lt;%= sectionTitle %&gt;&lt;/h6&gt;
+      &lt;/div&gt;
+    &lt;% } %&gt;
+    &lt;div class=&quot;hbox expand&quot;&gt;&lt;p&gt;&lt;%= content %&gt;&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+  </section>
+  <section>
+    <h3>style</h3>
+    <pre><code>/* 100% */
+/* 480px = 50% */
+/* 230px = 25% */
+.fc-layout-001 * {
+  box-sizing: border-box; }
+
+.fc-layout-001 .container {
+  padding: 90px 0;
+  background: no-repeat center;
+  background-size: cover;
+  width: 100%; }
+  @media screen and (max-width: 1024px) {
+    .fc-layout-001 .container {
+      margin: 0; } }
+  @media screen and (min-width: 1024px) {
+    .fc-layout-001 .container {
+      max-width: 980px;
+      margin: 0 auto; } }
+  .fc-layout-001 .container.dark {
+    background-color: #282828; }
+
+.fc-layout-001 .container-fluid {
+  padding: 90px 0;
+  background: no-repeat center;
+  background-size: cover;
+  width: 100%; }
+  @media screen and (max-width: 1024px) {
+    .fc-layout-001 .container-fluid {
+      margin: 0; } }
+  @media screen and (min-width: 1024px) {
+    .fc-layout-001 .container-fluid {
+      max-width: 1920px;
+      margin: 0 auto; } }
+  .fc-layout-001 .container-fluid .container {
+    padding: 0; }
+
+.fc-layout-001 h1,
+.fc-layout-001 h2,
+.fc-layout-001 h3,
+.fc-layout-001 h4,
+.fc-layout-001 h5,
+.fc-layout-001 h6,
+.fc-layout-001 p,
+.fc-layout-001 blockquote,
+.fc-layout-001 ul,
+.fc-layout-001 ol,
+.fc-layout-001 li,
+.fc-layout-001 dl,
+.fc-layout-001 dt,
+.fc-layout-001 dd {
+  margin: 0;
+  padding: 0;
+  word-break: break-all; }
+
+
+.fc-layout-001 h6 {
+  display: inline-block;
+  margin: 0;
+  padding: 3px 14px;
+  line-height: 18px;
+  /* 28(height) - 2x2(border) - 2x3(padding) */
+  font-size: 14px;
+  font-weight: bold;
+  color: #ed234b;
+  border: 2px solid #ed234b; }
+
+.fc-layout-001 h6:after {
+  content: &#39;.&#39;;
+  color: #ed234b; }
+
+.fc-layout-001 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; }
+
+.fc-layout-001 .vbox,
+.fc-layout-001 .hbox {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between; }
+
+.fc-layout-001 .vbox {
+  flex-direction: row; }
+
+
+.fc-layout-001 .hbox {
+  flex-direction: column; }
+
+.fc-layout-001 .hbox.full {
+  flex: 0 1 980px; }
+
+.fc-layout-001 .hbox.quarter {
+  flex: 0 1 230px; }
+
+.fc-layout-001 .hbox.half {
+  flex: 0 1 480px; }
+
+.fc-layout-001 .hbox.expand {
+  flex: 1 1 0; }
+
+.fc-layout-001 .hbox + .hbox {
+  margin-left: 20px; }
+
+.fc-layout-001 .vbox + .vbox {
+  margin-top: 30px; }
+
+.fc-layout-001 p {
+  display: inline-block;
+  font-size: 20px;
+  line-height: 30px; }
+
+.fc-layout-001 em {
+  font-weight: bold;
+  font-style: normal;
+  text-decoration: none;
+  box-shadow: inset 0 -8px 0 #50e3c2; }
+</code></pre>
+  </section>
+</main>
+<script src="_carousel.js" defer></script>
+<script src="_collapse.js" defer></script>
+</body>
+</html>

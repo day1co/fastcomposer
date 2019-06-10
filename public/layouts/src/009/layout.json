@@ -1,0 +1,39 @@
+{
+  "id": "009",
+  "description": "2단 [[제목+본문] + [이미지]x2]",
+  "icon": "icon.svg",
+  "params": [
+    {
+      "name": "sectionTitle",
+      "type": "text",
+      "description": "section title text"
+    },
+    {
+      "name": "title",
+      "type": "textarea",
+      "description": "title text"
+    },
+    {
+      "name": "content",
+      "type": "textarea",
+      "description": "content text"
+    },
+    {
+      "name": "image1",
+      "type": "image",
+      "description": "image1"
+    },
+    {
+      "name": "image2",
+      "type": "image",
+      "description": "image2"
+    }
+  ],
+  "values": {
+    "sectionTitle": "섹션 제목",
+    "title": "파이썬의 구조와 문법을 제대로 이해하고, 데이터 분석에 직접 적용까지 할 수 있습니다. 수박 겉 핥는 맛보기 강의가 아닌, 심도있는 모바일 앱 UX/UI 디자인 공부를 해보고 싶은 사람 모여라!",
+    "content": "수박 겉 핥는 맛보기 강의가 아닌, 심도있는 모바일 앱 UX/UI 디자인 공부를 해보고 싶은 사람 모여라!",
+    "image1": "https://via.placeholder.com/1920x1080.png/00c?text=image1",
+    "image2": "https://via.placeholder.com/1920x1080.png/0c0?text=image2"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "id": "018",
+  "description": "강사소개 : 2단 [이미지 + [제목/본문/인용(말풍선)]",
+  "icon": "icon.svg",
+  "params": [
+    {
+      "name": "sectionTitle",
+      "type": "text",
+      "description": "section title text"
+    },
+    {
+      "name": "image1",
+      "type": "image",
+      "description": "image1 url"
+    },
+    {
+      "name": "name1",
+      "type": "text",
+      "description": "name1 text"
+    },
+    {
+      "name": "about1",
+      "type": "textarea",
+      "description": "about1 text"
+    },
+    {
+      "name": "quote1",
+      "type": "textarea",
+      "description": "quote1 text"
+    }
+  ],
+  "values": {
+    "sectionTitle": "강사 소개",
+    "image1": "https://via.placeholder.com/320x320.png/0c0?text=image1",
+    "name1": "홍길동 강사님",
+    "about1": "- 한양대학교 경영학과 박사과정 재학 중, 데이터 마이닝 전공\n- 서울대학교 경영학과 석사 졸업, 마케팅 전공\n- 고려대학교 식량자원학과 학사 졸업\n- S화재, H캐피탈, H카드, H은행에서 데이터 분석가로 근무 중 (16년 경력)",
+    "quote1": "부동산 업계에서 구인난과 구직난이 동시에 있는 이유는 대체투자시장을 다루는 전문 교육기관 및 프로그램이 부족했기 때문이라고 생각됩니다. 지금까지 여러 곳에서 개별 강의 위주의 전문 교육이 산발적으로 있었으나, 이를 통합하여 기초부터 튼튼하게 다지는 제대로 된 프로그램이 없었고, 이에 필요성을 느껴 본 강의를 시작하게 되었습니다."
+  }
+}

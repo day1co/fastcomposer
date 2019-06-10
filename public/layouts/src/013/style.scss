@@ -1,0 +1,65 @@
+@import '../common';
+
+.fc-layout-013 {
+  @extend %fc-layout;
+
+  background-color: $bg-alt;
+
+  header{
+    &.vbox {
+      justify-content: center;
+    }
+
+    h5 {
+      font-size: 20px;
+      line-height: 30px;
+      text-align: center;
+    }
+
+    h5 + p {
+      margin-top: 12px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 24px;
+      text-align: center;
+    }
+  }
+
+  .card-list {
+    align-items: stretch;
+
+    .card {
+      padding: 30px 20px 36px 20px;
+      box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.1);
+      border: solid 1px #e6e8eb;
+      background-color: #ffffff;
+
+      img {
+        width: 90px;
+        height: 90px;
+        background-color: rgba(237, 35, 75, 0.3);
+        margin: 0 auto;
+      }
+
+      img + h5 {
+        margin-top: 40px;
+      }
+
+      h5 {
+        min-height: 48px;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 24px;
+      }
+
+      p {
+        flex-grow: 1;
+        font-size: 14px;
+        line-height: 22px;
+        margin-top: 12px;
+      }
+    }
+  }
+}

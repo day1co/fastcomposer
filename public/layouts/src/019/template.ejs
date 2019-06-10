@@ -1,0 +1,44 @@
+<div class="container">
+  <% if (sectionTitle) { %>
+    <div class="vbox">
+      <h6><%= sectionTitle %></h6>
+    </div>
+  <% } %>
+  <% if (image1 && name1 && role1 && about1) { %>
+    <div class="vbox">
+      <div class="hbox quarter">
+        <img src="<%= image1 %>">
+      </div>
+      <div class="hbox quarter">
+        <h5><%= name1 %></h5>
+        <p><%= role1 %></p>
+      </div>
+      <div class="hbox half">
+        <h5>소개</h5>
+        <p><%= about1 %></p>
+        <% if (link1) { %>
+        <a href="<%= link1 %>" target="_blank">강사님 인터뷰 보기 &gt;</a>
+        <% } %>
+      </div>
+    </div>
+  <% } %>
+  <% if (image2 && name2 && role2 && about2) { %>
+    <div class="vbox">
+      <div class="hbox quarter">
+        <img src="<%= image2 %>">
+      </div>
+      <div class="hbox quarter">
+        <h5><%= name2 %></h5>
+        <p><%= role2 %></p>
+      </div>
+      <div class="hbox half">
+        <h5>소개</h5>
+        <p><%= about2 %></p>
+        <% if (link2) { %>
+        <a href="<%= link2 %>" target="_blank">강사님 인터뷰 보기 &gt;</a>
+        <% } %>
+      </div>
+    </div>
+  <% } %>
+</div>
+

@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layouts</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+  <link rel="stylesheet" href="all.css">
+  <script src="https://unpkg.com/lodash/lodash.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/marked/marked.min.js"></script>
+</head>
+<body>
+<header>
+  <h1>layouts</h1>
+</header>
+<main>
+  <ul>
+    
+      <li><a href="001">001: 1단 [본문]</a></li>
+    
+      <li><a href="002">002: 1단(배경) [본문]</a></li>
+    
+      <li><a href="003">003: 1단 [이미지] / 2단 [제목+본문]</a></li>
+    
+      <li><a href="004">004: 2단 [제목 + [이미지+제목/본문]x3]</a></li>
+    
+      <li><a href="005">005: 2단(엇갈림) [이미지 + [제목/본문]]</a></li>
+    
+      <li><a href="006">006: 2단 [이미지 + [제목/본문]]x4</a></li>
+    
+      <li><a href="007">007: 1단 [이미지x3] 회전 / 2단 [이미지+이미지]</a></li>
+    
+      <li><a href="008">008: 1단 [본문] / 4단 [이미지+본문]x4</a></li>
+    
+      <li><a href="009">009: 2단 [[제목+본문] + [이미지]x2]</a></li>
+    
+      <li><a href="010">010: 2단 [이미지 + [제목+본문]]x2</a></li>
+    
+      <li><a href="011">011: 1단 [이미지] / 2단 [이미지+이미지]</a></li>
+    
+      <li><a href="012">012: 3단 [이미지/제목/본문]x3</a></li>
+    
+      <li><a href="013">013: 1단 [제목/본문] / 4단 [이미지/제목/본문]x4</a></li>
+    
+      <li><a href="014">014: 2단 [[제목/본문] + [이미지+제목/본문]x3]</a></li>
+    
+      <li><a href="015">015: 1단 [제목/본문] / 2단 [이미지+제목/본문]x2x2</a></li>
+    
+      <li><a href="016">016: 커리큘럼 : 3단(표) [클래스/날짜 + 제목 + 본문/더보기]</a></li>
+    
+      <li><a href="017">017: FAQ : 1단 [질문/답변(펼침)]</a></li>
+    
+      <li><a href="018">018: 강사소개 : 2단 [이미지 + [제목/본문/인용(말풍선)]</a></li>
+    
+      <li><a href="019">019: 강사소개 : 3단 [이미지 + 이름/담당 + 소개]x2</a></li>
+    
+  </ul>
+  
+  <div class="fc-block fc-layout fc-layout-001" style="outline: 2px dashed fuchsia">
+    <div class="container">
+  <div class="vbox">
+    
+      <div class="hbox quarter">
+        <h6>강의 목표</h6>
+      </div>
+    
+    <div class="hbox expand"><p>기본적인 Classification을 넘어 <em>번역, 요약, 문장 생성에 필요한</em> 알고리즘을 이해하고, 언어 모델등을 구현하는 실습을 통해 <em>상품화 가능한 수준의 자연어처리 역량</em>을 기르는 것.</p></div>
+  </div>
+</div>
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-002" style="outline: 2px dashed fuchsia">
+    <div class="container-fluid"
+     style="background-color: rgba(0, 0, 255, 0.75); background-image: url(https://via.placeholder.com/1440x306.png/00c?text=layout2+background+image)">
+  <div class="container">
+    <p>기본적인 Classification을 넘어 <em>번역, 요약, 문장 생성에 필요한</em> 알고리즘을 이해하고, 언어 모델등을 구현하는 실습을 통해 <em>상품화 가능한 수준의 자연어처리 역량</em>을 기르는 것.</p>
+  </div>
+</div>
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-003" style="outline: 2px dashed fuchsia">
+    <div class="container">
+  
+    <div class="vbox">
+      <h6>강의 개요</h6>
+    </div>
+  
+  <div class="vbox">
+    <img src="https://via.placeholder.com/980x360.png/00c?text=image1">
+  </div>
+  <div class="vbox">
+    <div class="hbox half">
+      <h3>최신 모델에 대한 이해와
+탄탄한 노하우를 얻어가세요</h3>
+    </div>
+    <div class="hbox half">
+      <p>Natural Language Processing (자연어처리)는 사람의 언어를 이해하고 처리할 수 있도록 해 줍니다. 즉, 컴퓨터와 사람 사이의 인터페이스를 연결해 주는 기술로서, 실제 필드에서 필요성이 높은 분야이기도 합니다.
+하지만, 기본적인 Classification이 아닌 실제 서비스(번역, 요약, 챗봇 등)를 상용화하기 위해 필요한 딥러닝 알고리즘, 언어모델, 강화학습 등 심화된 내용에 대해 제대로 배울 수 있는 자료는 턱없이 부족합니다.
+
+그래서 만들게된 본 강의는 NLP의 정점에 있는 최신 모델에 대한 깊이있는 커리큘럼 구성과 실무를 방불케하는 실습으로 구성되어 있습니다. 이 모든 내용은 기계번역, NLP의 분야의 전문가이신 현업 강사님이 진행하시기 때문에 직접 해보지 않으면 알 수 없는 생생한 노하우도 함께 얻어가실 수 있습니다.</p>
+    </div>
+  </div>
+</div>
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-004" style="outline: 2px dashed fuchsia">
+    <div class="container">
+  <div class="vbox">
+    <div class="hbox quarter">
+      <h3>파이썬의 구조와 문법을 제대로 이해하고, 데이터 분석에 직접 적용까지 할 수 있습니다.</h3>
+    </div>
+    <div class="hbox expand">
+      <div class="vbox card">
+        <div class="hbox quarter">
+          <img src="https://via.placeholder.com/190x190.png/00c?text=image1">
+        </div>
+        <div class="hbox half">
+          <h5>SEQ2SEQ 모델 완벽 이해</h5>
+          <p>자연어처리 분야의 핵심 딥러닝 기술인 Seque2Seq 모델과 관련된 이론에 대해 깊이있게 다룹니다. 또한 기계번역, NLP의 분야에서 전문가이신 강사님과 함께 실제 상품화가 가능한 수준의 실습(Machine Translation 또는 Summarization)을 통해 seq2seq의 실무 활용 방법에 대해 익힙니다.</p>
+        </div>
+      </div>
+      <div class="vbox card">
+        <div class="hbox quarter">
+          <img src="https://via.placeholder.com/190x190.png/0c0?text=image2">
+        </div>
+        <div class="hbox half">
+          <h5>NLG의 근간, 언어모델 구현</h5>
+          <p>language Modeling(언어모델)은 그 자체로서 활용도 뿐만 아니라, 기계번역과 음성인식, OCR, 그리고 Natural Language Generation (NLG)에 있어서도 매우 중요한 역할을 차지 합니다. 본 강의에서는 언어모델의 이론에 대해 깊이있게 이해하고, 직접 언어 모델링을 실습합니다.</p>
+        </div>
+      </div>
+      <div class="vbox card">
+        <div class="hbox quarter">
+          <img src="https://via.placeholder.com/190x190.png/c00?text=image3">
+        </div>
+        <div class="hbox half">
+          <h5>자연어 처리에 강화학습 적용</h5>
+          <p>NLP를 실제 서비스에 적용하고 차별화 하기 위해서는, 성능을 보다 높이고 다양한 objective에 대해서 학습시켜야 할 필요성이 있습니다. 본 강의에서는 Non-differentiable objective function 이나 Adversarial learning 활용한 NLP 성능 향상과 관련된 강화학습에 대해 이론과 실습을 통해 가르쳐드립니다. language Modeling(언어모델)은 그 자체로서 활용도 뿐만 아니라, 기계번역과 음성인식, OCR, 그리고 Natural Language Generation (NLG)에 있어서도 매우 중요한 역할을 차지 합니다. 본 강의에서는 언어모델의 이론에 대해 깊이있게 이해하고, 직접 언어 모델링을 실습합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-005" style="outline: 2px dashed fuchsia">
+    <div class="container-fluid">
+    <div class="vbox">
+      <div class="hbox">
+        <img src="https://via.placeholder.com/1440x600.png/00c?text=image1">
+      </div>
+      <div class="hbox">
+        <h3>실무 개발에 가장 가깝도록, 큐레이션된 커리큘럼</h3>
+        <p>블록체인 개발에 대한 다양한 오픈소스가 공개되어 있지만, 너무 방대한 나머지 어디서부터 공부해야할 지 스스로 방향을 잡기 어렵습니다. 간단한 스마트 컨트랙트를 구현하는 단계까지는 오르기 쉽지만, 아직 안정화되지 않은 블록체인 기술에서 실제 상용화할 수 있는 서비스 구현 단계까지 실력을 쌓는 것은 어렵습니다.
+ 본 프로그램은 강사님이 자신의 경험을 바탕으로 서비스 구현을 위한 필수지식을 큐레이션하여 가르치고, 예외적으로 발생하는 크고 작은 문제를 기술적으로 해결하는 방법을 함께 알려드립니다.</p>
+      </div>
+    </div>
+    <div class="vbox">
+      <div class="hbox">
+        <h3>2D 모션그래픽, 기초부터 실무 활용 노하우와 응용 스킬까지 한 번에!</h3>
+        <p>온라인 튜토리얼과 책을 보면서 무엇을 배우셨나요? 뜬구름 잡는 내용들은 실전에 아무런 도움이 되지 않습니다. 툴 기능을 위주로하여 전반적으로 훑는 옛날 방식으로 강의를 진행하지 않습니다. 기능만 달달 외운다고 실전에 아무런 도움이 되지 않기 때문입니다.
+ 패스트캠퍼스와 고성우 강사님은 친근한 2D 벡터 예제를 활용하여 입문자에게 높은 장벽인 애프터이펙트에 가장 쉬운 방법으로 접근하며, 어떻게 내 생각을 구체화 하고 움직임을 줄 것인지를 가르쳐드립니다. 씬 구성, 트랜지션 연습, 키프레임 연습, 캐릭터 애니메이션 등 꼭 필요한 정수만을 담아내어 수강생들이 정말 당장 써먹을 수 있는 기본기를 익히고, 무엇이든 표현할 수 있는 준비된 상태로 수료하도록 최선을 다해 열심히 이끌어나갑니다.
+ 국내 최고의 디자이너에게 최고의 실전 감각을 전수받고 준비된 모션그래퍼로 거듭나세요!</p>
+      </div>
+      <div class="hbox">
+        <img src="https://via.placeholder.com/1440x600.png/00c?text=image2">
+      </div>
+    </div>
+</div>
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-006" style="outline: 2px dashed fuchsia">
+    <div class="container">
+  <div class="vbox">
+    <div class="hbox">
+      <img src="https://via.placeholder.com/720x480.png/00c?text=image1">
+    </div>
+    <div class="hbox">
+      <h3>실무 맞춤형 커리큘럼 제공</h3>
+      <p>120명 이상 현업 전문가가 인정한 커리큘럼 입니다. 주 단위로 진행되는 과제를 통해, 정해진 시간 안에 UX적 사고방식으로 주어진 요구사항을 풀어내는 법을 반복적으로 연습하여 문제해결력과 실무적응력을 동시에 높입니다.</p>
+    </div>
+  </div>
+  <div class="vbox">
+    <div class="hbox">
+      <img src="https://via.placeholder.com/720x480.png/0c0?text=image2">
+    </div>
+    <div class="hbox">
+      <h3>총 13주, 풀타임 집중 과정</h3>
+      <p>비전공자도 디자인 전공자도 모두 OK! 단지 맛만 보는 과정이 아닙니다. 수료 후 바로 실무에 뛰어들 수 있는 탄탄한 실력과 경쟁력을 갖출 수 있도록 기초 이론 부터 2개 이상의 포트폴리오까지! 총 13주, 풀타임 과정으로 확실하게 전문 역량을 갖추세요.</p>
+    </div>
+  </div>
+  <div class="vbox">
+    <div class="hbox">
+      <img src="https://via.placeholder.com/720x480.png/c00?text=image3">
+    </div>
+    <div class="hbox">
+      <h3>현직 전문가의 실무 노하우</h3>
+      <p>특강으로 끝나는 것이 아닌 업력이 높은 현직 전문가만 강사로 모셨습니다. 현직 디자이너/개발자를 10명 이상 만나고 현장에서 경험으로 체득한 실무 스킬과 깊이가 다른 노하우를 가져갈 수 있습니다.</p>
+    </div>
+  </div>
+  <div class="vbox">
+    <div class="hbox">
+      <img src="https://via.placeholder.com/720x480.png/cc0?text=image4">
+    </div>
+    <div class="hbox">
+      <h3>커리어 전환을 위한 프리미엄 과정</h3>
+      <p>UX/UI 디자이너 커리어 전환을 목표로 포트폴리오 맞춤 멘토링, 취업 준비 특강, 채용 매니저와의 카운셀링, 다이렉트 매칭, 기업과 1:1 면접을 진행하는 Hiring day 참가 등 프리미엄 커리어 서비스를 제공합니다.</p>
+    </div>
+  </div>
+</div>
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-007" style="outline: 2px dashed fuchsia">
+    <div class="container">
+  <div class="vbox">
+    <div class="hbox">
+      <div class="carousel">
+        <ul>
+          <li class="carousel-item">
+            <img src="https://via.placeholder.com/980x540.png/00c?text=image1">
+          </li>
+          <li class="carousel-item">
+            <img src="https://via.placeholder.com/980x540.png/0c0?text=image2">
+          </li>
+          <li class="carousel-item">
+            <img src="https://via.placeholder.com/980x540.png/c00?text=image3">
+          </li>
+        </ul>
+        <ol>
+          <li><label><input type="radio" name="layout7-carousel" class="carousel-indicator"></label></li>
+          <li><label><input type="radio" name="layout7-carousel" class="carousel-indicator"></label></li>
+          <li><label><input type="radio" name="layout7-carousel" class="carousel-indicator"></label></li>
+        </ol>
+        <button type="button" class="carousel-prev">
+          <span class="sr-only">prev</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="22" viewBox="0 0 13 22">
+            <path fill="none" fill-rule="nonzero" stroke="#FFF" stroke-linecap="round" stroke-width="2"
+                  d="M12 1L2 11l10 10"/>
+          </svg>
+        </button>
+        <button type="button" class="carousel-next">
+          <span class="sr-only">next</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="22" viewBox="0 0 13 22">
+            <path fill="none" fill-rule="nonzero" stroke="#FFF" stroke-linecap="round" stroke-width="2"
+                  d="M1 1l10 10L1 21"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="vbox">
+    <div class="hbox half">
+      <img src="https://via.placeholder.com/720x480.png/0cc?text=image4">
+    </div>
+    <div class="hbox half">
+      <img src="https://via.placeholder.com/720x480.png/cc0?text=image5">
+    </div>
+  </div>
+</div>
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-008" style="outline: 2px dashed fuchsia">
+    <div class="container">
+  
+    <div class="vbox">
+      <h6>섹션 제목</h6>
+    </div>
+  
+  <div class="vbox">
+    <p>강의 과정을 수행하면서 구현하게 될 게임의 핵심 기능들을 살펴봅니다.</p>
+  </div>
+  <div class="vbox">
+    <div class="hbox">
+      <img src="https://via.placeholder.com/720x480.png/00c?text=layout8+image1">
+      <p>스프라이트 이동</p>
+    </div>
+    <div class="hbox">
+      <img src="https://via.placeholder.com/720x480.png/00c?text=layout8+image2">
+      <p>스프라이트 변경</p>
+    </div>
+    <div class="hbox">
+      <img src="https://via.placeholder.com/720x480.png/c00?text=layout8+image3">
+      <p>스크립트 활용 - 유도미사일(타겟으로 향하기)</p>
+    </div>
+    <div class="hbox">
+      <img src="https://via.placeholder.com/720x480.png/cc0?text=layout8+image4">
+      <p>게임 조작 - 클릭당 돈 증가</p>
+    </div>
+  </div>
+</div>
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-009" style="outline: 2px dashed fuchsia">
+    <div class="container">
+  <div class="vbox">
+    <h6>섹션 제목</h6>
+  </div>
+  <div class="vbox">
+    <div class="hbox quarter">
+      <h5>파이썬의 구조와 문법을 제대로 이해하고, 데이터 분석에 직접 적용까지 할 수 있습니다. 수박 겉 핥는 맛보기 강의가 아닌, 심도있는 모바일 앱 UX/UI 디자인 공부를 해보고 싶은 사람 모여라!</h5>
+      <p>수박 겉 핥는 맛보기 강의가 아닌, 심도있는 모바일 앱 UX/UI 디자인 공부를 해보고 싶은 사람 모여라!</p>
+    </div>
+    <div class="hbox">
+      <img src="https://via.placeholder.com/1920x1080.png/00c?text=image1">
+    </div>
+  </div>
+  <div class="vbox">
+    <div class="hbox quarter">
+    </div>
+    <div class="hbox">
+      <img src="https://via.placeholder.com/1920x1080.png/0c0?text=image2">
+    </div>
+  </div>
+</div>
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-010" style="outline: 2px dashed fuchsia">
+    <div class="container">
+  
+    <div class="vbox">
+      <h6>섹션 제목</h6>
+    </div>
+  
+  <div class="vbox">
+    <div class="hbox">
+      <img src="https://via.placeholder.com/1920x1080.png/00c?text=image1">
+    </div>
+    <div class="hbox quarter">
+      <h5>파이썬의 구조와 문법을 제대로 이해하고, 데이터 분석에 직접 적용까지 할 수 있습니다.</h5>
+      <p>수박 겉 핥는 맛보기 강의가 아닌, 심도있는 모바일 앱 UX/UI 디자인 공부를 해보고 싶은 사람 모여라!</p>
+    </div>
+  </div>
+  <div class="vbox">
+    <div class="hbox">
+      <img src="https://via.placeholder.com/1920x1080.png/0c0?text=image2">
+    </div>
+    <div class="hbox quarter">
+      <h5>파이썬의 구조와 문법을 제대로 이해하고, 데이터 분석에 직접 적용까지 할 수 있습니다.</h5>
+      <p>수박 겉 핥는 맛보기 강의가 아닌, 심도있는 모바일 앱 UX/UI 디자인 공부를 해보고 싶은 사람 모여라!</p>
+    </div>
+  </div>
+</div>
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-011" style="outline: 2px dashed fuchsia">
+    <div class="container">
+  <div class="vbox">
+    <div class="hbox">
+      <img src="https://via.placeholder.com/1920x1080.png/00c?text=image1">
+    </div>
+  </div>
+  <div class="vbox">
+    <div class="hbox half">
+      <img src="https://via.placeholder.com/720x480.png/0c0?text=image2">
+    </div>
+    <div class="hbox half">
+      <img src="https://via.placeholder.com/720x480.png/c00?text=image3">
+    </div>
+  </div>
+</div>
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-012" style="outline: 2px dashed fuchsia">
+    <div class="container">
+  
+    <div class="vbox">
+      <h6>섹션 제목</h6>
+    </div>
+  
+  <div class="vbox card-list">
+    <div class="hbox card">
+      <img src="https://via.placeholder.com/100x96.png/00c?text=image1">
+      <hr>
+      <h5>효과적인 화면 구성, 연출 팁, 컴포지팅(합성) 방법!</h5>
+      <pb>모션그래픽은 많은 요소들이 얽혀있습니다. 진입 장벽이 높지만, 방법만 안다면 보다 효과적으로 합성하여 더 멋진 장면을 연출할 수 있습니다.</pb>
+    </div>
+    <div class="hbox card">
+      <img src="https://via.placeholder.com/100x96.png/0c0?text=image2">
+      <hr>
+      <h5>눈이 즐거워지는
+트랜지션(장면 전환) 노하우!</h5>
+      <p>이야기의 흐름을 자연스럽게 이어주는 것은 기본,
+다양하고 화려한 트랜지션(장면 전환)으로
+시청자들의 시선을 압도하세요!</p>
+    </div>
+    <div class="hbox card">
+      <img src="https://via.placeholder.com/100x96.png/c00?text=image3">
+      <hr>
+      <h5>부드럽고 쫀득한 캐릭터 애니메이션!</h5>
+      <p>눈을 떼기 힘들정도로 정도로 부드럽고 쫀득한
+캐릭터 애니메이션을 다양하게 표현해보세요.
+영상의 퀄리티가 비교할 수 없을만큼 올라갑니다.</p>
+    </div>
+  </div>
+</div>
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-013" style="outline: 2px dashed fuchsia">
+    <div class="container">
+  
+  <div class="vbox">
+    <h6>섹션 제목</h6>
+  </div>
+  
+  <header class="vbox">
+    <div class="hbox half">
+      <h5>파이썬의 구조와 문법을 제대로 이해하고,
+테이터 분석에 직접 적용까지 할 수 있습니다.</h5>
+      <p>수박 겉 햝는 맛보기 강의가 아닌,
+심도있는 모바일 앱 UX/UI 디자인 공부를 해보고싶은 모든 사람 모여라!</p>
+    </div>
+  </header>
+  <div class="vbox card-list">
+    <div class="hbox quarter card">
+      <img src="https://via.placeholder.com/300x180.png/00c?text=image1">
+      <h5>프로그래밍 이해</h5>
+      <p>프로그래밍을 시작하기 전, 막연히 가졌던 두려움부터 없애 드립니다. 그리고서 웹 개발자로서 알아야 할 기초 지식부터 천천히 쌓아갑니다.</p>
+    </div>
+    <div class="hbox quarter card">
+      <img src="https://via.placeholder.com/90x90.png/00c?text=image2">
+      <h5>파이썬 문법</h5>
+      <p>입문자에게 가장 적합한 언어인 Python 문법을 집중적으로 공부하고 직접 코드로 표현해보면서 본격적인 개발을 위한 도움닫기를 준비합니다.</p>
+    </div>
+    <div class="hbox quarter card">
+      <img src="https://via.placeholder.com/90x90.png/00c?text=image3">
+      <h5>웬 프로그래밍 입문
+미니 웹 서버</h5>
+      <p>3주 동안은 웹 프로그래밍을 배워봅니다. 백엔드라고 불리는 웹 서버까지 다뤄보며 프로그래머로써 갖춰야 할 기초 소양을 체득합니다.</p>
+    </div>
+    <div class="hbox quarter card">
+      <img src="https://via.placeholder.com/90x90.png/00c?text=image4">
+      <h5>미니 웹 서비스 구현</h5>
+      <p>파이썬을 활용하여 미니 웹 서비스를 제작하고, Django 프레임 워크를 사용해 인스타그램과 비슷한 SNS 서비스를 직접 구현해봅니다.</p>
+    </div>
+  </div>
+</div>
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-014" style="outline: 2px dashed fuchsia">
+    <div class="container">
+  
+    <div class="vbox">
+      <h6>섹션 제목</h6>
+    </div>
+  
+  <div class="vbox">
+    <header class="hbox quarter">
+      <h5>파이썬의 구조와 문법을 제대로 이해하고,
+테이터 분석에 직접 적용까지 할 수 있습니다.</h5>
+      <p>수박 겉 햝는 맛보기 강의가 아닌,
+심도있는 모바일 앱 UX/UI 디자인 공부를 해보고싶은 모든 사람 모여라!</p>
+    </header>
+    <div class="hbox expand card-list">
+      <div class="vbox card">
+        <div class="hbox quarter">
+          <img src="https://via.placeholder.com/300x180.png/00c?text=image1">
+        </div>
+        <div class="hbox">
+          <h5>프로그래밍 이해</h5>
+          <p>프로그래밍을 시작하기 전, 막연히 가졌던 두려움부터 없애 드립니다. 그리고서 웹 개발자로서 알아야 할 기초 지식부터 천천히 쌓아갑니다.</p>
+        </div>
+      </div>
+      <div class="vbox card">
+        <div class="hbox quarter">
+          <img src="https://via.placeholder.com/90x90.png/00c?text=image2">
+        </div>
+        <div class="hbox">
+          <h5>파이썬 문법</h5>
+          <p>입문자에게 가장 적합한 언어인 Python 문법을 집중적으로 공부하고 직접 코드로 표현해보면서 본격적인 개발을 위한 도움닫기를 준비합니다.</p>
+        </div>
+      </div>
+      <div class="vbox card">
+        <div class="hbox quarter">
+          <img src="https://via.placeholder.com/90x90.png/00c?text=image3">
+        </div>
+        <div class="hbox">
+          <h5>웬 프로그래밍 입문
+미니 웹 서버</h5>
+          <p>3주 동안은 웹 프로그래밍을 배워봅니다. 백엔드라고 불리는 웹 서버까지 다뤄보며 프로그래머로써 갖춰야 할 기초 소양을 체득합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-015" style="outline: 2px dashed fuchsia">
+    <div class="container-fluid">
+  <div class="container">
+    
+      <div class="vbox">
+        <h6>섹션 제목</h6>
+      </div>
+    
+    <header class="vbox">
+      <div>
+        <h5>파이썬의 구조와 문법을 제대로 이해하고,
+테이터 분석에 직접 적용까지 할 수 있습니다.</h5>
+        <p>수박 겉 햝는 맛보기 강의가 아닌,
+심도있는 모바일 앱 UX/UI 디자인 공부를 해보고싶은 모든 사람 모여라!</p>
+      </div>
+    </header>
+    <div class="vbox card-list">
+      <div class="hbox card half">
+        <div class="vbox">
+          <div class="hbox quarter">
+            <img src="https://via.placeholder.com/300x180.png/00c?text=image1">
+          </div>
+          <div class="hbox">
+            <h5>프로그래밍 이해</h5>
+            <p>프로그래밍을 시작하기 전, 막연히 가졌던 두려움부터 없애 드립니다. 그리고서 웹 개발자로서 알아야 할 기초 지식부터 천천히 쌓아갑니다.</p>
+          </div>
+        </div>
+      </div>
+      <div class="hbox card half">
+        <div class="vbox">
+          <div class="hbox quarter">
+            <img src="https://via.placeholder.com/90x90.png/00c?text=image2">
+          </div>
+          <div class="hbox">
+            <h5>파이썬 문법</h5>
+            <p>입문자에게 가장 적합한 언어인 Python 문법을 집중적으로 공부하고 직접 코드로 표현해보면서 본격적인 개발을 위한 도움닫기를 준비합니다.</p>
+          </div>
+        </div>
+      </div>
+      <div class="hbox card half">
+        <div class="vbox">
+          <div class="hbox quarter">
+            <img src="https://via.placeholder.com/90x90.png/00c?text=image3">
+          </div>
+          <div class="hbox">
+            <h5>웬 프로그래밍 입문
+미니 웹 서버</h5>
+            <p>3주 동안은 웹 프로그래밍을 배워봅니다. 백엔드라고 불리는 웹 서버까지 다뤄보며 프로그래머로써 갖춰야 할 기초 소양을 체득합니다.</p>
+          </div>
+        </div>
+      </div>
+      <div class="hbox card half">
+        <div class="vbox">
+          <div class="hbox quarter">
+            <img src="https://via.placeholder.com/90x90.png/00c?text=image4">
+          </div>
+          <div class="hbox">
+            <h5>미니 웹 서비스 구현</h5>
+            <p>파이썬을 활용하여 미니 웹 서비스를 제작하고, Django 프레임 워크를 사용해 인스타그램과 비슷한 SNS 서비스를 직접 구현해봅니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-016" style="outline: 2px dashed fuchsia">
+    <div class="container">
+  
+    <div class="vbox">
+      <h6>커리큘럼</h6>
+    </div>
+  
+  <table>
+    <tbody>
+    
+    <tr>
+      <td>
+        <h5>Class 1.</h5>
+        <p>2018.10.05 (목)</p>
+      </td>
+      <td>
+        <h3>UX Design이란?</h3>
+      </td>
+      <td class="collapse-container">
+        
+          <ul>
+<li>강사 소개</li>
+<li>커리큘럼 소개</li>
+<li>UX개념소개</li>
+</ul>
+
+        
+        
+          <div class="more">
+            <ul>
+<li>더더더</li>
+<li>보보보</li>
+<li>기기기</li>
+</ul>
+
+          </div>
+        
+        <label class="collapse" data-collapse-target=".more"><input type="checkbox"></label>
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>
+        <h5>Class 2.</h5>
+        <p>2018.10.12 (목)</p>
+      </td>
+      <td>
+        <h3>모바일 앱 디자인을 위한 실무 Process-1</h3>
+      </td>
+      <td class="collapse-container">
+        
+          <ul>
+<li>강사 소개</li>
+<li>커리큘럼 소개</li>
+<li>UX개념소개</li>
+</ul>
+
+        
+        
+          <div class="more">
+            <ul>
+<li>더더더</li>
+<li>보보보</li>
+<li>기기기</li>
+</ul>
+
+          </div>
+        
+        <label class="collapse" data-collapse-target=".more"><input type="checkbox"></label>
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>
+        <h5>Class 3.</h5>
+        <p>2018.10.12 (목)</p>
+      </td>
+      <td>
+        <h3>모바일 앱 디자인을 위한 실무 Process-2</h3>
+      </td>
+      <td class="collapse-container">
+        
+          <ul>
+<li>조편성</li>
+<li>실무에 필요한 UX/UI용어</li>
+<li>모바일 UI 역사, 트렌드</li>
+</ul>
+
+        
+        
+          <div class="more">
+            <ul>
+<li>애자일과 워터폴 프로세스</li>
+<li>LEAN UX, MVP</li>
+<li>UX 목표 수립(BIZ 목표 – 시장환경/조건 – UX 챌린지)</li>
+<li>정량적, 정성적 분석 방법</li>
+<li>사용자 인터뷰(IDI – FGI)</li>
+<li>CONTECTUAL INQUIRY</li>
+<li>카드소팅</li>
+<li>다이어리 스터디</li>
+<li>인터뷰 계획 및 이슈도출</li>
+</ul>
+
+          </div>
+        
+        <label class="collapse" data-collapse-target=".more"><input type="checkbox"></label>
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td>
+        <h5>Class 4.</h5>
+        <p>2018.10.19 (목)</p>
+      </td>
+      <td>
+        <h3>Journey Map을 활용한 어플리케이션 분석 (실습1)</h3>
+      </td>
+      <td class="collapse-container">
+        
+          <ul>
+<li>강사 소개</li>
+<li>커리큘럼 소개</li>
+<li>UX개념소개</li>
+</ul>
+
+        
+        
+          <div class="more">
+            <ul>
+<li>더더더</li>
+<li>보보보</li>
+<li>기기기</li>
+</ul>
+
+          </div>
+        
+        <label class="collapse" data-collapse-target=".more"><input type="checkbox"></label>
+      </td>
+    </tr>
+    
+    
+    
+    
+    
+    
+    </tbody>
+  </table>
+</div>
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-017" style="outline: 2px dashed fuchsia">
+    <div class="container">
+  
+    <div class="vbox">
+      <h6>자주 묻는 질문</h6>
+    </div>
+  
+  
+    <header class="vbox">
+      <h5>해당 사항이 없다면 1:1 문의게시판을 이용해주세요!</h5>
+    </header>
+  
+  <div class="vbox">
+    <dl class="collapse-container">
+      
+        <dt><label class="collapse" data-collapse-target=".more1"><input type="checkbox" checked>UX디자인과 UI디자인의 비중이 어떻게 되나요?</label></dt>
+        <dd class="more more1">50대 50이라고 보시면 됩니다. 과거 디자인이 심미적인 것에 치중했다면 최근에는 문제를 해결하고 필요에 대한을 제시하는 역할이 커졌습니다. UX적 사고가 사업의 핵심이 되는 바, 기업은 사용자를 고려하고 논리적인 사고를 할 줄 아는 디자이너를 원하고 있습니다.</dd>
+      
+      
+        <dt><label class="collapse" data-collapse-target=".more2"><input type="checkbox">UX디자인과 UI디자인의 비중이 어떻게 되나요?</label></dt>
+        <dd class="more more2">50대 50이라고 보시면 됩니다. 과거 디자인이 심미적인 것에 치중했다면 최근에는 문제를 해결하고 필요에 대한을 제시하는 역할이 커졌습니다. UX적 사고가 사업의 핵심이 되는 바, 기업은 사용자를 고려하고 논리적인 사고를 할 줄 아는 디자이너를 원하고 있습니다.</dd>
+      
+      
+        <dt><label class="collapse" data-collapse-target=".more3"><input type="checkbox">UX디자인과 UI디자인의 비중이 어떻게 되나요?</label></dt>
+        <dd class="more more3">50대 50이라고 보시면 됩니다. 과거 디자인이 심미적인 것에 치중했다면 최근에는 문제를 해결하고 필요에 대한을 제시하는 역할이 커졌습니다. UX적 사고가 사업의 핵심이 되는 바, 기업은 사용자를 고려하고 논리적인 사고를 할 줄 아는 디자이너를 원하고 있습니다.</dd>
+      
+      
+        <dt><label class="collapse" data-collapse-target=".more4"><input type="checkbox">UX디자인과 UI디자인의 비중이 어떻게 되나요?</label></dt>
+        <dd class="more more4">50대 50이라고 보시면 됩니다. 과거 디자인이 심미적인 것에 치중했다면 최근에는 문제를 해결하고 필요에 대한을 제시하는 역할이 커졌습니다. UX적 사고가 사업의 핵심이 되는 바, 기업은 사용자를 고려하고 논리적인 사고를 할 줄 아는 디자이너를 원하고 있습니다.</dd>
+      
+      
+        <dt><label class="collapse" data-collapse-target=".more5"><input type="checkbox">UX디자인과 UI디자인의 비중이 어떻게 되나요?</label></dt>
+        <dd class="more more5">50대 50이라고 보시면 됩니다. 과거 디자인이 심미적인 것에 치중했다면 최근에는 문제를 해결하고 필요에 대한을 제시하는 역할이 커졌습니다. UX적 사고가 사업의 핵심이 되는 바, 기업은 사용자를 고려하고 논리적인 사고를 할 줄 아는 디자이너를 원하고 있습니다.</dd>
+      
+      
+      
+      
+      
+    </dl>
+  </div>
+  
+    <footer class="vbox">
+      <a href="https://www.fastcampus.co.kr" target="_blank"
+              
+      >1:1 문의하기</a>
+    </footer>
+  
+</div>
+
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-018" style="outline: 2px dashed fuchsia">
+    <div class="container-fluid">
+  <div class="container">
+    
+      <div class="vbox">
+        <h6>강사 소개</h6>
+      </div>
+    
+    <div class="vbox">
+      <div class="hbox quarter">
+        <img src="https://via.placeholder.com/320x320.png/0c0?text=image1">
+      </div>
+      <div class="hbox card">
+        <h5>홍길동 강사님</h5>
+        
+          <div>
+            <ul>
+<li>한양대학교 경영학과 박사과정 재학 중, 데이터 마이닝 전공</li>
+<li>서울대학교 경영학과 석사 졸업, 마케팅 전공</li>
+<li>고려대학교 식량자원학과 학사 졸업</li>
+<li>S화재, H캐피탈, H카드, H은행에서 데이터 분석가로 근무 중 (16년 경력)</li>
+</ul>
+
+          </div>
+        
+        
+          <blockquote>부동산 업계에서 구인난과 구직난이 동시에 있는 이유는 대체투자시장을 다루는 전문 교육기관 및 프로그램이 부족했기 때문이라고 생각됩니다. 지금까지 여러 곳에서 개별 강의 위주의 전문 교육이 산발적으로 있었으나, 이를 통합하여 기초부터 튼튼하게 다지는 제대로 된 프로그램이 없었고, 이에 필요성을 느껴 본 강의를 시작하게 되었습니다.</blockquote>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+  
+  <div class="fc-block fc-layout fc-layout-019" style="outline: 2px dashed fuchsia">
+    <div class="container">
+  
+    <div class="vbox">
+      <h6>강사 소개</h6>
+    </div>
+  
+  
+    <div class="vbox">
+      <div class="hbox quarter">
+        <img src="https://via.placeholder.com/320x320.png/00c?text=image1">
+      </div>
+      <div class="hbox quarter">
+        <h5>은영상 강사님</h5>
+        <p>개인프로젝트 리딩 및 멘토링 파트</p>
+      </div>
+      <div class="hbox half">
+        <h5>소개</h5>
+        <p>디지털 마케팅 전문 회사인 ATIVEGENE의 대표를 맡고 있으며 국내외 어플리케이션, 이커머스, 게임, 소셜네트워킹 등 다양한 온라인 마케팅을 성공적으로 진행하고 있습니다. <br> 애플을 빛낸 최고의 앱으로 선정된 ViMO의 CSO와 디지털 마케팅 에이전시에서 마케팅 총괄이사를 역임하기도 했습니다.</p>
+        
+        <a href="https://www.fastcampus.co.kr/" target="_blank">강사님 인터뷰 보기 &gt;</a>
+        
+      </div>
+    </div>
+  
+  
+    <div class="vbox">
+      <div class="hbox quarter">
+        <img src="https://via.placeholder.com/320x320.png/00c?text=image2">
+      </div>
+      <div class="hbox quarter">
+        <h5>은영상 강사님</h5>
+        <p>개인프로젝트 리딩 및 멘토링 파트</p>
+      </div>
+      <div class="hbox half">
+        <h5>소개</h5>
+        <p>디지털 마케팅 전문 회사인 ATIVEGENE의 대표를 맡고 있으며 국내외 어플리케이션, 이커머스, 게임, 소셜네트워킹 등 다양한 온라인 마케팅을 성공적으로 진행하고 있습니다. <br> 애플을 빛낸 최고의 앱으로 선정된 ViMO의 CSO와 디지털 마케팅 에이전시에서 마케팅 총괄이사를 역임하기도 했습니다.</p>
+        
+        <a href="https://www.fastcampus.co.kr/" target="_blank">강사님 인터뷰 보기 &gt;</a>
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </div>
+  
+</main>
+<script src="_carousel.js" defer></script>
+<script src="_collapse.js" defer></script>
+</body>
+</html>

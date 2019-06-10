@@ -1,0 +1,52 @@
+.collapse {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+.collapse-indicator {
+  /* FIXME: buggy on IE */
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: #ffffff no-repeat;
+  //background-image: url(collapse-down.png);
+  //background-image: -webkit-image-set(
+  //    url(collapse-down.png) 1x,
+  //    url(collapse-down@2x.png) 2x,
+  //    url(collapse-down@3x.png) 3x
+  //);
+}
+
+.collapse-indicator:focus {
+  outline: none;
+}
+
+.collapse-indicator:checked {
+  //background-image: url(collapse-up.png);
+  //background-image: -webkit-image-set(url(collapse-up.png) 1x, url(collapse-up@2x.png) 2x, url(collapse-up@3x.png) 3x);
+}
+
+.collapse:hover .collapse-indicator {
+  //background-image: url(collapse-down-hover.png);
+  //background-image: -webkit-image-set(
+  //    url(collapse-down-hover.png) 1x,
+  //    url(collapse-down-hover@2x.png) 2x,
+  //    url(collapse-down-hover@3x.png) 3x
+  //);
+}
+
+.collapse:hover .collapse-indicator:checked {
+  //background-image: url(collapse-up-hover.png);
+  //background-image: -webkit-image-set(
+  //    url(collapse-up-hover.png) 1x,
+  //    url(collapse-up-hover@2x.png) 2x,
+  //    url(collapse-up-hover@3x.png) 3x
+  //);
+}

@@ -1,0 +1,21 @@
+{
+  "id": "001",
+  "description": "1단 [본문]",
+  "icon": "icon.svg",
+  "params": [
+    {
+      "name": "sectionTitle",
+      "type": "text",
+      "description": "section title text"
+    },
+    {
+      "name": "content",
+      "type": "textarea",
+      "description": "content text"
+    }
+  ],
+  "values": {
+    "sectionTitle": "강의 목표",
+    "content": "기본적인 Classification을 넘어 <em>번역, 요약, 문장 생성에 필요한</em> 알고리즘을 이해하고, 언어 모델등을 구현하는 실습을 통해 <em>상품화 가능한 수준의 자연어처리 역량</em>을 기르는 것."
+  }
+}

@@ -1,0 +1,60 @@
+<div class="container">
+  <% if (sectionTitle) { %>
+    <div class="vbox">
+      <h6><%= sectionTitle %></h6>
+    </div>
+  <% } %>
+  <% if (title) { %>
+    <header class="vbox">
+      <h5><%= title %></h5>
+    </header>
+  <% } %>
+  <div class="vbox">
+    <dl class="collapse-container">
+      <% if (title1 && content1) { %>
+        <dt><label class="collapse" data-collapse-target=".more1"><input type="checkbox" checked><%= title1 %></label></dt>
+        <dd class="more more1"><%= content1 %></dd>
+      <% } %>
+      <% if (title2 && content2) { %>
+        <dt><label class="collapse" data-collapse-target=".more2"><input type="checkbox"><%= title2 %></label></dt>
+        <dd class="more more2"><%= content2 %></dd>
+      <% } %>
+      <% if (title3 && content3) { %>
+        <dt><label class="collapse" data-collapse-target=".more3"><input type="checkbox"><%= title3 %></label></dt>
+        <dd class="more more3"><%= content3 %></dd>
+      <% } %>
+      <% if (title4 && content4) { %>
+        <dt><label class="collapse" data-collapse-target=".more4"><input type="checkbox"><%= title4 %></label></dt>
+        <dd class="more more4"><%= content4 %></dd>
+      <% } %>
+      <% if (title5 && content5) { %>
+        <dt><label class="collapse" data-collapse-target=".more5"><input type="checkbox"><%= title5 %></label></dt>
+        <dd class="more more5"><%= content5 %></dd>
+      <% } %>
+      <% if (title6 && content6) { %>
+        <dt><label class="collapse" data-collapse-target=".more6"><input type="checkbox"><%= title6 %></label></dt>
+        <dd class="more more6"><%= content6 %></dd>
+      <% } %>
+      <% if (title7 && content7) { %>
+        <dt><label class="collapse" data-collapse-target=".more7"><input type="checkbox"><%= title7 %></label></dt>
+        <dd class="more more6"><%= content7 %></dd>
+      <% } %>
+      <% if (title8 && content8) { %>
+        <dt><label class="collapse" data-collapse-target=".more8"><input type="checkbox"><%= title8 %></label></dt>
+        <dd class="more more6"><%= content8 %></dd>
+      <% } %>
+      <% if (title9 && content9) { %>
+        <dt><label class="collapse" data-collapse-target=".more9"><input type="checkbox"><%= title9 %></label></dt>
+        <dd class="more more9"><%= content9 %></dd>
+      <% } %>
+    </dl>
+  </div>
+  <% if (moreLink && moreText) { %>
+    <footer class="vbox">
+      <a href="<%= moreLink %>" <% if (moreTarget) { %>target="<%= moreTarget %>"
+              <% } %>
+      ><%= moreText %></a>
+    </footer>
+  <% } %>
+</div>
+

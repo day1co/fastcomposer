@@ -1,0 +1,77 @@
+@import '../common';
+
+.fc-layout-015 {
+  @extend %fc-layout;
+
+  background-color: $bg-alt;
+
+  header {
+    h5 {
+      font-size: 20px;
+      font-weight: bold;
+      line-height: 30px;
+      max-width: $half;
+    }
+
+    h5 + p {
+      margin-top: 12px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 24px;
+      max-width: $full - $quarter;
+    }
+  }
+
+  .card-list {
+    flex-wrap: wrap;
+    align-items: stretch;
+
+    .card + .card {
+      margin-left: 0;
+    }
+
+    .card {
+      padding: 30px 20px;
+      box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.1);
+      border: solid 1px #e6e8eb;
+      background-color: #ffffff;
+
+      .vbox {
+        align-items: center;
+      }
+
+      img {
+        margin: auto 45px;
+        width: 100px;
+        height: 100px;
+        background-color: rgba(237, 35, 75, 0.3);
+      }
+
+      h5 {
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 24px;
+      }
+
+      h5 + p {
+        margin-top: 12px;
+      }
+
+      p {
+        font-size: 14px;
+        line-height: 22px;
+      }
+    }
+
+    .card:nth-child(even) {
+      margin-left: 20px;
+    }
+
+    .card:nth-child(4n + 3),
+    .card:nth-child(4n + 4) {
+      margin-top: 20px;
+    }
+  }
+}

@@ -1,0 +1,49 @@
+@import '../common';
+
+.fc-layout-007 {
+  @extend %fc-layout;
+
+  @import "../carousel";
+
+  .carousel {
+    width: 980px;
+    height: 540px;
+  }
+
+  .half img {
+    width: 480px;
+    height: 270px;
+  }
+
+  .carousel-prev,
+  .carousel-next {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #7d7d7d;
+    background-image: none;
+  }
+
+  .carousel ol {
+    padding: 6px 10px;
+    background-color: #7d7d7d;
+    border-radius: 15px;
+    opacity: 0.5;
+  }
+
+  .carousel ol li input {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    opacity: 0.5;
+  }
+
+  .carousel ol li input:checked {
+    opacity: 1;
+  }
+
+  .carousel ol li + li {
+    margin-left: 20px;
+  }
+}
