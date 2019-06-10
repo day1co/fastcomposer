@@ -217,6 +217,7 @@ ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
     .fc-block__edit {
       border: 0.8rem solid ;
       padding: 1.2rem 1.2rem;
+      background-color: #f8f8f8;
       .draggablePopupTools {
         text-align: right;
       }
