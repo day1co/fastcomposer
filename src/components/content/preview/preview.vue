@@ -10,7 +10,7 @@
         </Draggable>
       </Container>
     </main>
-    <button class="fc-preview__save" type="button" @click="save">
+    <button class="fc-composer__content__save" type="button" @click="save">
       <i class="material-icons">&#xE5CA;</i>
     </button>
   </div>
