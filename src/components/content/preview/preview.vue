@@ -10,10 +10,15 @@
         </Draggable>
       </Container>
     </main>
+    <button class="fc-preview__save" type="button" @click="save">
+      <i class="material-icons">&#xE5CA;</i>
+    </button>
   </div>
 </template>
 
 <script>
+  import EventBus from './../../../event-bus/event-bus';
+  import marked from 'marked';
   import LayerPreview from './layer-preview.vue';
   import { Container, Draggable } from "vue-smooth-dnd";
 
@@ -54,6 +59,20 @@
       onDrop(dropResult) {
         this.layers = applyDrag(this.layers, dropResult);
       },
+      save() {
+        const html = this.layers
+          .map(
+            block => `
+            <section class="fc-block fc-layout fc-layout-${block.layout.id}">
+              ${block.layout.templateFunc({
+              $markdown: marked,
+              ...block.values
+            })}
+            </section>`
+          )
+          .join('\n');
+        EventBus.$emit('save', html);
+      }
     },
   };
 </script>
