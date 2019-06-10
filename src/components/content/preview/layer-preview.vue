@@ -8,6 +8,9 @@
       v-html="html"
     ></div>
     <div class="fc-block__utils">
+      <button class="fc-block__utils__btn" @click="removeLayer(layer, index)">
+        <i class="material-icons">&#xE872;</i>
+      </button>
       <button class="fc-block__utils__btn row-drag-handle">
         <i class="material-icons">drag_handle</i>
       </button>
@@ -45,7 +48,7 @@ export default {
   },
   methods: {
     removeLayer() {
-      this.$emit('removeLayer', this.layer, this.index);
+      EventBus.$emit('removeLayer', this.layer, this.index);
     },
     selectedLayer(layer) {
       EventBus.$emit('selectedLayer', layer);
