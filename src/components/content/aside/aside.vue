@@ -1,7 +1,7 @@
 <template>
   <div class="fc-aside">
-    <layout-kits
-      :layoutKits="layoutKits"
+    <layout-basket
+      :layouts="layouts"
     />
     <button
       type="button"
@@ -13,14 +13,14 @@
 </template>
 <script>
   import EventBus from './../../../event-bus/event-bus';
-  import LayoutKits from './layout-kits/layout-kits';
+  import LayoutBasket from './layout-basket/layout-basket';
   export default {
     name: 'composer-aside',
     components: {
-      LayoutKits
+      LayoutBasket
     },
     props: {
-      layoutKits: {
+      layouts: {
         type: Array,
         default() {
           return []

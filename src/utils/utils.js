@@ -1,7 +1,7 @@
 import {template} from "lodash";
 
-export const restructureLayouts = (layoutKits) => {
-  return layoutKits.map(layoutKit => Object.assign(layoutKit, {templateFunc: template(layoutKit.template)}));
+export const restructureLayouts = (layouts) => {
+  return layouts.map(layout => Object.assign(layout, {templateFunc: template(layout.template)}));
 };
 
 let _blockIdSeq = 0;

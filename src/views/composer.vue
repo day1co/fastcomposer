@@ -9,7 +9,7 @@
       @toggleViewport="onToggleViewport"
     />
     <composer-content
-      :layoutKits="layoutKits"
+      :layouts="layouts"
       :layers="layers"
     />
 
@@ -53,12 +53,12 @@
         this.currentLayer = this.layers[this.currentLayerIndex];
       });
 
-      // function1
-      EventBus.$on('addLayer', (layoutKit) => {
+      // function1 addLayer
+      EventBus.$on('selected', (layout) => {
         const layer = {
           id: uniqueId(),
-          layout: layoutKit,
-          values: cloneDeep(layoutKit.values) || {},
+          layout,
+          values: cloneDeep(layout.values) || {},
         };
 
         this.layers.push(layer);
@@ -100,7 +100,7 @@
     },
     data() {
       return {
-        layoutKits: [],
+        layouts: [],
         layers: [],
         currentLayerIndex: -1,
         viewport: '',
@@ -114,14 +114,14 @@
       closePopup() {
         this.currentLayerIndex = -1;
       },
-      setLayouts(layoutKits) {
-        this.layoutKits = layoutKits;
+      setLayouts(layouts) {
+        this.layouts = layouts;
       },
       setLayerBlockData(layerBlockData) {
         /**
          * layoutMap은 LayerBlackData에서 사용하니 사용구간으로 이동
          */
-        this.layoutMap = this.layoutKits.reduce((layoutMap, layout) => {
+        this.layoutMap = this.layouts.reduce((layoutMap, layout) => {
           layoutMap[layout.id] = layout;
           return layoutMap;
         }, {});
