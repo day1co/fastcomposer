@@ -1,7 +1,7 @@
 <template>
   <div class="preview-container">
     <main>
-      <Container @drop="onDrop" drag-handle-selector=".row-drag-handle" :animation-duration="200">
+      <Container @drop="onDrop" :animation-duration="200">
         <Draggable v-for="(layer, layerIndex) in layers" :key="layerIndex">
           <layer-preview
             :key="'layer-' + layerIndex"

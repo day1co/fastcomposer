@@ -8,31 +8,36 @@
     <composer-header
       @toggleViewport="onToggleViewport"
     />
-    <composer-content
-      :layouts="layouts"
-      :layers="layers"
-    />
+    <div class="fc-composer__content">
+      <preview
+        :layers="layers"
+      />
+      <composer-aside
+        :layouts="layouts"
+      />
+    </div>
 
-    <div class="fc-block__edit" v-if="getCurrentLayer" v-draggable style="position: absolute;top:50%;left: 50%;">
+    <div class="fc-block__edit" v-if="currentLayer" v-draggable>
       <div class="draggablePopupTools">
         <button @click="closePopup()">
           <i class="material-icons">close</i>
         </button>
       </div>
-      <editor :layer="getCurrentLayer" />
+      <editor :layer="currentLayer" />
     </div>
   </div>
 </template>
 
 <script>
   import { cloneDeep } from 'lodash';
+  import { Draggable } from 'draggable-vue-directive';
   import { uniqueId } from './../utils/utils';
   import EventBus from './../event-bus/event-bus';
   import marked from 'marked';
-  import ComposerHeader from '../components/header.vue';
-  import ComposerContent from '../components/content/content.vue';
-  import Editor from '../components/editor';
-  import { Draggable } from 'draggable-vue-directive';
+  import ComposerHeader from '../components/header/header.vue';
+  import Editor from '../components/editor/editor';
+  import Preview from '../components/content/preview/preview';
+  import ComposerAside from '../components/content/aside/aside';
 
   export default {
     name: 'composer',
@@ -41,7 +46,8 @@
     },
     components: {
       ComposerHeader,
-      ComposerContent,
+      Preview,
+      ComposerAside,
       Editor,
     },
     mounted() {
@@ -66,7 +72,7 @@
       });
 
       // function 2
-      EventBus.$on('toggleAsideMenu', () => {
+      EventBus.$on('toggleAside', () => {
         this.isVisible = !this.isVisible;
       });
 
@@ -83,7 +89,7 @@
       });
     },
     computed: {
-      getCurrentLayer() {
+      currentLayer() {
         return this.layers[this.currentLayerIndex];
       },
       layerHtml() {
@@ -226,6 +232,9 @@
     }
 
     .fc-block__edit {
+      position: absolute;
+      top:50%;
+      left: 50%;
       border: 0.8rem solid ;
       padding: 1.2rem 1.2rem;
       background-color: #f8f8f8;

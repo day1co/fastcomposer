@@ -6,7 +6,7 @@
     <button
       type="button"
       class="fc-aside__btn"
-      @click="toggleMenu">
+      @click="toggleAside">
       <i class="material-icons">&#xE3E8;</i>
     </button>
   </div>
@@ -28,8 +28,8 @@
       }
     },
     methods: {
-      toggleMenu() {
-        EventBus.$emit('toggleAsideMenu');
+      toggleAside() {
+        EventBus.$emit('toggleAside');
       }
     }
   }
