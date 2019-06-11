@@ -1,5 +1,5 @@
 <template>
-  <form class="fc-block__form" @submit="$emit('apply', layer)">
+  <form class="fc-block__form">
     <fieldset
       v-for="param in layer.layout.params"
       :key="param.name"
@@ -56,10 +56,6 @@
       },
     },
     methods: {
-      resize(event){
-        event.target.style.height = 'auto';
-        event.target.style.height = `${event.target.scrollHeight}px`;
-      },
       upload(name, url) {
         this.layer.values[name] = url;
       },
