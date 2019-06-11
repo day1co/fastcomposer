@@ -49,6 +49,6 @@ const app = new Vue({
 //   app.$refs.composer.setLayerBlockData(resources.data);
 // });
 
-// console.log(layoutKits); // 실제 layout 도구들...
-// console.log(res.data); // layoutKits들을 이용하여 data와 결합하여 preview에 보여준다
+// console.log(layouts); // 실제 layout 도구들...
+// console.log(res.data); // layouts들을 이용하여 data와 결합하여 preview에 보여준다
 

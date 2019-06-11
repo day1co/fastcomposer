@@ -5,7 +5,7 @@
     />
 
     <composer-aside
-      :layoutKits="layoutKits"
+      :layouts="layouts"
     />
   </div>
 </template>
@@ -20,7 +20,7 @@
       Preview,
     },
     props: {
-      layoutKits: {
+      layouts: {
         type: Array,
         default() {
           return [];

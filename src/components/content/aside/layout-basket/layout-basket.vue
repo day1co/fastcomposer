@@ -1,24 +1,22 @@
 <template>
   <ul class="fc-aside__list">
-    <template v-for="(layoutKit, index) in layoutKits">
-      <li :key="index">
-        <button class="fc-layout-kit__item" @click="selected(layoutKit)">
-          <img :src="layoutKit.icon" alt="" />
-          <span class="fc-layout-kit__item__info">
-            <strong class="fc-layout-kit__item__name">{{ layoutKit.id }}</strong>
-            {{ layoutKit.description }}
-          </span>
-        </button>
-      </li>
-    </template>
+    <li v-for="(layout, index) in layouts" :key="index">
+      <button class="fc-layout-kit__item" @click="selected(layout)">
+        <img :src="layout.icon" alt="" />
+        <span class="fc-layout-kit__item__info">
+          <strong class="fc-layout-kit__item__name">{{ layout.id }}</strong>
+          {{ layout.description }}
+        </span>
+      </button>
+    </li>
   </ul>
 </template>
 <script>
   import EventBus from './../../../../event-bus/event-bus';
   export default {
-    name: 'layout-kits',
+    name: 'layout-basket',
     props: {
-      layoutKits: {
+      layouts: {
         type: Array,
         default() {
           return []
@@ -26,11 +24,11 @@
       }
     },
     methods: {
-      selected(layoutKit) {
+      selected(layout) {
         /**
          * composer에서 layers에 push가 일어나며, 추가된 layer가 선택된다.
          */
-        EventBus.$emit('addLayer', layoutKit);
+        EventBus.$emit('selected', layout);
       }
     }
   }
