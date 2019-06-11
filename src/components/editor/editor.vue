@@ -64,5 +64,5 @@
 </script>
 
 <style lang="scss">
-  @import '../assets/scss/utils/utilities.scss';
+  @import '../../assets/scss/utils/utilities';
 </style>
