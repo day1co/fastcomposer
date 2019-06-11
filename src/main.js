@@ -1,13 +1,13 @@
 //
 // entry-point for vue-cli-service build/serve
 //
-import { restructureLayoutKit } from './utils/utils';
+import { restructureLayouts } from './utils/utils';
 import Vue from 'vue';
 import axios from 'axios';
 import Composer from './views/composer.vue';
 
 // sample layouts with es6 module:
-import layoutKits from '../public/layouts/src/all';
+import layouts from '../public/layouts/src/all';
 import '../public/layouts/src/all.css';
 
 // sample layouts with commonjs bundle
@@ -39,8 +39,7 @@ const app = new Vue({
     });
   },
   mounted() {
-    console.dir(layoutKits);
-    this.$refs.composer.setLayoutKits(restructureLayoutKit(layoutKits));
+    this.$refs.composer.setLayouts(restructureLayouts(layouts));
   },
 });
 /**

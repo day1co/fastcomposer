@@ -51,7 +51,6 @@
       EventBus.$on('selectedLayer', (layer) => {
         this.currentLayerIndex = getSelectedIndex(layer);
         this.currentLayer = this.layers[this.currentLayerIndex];
-        // console.log(this.getCurrentLayer());
       });
 
       // function1
@@ -90,9 +89,9 @@
       layerHtml() {
         const html = this.layers
           .map(layer => `
-<section class="fc-block fc-layout fc-layout-${layer.layout.id}">
-${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
-</section>`,
+            <section class="fc-block fc-layout fc-layout-${layer.layout.id}">
+            ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
+            </section>`,
           )
           .join('\n');
 
@@ -115,7 +114,7 @@ ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
       closePopup() {
         this.currentLayerIndex = -1;
       },
-      setLayoutKits(layoutKits) {
+      setLayouts(layoutKits) {
         this.layoutKits = layoutKits;
       },
       setLayerBlockData(layerBlockData) {

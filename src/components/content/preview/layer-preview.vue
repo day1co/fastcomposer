@@ -27,13 +27,9 @@ export default {
   props: {
     layer: {
       type: Object,
-      default(){
+      default() {
         return {}
       }
-    },
-    zoom: {
-      type: Number,
-      default: 0
     },
     active: {
       type: Boolean,

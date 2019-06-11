@@ -1,6 +1,6 @@
 import {template} from "lodash";
 
-export const restructureLayoutKit = (layoutKits) => {
+export const restructureLayouts = (layoutKits) => {
   return layoutKits.map(layoutKit => Object.assign(layoutKit, {templateFunc: template(layoutKit.template)}));
 };
 
