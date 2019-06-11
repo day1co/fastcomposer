@@ -56,7 +56,7 @@
       // function0
       EventBus.$on('selectedLayer', (layer) => {
         this.currentLayerIndex = getSelectedIndex(layer);
-        this.currentLayer = this.layers[this.currentLayerIndex];
+        // this.currentLayer = this.layers[this.currentLayerIndex];
       });
 
       // function1 addLayer
