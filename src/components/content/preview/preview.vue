@@ -3,7 +3,7 @@
     <main>
       <Container @drop="onDrop" :animation-duration="200">
         <Draggable v-for="(layer, layerIndex) in layers" :key="layerIndex">
-          <layer-preview
+          <layer-content
             :key="'layer-' + layerIndex"
             :layer="layer"
           />
@@ -19,7 +19,7 @@
 <script>
   import EventBus from './../../../event-bus/event-bus';
   import marked from 'marked';
-  import LayerPreview from './layer-preview.vue';
+  import LayerContent from './layer-content.vue';
   import { Container, Draggable } from "vue-smooth-dnd";
 
   const applyDrag = (arr, dragResult) => {
@@ -42,7 +42,7 @@
 
   export default {
     components: {
-      LayerPreview,
+      LayerContent,
       Container,
       Draggable,
     },
