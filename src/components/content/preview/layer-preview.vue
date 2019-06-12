@@ -23,7 +23,6 @@ import EventBus from './../../../event-bus/event-bus';
 import marked from 'marked';
 
 export default {
-  name: 'layer-preview',
   props: {
     layer: {
       type: Object,

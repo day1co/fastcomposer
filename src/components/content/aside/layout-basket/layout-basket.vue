@@ -1,10 +1,10 @@
 <template>
   <ul class="fc-aside__list">
     <li v-for="(layout, index) in layouts" :key="index">
-      <button class="fc-layout-kit__item" @click="selected(layout)">
+      <button class="fc-layout__item" @click="selected(layout)">
         <img :src="layout.icon" alt="" />
-        <span class="fc-layout-kit__item__info">
-          <strong class="fc-layout-kit__item__name">{{ layout.id }}</strong>
+        <span class="fc-layout__item__info">
+          <strong class="fc-layout__item__name">{{ layout.id }}</strong>
           {{ layout.description }}
         </span>
       </button>
@@ -14,7 +14,6 @@
 <script>
   import EventBus from './../../../../event-bus/event-bus';
   export default {
-    name: 'layout-basket',
     props: {
       layouts: {
         type: Array,
@@ -50,7 +49,7 @@
       }
     }
 
-    .fc-layout-kit {
+    .fc-layout {
       &__item {
         display: flex;
         flex-direction: row;

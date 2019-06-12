@@ -43,7 +43,6 @@
   // import FileUpload from './file-upload.vue';
 
   export default {
-    name: 'editor',
     components: {
       // FileUpload,
     },
