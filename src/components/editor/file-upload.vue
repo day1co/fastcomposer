@@ -22,7 +22,6 @@
 
 <script>
 export default {
-  name: 'file-upload',
   props: {
     name: String,
     accept: String,

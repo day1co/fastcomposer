@@ -41,7 +41,6 @@
   };
 
   export default {
-    name: 'preview',
     components: {
       LayerPreview,
       Container,

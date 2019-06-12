@@ -5,9 +5,7 @@
     isVisible && 'fc-composer--aside'
   ]"
   >
-    <composer-header
-      @toggleViewport="onToggleViewport"
-    />
+    <composer-header/>
     <div class="fc-composer__content">
       <preview
         :layers="layers"
@@ -40,7 +38,6 @@
   import ComposerAside from '../components/content/aside/aside';
 
   export default {
-    name: 'composer',
     directives: {
       Draggable
     },
@@ -87,6 +84,11 @@
       EventBus.$on('save', (html) => {
         console.log(html);
       });
+
+      // function 5
+      EventBus.$on('toggleViewport', (viewport) => {
+          this.viewport = viewport;
+      });
     },
     computed: {
       currentLayer() {
@@ -114,9 +116,6 @@
       };
     },
     methods: {
-      onToggleViewport(viewport) {
-        this.viewport = viewport;
-      },
       closePopup() {
         this.currentLayerIndex = -1;
       },

@@ -15,7 +15,6 @@
   import EventBus from './../../../event-bus/event-bus';
   import LayoutBasket from './layout-basket/layout-basket';
   export default {
-    name: 'composer-aside',
     components: {
       LayoutBasket
     },
