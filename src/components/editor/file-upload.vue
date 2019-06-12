@@ -25,6 +25,12 @@ export default {
   props: {
     name: String,
     accept: String,
+    layer: {
+      type: Object,
+      default() {
+        return {}
+      },
+    },
   },
   data() {
     return {
@@ -45,10 +51,22 @@ export default {
       //setTimeout(()=>this.$root.$emit('fc-upload', {id: this.id, type: 'STATE', state: 'UPLOADING', progress: 50}), 2*1000);
       //setTimeout(()=>this.$root.$emit('fc-upload', {id: this.id, type: 'STATE', state: 'ERROR', error: 'test'}), 5*1000);
       //setTimeout(()=>this.$root.$emit('fc-upload', {id: this.id, type: 'STATE', state: 'UPLOADED', url: 'test'}), 5*1000);
+      if (!files.length)
+        return;
+      this.createImage(files[0]);
     },
     cancel() {
       this.$root.$emit('fc-upload', { id: this.id, type: 'CANCEL' });
       this.state = 'READY';
+    },
+    createImage(file) {
+      const reader = new FileReader();
+      const vm = this;
+
+      reader.onload = (e) => {
+        vm.layer.values[vm.name] = e.target.result;
+      };
+      reader.readAsDataURL(file);
     },
   },
   created() {

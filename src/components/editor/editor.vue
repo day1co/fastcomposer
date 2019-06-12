@@ -18,11 +18,12 @@
           :placeholder="param.description"
           v-model="layer.values[param.name]"
         />
-<!--        <preview-edit-->
-<!--          :name="param.name"-->
-<!--          accept="image/*"-->
-<!--          @upload="upload"-->
-<!--        ></preview-edit>-->
+        <file-upload
+          :name="param.name"
+          :layer="layer"
+          accept="image/*"
+          @upload="upload"
+        ></file-upload>
       </template>
 
       <template v-else>
@@ -40,11 +41,11 @@
 </template>
 
 <script>
-  // import FileUpload from './file-upload.vue';
+  import FileUpload from './file-upload.vue';
 
   export default {
     components: {
-      // FileUpload,
+      FileUpload,
     },
     props: {
       layer: {
