@@ -39,7 +39,7 @@ const app = new Vue({
     });
   },
   mounted() {
-    this.$refs.composer.setLayouts(restructureLayouts(layouts));
+    this.$refs.composer.setLayouts(layouts);
   },
 });
 /**
