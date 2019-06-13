@@ -29,7 +29,7 @@
 <script>
   import { cloneDeep } from 'lodash';
   import { Draggable } from 'draggable-vue-directive';
-  import { uniqueId } from './../utils/utils';
+  import { uniqueId, restructureLayouts } from './../utils/utils';
   import EventBus from './../event-bus/event-bus';
   import marked from 'marked';
   import ComposerHeader from '../components/header/header.vue';
@@ -120,7 +120,7 @@
         this.currentLayerIndex = -1;
       },
       setLayouts(layouts) {
-        this.layouts = layouts;
+        this.layouts = restructureLayouts(layouts);
       },
       setLayerBlockData(layerBlockData) {
         /**
@@ -135,6 +135,9 @@
          * uniqueId -> 밖으로 빼서처리해도 될거같은데...
          * @type {any}
          */
+        if (typeof layerBlockData === 'string') {
+          layerBlockData = JSON.parse(layerBlockData);
+        }
         this.layers = Object.assign([], layerBlockData.map(layer => Object.assign({id: uniqueId()}, layer, {layout: this.layoutMap[layer.layout]})));
       },
       save() {
