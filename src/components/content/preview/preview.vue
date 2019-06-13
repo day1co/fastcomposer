@@ -6,6 +6,7 @@
           <layer-content
             :key="'layer-' + layerIndex"
             :layer="layer"
+            :index="layerIndex"
           />
         </Draggable>
       </Container>

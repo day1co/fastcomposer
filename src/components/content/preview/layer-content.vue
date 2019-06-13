@@ -4,7 +4,7 @@
       :id="layer.id"
       @click="selectedLayer(layer)"
       class="fc-layer-preview fc-block fc-layout"
-      :class="['fc-layout-' + layer.layout.id, { active: active }, { hidden: this.layer.hidden }]"
+      :class="['fc-layout-' + layer.layout.id, { active: active }, { hidden: layer.hidden }]"
       v-html="html"
     ></div>
     <div class="fc-block__utils">
@@ -42,8 +42,8 @@ export default {
     },
   },
   methods: {
-    removeLayer() {
-      EventBus.$emit('removeLayer', this.layer, this.index);
+    removeLayer(layer, index) {
+      EventBus.$emit('removeLayer', layer, index);
     },
     selectedLayer(layer) {
       EventBus.$emit('selectedLayer', layer);
