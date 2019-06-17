@@ -89,6 +89,11 @@
       EventBus.$on('toggleViewport', (viewport) => {
           this.viewport = viewport;
       });
+
+      // function 6
+      EventBus.$on('fc-upload', (obj, callback) => {
+        this.$emit('uploadFile', obj, callback);
+      });
     },
     computed: {
       currentLayer() {
