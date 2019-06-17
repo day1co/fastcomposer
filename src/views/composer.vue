@@ -82,7 +82,7 @@
 
       // function 4
       EventBus.$on('save', (html) => {
-        console.log(html);
+        this.save(html);
       });
 
       // function 5
