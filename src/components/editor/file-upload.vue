@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import EventBus from './../../event-bus/event-bus';
 export default {
   props: {
     name: String,
@@ -47,30 +48,25 @@ export default {
   },
   methods: {
     upload(files) {
-      this.$root.$emit('fc-upload', { id: this.id, type: 'UPLOAD', files });
+      // this.$root.$emit('fc-upload', { id: this.id, type: 'UPLOAD', files });
       //setTimeout(()=>this.$root.$emit('fc-upload', {id: this.id, type: 'STATE', state: 'UPLOADING', progress: 50}), 2*1000);
       //setTimeout(()=>this.$root.$emit('fc-upload', {id: this.id, type: 'STATE', state: 'ERROR', error: 'test'}), 5*1000);
       //setTimeout(()=>this.$root.$emit('fc-upload', {id: this.id, type: 'STATE', state: 'UPLOADED', url: 'test'}), 5*1000);
-      if (!files.length)
-        return;
-      this.createImage(files[0]);
+      // if (!files.length)
+      //   return;
+      if (files.length) {
+        EventBus.$emit('fc-upload', { id: this.id, type: 'UPLOAD', files }, ({ id, url}) => {
+          this.layer.values[this.name] = url;
+        });
+      }
     },
     cancel() {
       this.$root.$emit('fc-upload', { id: this.id, type: 'CANCEL' });
       this.state = 'READY';
     },
-    createImage(file) {
-      const reader = new FileReader();
-      const vm = this;
-
-      reader.onload = (e) => {
-        vm.layer.values[vm.name] = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    },
   },
   created() {
-    // this.$root.$on('fc-upload', event => {
+    // EventBus.$on('fc-upload', event => {
     //   if (event.id === this.id) {
     //     console.log('fc-upload', event);
     //     if (event.type === 'STATE') {
