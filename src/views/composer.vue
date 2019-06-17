@@ -242,9 +242,11 @@
       position: absolute;
       top:50%;
       left: 50%;
+      max-height: 1000px;
       border: 0.8rem solid ;
       padding: 1.2rem 1.2rem;
       background-color: #f8f8f8;
+      overflow: scroll;
       .draggablePopupTools {
         text-align: right;
       }
