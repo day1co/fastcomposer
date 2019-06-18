@@ -1,6 +1,7 @@
 {
   "name": "@fastcampus/fastcomposer",
-  "version": "0.0.3",
+  "version": "0.1.0-dev",
+  "author": "Yoosoo Won <yswon@fastcampus.co.kr>",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
