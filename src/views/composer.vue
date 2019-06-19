@@ -11,6 +11,7 @@
         :layers="layers"
       />
       <composer-aside
+        :layers="layers"
         :layouts="layouts"
       />
     </div>
@@ -47,7 +48,7 @@
       ComposerAside,
       Editor,
     },
-    mounted() {
+    created() {
       const getSelectedIndex = layer => this.layers.indexOf(layer);
 
       // function0
@@ -58,6 +59,7 @@
 
       // function1 addLayer
       EventBus.$on('selected', (layout) => {
+        console.log('90');
         const layer = {
           id: uniqueId(),
           layout,
@@ -93,6 +95,11 @@
       // function 6
       EventBus.$on('fc-upload', (obj, callback) => {
         this.$emit('uploadFile', obj, callback);
+      });
+
+      // function 7
+      EventBus.$on('moveSelectedLayer',(index) => {
+        this.$el.getElementsByClassName('fc-composer__content')[0].scrollTop = this.$el.getElementsByClassName('fc-layer-preview-container')[index].offsetTop;
       });
     },
     computed: {
@@ -155,6 +162,32 @@
         this.$emit('save', layerHtml, layerJson);
       },
     },
+    beforeDestroy() {
+      console.log('beforeDestroy');
+      // function0
+      EventBus.$off('selectedLayer');
+
+      // function1 addLayer
+      EventBus.$off('selected');
+
+      // function 2
+      EventBus.$off('toggleAside');
+
+      // function 3
+      EventBus.$off('removeLayer');
+
+      // function 4
+      EventBus.$off('save');
+
+      // function 5
+      EventBus.$off('toggleViewport');
+
+      // function 6
+      EventBus.$off('fc-upload');
+
+      // function 7
+      EventBus.$on('moveSelectedLayer');
+    }
   };
 </script>
 
