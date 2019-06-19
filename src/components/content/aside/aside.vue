@@ -1,6 +1,9 @@
 <template>
   <div class="fc-aside">
-    <layout-basket
+    <layer-basket
+      :layers="layers"
+    />
+    <layouts
       :layouts="layouts"
     />
     <button
@@ -13,10 +16,12 @@
 </template>
 <script>
   import EventBus from './../../../event-bus/event-bus';
-  import LayoutBasket from './layout-basket/layout-basket';
+  import LayerBasket from './layer-basket/layer-basket';
+  import Layouts from './layouts/layouts';
   export default {
     components: {
-      LayoutBasket
+      LayerBasket,
+      Layouts
     },
     props: {
       layouts: {
@@ -24,7 +29,13 @@
         default() {
           return []
         }
-      }
+      },
+      layers: {
+        type: Array,
+        default() {
+          return []
+        }
+      },
     },
     methods: {
       toggleAside() {
@@ -37,6 +48,7 @@
   @import '../../../assets/scss/utils/utilities.scss';
 
   .fc-aside {
+    display: flex;
     position: fixed;
     top: 0;
     right: 0;
@@ -64,6 +76,7 @@
       overflow: scroll;
       box-sizing: border-box;
       padding: 1.2rem 0.9rem;
+      width: percentage(0.5);
       height: percentage(1);
       background-color: $secondary;
 

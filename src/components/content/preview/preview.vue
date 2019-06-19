@@ -1,15 +1,12 @@
 <template>
-  <div class="preview-container">
+  <div class="fc-preview-container">
     <main>
-      <Container @drop="onDrop" :animation-duration="200">
-        <Draggable v-for="(layer, layerIndex) in layers" :key="layerIndex">
-          <layer-content
-            :key="'layer-' + layerIndex"
-            :layer="layer"
-            :index="layerIndex"
-          />
-        </Draggable>
-      </Container>
+      <layer-content
+        v-for="(layer, layerIndex) in layers"
+        :key="'layer-' + layerIndex"
+        :layer="layer"
+        :index="layerIndex"
+      />
     </main>
     <button class="fc-composer__content__save" type="button" @click="save">
       <i class="material-icons">&#xE5CA;</i>
@@ -21,31 +18,10 @@
   import EventBus from './../../../event-bus/event-bus';
   import marked from 'marked';
   import LayerContent from './layer-content.vue';
-  import { Container, Draggable } from "vue-smooth-dnd";
-
-  const applyDrag = (arr, dragResult) => {
-    const { removedIndex, addedIndex, payload } = dragResult;
-    if (removedIndex === null && addedIndex === null) return arr;
-
-    const result = arr;
-    let itemToAdd = payload;
-
-    if (removedIndex !== null) {
-      itemToAdd = result.splice(removedIndex, 1)[0];
-    }
-
-    if (addedIndex !== null) {
-      result.splice(addedIndex, 0, itemToAdd);
-    }
-
-    return result;
-  };
 
   export default {
     components: {
       LayerContent,
-      Container,
-      Draggable,
     },
     props: {
       layers: {
@@ -56,9 +32,6 @@
       },
     },
     methods: {
-      onDrop(dropResult) {
-        this.layers = applyDrag(this.layers, dropResult);
-      },
       save() {
         const html = this.layers
           .map(
@@ -92,7 +65,7 @@
       0.16);
     @include transition(null, 0.3s);
 
-    .preview-container {
+    .fc-preview-container {
       background-color: $white;
     }
 
@@ -199,9 +172,6 @@
           color: $white;
         }
       }
-    }
-
-    &__utils {
     }
   }
 </style>
