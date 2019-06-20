@@ -24,6 +24,10 @@
       </div>
       <editor :layer="currentLayer" />
     </div>
+    <modal v-if="showModal" @close="showModal = false">
+      <h3 slot="header">알림</h3>
+      <p slot="body">저장되었습니다</p>
+    </modal>
   </div>
 </template>
 
@@ -37,12 +41,14 @@
   import Editor from '../components/editor/editor';
   import Preview from '../components/content/preview/preview';
   import ComposerAside from '../components/content/aside/aside';
+  import Modal from '../components/common/modal';
 
   export default {
     directives: {
       Draggable
     },
     components: {
+      Modal,
       ComposerHeader,
       Preview,
       ComposerAside,
@@ -120,6 +126,7 @@
     },
     data() {
       return {
+        showModal: false,
         layouts: [],
         layers: [],
         currentLayerIndex: -1,
@@ -160,6 +167,7 @@
         // TODO: save html only!
         // AS-IS: save generated html with source json
         this.$emit('save', layerHtml, layerJson);
+        this.showModal = true; // callback으로 받아서 처리 고려...
       },
     },
     beforeDestroy() {

@@ -1,9 +1,7 @@
 //
 // entry-point for vue-cli-service build/serve
 //
-import { restructureLayouts } from './utils/utils';
 import Vue from 'vue';
-import axios from 'axios';
 import Composer from './views/composer.vue';
 
 // sample layouts with es6 module:
@@ -25,7 +23,7 @@ const el = document.querySelector('#app');
 //   layout.icon = require(`../public/layouts/${layout.id}/icon.svg`);
 // });
 
-const app = new Vue({
+new Vue({
   el,
   render(createElement) {
     return createElement(Composer, {
