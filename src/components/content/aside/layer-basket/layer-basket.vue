@@ -1,8 +1,8 @@
 <template>
   <div class="fc-aside__list">
-    <Container @drop="onDrop" :animation-duration="200">
-      <Draggable v-for="(layer, layerIndex) in layers" :key="layerIndex">
-        <button class="fc-layout__item" @click="select(layer, layerIndex)">
+    <Container @drop="drop" :animation-duration="200">
+      <Draggable v-for="(layer, index) in layers" :key="index">
+        <button class="fc-layout__item" @click="select(index)">
           <img :src="layer.layout.icon" alt="" />
           <span class="fc-layout__item__info">
             <strong class="fc-layout__item__name">{{ layer.layout.id }}</strong>
@@ -22,24 +22,6 @@
   import { Container, Draggable } from "vue-smooth-dnd";
   import EventBus from './../../../../event-bus/event-bus';
 
-  const applyDrag = (arr, dragResult) => {
-    const { removedIndex, addedIndex, payload } = dragResult;
-    if (removedIndex === null && addedIndex === null) return arr;
-
-    const result = arr;
-    let itemToAdd = payload;
-
-    if (removedIndex !== null) {
-      itemToAdd = result.splice(removedIndex, 1)[0];
-    }
-
-    if (addedIndex !== null) {
-      result.splice(addedIndex, 0, itemToAdd);
-    }
-
-    return result;
-  };
-
   export default {
     components: {
       Container,
@@ -53,16 +35,38 @@
         }
       },
     },
-    methods: {
-      select(layer, layerIndex) {
-        EventBus.$emit('moveSelectedLayer', layerIndex);
-        EventBus.$emit('selectedLayer', layer);
+    data() {
+      return {
+        dropResult: null
+      }
+    },
+    computed: {
+      applyDrag() {
+        const { removedIndex, addedIndex, payload } = this.dropResult;
+        if (removedIndex === null && addedIndex === null) return this.layers;
 
-        // console.log(layer);
-        // console.dir(layerIndex);
+        const result = this.layers;
+        let itemToAdd = payload;
+
+        if (removedIndex !== null) {
+          itemToAdd = result.splice(removedIndex, 1)[0];
+        }
+
+        if (addedIndex !== null) {
+          result.splice(addedIndex, 0, itemToAdd);
+        }
+
+        return result;
+      }
+    },
+    methods: {
+      select(index) {
+        EventBus.$emit('selected-layer', index);
+        EventBus.$emit('move-selected-layer');
       },
-      onDrop(dropResult) {
-        this.layers = applyDrag(this.layers, dropResult);
+      drop(dropResult) {
+        this.dropResult = dropResult;
+        this.layers = this.applyDrag;
       },
     }
   }

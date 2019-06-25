@@ -31,9 +31,9 @@
         },
       },
     },
-    methods: {
-      save() {
-        const html = this.layers
+    computed: {
+      html() {
+        return this.layers
           .map(
             block => `
             <section class="fc-block fc-layout fc-layout-${block.layout.id}">
@@ -44,7 +44,12 @@
             </section>`
           )
           .join('\n');
-        EventBus.$emit('save', html);
+      }
+    },
+    methods: {
+      save() {
+        console.log(this.html);
+        EventBus.$emit('save');
       }
     },
   };

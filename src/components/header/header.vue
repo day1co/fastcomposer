@@ -14,7 +14,7 @@
   export default {
     methods: {
       toggleViewport(viewport) {
-        EventBus.$emit('toggleViewport', viewport);
+        EventBus.$emit('toggle-viewport', viewport);
       }
     }
   }
