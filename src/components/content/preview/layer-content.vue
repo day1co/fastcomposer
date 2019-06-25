@@ -33,8 +33,8 @@ export default {
     },
   },
   methods: {
-    removeLayer(layer, index) {
-      EventBus.$emit('removeLayer', layer, index);
+    removeLayer(index) {
+      EventBus.$emit('remove-layer',index);
     },
   }
 };

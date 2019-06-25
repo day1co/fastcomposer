@@ -27,7 +27,7 @@
         /**
          * composer에서 layers에 push가 일어나며, 추가된 layer가 선택된다.
          */
-        EventBus.$emit('selected', layout);
+        EventBus.$emit('add-layer', layout);
       }
     }
   }

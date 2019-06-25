@@ -39,7 +39,7 @@
     },
     methods: {
       toggleAside() {
-        EventBus.$emit('toggleAside');
+        EventBus.$emit('toggle-aside');
       }
     }
   }

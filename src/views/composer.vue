@@ -56,7 +56,7 @@
       Editor,
     },
     props: {
-      layoutsModels: {
+      layoutModels: {
         type: Array,
         default () {
           return [{}];
@@ -70,78 +70,40 @@
       },
     },
     mounted() {
-      this.setLayouts(this.layoutsModels);
+      this.setLayouts(this.layoutModels);
       this.setLayerBlockData(this.layerModals);
     },
     created() {
-      const getSelectedIndex = layer => this.layers.indexOf(layer);
-
-      // function0
-      EventBus.$on('selectedLayer', (layer) => {
-        this.currentLayerIndex = getSelectedIndex(layer);
-        // this.currentLayer = this.layers[this.currentLayerIndex];
-      });
-
-      // function1 addLayer
-      EventBus.$on('selected', (layout) => {
-        console.log('90');
-        const layer = {
-          id: uniqueId(),
-          layout,
-          values: cloneDeep(layout.values) || {},
-        };
-
-        this.layers.push(layer);
-        this.currentLayerIndex = getSelectedIndex(layer);
-      });
-
-      // function 2
-      EventBus.$on('toggleAside', () => {
-        this.isVisible = !this.isVisible;
-      });
-
-      // function 3
-      EventBus.$on('removeLayer', (layer, layerIndex) => {
-        if (layerIndex !== -1) {
-          this.layers.splice(layerIndex, 1);
-        }
-      });
-
-      // function 4
-      EventBus.$on('save', (html) => {
-        this.save(html);
-      });
-
-      // function 5
-      EventBus.$on('toggleViewport', (viewport) => {
-          this.viewport = viewport;
-      });
-
-      // function 6
-      EventBus.$on('fc-upload', (obj, callback) => {
-        this.$emit('uploadFile', obj, callback);
-      });
-
-      // function 7
-      EventBus.$on('moveSelectedLayer',(index) => {
-        this.$el.getElementsByClassName('fc-composer__content')[0].scrollTop = this.$el.getElementsByClassName('fc-layer-preview-container')[index].offsetTop;
-      });
+      // ㅠㅠ
+      EventBus.$on('selected-layer', this.onUpdateCurrentLayerIndex);
+      EventBus.$on('add-layer', this.onAddLayer);
+      EventBus.$on('remove-layer', this.onRemoveLayer);
+      EventBus.$on('toggle-aside', this.onToggleAside);
+      EventBus.$on('save', this.onSave);
+      EventBus.$on('toggle-viewport', this.onChangeViewport);
+      EventBus.$on('move-selected-layer',this.onMoveSelectedLayer);
+      EventBus.$on('fc-upload', this.onUploadFile);
     },
     computed: {
       currentLayer() {
         return this.layers[this.currentLayerIndex];
       },
       layerHtml() {
-        const html = this.layers
-          .map(layer => `
+        return this.layers.map(layer => `
             <section class="fc-block fc-layout fc-layout-${layer.layout.id}">
-            ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
+              ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
             </section>`,
-          )
-          .join('\n');
-
-        return html;
+          ).join('\n');
       },
+      layoutMaps() {
+        return this.layouts.reduce((layoutMap, layout) => {
+          layoutMap[layout.id] = layout;
+          return layoutMap;
+        }, {});
+      },
+      scrollPoint() {
+        return this.$el.getElementsByClassName('fc-layer-preview-container')[this.currentLayerIndex].offsetTop;
+      }
     },
     data() {
       return {
@@ -149,7 +111,7 @@
         layers: [],
         currentLayerIndex: -1,
         viewport: '',
-        isVisible: true, // 작업 편의를 위해 임시로
+        isVisible: true,
         notification: {
           state: false,
           show() {
@@ -162,6 +124,34 @@
       };
     },
     methods: {
+      onUpdateCurrentLayerIndex(index) {
+        this.currentLayerIndex = index;
+      },
+      onAddLayer(layout) {
+        this.layers.push({
+          id: uniqueId(),
+          layout,
+          values: cloneDeep(layout.values) || {},
+        });
+        this.currentLayerIndex = this.layers.length - 1
+      },
+      onRemoveLayer(index) {
+        if (index !== -1) {
+          this.layers.splice(index, 1);
+        }
+      },
+      onToggleAside() {
+        this.isVisible = !this.isVisible;
+      },
+      onChangeViewport(viewport) {
+        this.viewport = viewport;
+      },
+      onMoveSelectedLayer() {
+        this.$el.getElementsByClassName('fc-composer__content')[0].scrollTop = this.scrollPoint;
+      },
+      onUploadFile(fileInfo, callback) {
+        this.$emit('uploadFile', fileInfo, callback);
+      },
       closePopup() {
         this.currentLayerIndex = -1;
       },
@@ -169,24 +159,13 @@
         this.layouts = restructureLayouts(layouts);
       },
       setLayerBlockData(layerBlockData) {
-        /**
-         * layoutMap은 LayerBlackData에서 사용하니 사용구간으로 이동
-         */
-        this.layoutMap = this.layouts.reduce((layoutMap, layout) => {
-          layoutMap[layout.id] = layout;
-          return layoutMap;
-        }, {});
-
-        /**
-         * uniqueId -> 밖으로 빼서처리해도 될거같은데...
-         * @type {any}
-         */
         if (typeof layerBlockData === 'string') {
           layerBlockData = JSON.parse(layerBlockData);
         }
-        this.layers = Object.assign([], layerBlockData.map(layer => Object.assign({id: uniqueId()}, layer, {layout: this.layoutMap[layer.layout]})));
+
+        this.layers = Object.assign([], layerBlockData.map(layer => Object.assign({id: uniqueId()}, layer, {layout: this.layoutMaps[layer.layout]})));
       },
-      save() {
+      onSave() {
         const layerHtml = this.layerHtml;
         // replace layout object => layout id
         const layers = this.layers.map(layer => Object.assign({}, layer, {layout: layer.layout.id}));
@@ -197,30 +176,7 @@
       },
     },
     beforeDestroy() {
-      console.log('beforeDestroy');
-      // function0
-      EventBus.$off('selectedLayer');
-
-      // function1 addLayer
-      EventBus.$off('selected');
-
-      // function 2
-      EventBus.$off('toggleAside');
-
-      // function 3
-      EventBus.$off('removeLayer');
-
-      // function 4
-      EventBus.$off('save');
-
-      // function 5
-      EventBus.$off('toggleViewport');
-
-      // function 6
-      EventBus.$off('fc-upload');
-
-      // function 7
-      EventBus.$on('moveSelectedLayer');
+      EventBus.$off();
     }
   };
 </script>
