@@ -24,7 +24,8 @@
       </div>
       <editor :layer="currentLayer" />
     </div>
-    <modal v-if="showModal" @close="showModal = false">
+
+    <modal v-if="notification.state" @close="notification.hide()">
       <h3 slot="header">알림</h3>
       <p slot="body">저장되었습니다</p>
     </modal>
@@ -53,6 +54,24 @@
       Preview,
       ComposerAside,
       Editor,
+    },
+    props: {
+      layoutsModels: {
+        type: Array,
+        default () {
+          return [{}];
+        }
+      },
+      layerModals: {
+        type: Array,
+        default () {
+          return [{}];
+        }
+      },
+    },
+    mounted() {
+      this.setLayouts(this.layoutsModels);
+      this.setLayerBlockData(this.layerModals);
     },
     created() {
       const getSelectedIndex = layer => this.layers.indexOf(layer);
@@ -126,12 +145,20 @@
     },
     data() {
       return {
-        showModal: false,
         layouts: [],
         layers: [],
         currentLayerIndex: -1,
         viewport: '',
         isVisible: true, // 작업 편의를 위해 임시로
+        notification: {
+          state: false,
+          show() {
+            this.state = true;
+          },
+          hide() {
+            this.state = false;
+          }
+        }
       };
     },
     methods: {
@@ -167,7 +194,6 @@
         // TODO: save html only!
         // AS-IS: save generated html with source json
         this.$emit('save', layerHtml, layerJson);
-        this.showModal = true; // callback으로 받아서 처리 고려...
       },
     },
     beforeDestroy() {
