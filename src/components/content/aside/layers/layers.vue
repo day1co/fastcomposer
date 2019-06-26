@@ -1,21 +1,25 @@
 <template>
-  <div class="fc-aside__list">
-    <Container @drop="drop" :animation-duration="200">
-      <Draggable v-for="(layer, index) in layers" :key="index">
-        <button class="fc-layout__item" @click="select(index)">
-          <img :src="layer.layout.icon" alt="" />
-          <span class="fc-layout__item__info">
-            <strong class="fc-layout__item__name">{{ layer.layout.id }}</strong>
-            {{ layer.layout.description }}
-          </span>
-          <div class="fc-layout__utils">
-            <button class="fc-block__utils__btn" @click="removeLayer(layer, index)">
-              <i class="material-icons">&#xE872;</i>
+  <div class="fc-layer">
+    <div class="fc-layer__list">
+      <Container @drop="drop" :animation-duration="200">
+        <Draggable v-for="(layer, index) in layers" :key="index">
+          <div style="border: 1px solid darkviolet">
+            <button class="fc-layer__list__item" @click="select(index)">
+              <img :src="layer.layout.icon" alt="" />
+              <span class="fc-layer__list__item__info">
+              <strong class="fc-layer__list__item__name">{{ layer.layout.id }}</strong>
+              {{ layer.layout.description }}
+            </span>
+              <div class="fc-layer__list__utils">
+                <button class="fc-layer__list__utils__btn" @click="removeLayer(layer, index)">
+                  <i class="material-icons">&#xE872;</i>
+                </button>
+              </div>
             </button>
           </div>
-        </button>
-      </Draggable>
-    </Container>
+        </Draggable>
+      </Container>
+    </div>
   </div>
 </template>
 <script>
@@ -73,27 +77,18 @@
 </script>
 <style lang="scss" scoped>
   @import '../../../../assets/scss/utils/utilities.scss';
-  .fc-aside {
+
+  .fc-layer {
     &__list {
       overflow: scroll;
       box-sizing: border-box;
       padding: 1.2rem 0.9rem;
       height: percentage(1);
       background-color: $secondary;
-
-      li {
-        & + li {
-          margin-top: 1rem;
-        }
-      }
-    }
-
-    .fc-layout {
       &__item {
         display: flex;
         flex-direction: row;
         width: percentage(1);
-        margin-bottom: 0.5rem;
         background: #0fd961;
         color: $white;
 
@@ -108,6 +103,11 @@
         &__name {
           display: block;
           margin-bottom: 0.5rem;
+        }
+      }
+      .smooth-dnd-draggable-wrapper {
+        & + .smooth-dnd-draggable-wrapper {
+          margin-top: 0.5rem;
         }
       }
     }

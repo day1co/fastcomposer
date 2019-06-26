@@ -1,15 +1,17 @@
 <template>
-  <ul class="fc-aside__list">
-    <li v-for="(layout, index) in layouts" :key="index">
-      <button class="fc-layout__item" @click="selected(layout)">
-        <img :src="layout.icon" alt="" />
-        <span class="fc-layout__item__info">
-          <strong class="fc-layout__item__name">{{ layout.id }}</strong>
+  <div class="fc-layout">
+    <ul class="fc-layout__list">
+      <li v-for="(layout, index) in layouts" :key="index">
+        <button class="fc-layout__list__item" @click="selected(layout)">
+          <img :src="layout.icon" alt="" />
+          <span class="fc-layout__list__item__info">
+          <strong class="fc-layout__list__item__name">{{ layout.id }}</strong>
           {{ layout.description }}
         </span>
-      </button>
-    </li>
-  </ul>
+        </button>
+      </li>
+    </ul>
+  </div>
 </template>
 <script>
   import EventBus from './../../../../event-bus/event-bus';
@@ -32,9 +34,10 @@
     }
   }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   @import '../../../../assets/scss/utils/utilities.scss';
-  .fc-aside {
+
+  .fc-layout {
     &__list {
       overflow: scroll;
       box-sizing: border-box;
@@ -42,14 +45,6 @@
       height: percentage(1);
       background-color: $secondary;
 
-      li {
-        & + li {
-          margin-top: 1rem;
-        }
-      }
-    }
-
-    .fc-layout {
       &__item {
         display: flex;
         flex-direction: row;
@@ -68,6 +63,11 @@
           display: block;
           margin-bottom: 0.5rem;
         }
+      }
+    }
+    li {
+      & + li {
+        margin-top: 1rem;
       }
     }
   }
