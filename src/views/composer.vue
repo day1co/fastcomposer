@@ -102,7 +102,7 @@
         }, {});
       },
       scrollPoint() {
-        return this.$el.getElementsByClassName('fc-layer-preview-container')[this.currentLayerIndex].offsetTop;
+        return this.$el.getElementsByClassName('fc-layer')[this.currentLayerIndex].offsetTop;
       }
     },
     data() {
@@ -201,7 +201,6 @@
 
     &--flush {
       padding: 0;
-
       .fc-composer__content {
         margin-left: 0;
         margin-right: 0;
@@ -222,43 +221,19 @@
       padding-right: 0;
     }
 
-    &__header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 101;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-left: 1.8rem;
-      padding-right: 1.8rem;
-      width: percentage(1);
-      height: $header-size;
-      &__h {
-        font-size: 1.8rem;
-        color: $white;
-      }
-
-      &__utils {
-        display: flex;
-
-        .fc-utils__btn {
-          flex: 1;
-          display: flex;
-          margin-left: 0.8rem;
-          color: $white;
-          align-items: center;
-        }
-      }
-    }
-
-    .editor-draggable-area {
-      position: absolute;
-      left: calc(50% - 95px);
-      top: calc(50% - 57px);
-      border: 1px solid #bbb;
-      background-color: #ffffff;
+    &__content {
+      overflow: scroll;
+      position: relative;
+      scroll-behavior: smooth;
+      flex: 1;
+      margin-left: 1.8rem;
+      margin-right: 1.8rem;
+      background: -moz-linear-gradient(top,  rgba(135,224,253,1) 0%, rgba(83,203,241,1) 40%, rgba(5,171,224,1) 100%);
+      background: -webkit-linear-gradient(top,  rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
+      background: linear-gradient(to bottom,  rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
+      box-shadow: 0 .3rem 1rem rgba($black, 0.24), 0 .3rem 1rem rgba($black,
+        0.16);
+      @include transition(null, 0.3s);
     }
 
     .fc-block__edit {
@@ -275,27 +250,4 @@
       }
     }
   }
-
-  .side-area {
-    width: 20rem;
-  }
-
-  .preview-area {
-    width: 100%;
-    height: 100%;
-    overflow-y: scroll;
-  }
-
-  .save-btn {
-    position: fixed;
-    cursor: pointer;
-    border-radius: 50%;
-    right: 15px;
-    bottom: 35px;
-    width: 5rem;
-    height: 5rem;
-    background-color: #6e827f;
-    color: white;
-  }
-
 </style>

@@ -1,8 +1,8 @@
 <template>
-  <div class="fc-layer-preview-container">
+  <div class="fc-layer">
     <div
+      class="fc-layer__container"
       :id="layer.id"
-      class="fc-layer-preview fc-block fc-layout"
       :class="['fc-layout-' + layer.layout.id, { active: active }, { hidden: layer.hidden }]"
       v-html="html"
     ></div>
@@ -40,24 +40,25 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../../../assets/scss/utils/utilities.scss';
-.fc-layer-preview-container {
+
+.fc-layer {
   position: relative;
   border-bottom: 1px solid #bbb;
-}
-.fc-layer-preview {
-  flex: 0 0 0;
-  width: 100%;
-  outline: 1px dashed lightgray;
+  .fc-layer__preview {
+    flex: 0 0 0;
+    width: 100%;
+    outline: 1px dashed lightgray;
 
-  &.active {
-    outline: 1px dashed fuchsia;
-  }
+    &.active {
+      outline: 1px dashed fuchsia;
+    }
 
-  &.hidden {
-    opacity: 0.5;
-    background-color: olive;
+    &.hidden {
+      opacity: 0.5;
+      background-color: olive;
+    }
   }
 }
 </style>

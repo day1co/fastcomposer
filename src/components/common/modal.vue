@@ -56,9 +56,11 @@
         transition: all .3s ease;
         font-family: Helvetica, Arial, sans-serif;
 
-        &__header h3 {
-          margin-top: 0;
-          color: #42b983;
+        &__header {
+          h3 {
+            margin-top: 0;
+            color: #42b983;
+          }
         }
 
         &__body {

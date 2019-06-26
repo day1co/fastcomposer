@@ -1,6 +1,6 @@
 <template>
   <div class="fc-aside">
-    <layer-basket
+    <layers
       :layers="layers"
     />
     <layouts
@@ -16,11 +16,11 @@
 </template>
 <script>
   import EventBus from './../../../event-bus/event-bus';
-  import LayerBasket from './layer-basket/layer-basket';
+  import Layers from './layers/layers';
   import Layouts from './layouts/layouts';
   export default {
     components: {
-      LayerBasket,
+      Layers,
       Layouts
     },
     props: {
@@ -44,7 +44,8 @@
     }
   }
 </script>
-<style lang="scss">
+
+<style lang="scss" scoped>
   @import '../../../assets/scss/utils/utilities.scss';
 
   .fc-aside {
@@ -70,41 +71,6 @@
 
     .fc-composer--aside & {
       transform: translate3d(0, 0, 0);
-    }
-
-    &__list {
-      overflow: scroll;
-      box-sizing: border-box;
-      padding: 1.2rem 0.9rem;
-      width: percentage(0.5);
-      height: percentage(1);
-      background-color: $secondary;
-
-      li {
-        & + li {
-          margin-top: 1rem;
-        }
-      }
-    }
-
-    &__item {
-      display: flex;
-      flex-direction: row;
-      width: percentage(1);
-      color: $white;
-
-      &__info {
-        flex: 1;
-        padding-top: 0.5rem;
-        padding-left: 1rem;
-        padding-bottom: 0.5rem;
-        text-align: left;
-      }
-
-      &__name {
-        display: block;
-        margin-bottom: 0.5rem;
-      }
     }
 
     &__btn {
