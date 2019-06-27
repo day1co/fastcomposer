@@ -1,5 +1,8 @@
 <template>
   <div class="fc-file-upload">
+    <div class="progress">
+      <div class="progress-bar" :style="`width: ${ statePercent }%`"></div>
+    </div>
     <template v-if="state === 'READY'">
       <form enctype="multipart/form-data">
         <input type="file" :name="name" :accept="accept" @change="upload($event.target.files)" />
@@ -44,6 +47,7 @@ export default {
         return `fc-upload-${seq}-${nonce}`;
       },
       state: 'READY',
+      statePercent: 0
     };
   },
   methods: {
@@ -55,14 +59,19 @@ export default {
       // if (!files.length)
       //   return;
       if (files.length) {
-        EventBus.$emit('fc-upload', { id: this.id, type: 'UPLOAD', files }, ({ id, url}) => {
-          this.layer.values[this.name] = url;
+        this.state = 'UPLOADING';
+        this.statePercent = 50;
+        EventBus.$emit('fc-upload', { id: this.id, type: 'UPLOAD', files }, (res) => {
+          this.layer.values[this.name] = res.url;
+          this.state = 'UPLOADED';
+          this.statePercent = 100;
         });
       }
     },
     cancel() {
       this.$root.$emit('fc-upload', { id: this.id, type: 'CANCEL' });
       this.state = 'READY';
+      this.statePercent = 0;
     },
   },
   created() {
@@ -87,6 +96,22 @@ export default {
 
   > div {
     flex: 1 1 0;
+  }
+
+  .progress {
+    width: 100%;
+    height:2px;
+    background-color: grey;
+    border-radius: 6px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(255, 255, 255, 0.08);
+    .progress-bar {
+      height: 100%;
+      border-radius: 4px;
+      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.05));
+      transition: 0.4s linear;
+      transition-property: width, background-color;
+      box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.25), inset 0 1px rgba(255, 255, 255, 0.1);
+    }
   }
 
   button {
