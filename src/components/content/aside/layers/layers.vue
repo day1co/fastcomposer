@@ -1,7 +1,7 @@
 <template>
   <div class="fc-layer">
     <div class="fc-layer__list">
-      <Container @drop="drop" :animation-duration="200">
+      <Container @drop="drop" :get-ghost-parent="getGhostParent" :remove-on-drop-out="true">
         <Draggable v-for="(layer, index) in layers" :key="index">
           <button class="fc-layer__list__item" :class="[index === currentLayerIndex ? 'fc-layer__list__item--active' : '']" @click="select(index)">
             <div class="fc-layer__list__item__group">
@@ -76,6 +76,9 @@
       drop(dropResult) {
         this.dropResult = dropResult;
         this.layers = this.applyDrag;
+      },
+      getGhostParent(){
+        return document.body;
       },
       removeSelectedLayer(index) {
         this.currentLayerIndex = index;
