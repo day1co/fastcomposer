@@ -3,20 +3,20 @@
     <div class="fc-layer__list">
       <Container @drop="drop" :animation-duration="200">
         <Draggable v-for="(layer, index) in layers" :key="index">
-          <div style="border: 1px solid darkviolet">
-            <button class="fc-layer__list__item" @click="select(index)">
+          <button class="fc-layer__list__item" :class="[index === currentLayerIndex ? 'fc-layer__list__item--active' : '']" @click="select(index)">
+            <div class="fc-layer__list__item__group">
               <img :src="layer.layout.icon" alt="" />
-              <span class="fc-layer__list__item__info">
-              <strong class="fc-layer__list__item__name">{{ layer.layout.id }}</strong>
-              {{ layer.layout.description }}
-            </span>
+              <span class="fc-layer__list__item__group__info">
+                <strong class="fc-layer__list__item__group__name">{{ layer.layout.id }}</strong>
+                {{ layer.layout.description }}
+                </span>
               <div class="fc-layer__list__utils">
                 <button class="fc-layer__list__utils__btn" @click="removeLayer(layer, index)">
                   <i class="material-icons">&#xE872;</i>
                 </button>
               </div>
-            </button>
-          </div>
+            </div>
+          </button>
         </Draggable>
       </Container>
     </div>
@@ -27,6 +27,9 @@
   import EventBus from './../../../../event-bus/event-bus';
 
   export default {
+    created() {
+      EventBus.$on('remove-selected-layer', this.removeSelectedLayer);
+    },
     components: {
       Container,
       Draggable,
@@ -41,7 +44,8 @@
     },
     data() {
       return {
-        dropResult: null
+        dropResult: null,
+        currentLayerIndex: -1
       }
     },
     computed: {
@@ -65,6 +69,7 @@
     },
     methods: {
       select(index) {
+        this.currentLayerIndex = index;
         EventBus.$emit('selected-layer', index);
         EventBus.$emit('move-selected-layer');
       },
@@ -72,6 +77,9 @@
         this.dropResult = dropResult;
         this.layers = this.applyDrag;
       },
+      removeSelectedLayer(index) {
+        this.currentLayerIndex = index;
+      }
     }
   }
 </script>
@@ -86,23 +94,28 @@
       height: percentage(1);
       background-color: $secondary;
       &__item {
-        display: flex;
-        flex-direction: row;
-        width: percentage(1);
-        background: #0fd961;
-        color: $white;
-
-        &__info {
-          flex: 1;
-          padding-top: 0.5rem;
-          padding-left: 1rem;
-          padding-bottom: 0.5rem;
-          text-align: left;
+        width: 100%;
+        border: 3px solid #ffffff;
+        &--active {
+          border: 3px solid #f74982;
         }
-
-        &__name {
-          display: block;
-          margin-bottom: 0.5rem;
+        &__group {
+          display: flex;
+          flex-direction: row;
+          width: percentage(1);
+          background: #0fd961;
+          color: $white;
+          &__info {
+            flex: 1;
+            padding-top: 0.5rem;
+            padding-left: 1rem;
+            padding-bottom: 0.5rem;
+            text-align: left;
+          }
+          &__name {
+            display: block;
+            margin-bottom: 0.5rem;
+          }
         }
       }
       .smooth-dnd-draggable-wrapper {
