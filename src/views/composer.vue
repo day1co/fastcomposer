@@ -239,13 +239,14 @@
 
     .fc-block__edit {
       position: absolute;
-      top:50%;
       left: 50%;
+      width: 416px;
       max-height: 1000px;
       border: 0.8rem solid ;
       padding: 1.2rem 1.2rem;
       background-color: #f8f8f8;
       overflow: scroll;
+      z-index: 99;
       .draggablePopupTools {
         text-align: right;
       }
