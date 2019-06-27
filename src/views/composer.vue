@@ -154,6 +154,7 @@
       },
       closePopup() {
         this.currentLayerIndex = -1;
+        EventBus.$emit('remove-selected-layer', this.currentLayerIndex);
       },
       setLayouts(layouts) {
         this.layouts = restructureLayouts(layouts);
