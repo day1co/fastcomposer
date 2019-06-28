@@ -59,19 +59,22 @@
       layoutModels: {
         type: Array,
         default () {
-          return [{}];
+          return [];
         }
       },
       layerModals: {
         type: Array,
         default () {
-          return [{}];
+          return [];
         }
       },
     },
     mounted() {
       this.setLayouts(this.layoutModels);
-      this.setLayerBlockData(this.layerModals);
+
+      if (this.layerModals.length) {
+        this.setLayerBlockData(this.layerModals);
+      }
     },
     created() {
       // ㅠㅠ
