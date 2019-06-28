@@ -1,12 +1,8 @@
 # FAST COMPOSER
 
----
-
 a layout based WYSIWYG html editor.
 
 ## Table Contents
-
----
 
 * [Project setup](#Project setup)
 * [Install](#install)
@@ -15,8 +11,6 @@ a layout based WYSIWYG html editor.
 * [Feature](#feature)
 
 ## Project setup
-
----
 
 ```console
 $ npm install
@@ -66,8 +60,6 @@ $ npm install --save @fastcampus/fastcomposer
 
 ## Use(Vuejs)
 
----
-
 ### load
 
 #### template
@@ -101,8 +93,6 @@ components: {
 |---|---|---|---|---|
 | layoutModels | Array | [] | No | @fastcampus/layouts list를 넣어준다 |
 | layerModals | Array | [] | Yes |서버로부터 저장된 layer data 가 존재한다면 이곳에 넣어준다. |
-
----
 
 ### Methods
 
