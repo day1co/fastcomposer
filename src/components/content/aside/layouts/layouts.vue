@@ -38,6 +38,7 @@
   @import '../../../../assets/scss/utils/utilities.scss';
 
   .fc-layout {
+    width: 60%;
     &__list {
       overflow: scroll;
       box-sizing: border-box;

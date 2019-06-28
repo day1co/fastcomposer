@@ -3,7 +3,7 @@
     <div class="fc-layer__list">
       <Container @drop="drop" :get-ghost-parent="getGhostParent" :remove-on-drop-out="true">
         <Draggable v-for="(layer, index) in layers" :key="index">
-          <button class="fc-layer__list__item" :class="[index === currentLayerIndex ? 'fc-layer__list__item--active' : '']" @click="select(index)">
+          <button class="fc-layer__list__item" :class="{'fc-layer__list__item--active': index === currentLayerIndex}" @click="select(index)">
             <div class="fc-layer__list__item__group">
               <img :src="layer.layout.icon" alt="" />
               <span class="fc-layer__list__item__group__info">
@@ -90,6 +90,7 @@
   @import '../../../../assets/scss/utils/utilities.scss';
 
   .fc-layer {
+    width: 40%;
     &__list {
       overflow: scroll;
       box-sizing: border-box;
