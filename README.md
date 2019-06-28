@@ -4,11 +4,9 @@ a layout based WYSIWYG html editor.
 
 ## Table Contents
 
-* [Project setup](#Project setup)
-* [Install](#install)
-* [Use](#use)
-* [API](#API)
-* [Feature](#feature)
+* [Project setup](#Project-setup)
+* [설치](#설치)
+* [사용하기](#사용하기-Vuejs)
 
 ## Project setup
 
@@ -52,17 +50,17 @@ $ npm run lint
 $ npm run build-layouts
 ```
 
-## Install
+## 설치
 
 ```console
 $ npm install --save @fastcampus/fastcomposer
 ```
 
-## Use(Vuejs)
+## 사용하기-Vuejs
 
-### load
+### 로드하기
 
-#### template
+#### 템플릿
 
 ```html
 Vue DOM 속성을 사용하는 경우 ref 속성 정의
@@ -74,7 +72,7 @@ or
 ```html
 <composer/>
 ```
-#### script
+#### 스크립트
 
 ```javascript
 import Composer from '@fastcampus/fastcomposer/src/views/composer';
@@ -87,28 +85,28 @@ components: {
 }
 ```
 
-### Props
+### 속성
 
 | Name | Type | Default | Optional | Description |
 |---|---|---|---|---|
 | layoutModels | Array | [] | No | @fastcampus/layouts list를 넣어준다 |
 | layerModals | Array | [] | Yes |서버로부터 저장된 layer data 가 존재한다면 이곳에 넣어준다. |
 
-### Methods
+### 메서드
 
-#### 노티 알림을 표시
+#### 노티 알림 표시
 
 ```javascript
 this.$refs.fastComposer.notification.show();
 ```
 
-#### 노티 알림을 삭제
+#### 노티 알림 삭제
 
 ```javascript
 this.$refs.fastComposer.notification.hide();
 ```
 
-### Event
+### 이벤트
 #### save
 
 template 을 편집하고 저장에 대해 callback 을 받는다
@@ -143,7 +141,6 @@ methods: {
 <composer
   @uploadFile="onUpload"
 />
-
 ```
 
 ```javascript
