@@ -9,7 +9,7 @@
       </form>
     </template>
     <template v-if="state === 'UPLOADING'">
-      <div>업로드 중...</div>
+      <div>업로드 중</div>
       <button type="button" @click="cancel">취소</button>
     </template>
     <template v-if="state === 'ERROR'">
