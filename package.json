@@ -8,7 +8,7 @@
     "test": "vue-cli-service test",
     "lint": "vue-cli-service lint",
     "bundle": "vue-cli-service build --target lib --name fastcomposer ./src/index.js",
-    "build-layouts": "node build-layouts"
+    "build-layouts": "node layouts/build.js"
   },
   "dependencies": {
     "draggable-vue-directive": "^2.0.6",
