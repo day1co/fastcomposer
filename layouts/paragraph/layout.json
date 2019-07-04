@@ -1,0 +1,15 @@
+{
+  "id": "paragraph",
+  "icon": "icon.svg",
+  "description": "단순 본문",
+  "params": [
+    {
+      "name": "content",
+      "type": "textarea",
+      "description": "paragraph text"
+    }
+  ],
+  "values": {
+    "content": "본문"
+  }
+}
