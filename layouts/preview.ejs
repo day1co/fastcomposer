@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lodash/lodash.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/marked/marked.min.js"></script>
+</head>
+<body>
+<header>
+  <h1>preview - layout - <%= layout.id %></h1>
+  <p><%= layout.description %></p>
+</header>
+<main>
+  <section>
+    <h3>preview</h3>
+    <div class="fc-block fc-layout fc-layout-<%= layout.id %>" style="outline: 2px dashed fuchsia">
+      <%= _.template(layout.template)(Object.assign({ $markdown }, layout.values)) %>
+    </div>
+  </section>
+  <section>
+    <h3>config</h3>
+    <pre><code><%- JSON.stringify(_.omit(layout, ['template', 'style']), null, 2) %></code></pre>
+  </section>
+  <section>
+    <h3>template</h3>
+    <pre><code><%- layout.template %></code></pre>
+  </section>
+  <section>
+    <h3>style</h3>
+    <pre><code><%- layout.style %></code></pre>
+  </section>
+</main>
+<script src="_carousel.js" defer></script>
+<script src="_collapse.js" defer></script>
+</body>
+</html>

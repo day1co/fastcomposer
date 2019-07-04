@@ -1,0 +1,40 @@
+[
+  {
+    "id": "fc-block-1",
+    "layout": "heading",
+    "values": {
+      "title": "제목"
+    }
+  },
+  {
+    "id": "fc-block-2",
+    "layout": "paragraph",
+    "values": {
+      "content": "본문"
+    }
+  },
+  {
+    "id": "fc-block-3",
+    "layout": "image",
+    "values": {
+      "src": "https://via.placeholder.com/320x320.png/00c",
+      "width": "320",
+      "height": "320",
+      "alt": "simple image"
+    }
+  },
+  {
+    "id": "fc-block-4",
+    "layout": "html",
+    "values": {
+      "content": "<h1>hello</h1><p>world</p>"
+    }
+  },
+  {
+    "id": "fc-block-5",
+    "layout": "markdown",
+    "values": {
+      "content": "may the **markdown** be with you!"
+    }
+  }
+]
