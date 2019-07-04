@@ -4,7 +4,7 @@ const sass = require('node-sass');
 const _ = require('lodash');
 const marked = require('marked');
 
-const srcDir = path.resolve(__dirname, 'public/layouts');
+const srcDir = path.resolve(__dirname);
 
 const layouts = [];
 const styles = [];
