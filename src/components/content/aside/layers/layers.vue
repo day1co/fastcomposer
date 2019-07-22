@@ -41,11 +41,16 @@
           return []
         }
       },
+      currentLayerIndex: {
+        type: Number,
+        default() {
+          return -1
+        }
+      }
     },
     data() {
       return {
         dropResult: null,
-        currentLayerIndex: -1
       }
     },
     computed: {

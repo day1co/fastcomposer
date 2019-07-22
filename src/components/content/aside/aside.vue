@@ -2,6 +2,7 @@
   <div class="fc-aside">
     <layers
       :layers="layers"
+      :currentLayerIndex="currentLayerIndex"
     />
     <layouts
       :layouts="layouts"
@@ -36,6 +37,12 @@
           return []
         }
       },
+      currentLayerIndex: {
+        type: Number,
+        default() {
+          return -1
+        }
+      }
     },
     methods: {
       toggleAside() {
