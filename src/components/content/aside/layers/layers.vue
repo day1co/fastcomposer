@@ -27,9 +27,6 @@
   import EventBus from './../../../../event-bus/event-bus';
 
   export default {
-    created() {
-      EventBus.$on('remove-selected-layer', this.removeSelectedLayer);
-    },
     components: {
       Container,
       Draggable,
@@ -74,7 +71,6 @@
     },
     methods: {
       select(index) {
-        this.currentLayerIndex = index;
         EventBus.$emit('selected-layer', index);
         EventBus.$emit('move-selected-layer');
       },
@@ -85,9 +81,6 @@
       getGhostParent(){
         return document.body;
       },
-      removeSelectedLayer(index) {
-        this.currentLayerIndex = index;
-      }
     }
   }
 </script>
