@@ -151,6 +151,7 @@
       onRemoveLayer(index) {
         if (index !== -1) {
           this.layers.splice(index, 1);
+          this.currentLayerIndex = -1;
         }
       },
       onToggleAside() {
