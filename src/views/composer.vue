@@ -26,6 +26,11 @@
       <editor :layer="currentLayer" />
     </div>
 
+    <layouts
+      :layouts="layouts"
+      :layoutStyle="layoutStyle"
+      ref="layouts"
+    />
     <modal v-if="notification.state" @close="notification.hide()">
       <h3 slot="header">알림</h3>
       <p slot="body">저장되었습니다</p>
@@ -43,6 +48,7 @@
   import Editor from '../components/editor/editor';
   import Preview from '../components/content/preview/preview';
   import ComposerAside from '../components/content/aside/aside';
+  import Layouts from '../components/content/layouts/layouts';
   import Modal from '../components/common/modal';
 
   export default {
@@ -55,6 +61,7 @@
       Preview,
       ComposerAside,
       Editor,
+      Layouts
     },
     props: {
       layoutModels: {
@@ -78,7 +85,6 @@
       }
     },
     created() {
-      // ㅠㅠ
       EventBus.$on('selected-layer', this.onUpdateCurrentLayerIndex);
       EventBus.$on('add-layer', this.onAddLayer);
       EventBus.$on('remove-layer', this.onRemoveLayer);
@@ -87,6 +93,7 @@
       EventBus.$on('toggle-viewport', this.onChangeViewport);
       EventBus.$on('move-selected-layer',this.onMoveSelectedLayer);
       EventBus.$on('fc-upload', this.onUploadFile);
+      EventBus.$on('show-layout-panel', this.onShowLayouts);
     },
     computed: {
       currentLayer() {
@@ -113,6 +120,7 @@
       return {
         layouts: [],
         layers: [],
+        layoutStyle: {},
         currentLayerIndex: -1,
         viewport: '',
         isVisible: true,
@@ -169,6 +177,17 @@
         }
 
         this.layers = Object.assign([], layerBlockData.map(layer => Object.assign({id: uniqueId()}, layer, {layout: this.layoutMaps[layer.layout]})));
+      },
+      onShowLayouts(event) {
+        const layoutsWidth = 200;
+        const { offsetLeft, offsetWidth } = event.currentTarget;
+
+        this.layoutStyle = {
+          left: `${offsetLeft - ((layoutsWidth / 2) - (offsetWidth / 2))}px`,
+          width: `${layoutsWidth}px`
+        };
+
+        this.$refs.layouts.toggle();
       },
       onSave() {
         const layerHtml = this.layerHtml;

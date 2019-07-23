@@ -4,9 +4,6 @@
       :layers="layers"
       :currentLayerIndex="currentLayerIndex"
     />
-    <layouts
-      :layouts="layouts"
-    />
     <button
       type="button"
       class="fc-aside__btn"
@@ -18,11 +15,9 @@
 <script>
   import EventBus from './../../../event-bus/event-bus';
   import Layers from './layers/layers';
-  import Layouts from './layouts/layouts';
   export default {
     components: {
       Layers,
-      Layouts
     },
     props: {
       layouts: {

@@ -11,7 +11,7 @@
                 {{ layer.layout.description }}
                 </span>
               <div class="fc-layer__list__utils">
-                <button class="fc-layer__list__utils__btn" @click="removeLayer(layer, index)">
+                <button class="fc-layer__list__utils__btn" @click="removeLayer(index)">
                   <i class="material-icons">&#xE872;</i>
                 </button>
               </div>
@@ -81,6 +81,9 @@
       getGhostParent(){
         return document.body;
       },
+      removeLayer(index) {
+        EventBus.$emit('remove-layer', index);
+      }
     }
   }
 </script>
@@ -88,7 +91,7 @@
   @import '../../../../assets/scss/utils/utilities.scss';
 
   .fc-layer {
-    width: 40%;
+    width: 95%;
     &__list {
       overflow: scroll;
       box-sizing: border-box;
