@@ -29,12 +29,18 @@
 
         <template v-else>
           <input
+            v-if="param.name !== 'targetTime'"
             class="fc-editor__form__input"
             :id="layer.id + '--' + param.type"
             :type="param.type"
             :name="param.name"
             :placeholder="param.description"
             v-model="layer.values[param.name]"
+          />
+          <calendar
+           v-else
+           :param="param"
+           :layer="layer"
           />
         </template>
       </fieldset>
@@ -44,10 +50,12 @@
 
 <script>
   import FileUpload from './file-upload.vue';
+  import Calendar from './calendar';
 
   export default {
     components: {
       FileUpload,
+      Calendar
     },
     props: {
       layer: {
