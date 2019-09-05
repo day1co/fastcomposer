@@ -270,7 +270,7 @@
       padding: 1.2rem 1.2rem;
       background-color: #f8f8f8;
       overflow: scroll;
-      z-index: 99;
+      z-index: 102;
       .draggablePopupTools {
         text-align: right;
       }
