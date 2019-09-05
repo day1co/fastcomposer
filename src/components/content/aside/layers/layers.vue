@@ -1,7 +1,7 @@
 <template>
   <div class="fc-layer">
     <div class="fc-layer__list">
-      <Container @drop="drop" :get-ghost-parent="getGhostParent" :remove-on-drop-out="true">
+      <Container @drop="drop" :get-ghost-parent="getGhostParent">
         <Draggable v-for="(layer, index) in layers" :key="index">
           <div class="fc-layer__list__item" :class="{'fc-layer__list__item--active': index === currentLayerIndex}">
             <div class="fc-layer__list__item__group" @click="select(index)">
