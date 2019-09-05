@@ -140,13 +140,17 @@
         this.currentLayerIndex = index;
       },
       onAddLayer(layout) {
+        if (this.currentLayerIndex < 0) {
+          this.currentLayerIndex = this.layers.length - 1
+        }
+
         this.layers.splice(this.currentLayerIndex + 1, 0, {
           id: uniqueId(),
           layout,
           values: cloneDeep(layout.values) || {},
         });
 
-        this.currentLayerIndex = (this.currentLayerIndex < 0) ? this.layers.length - 1 : this.currentLayerIndex + 1;
+        this.currentLayerIndex = this.currentLayerIndex + 1;
       },
       onRemoveLayer(index) {
         if (index !== -1) {
