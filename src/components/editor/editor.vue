@@ -27,7 +27,7 @@
           ></file-upload>
         </template>
 
-        <template v-if="param.type === 'datetime-local'">
+        <template v-else-if="param.type === 'datetime-local'">
           <input
             type="datetime-local"
             class="fc-editor__form__input"
