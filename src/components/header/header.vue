@@ -45,10 +45,9 @@
 
     &__utils {
       display: flex;
+      width: 266px;
 
       .fc-utils__btn {
-        flex: 1;
-        display: flex;
         margin-left: 0.8rem;
         color: $white;
         align-items: center;
