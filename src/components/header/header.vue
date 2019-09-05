@@ -3,9 +3,7 @@
     <h1 class="fc-header__h">FastComposer</h1>
     <div class="fc-header__utils">
       <button type="button" class="fc-utils__btn" @click="showLayerPanel"><i class="material-icons">add</i></button>
-      <button type="button" class="fc-utils__btn" @click="toggleViewport('flush')"><i class="material-icons"></i></button>
-      <button type="button" class="fc-utils__btn" @click="toggleViewport('landscape')"><i class="material-icons"></i></button>
-      <button type="button" class="fc-utils__btn" @click="toggleViewport('portrait')"><i class="material-icons"></i></button></div>
+    </div>
   </header>
 </template>
 
