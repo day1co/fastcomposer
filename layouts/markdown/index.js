@@ -1,5 +1,5 @@
 import layout from './layout.json';
-import template from 'raw-loader!./template.ejs';
+import template from './template.ejs';
 import style from './style.scss';
 import icon from './icon.svg';
 

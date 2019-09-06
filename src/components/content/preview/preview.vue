@@ -75,7 +75,7 @@
       @include transition(null, 0.3s);
 
       .fc-composer--aside & {
-        right: $sidebar-size + 2.8rem;
+        right: $sidebar-size + 3.8rem;
       }
     }
 

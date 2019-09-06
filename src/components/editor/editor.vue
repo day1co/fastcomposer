@@ -27,6 +27,16 @@
           ></file-upload>
         </template>
 
+        <template v-else-if="param.type === 'datetime-local'">
+          <input
+            type="datetime-local"
+            class="fc-editor__form__input"
+            :id="layer.id + '--' + param.type"
+            :name="param.name"
+            :placeholder="param.description"
+            v-model="layer.values[param.name]"/>
+        </template>
+
         <template v-else>
           <input
             class="fc-editor__form__input"

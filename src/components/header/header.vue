@@ -2,9 +2,8 @@
   <header class="fc-header">
     <h1 class="fc-header__h">FastComposer</h1>
     <div class="fc-header__utils">
-      <button type="button" class="fc-utils__btn" @click="toggleViewport('flush')"><i class="material-icons"></i></button>
-      <button type="button" class="fc-utils__btn" @click="toggleViewport('landscape')"><i class="material-icons"></i></button>
-      <button type="button" class="fc-utils__btn" @click="toggleViewport('portrait')"><i class="material-icons"></i></button></div>
+      <button type="button" class="fc-utils__btn" @click="showLayerPanel"><i class="material-icons">add</i></button>
+    </div>
   </header>
 </template>
 
@@ -15,6 +14,9 @@
     methods: {
       toggleViewport(viewport) {
         EventBus.$emit('toggle-viewport', viewport);
+      },
+      showLayerPanel($event) {
+        EventBus.$emit('show-layout-panel', $event);
       }
     }
   }
@@ -43,10 +45,9 @@
 
     &__utils {
       display: flex;
+      width: 266px;
 
       .fc-utils__btn {
-        flex: 1;
-        display: flex;
         margin-left: 0.8rem;
         color: $white;
         align-items: center;

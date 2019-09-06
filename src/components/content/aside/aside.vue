@@ -2,9 +2,7 @@
   <div class="fc-aside">
     <layers
       :layers="layers"
-    />
-    <layouts
-      :layouts="layouts"
+      :currentLayerIndex="currentLayerIndex"
     />
     <button
       type="button"
@@ -17,11 +15,9 @@
 <script>
   import EventBus from './../../../event-bus/event-bus';
   import Layers from './layers/layers';
-  import Layouts from './layouts/layouts';
   export default {
     components: {
       Layers,
-      Layouts
     },
     props: {
       layouts: {
@@ -36,6 +32,12 @@
           return []
         }
       },
+      currentLayerIndex: {
+        type: Number,
+        default() {
+          return -1
+        }
+      }
     },
     methods: {
       toggleAside() {

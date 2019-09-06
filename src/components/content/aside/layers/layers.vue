@@ -1,22 +1,22 @@
 <template>
   <div class="fc-layer">
     <div class="fc-layer__list">
-      <Container @drop="drop" :get-ghost-parent="getGhostParent" :remove-on-drop-out="true">
+      <Container @drop="drop" :get-ghost-parent="getGhostParent">
         <Draggable v-for="(layer, index) in layers" :key="index">
-          <button class="fc-layer__list__item" :class="{'fc-layer__list__item--active': index === currentLayerIndex}" @click="select(index)">
-            <div class="fc-layer__list__item__group">
+          <div class="fc-layer__list__item" :class="{'fc-layer__list__item--active': index === currentLayerIndex}">
+            <div class="fc-layer__list__item__group" @click="select(index)">
               <img :src="layer.layout.icon" alt="" />
               <span class="fc-layer__list__item__group__info">
                 <strong class="fc-layer__list__item__group__name">{{ layer.layout.id }}</strong>
                 {{ layer.layout.description }}
-                </span>
-              <div class="fc-layer__list__utils">
-                <button class="fc-layer__list__utils__btn" @click="removeLayer(layer, index)">
-                  <i class="material-icons">&#xE872;</i>
-                </button>
-              </div>
+              </span>
             </div>
-          </button>
+            <div class="fc-layer__list__utils">
+              <button class="fc-layer__list__utils__btn" @click="removeLayer(index)">
+                <i class="material-icons">&#xE872;</i>
+              </button>
+            </div>
+          </div>
         </Draggable>
       </Container>
     </div>
@@ -27,9 +27,6 @@
   import EventBus from './../../../../event-bus/event-bus';
 
   export default {
-    created() {
-      EventBus.$on('remove-selected-layer', this.removeSelectedLayer);
-    },
     components: {
       Container,
       Draggable,
@@ -41,11 +38,16 @@
           return []
         }
       },
+      currentLayerIndex: {
+        type: Number,
+        default() {
+          return -1
+        }
+      }
     },
     data() {
       return {
         dropResult: null,
-        currentLayerIndex: -1
       }
     },
     computed: {
@@ -69,7 +71,6 @@
     },
     methods: {
       select(index) {
-        this.currentLayerIndex = index;
         EventBus.$emit('selected-layer', index);
         EventBus.$emit('move-selected-layer');
       },
@@ -80,8 +81,8 @@
       getGhostParent(){
         return document.body;
       },
-      removeSelectedLayer(index) {
-        this.currentLayerIndex = index;
+      removeLayer(index) {
+        EventBus.$emit('remove-layer', index);
       }
     }
   }
@@ -90,7 +91,7 @@
   @import '../../../../assets/scss/utils/utilities.scss';
 
   .fc-layer {
-    width: 40%;
+    width: 95%;
     &__list {
       overflow: scroll;
       box-sizing: border-box;
@@ -98,7 +99,7 @@
       height: percentage(1);
       background-color: $secondary;
       &__item {
-        width: 100%;
+        position: relative;
         border: 3px solid #ffffff;
         &--active {
           border: 3px solid #f74982;
@@ -121,6 +122,11 @@
             margin-bottom: 0.5rem;
           }
         }
+      }
+      &__utils {
+        position: absolute;
+        top: 0;
+        right: 0;
       }
       .smooth-dnd-draggable-wrapper {
         & + .smooth-dnd-draggable-wrapper {

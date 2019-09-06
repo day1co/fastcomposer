@@ -13,6 +13,7 @@
       <composer-aside
         :layers="layers"
         :layouts="layouts"
+        :currentLayerIndex="currentLayerIndex"
       />
     </div>
 
@@ -25,6 +26,11 @@
       <editor :layer="currentLayer" />
     </div>
 
+    <layouts
+      :layouts="layouts"
+      :layoutStyle="layoutStyle"
+      ref="layouts"
+    />
     <modal v-if="notification.state" @close="notification.hide()">
       <h3 slot="header">알림</h3>
       <p slot="body">저장되었습니다</p>
@@ -42,6 +48,7 @@
   import Editor from '../components/editor/editor';
   import Preview from '../components/content/preview/preview';
   import ComposerAside from '../components/content/aside/aside';
+  import Layouts from '../components/content/layouts/layouts';
   import Modal from '../components/common/modal';
 
   export default {
@@ -54,6 +61,7 @@
       Preview,
       ComposerAside,
       Editor,
+      Layouts
     },
     props: {
       layoutModels: {
@@ -77,7 +85,6 @@
       }
     },
     created() {
-      // ㅠㅠ
       EventBus.$on('selected-layer', this.onUpdateCurrentLayerIndex);
       EventBus.$on('add-layer', this.onAddLayer);
       EventBus.$on('remove-layer', this.onRemoveLayer);
@@ -86,6 +93,7 @@
       EventBus.$on('toggle-viewport', this.onChangeViewport);
       EventBus.$on('move-selected-layer',this.onMoveSelectedLayer);
       EventBus.$on('fc-upload', this.onUploadFile);
+      EventBus.$on('show-layout-panel', this.onShowLayouts);
     },
     computed: {
       currentLayer() {
@@ -112,6 +120,7 @@
       return {
         layouts: [],
         layers: [],
+        layoutStyle: {},
         currentLayerIndex: -1,
         viewport: '',
         isVisible: true,
@@ -131,16 +140,22 @@
         this.currentLayerIndex = index;
       },
       onAddLayer(layout) {
-        this.layers.push({
+        if (this.currentLayerIndex < 0) {
+          this.currentLayerIndex = this.layers.length - 1
+        }
+
+        this.layers.splice(this.currentLayerIndex + 1, 0, {
           id: uniqueId(),
           layout,
           values: cloneDeep(layout.values) || {},
         });
-        this.currentLayerIndex = this.layers.length - 1
+
+        this.currentLayerIndex = this.currentLayerIndex + 1;
       },
       onRemoveLayer(index) {
         if (index !== -1) {
           this.layers.splice(index, 1);
+          this.currentLayerIndex = -1;
         }
       },
       onToggleAside() {
@@ -157,7 +172,6 @@
       },
       closePopup() {
         this.currentLayerIndex = -1;
-        EventBus.$emit('remove-selected-layer', this.currentLayerIndex);
       },
       setLayouts(layouts) {
         this.layouts = restructureLayouts(layouts);
@@ -168,6 +182,17 @@
         }
 
         this.layers = Object.assign([], layerBlockData.map(layer => Object.assign({id: uniqueId()}, layer, {layout: this.layoutMaps[layer.layout]})));
+      },
+      onShowLayouts(event) {
+        const layoutsWidth = 200;
+        const { offsetLeft, offsetWidth } = event.currentTarget;
+
+        this.layoutStyle = {
+          left: `${offsetLeft - ((layoutsWidth / 2) - (offsetWidth / 2))}px`,
+          width: `${layoutsWidth}px`
+        };
+
+        this.$refs.layouts.toggle();
       },
       onSave() {
         const layerHtml = this.layerHtml;
@@ -249,7 +274,7 @@
       padding: 1.2rem 1.2rem;
       background-color: #f8f8f8;
       overflow: scroll;
-      z-index: 99;
+      z-index: 102;
       .draggablePopupTools {
         text-align: right;
       }

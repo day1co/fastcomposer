@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import EventBus from './../../../event-bus/event-bus';
 import marked from 'marked';
 
 export default {
@@ -32,11 +31,6 @@ export default {
       return this.layer.layout.templateFunc({ $markdown: marked, ...this.layer.values });
     },
   },
-  methods: {
-    removeLayer(index) {
-      EventBus.$emit('remove-layer',index);
-    },
-  }
 };
 </script>
 
