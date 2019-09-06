@@ -37,6 +37,10 @@
             v-model="layer.values[param.name]"/>
         </template>
 
+        <template v-else-if="param.type === 'textarea'">
+          <textarea class="fc-editor__form__textarea" rows="20" v-model="layer.values[param.name]"></textarea>
+        </template>
+
         <template v-else>
           <input
             class="fc-editor__form__input"
@@ -113,6 +117,10 @@
         text-transform: uppercase;
         margin-bottom: -0.1rem;
         border-bottom: 0.1rem solid $secondary;
+      }
+
+      &__textarea {
+        width: 100%;
       }
 
       &__input {
