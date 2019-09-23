@@ -62,8 +62,8 @@
 
     &__save {
       position: fixed;
-      right: 1.8rem;
-      bottom: 2.8rem;
+      right: 1.75rem;
+      top: .75rem;
       z-index: 101;
       width: 4.5rem;
       height: 4.5rem;
@@ -75,7 +75,7 @@
       @include transition(null, 0.3s);
 
       .fc-composer--aside & {
-        right: $sidebar-size + 3.8rem;
+        right: $sidebar-size + 1.75rem;
       }
     }
 
