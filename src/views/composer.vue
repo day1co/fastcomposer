@@ -19,9 +19,9 @@
 
     <div class="fc-block__edit" v-show="currentLayer" v-draggable="draggableValue">
       <div class="draggablePopupTools">
-        <button :ref="handleId">
+        <button :ref="handleId" class="move-btn">
           <i class="material-icons">
-            view_headline
+            open_with
           </i>
         </button>
         <button @click="closePopup()">
@@ -286,6 +286,9 @@
       z-index: 102;
       .draggablePopupTools {
         text-align: right;
+        .move-btn {
+          float: left;
+        }
       }
     }
   }
