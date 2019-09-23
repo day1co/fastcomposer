@@ -29,7 +29,7 @@ export default {
   computed: {
     html() {
       for (const prop in this.layer.layout.values) {
-        if (!this.layer.values[prop]) {
+        if (this.layer.values[prop] === undefined) {
           this.layer.values[prop] = this.layer.layout.values[prop];
         }
       }
