@@ -13,6 +13,7 @@
 
         <template v-if="param.type === 'image'">
           <input
+            class="fc-editor__form__input"
             type="url"
             :id="layer.id + '--' + param.type"
             :name="param.name"

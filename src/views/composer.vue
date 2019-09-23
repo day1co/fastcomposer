@@ -17,13 +17,18 @@
       />
     </div>
 
-    <div class="fc-block__edit" v-if="currentLayer" v-draggable>
+    <div class="fc-block__edit" v-show="currentLayer" v-draggable="draggableValue">
       <div class="draggablePopupTools">
+        <button :ref="handleId">
+          <i class="material-icons">
+            view_headline
+          </i>
+        </button>
         <button @click="closePopup()">
           <i class="material-icons">close</i>
         </button>
       </div>
-      <editor :layer="currentLayer" />
+      <editor v-if="currentLayer" :layer="currentLayer" />
     </div>
 
     <layouts
@@ -78,6 +83,7 @@
       },
     },
     mounted() {
+      this.draggableValue.handle = this.$refs[this.handleId];
       this.setLayouts(this.layoutModels);
 
       if (this.layerModals.length) {
@@ -118,6 +124,10 @@
     },
     data() {
       return {
+        handleId: 'edit-move',
+        draggableValue: {
+          handle: undefined
+        },
         layouts: [],
         layers: [],
         layoutStyle: {},
