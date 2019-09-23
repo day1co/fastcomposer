@@ -29,8 +29,8 @@
 
         <template v-else-if="param.type === 'datetime-local'">
           <input
-            type="datetime-local"
             class="fc-editor__form__input"
+            :type="param.type"
             :id="layer.id + '--' + param.type"
             :name="param.name"
             :placeholder="param.description"

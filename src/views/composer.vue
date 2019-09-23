@@ -253,7 +253,6 @@
     &__content {
       overflow: scroll;
       position: relative;
-      scroll-behavior: smooth;
       flex: 1;
       margin-left: 1.8rem;
       margin-right: 1.8rem;

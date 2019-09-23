@@ -28,6 +28,11 @@ export default {
   },
   computed: {
     html() {
+      for (const prop in this.layer.layout.values) {
+        if (!this.layer.values[prop]) {
+          this.layer.values[prop] = this.layer.layout.values[prop];
+        }
+      }
       return this.layer.layout.templateFunc({ $markdown: marked, ...this.layer.values });
     },
   },

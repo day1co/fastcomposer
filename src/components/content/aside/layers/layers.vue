@@ -4,7 +4,7 @@
       <Container @drop="drop" :get-ghost-parent="getGhostParent">
         <Draggable v-for="(layer, index) in layers" :key="index">
           <div class="fc-layer__list__item" :class="{'fc-layer__list__item--active': index === currentLayerIndex}">
-            <div class="fc-layer__list__item__group" @click="select(index)">
+            <div class="fc-layer__list__item__group" v-if="layer.layout" @click="select(index)">
               <img :src="layer.layout.icon" alt="" />
               <span class="fc-layer__list__item__group__info">
                 <strong class="fc-layer__list__item__group__name">{{ layer.layout.id }}</strong>
