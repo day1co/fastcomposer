@@ -278,7 +278,7 @@
       position: absolute;
       left: 50%;
       width: 416px;
-      max-height: 1000px;
+      max-height: 100vh;
       border: 0.8rem solid ;
       padding: 1.2rem 1.2rem;
       background-color: #f8f8f8;
