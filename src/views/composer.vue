@@ -1,34 +1,24 @@
 <template>
   <div class="fc-composer"
    :class="[
-    viewport ? { ['fc-composer--' + viewport]: viewport } : 'fc-composer--landscape',
-    isVisible && 'fc-composer--aside'
+    isLeftVisible && 'fc-composer--aside-l',
+    isRightVisible && 'fc-composer--aside-r',
   ]"
   >
     <composer-header/>
     <div class="fc-composer__content">
+      <composer-aside :className="'left'">
+        <editor v-if="currentLayer" :layer="currentLayer" />
+      </composer-aside>
       <preview
         :layers="layers"
       />
-      <composer-aside
-        :layers="layers"
-        :layouts="layouts"
-        :currentLayerIndex="currentLayerIndex"
-      />
-    </div>
-
-    <div class="fc-block__edit" v-show="currentLayer" v-draggable="draggableValue">
-      <div class="draggablePopupTools">
-        <button :ref="handleId" class="move-btn">
-          <i class="material-icons">
-            open_with
-          </i>
-        </button>
-        <button @click="closePopup()">
-          <i class="material-icons">close</i>
-        </button>
-      </div>
-      <editor v-if="currentLayer" :layer="currentLayer" />
+      <composer-aside :className="'right'">
+        <layers
+          :layers="layers"
+          :currentLayerIndex="currentLayerIndex"
+        />
+      </composer-aside>
     </div>
 
     <layouts
@@ -45,28 +35,26 @@
 
 <script>
   import { cloneDeep } from 'lodash';
-  import { Draggable } from 'draggable-vue-directive';
   import { uniqueId, restructureLayouts } from './../utils/utils';
   import EventBus from './../event-bus/event-bus';
   import marked from 'marked';
-  import ComposerHeader from '../components/header/header.vue';
-  import Editor from '../components/editor/editor';
-  import Preview from '../components/content/preview/preview';
-  import ComposerAside from '../components/content/aside/aside';
-  import Layouts from '../components/content/layouts/layouts';
-  import Modal from '../components/common/modal';
+  import ComposerHeader from './../components/header/header.vue';
+  import Editor from './../components/editor/editor';
+  import Preview from './../components/content/preview/preview';
+  import ComposerAside from './../components/content/aside/aside';
+  import Layouts from './../components/content/layouts/layouts';
+  import Modal from './../components/common/modal';
+  import Layers from './../components/content/aside/layers/layers';
 
   export default {
-    directives: {
-      Draggable
-    },
     components: {
       Modal,
       ComposerHeader,
       Preview,
       ComposerAside,
       Editor,
-      Layouts
+      Layouts,
+      Layers
     },
     props: {
       layoutModels: {
@@ -83,7 +71,6 @@
       },
     },
     mounted() {
-      this.draggableValue.handle = this.$refs[this.handleId];
       this.setLayouts(this.layoutModels);
 
       if (this.layerModals.length) {
@@ -96,7 +83,6 @@
       EventBus.$on('remove-layer', this.onRemoveLayer);
       EventBus.$on('toggle-aside', this.onToggleAside);
       EventBus.$on('save', this.onSave);
-      EventBus.$on('toggle-viewport', this.onChangeViewport);
       EventBus.$on('move-selected-layer',this.onMoveSelectedLayer);
       EventBus.$on('fc-upload', this.onUploadFile);
       EventBus.$on('show-layout-panel', this.onShowLayouts);
@@ -119,21 +105,17 @@
         }, {});
       },
       scrollPoint() {
-        return this.$el.getElementsByClassName('fc-layer')[this.currentLayerIndex].offsetTop;
+        return this.$el.getElementsByClassName('fc-sidebar-container')[this.currentLayerIndex].offsetTop;
       }
     },
     data() {
       return {
-        handleId: 'edit-move',
-        draggableValue: {
-          handle: undefined
-        },
         layouts: [],
         layers: [],
         layoutStyle: {},
         currentLayerIndex: -1,
-        viewport: '',
-        isVisible: true,
+        isLeftVisible: true,
+        isRightVisible: true,
         notification: {
           state: false,
           show() {
@@ -168,11 +150,12 @@
           this.currentLayerIndex = -1;
         }
       },
-      onToggleAside() {
-        this.isVisible = !this.isVisible;
-      },
-      onChangeViewport(viewport) {
-        this.viewport = viewport;
+      onToggleAside(state) {
+        if (state === 'left') {
+          this.isLeftVisible = !this.isLeftVisible;
+        } else {
+          this.isRightVisible = !this.isRightVisible;
+        }
       },
       onMoveSelectedLayer() {
         this.$el.getElementsByClassName('fc-composer__content')[0].scrollTop = this.scrollPoint;
@@ -250,7 +233,11 @@
       padding-right: 0;
     }
 
-    &--aside {
+    &--aside-l {
+      padding-left: $sidebar-size + 4rem;
+    }
+
+    &--aside-r {
       padding-right: $sidebar-size;
     }
 
@@ -272,24 +259,6 @@
       box-shadow: 0 .3rem 1rem rgba($black, 0.24), 0 .3rem 1rem rgba($black,
         0.16);
       @include transition(null, 0.3s);
-    }
-
-    .fc-block__edit {
-      position: absolute;
-      left: 50%;
-      width: 416px;
-      max-height: 100vh;
-      border: 0.8rem solid ;
-      padding: 1.2rem 1.2rem;
-      background-color: #f8f8f8;
-      overflow: scroll;
-      z-index: 102;
-      .draggablePopupTools {
-        text-align: right;
-        .move-btn {
-          float: left;
-        }
-      }
     }
   }
 </style>

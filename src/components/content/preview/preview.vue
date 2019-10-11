@@ -74,7 +74,7 @@
         0.16);
       @include transition(null, 0.3s);
 
-      .fc-composer--aside & {
+      .fc-composer--aside-r & {
         right: $sidebar-size + 1.75rem;
       }
     }

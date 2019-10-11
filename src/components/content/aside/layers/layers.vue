@@ -1,26 +1,22 @@
 <template>
-  <div class="fc-layer">
-    <div class="fc-layer__list">
-      <Container @drop="drop" :get-ghost-parent="getGhostParent">
-        <Draggable v-for="(layer, index) in layers" :key="index">
-          <div class="fc-layer__list__item" :class="{'fc-layer__list__item--active': index === currentLayerIndex}">
-            <div class="fc-layer__list__item__group" v-if="layer.layout" @click="select(index)">
-              <img :src="layer.layout.icon" alt="" />
-              <span class="fc-layer__list__item__group__info">
-                <strong class="fc-layer__list__item__group__name">{{ layer.layout.id }}</strong>
-                {{ layer.layout.description }}
-              </span>
-            </div>
-            <div class="fc-layer__list__utils">
-              <button class="fc-layer__list__utils__btn" @click="removeLayer(index)">
-                <i class="material-icons">&#xE872;</i>
-              </button>
-            </div>
-          </div>
-        </Draggable>
-      </Container>
-    </div>
-  </div>
+  <Container @drop="drop" :get-ghost-parent="getGhostParent">
+    <Draggable v-for="(layer, index) in layers" :key="index">
+      <div class="__item" :class="{'__item--active': index === currentLayerIndex}">
+        <div class="__item__group" v-if="layer.layout" @click="select(index)">
+          <img :src="layer.layout.icon" alt="" />
+          <span class="__item__group__info">
+            <strong class="__item__group__name">{{ layer.layout.id }}</strong>
+            {{ layer.layout.description }}
+          </span>
+        </div>
+        <div class="__utils">
+          <button class="__utils__btn" @click="removeLayer(index)">
+            <i class="material-icons">&#xE872;</i>
+          </button>
+        </div>
+      </div>
+    </Draggable>
+  </Container>
 </template>
 <script>
   import { Container, Draggable } from "vue-smooth-dnd";
@@ -89,50 +85,39 @@
 </script>
 <style lang="scss" scoped>
   @import '../../../../assets/scss/utils/utilities.scss';
-
-  .fc-layer {
-    width: 95%;
-    &__list {
-      overflow: scroll;
-      box-sizing: border-box;
-      padding: 1.2rem 0.9rem;
-      height: percentage(1);
-      background-color: $secondary;
-      &__item {
-        position: relative;
-        border: 3px solid #ffffff;
-        &--active {
-          border: 3px solid #f74982;
-        }
-        &__group {
-          display: flex;
-          flex-direction: row;
-          width: percentage(1);
-          background: #0fd961;
-          color: $white;
-          &__info {
-            flex: 1;
-            padding-top: 0.5rem;
-            padding-left: 1rem;
-            padding-bottom: 0.5rem;
-            text-align: left;
-          }
-          &__name {
-            display: block;
-            margin-bottom: 0.5rem;
-          }
-        }
+  .__item {
+    position: relative;
+    border: 3px solid #ffffff;
+    &--active {
+      border: 3px solid #f74982;
+    }
+    &__group {
+      display: flex;
+      flex-direction: row;
+      width: percentage(1);
+      background: #0fd961;
+      color: $white;
+      &__info {
+        flex: 1;
+        padding-top: 0.5rem;
+        padding-left: 1rem;
+        padding-bottom: 0.5rem;
+        text-align: left;
       }
-      &__utils {
-        position: absolute;
-        top: 0;
-        right: 0;
+      &__name {
+        display: block;
+        margin-bottom: 0.5rem;
       }
-      .smooth-dnd-draggable-wrapper {
-        & + .smooth-dnd-draggable-wrapper {
-          margin-top: 0.5rem;
-        }
-      }
+    }
+  }
+  .__utils {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .smooth-dnd-draggable-wrapper {
+    & + .smooth-dnd-draggable-wrapper {
+      margin-top: 0.5rem;
     }
   }
 </style>
