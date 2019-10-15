@@ -1,6 +1,9 @@
 <template>
   <header class="fc-header">
     <h1 class="fc-header__h">FastComposer</h1>
+    <div class="fc-header__content">
+      <message-toast :message="message"/>
+    </div>
     <div class="fc-header__utils">
       <button type="button" class="fc-utils__btn" @click="showLayerPanel"><i class="material-icons">add</i></button>
     </div>
@@ -9,16 +12,25 @@
 
 <script>
   import EventBus from '../../event-bus/event-bus';
+  import MessageToast from './../common/message-toast';
 
   export default {
+    components: {
+      MessageToast
+    },
     methods: {
-      toggleViewport(viewport) {
-        EventBus.$emit('toggle-viewport', viewport);
-      },
       showLayerPanel($event) {
         EventBus.$emit('show-layout-panel', $event);
       }
-    }
+    },
+    props: {
+      message: {
+        type: String,
+        default () {
+          return '';
+        }
+      }
+    },
   }
 </script>
 

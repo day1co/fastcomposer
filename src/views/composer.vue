@@ -5,7 +5,7 @@
     isRightVisible && 'fc-composer--aside-r',
   ]"
   >
-    <composer-header/>
+    <composer-header :message="notification.message"/>
     <div class="fc-composer__content">
       <composer-aside :className="'left'">
         <editor v-if="currentLayer" :layer="currentLayer" />
@@ -26,10 +26,6 @@
       :layoutStyle="layoutStyle"
       ref="layouts"
     />
-    <modal v-if="notification.state" @close="notification.hide()">
-      <h3 slot="header">알림</h3>
-      <p slot="body">저장되었습니다</p>
-    </modal>
   </div>
 </template>
 
@@ -43,12 +39,10 @@
   import Preview from './../components/content/preview/preview';
   import ComposerAside from './../components/content/aside/aside';
   import Layouts from './../components/content/layouts/layouts';
-  import Modal from './../components/common/modal';
   import Layers from './../components/content/aside/layers/layers';
 
   export default {
     components: {
-      Modal,
       ComposerHeader,
       Preview,
       ComposerAside,
@@ -86,6 +80,7 @@
       EventBus.$on('move-selected-layer',this.onMoveSelectedLayer);
       EventBus.$on('fc-upload', this.onUploadFile);
       EventBus.$on('show-layout-panel', this.onShowLayouts);
+      EventBus.$on('clear', this.clearMessageToast);
     },
     computed: {
       currentLayer() {
@@ -117,17 +112,24 @@
         isLeftVisible: true,
         isRightVisible: true,
         notification: {
-          state: false,
-          show() {
-            this.state = true;
+          message: '',
+          type: '',
+          success(message) {
+            this.message = message;
           },
-          hide() {
-            this.state = false;
+          error(message) {
+            this.message = message;
+          },
+          default(message) {
+            this.message = message;
           }
         }
       };
     },
     methods: {
+      clearMessageToast() {
+        this.notification.message = '';
+      },
       onUpdateCurrentLayerIndex(index) {
         this.currentLayerIndex = index;
       },
@@ -162,9 +164,6 @@
       },
       onUploadFile(fileInfo, callback) {
         this.$emit('uploadFile', fileInfo, callback);
-      },
-      closePopup() {
-        this.currentLayerIndex = -1;
       },
       setLayouts(layouts) {
         this.layouts = restructureLayouts(layouts);
