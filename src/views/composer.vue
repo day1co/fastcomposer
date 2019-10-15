@@ -100,7 +100,7 @@
         }, {});
       },
       scrollPoint() {
-        return this.$el.getElementsByClassName('fc-sidebar-container')[this.currentLayerIndex].offsetTop;
+        return this.$el.getElementsByClassName('fc-layer')[this.currentLayerIndex].offsetTop;
       }
     },
     data() {
