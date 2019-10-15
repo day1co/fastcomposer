@@ -5,7 +5,7 @@
     isRightVisible && 'fc-composer--aside-r',
   ]"
   >
-    <composer-header :message="notification.message"/>
+    <composer-header :notificationMessage="notification.message" :notificationType="notification.type"/>
     <div class="fc-composer__content">
       <composer-aside :className="'left'">
         <editor v-if="currentLayer" :layer="currentLayer" />
@@ -116,12 +116,15 @@
           type: '',
           success(message) {
             this.message = message;
+            this.type = 'success';
           },
           error(message) {
             this.message = message;
+            this.type = 'error';
           },
           default(message) {
             this.message = message;
+            this.type = 'default';
           }
         }
       };

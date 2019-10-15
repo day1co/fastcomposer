@@ -42,6 +42,7 @@
   .fc-message-toast {
     &__content {
       color: #ffffff;
+      text-align: center;
     }
   }
   .message-toast-enter-active {
