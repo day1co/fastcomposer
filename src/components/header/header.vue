@@ -82,7 +82,7 @@
     }
 
     &__content {
-      flex-grow: 25;
+      flex-grow: 23;
     }
 
     &__utils {
