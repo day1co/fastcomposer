@@ -1,6 +1,6 @@
 {
   "name": "@fastcampus/fastcomposer",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "author": "Yoosoo Won <yswon@fastcampus.co.kr>",
   "scripts": {
     "serve": "vue-cli-service serve",
