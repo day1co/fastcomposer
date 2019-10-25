@@ -42,6 +42,12 @@
           <textarea class="fc-editor__form__textarea" rows="20" v-model="layer.values[param.name]"></textarea>
         </template>
 
+        <template v-else-if="param.type === 'select'">
+          <select class="fc-editor__form__select" v-model="layer.values[param.name]">
+            <option v-for="( option, index ) in param.options" :key="index">{{ option }}</option>
+          </select>
+        </template>
+
         <template v-else>
           <input
             class="fc-editor__form__input"
@@ -99,6 +105,7 @@
         padding: 1.8rem 1.8rem;
         border-radius: 0.5rem;
         background-color: $white;
+        color: $black;
 
         & + & {
           margin-top: 1rem;
@@ -121,6 +128,10 @@
       }
 
       &__textarea {
+        width: 100%;
+      }
+
+      &__select {
         width: 100%;
       }
 
