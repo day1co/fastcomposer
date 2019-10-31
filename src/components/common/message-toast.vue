@@ -1,7 +1,7 @@
 <template>
   <transition name="message-toast">
-    <div class="fcc-message-toast" v-show="isActive">
-      <p class="fcc-message-toast__content">
+    <div class="fc-message-toast" v-show="isActive">
+      <p class="fc-message-toast__content">
         {{ message }}
       </p>
     </div>
@@ -39,7 +39,7 @@
 </script>
 
 <style lang="scss" scope>
-  .fcc-message-toast {
+  .fc-message-toast {
     &__content {
       color: #ffffff;
       text-align: center;

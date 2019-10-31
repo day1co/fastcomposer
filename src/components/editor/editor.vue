@@ -1,19 +1,19 @@
 <template>
-  <div class="fcc-editor">
-    <form class="fcc-editor__form">
+  <div class="fc-editor">
+    <form class="fc-editor__form">
       <fieldset
         v-for="param in layer.layout.params"
         :key="param.name"
-        class="fcc-editor__form__fieldset"
+        class="fc-editor__form__fieldset"
       >
-        <label class="fcc-editor__form__label" :for="layer.id + '--' + param.type">
-          <strong class="fcc-editor__form__name">{{ param.name }}</strong>
+        <label class="fc-editor__form__label" :for="layer.id + '--' + param.type">
+          <strong class="fc-editor__form__name">{{ param.name }}</strong>
           ({{ param.type }})
         </label>
 
         <template v-if="param.type === 'image'">
           <input
-            class="fcc-editor__form__input"
+            class="fc-editor__form__input"
             type="url"
             :id="layer.id + '--' + param.type"
             :name="param.name"
@@ -30,7 +30,7 @@
 
         <template v-else-if="param.type === 'datetime-local'">
           <input
-            class="fcc-editor__form__input"
+            class="fc-editor__form__input"
             :type="param.type"
             :id="layer.id + '--' + param.type"
             :name="param.name"
@@ -39,18 +39,18 @@
         </template>
 
         <template v-else-if="param.type === 'textarea'">
-          <textarea class="fcc-editor__form__textarea" rows="20" v-model="layer.values[param.name]"></textarea>
+          <textarea class="fc-editor__form__textarea" rows="20" v-model="layer.values[param.name]"></textarea>
         </template>
 
         <template v-else-if="param.type === 'select'">
-          <select class="fcc-editor__form__select" v-model="layer.values[param.name]">
+          <select class="fc-editor__form__select" v-model="layer.values[param.name]">
             <option v-for="( option, index ) in param.options" :key="index">{{ option }}</option>
           </select>
         </template>
 
         <template v-else>
           <input
-            class="fcc-editor__form__input"
+            class="fc-editor__form__input"
             :id="layer.id + '--' + param.type"
             :type="param.type"
             :name="param.name"
@@ -88,7 +88,7 @@
 
 <style lang="scss" scoped>
   @import '../../assets/scss/utils/utilities';
-  .fcc-editor {
+  .fc-editor {
     position: relative;
 
     &__edit {

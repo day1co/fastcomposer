@@ -1,12 +1,12 @@
 <template>
-  <div class="fcc-composer"
+  <div class="fc-composer"
    :class="[
-    isLeftVisible && 'fcc-composer--aside-l',
-    isRightVisible && 'fcc-composer--aside-r',
+    isLeftVisible && 'fc-composer--aside-l',
+    isRightVisible && 'fc-composer--aside-r',
   ]"
   >
     <composer-header :notificationMessage="notification.message" :notificationType="notification.type"/>
-    <div class="fcc-composer__content">
+    <div class="fc-composer__content">
       <composer-aside :className="'left'">
         <editor v-if="currentLayer" :layer="currentLayer" />
       </composer-aside>
@@ -78,7 +78,7 @@
       EventBus.$on('toggle-aside', this.onToggleAside);
       EventBus.$on('save', this.onSave);
       EventBus.$on('move-selected-layer',this.onMoveSelectedLayer);
-      EventBus.$on('fcc-upload', this.onUploadFile);
+      EventBus.$on('fc-upload', this.onUploadFile);
       EventBus.$on('show-layout-panel', this.onShowLayouts);
       EventBus.$on('clear', this.clearMessageToast);
     },
@@ -88,7 +88,7 @@
       },
       layerHtml() {
         return this.layers.map(layer => `
-            <section class="fcc-block fcc-layout fcc-layout-${layer.layout.id}">
+            <section class="fc-block fc-layout fc-layout-${layer.layout.id}">
               ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
             </section>`,
           ).join('\n');
@@ -100,7 +100,7 @@
         }, {});
       },
       scrollPoint() {
-        return this.$el.getElementsByClassName('fcc-layer')[this.currentLayerIndex].offsetTop;
+        return this.$el.getElementsByClassName('fc-layer')[this.currentLayerIndex].offsetTop;
       }
     },
     data() {
@@ -163,7 +163,7 @@
         }
       },
       onMoveSelectedLayer() {
-        this.$el.getElementsByClassName('fcc-composer__content')[0].scrollTop = this.scrollPoint;
+        this.$el.getElementsByClassName('fc-composer__content')[0].scrollTop = this.scrollPoint;
       },
       onUploadFile(fileInfo, callback) {
         this.$emit('uploadFile', fileInfo, callback);
@@ -208,7 +208,7 @@
 <style lang="scss">
   @import './../assets/scss/style.scss';
 
-  .fcc-composer {
+  .fc-composer {
     overflow: hidden;
     position: relative;
     box-sizing: border-box;
@@ -225,7 +225,7 @@
 
     &--flush {
       padding: 0;
-      .fcc-composer__content {
+      .fc-composer__content {
         margin-left: 0;
         margin-right: 0;
       }

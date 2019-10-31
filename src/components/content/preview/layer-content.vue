@@ -1,9 +1,9 @@
 <template>
-  <div class="fcc-layer">
+  <div class="fc-layer">
     <div
-      class="fcc-layer__container"
+      class="fc-layer__container"
       :id="layer.id"
-      :class="['fcc-layout-' + layer.layout.id, { active: active }, { hidden: layer.hidden }]"
+      :class="['fc-layout-' + layer.layout.id, { active: active }, { hidden: layer.hidden }]"
       v-html="html"
     ></div>
   </div>
@@ -42,10 +42,10 @@ export default {
 <style lang="scss" scoped>
 @import '../../../assets/scss/utils/utilities.scss';
 
-.fcc-layer {
+.fc-layer {
   position: relative;
   border-bottom: 1px solid #bbb;
-  .fcc-layer__preview {
+  .fc-layer__preview {
     flex: 0 0 0;
     width: 100%;
     outline: 1px dashed lightgray;

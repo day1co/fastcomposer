@@ -1,16 +1,16 @@
 <template>
   <div
-    class="fcc-aside"
-    :class="['fcc-aside-' + className]">
-    <div class="fcc-aside__content">
-      <div class="fcc-aside__container">
+    class="fc-aside"
+    :class="['fc-aside-' + className]">
+    <div class="fc-aside__content">
+      <div class="fc-aside__container">
         <slot></slot>
       </div>
     </div>
 
     <button
       type="button"
-      class="fcc-aside__btn"
+      class="fc-aside__btn"
       @click="toggleAside">
       <i class="material-icons">&#xE3E8;</i>
     </button>
@@ -38,7 +38,7 @@
 <style lang="scss" scoped>
   @import '../../../assets/scss/utils/utilities.scss';
 
-  .fcc-aside {
+  .fc-aside {
     display: flex;
     position: fixed;
     top: 0;
@@ -80,28 +80,28 @@
     }
   }
 
-  .fcc-aside-right {
+  .fc-aside-right {
     right: 0;
 
-    .fcc-composer--aside-r & {
+    .fc-composer--aside-r & {
       transform: translate3d(0, 0, 0);
     }
 
-    .fcc-aside__btn {
+    .fc-aside__btn {
       left: 0;
     }
   }
 
-  .fcc-aside-left {
+  .fc-aside-left {
     left: 0;
     max-width: $sidebar-size + 4rem;
     transform: translate3d(-100%, 0, 0);
 
-    .fcc-composer--aside-l & {
+    .fc-composer--aside-l & {
       transform: translate3d(0, 0, 0);
     }
 
-    .fcc-aside__btn {
+    .fc-aside__btn {
       right: 0;
       transform: translate3d(100%, -50%, 0) rotate(180deg);
     }

@@ -1,13 +1,13 @@
 <template>
-  <div class="fcc-layout" v-if="flag"
+  <div class="fc-layout" v-if="flag"
     :style="layoutStyle"
   >
-    <ul class="fcc-layout__list">
+    <ul class="fc-layout__list">
       <li v-for="(layout, index) in layouts" :key="index">
-        <button class="fcc-layout__list__item" @click="selected(layout)">
+        <button class="fc-layout__list__item" @click="selected(layout)">
           <img :src="layout.icon" alt="" />
-          <span class="fcc-layout__list__item__info">
-          <strong class="fcc-layout__list__item__name">{{ layout.id }}</strong>
+          <span class="fc-layout__list__item__info">
+          <strong class="fc-layout__list__item__name">{{ layout.id }}</strong>
           {{ layout.description }}
         </span>
         </button>
@@ -51,7 +51,7 @@
 
 <style lang="scss" scoped>
   @import '../../../assets/scss/utils/utilities.scss';
-  .fcc-layout:before {
+  .fc-layout:before {
     position: absolute;
     bottom: 100%;
     left: calc(50% - 10px);
@@ -67,7 +67,7 @@
     content: " ";
   }
 
-  .fcc-layout {
+  .fc-layout {
     display: flex;
     position: fixed;
     top:6rem;
