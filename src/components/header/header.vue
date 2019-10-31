@@ -70,10 +70,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-left: 1.8rem;
-    padding-right: 1.8rem;
+    padding: 0 1.8rem;
     width: percentage(1);
     height: $header-size;
+    background-color: transparent;
+    transform: none;
+    transition: none;
+
 
     &__h {
       font-size: 1.8rem;
