@@ -1,6 +1,6 @@
 <template>
-  <div class="fc-preview">
-    <div class="fc-preview__container">
+  <div class="fcc-preview">
+    <div class="fcc-preview__container">
       <layer-content
         v-for="(layer, layerIndex) in layers"
         :key="'layer-' + layerIndex"
@@ -8,7 +8,7 @@
         :index="layerIndex"
       />
     </div>
-    <button class="fc-preview__save" type="button" @click="save">
+    <button class="fcc-preview__save" type="button" @click="save">
       <i class="material-icons">&#xE5CA;</i>
     </button>
   </div>
@@ -36,7 +36,7 @@
         return this.layers
           .map(
             block => `
-            <section class="fc-block fc-layout fc-layout-${block.layout.id}">
+            <section class="fcc-block fcc-layout fcc-layout-${block.layout.id}">
               ${block.layout.templateFunc({
               $markdown: marked,
               ...block.values
@@ -57,7 +57,7 @@
 
 <style lang="scss" scoped>
   @import '../../../assets/scss/utils/utilities.scss';
-  .fc-preview {
+  .fcc-preview {
     background-color: $white;
 
     &__save {
@@ -74,7 +74,7 @@
         0.16);
       @include transition(null, 0.3s);
 
-      .fc-composer--aside-r & {
+      .fcc-composer--aside-r & {
         right: $sidebar-size + 1.75rem;
       }
     }

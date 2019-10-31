@@ -1,5 +1,5 @@
 <template>
-  <div class="fc-file-upload">
+  <div class="fcc-file-upload">
     <div class="progress">
       <div class="progress-bar" :style="`width: ${ statePercent }%`"></div>
     </div>
@@ -44,7 +44,7 @@ export default {
         const nonce = Math.random()
           .toString(36)
           .substr(2, 9);
-        return `fc-upload-${seq}-${nonce}`;
+        return `fcc-upload-${seq}-${nonce}`;
       },
       state: 'READY',
       statePercent: 0
@@ -52,16 +52,16 @@ export default {
   },
   methods: {
     upload(files) {
-      // this.$root.$emit('fc-upload', { id: this.id, type: 'UPLOAD', files });
-      //setTimeout(()=>this.$root.$emit('fc-upload', {id: this.id, type: 'STATE', state: 'UPLOADING', progress: 50}), 2*1000);
-      //setTimeout(()=>this.$root.$emit('fc-upload', {id: this.id, type: 'STATE', state: 'ERROR', error: 'test'}), 5*1000);
-      //setTimeout(()=>this.$root.$emit('fc-upload', {id: this.id, type: 'STATE', state: 'UPLOADED', url: 'test'}), 5*1000);
+      // this.$root.$emit('fcc-upload', { id: this.id, type: 'UPLOAD', files });
+      //setTimeout(()=>this.$root.$emit('fcc-upload', {id: this.id, type: 'STATE', state: 'UPLOADING', progress: 50}), 2*1000);
+      //setTimeout(()=>this.$root.$emit('fcc-upload', {id: this.id, type: 'STATE', state: 'ERROR', error: 'test'}), 5*1000);
+      //setTimeout(()=>this.$root.$emit('fcc-upload', {id: this.id, type: 'STATE', state: 'UPLOADED', url: 'test'}), 5*1000);
       // if (!files.length)
       //   return;
       if (files.length) {
         this.state = 'UPLOADING';
         this.statePercent = 50;
-        EventBus.$emit('fc-upload', { id: this.id, type: 'UPLOAD', files }, (res) => {
+        EventBus.$emit('fcc-upload', { id: this.id, type: 'UPLOAD', files }, (res) => {
           this.layer.values[this.name] = res.url;
           this.state = 'UPLOADED';
           this.statePercent = 100;
@@ -69,15 +69,15 @@ export default {
       }
     },
     cancel() {
-      this.$root.$emit('fc-upload', { id: this.id, type: 'CANCEL' });
+      this.$root.$emit('fcc-upload', { id: this.id, type: 'CANCEL' });
       this.state = 'READY';
       this.statePercent = 0;
     },
   },
   created() {
-    // EventBus.$on('fc-upload', event => {
+    // EventBus.$on('fcc-upload', event => {
     //   if (event.id === this.id) {
-    //     console.log('fc-upload', event);
+    //     console.log('fcc-upload', event);
     //     if (event.type === 'STATE') {
     //       if (event.state === 'UPLOADED' && this.state !== 'UPLOADED') {
     //         this.$emit('upload', this.name, event.url);
@@ -91,7 +91,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fc-upload {
+.fcc-upload {
   display: flex;
 
   > div {

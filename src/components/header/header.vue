@@ -1,14 +1,14 @@
 <template>
-  <header class="fc-header">
-    <h1 class="fc-header__h">FastComposer</h1>
-    <div class="fc-header__content">
+  <header class="fcc-header">
+    <h1 class="fcc-header__h">FastComposer</h1>
+    <div class="fcc-header__content">
       <message-toast :message="notificationMessage"/>
     </div>
-    <div class="fc-header__utils">
-      <button type="button" class="fc-utils__btn" @click="showLayerPanel"><i class="material-icons">add</i></button>
+    <div class="fcc-header__utils">
+      <button type="button" class="fcc-utils__btn" @click="showLayerPanel"><i class="material-icons">add</i></button>
     </div>
-    <div class="fc-header__info">
-      <span class="fc-header__save-time" v-show="saveTime">최종저장 시간: {{ saveTime }}</span>
+    <div class="fcc-header__info">
+      <span class="fcc-header__save-time" v-show="saveTime">최종저장 시간: {{ saveTime }}</span>
     </div>
   </header>
 </template>
@@ -61,7 +61,7 @@
 <style lang="scss" scoped>
   @import './../../assets/scss/style.scss';
 
-  .fc-header {
+  .fcc-header {
     position: fixed;
     top: 0;
     left: 0;
@@ -87,7 +87,7 @@
 
     &__utils {
       flex-grow: 0.3;
-      .fc-utils__btn {
+      .fcc-utils__btn {
         color: $white;
         align-items: center;
       }

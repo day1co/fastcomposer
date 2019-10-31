@@ -10,5 +10,5 @@ export const uniqueId = () => {
   const nonce = Math.random()
     .toString(36)
     .substr(2, 9);
-  return `fc-block-${seq}-${nonce}`;
+  return `fcc-block-${seq}-${nonce}`;
 };
