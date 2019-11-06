@@ -3,10 +3,12 @@
     <div class="fc-preview__container">
       <layer-content
         v-for="(layer, layerIndex) in layers"
+        :isSelected="layerIndex === index"
         :key="'layer-' + layerIndex"
         :layer="layer"
         :index="layerIndex"
       />
+
     </div>
     <button class="fc-preview__save" type="button" @click="save">
       <i class="material-icons">&#xE5CA;</i>
@@ -31,6 +33,11 @@
         },
       },
     },
+    data() {
+      return {
+        index: null
+      }
+    },
     computed: {
       html() {
         return this.layers
@@ -52,6 +59,14 @@
         EventBus.$emit('save');
       }
     },
+    mounted() {
+      EventBus.$on('selected-layer', (index) => {
+        this.index = index;
+      });
+      EventBus.$on('remove-layer', () => {
+        this.index = null;
+      })
+    }
   };
 </script>
 

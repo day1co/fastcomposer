@@ -3,7 +3,7 @@
     <div
       class="fc-layer__container"
       :id="layer.id"
-      :class="['fc-layout-' + layer.layout.id, { active: active }, { hidden: layer.hidden }]"
+      :class="['fc-layout-' + layer.layout.id, { 'fc-selected': isSelected }]"
       v-html="html"
     ></div>
   </div>
@@ -20,11 +20,10 @@ export default {
         return {}
       }
     },
-    active: {
-      type: Boolean,
-      default:  false
-    },
     index: Number,
+    isSelected: {
+      type: Boolean
+    }
   },
   computed: {
     html() {
@@ -44,7 +43,9 @@ export default {
 
 .fc-layer {
   position: relative;
-  border-bottom: 1px solid #bbb;
+  .fc-selected {
+    box-shadow: inset 0 0 0 .4rem red;
+  }
   .fc-layer__preview {
     flex: 0 0 0;
     width: 100%;
