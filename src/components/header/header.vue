@@ -4,11 +4,14 @@
     <div class="fc-header__content">
       <message-toast :message="notificationMessage"/>
     </div>
-    <div class="fc-header__utils">
-      <button type="button" class="fc-utils__btn" @click="showLayerPanel"><i class="material-icons">add</i></button>
-    </div>
-    <div class="fc-header__info">
-      <span class="fc-header__save-time" v-show="saveTime">최종저장 시간: {{ saveTime }}</span>
+    <div class="fc-header__right">
+      <div class="fc-header__info">
+        <span class="fc-header__save-time" v-show="saveTime">최종저장 시간: {{ saveTime }}</span>
+      </div>
+      <div class="fc-header__utils">
+        <button @click="showInfoTags"><i class="material-icons">help</i></button>
+        <button type="button" class="fc-utils__btn" @click="showLayerPanel"><i class="material-icons">add</i></button>
+      </div>
     </div>
   </header>
 </template>
@@ -25,6 +28,9 @@
     methods: {
       showLayerPanel($event) {
         EventBus.$emit('show-layout-panel', $event);
+      },
+      showInfoTags() {
+        EventBus.$emit('showInfoTags');
       }
     },
     data() {
@@ -74,35 +80,27 @@
     width: percentage(1);
     height: $header-size;
     background-color: transparent;
-    transform: none;
-    transition: none;
+    transform: none; // admin과 충돌 이슈
+    transition: none;  // admin과 충돌 이슈
 
+    button {
+      color: $white;
+    }
 
     &__h {
+      width: 30.2rem;
       font-size: 1.8rem;
       color: $white;
-      flex-grow: 1;
     }
 
-    &__content {
-      flex-grow: 23;
-    }
-
-    &__utils {
-      flex-grow: 0.3;
-      .fc-utils__btn {
+    &__right {
+      display: flex;
+      width: 26.2rem;
+      flex-direction: column;
+      > div {
         color: $white;
-        align-items: center;
+        height: 3rem;
       }
-    }
-
-    &__info {
-      flex: 1 1 130px;
-    }
-
-    &__save-time {
-      text-align: center;
-      color: #ffffff;
     }
   }
 </style>

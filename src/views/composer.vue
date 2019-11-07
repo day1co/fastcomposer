@@ -1,31 +1,70 @@
 <template>
-  <div class="fc-composer"
-   :class="[
-    isLeftVisible && 'fc-composer--aside-l',
-    isRightVisible && 'fc-composer--aside-r',
-  ]"
-  >
-    <composer-header :notificationMessage="notification.message" :notificationType="notification.type"/>
-    <div class="fc-composer__content">
-      <composer-aside :className="'left'">
-        <editor v-if="currentLayer" :layer="currentLayer" />
-      </composer-aside>
-      <preview
-        :layers="layers"
-      />
-      <composer-aside :className="'right'">
-        <layers
+  <div>
+    <div class="fc-composer"
+     :class="[
+      isLeftVisible && 'fc-composer--aside-l',
+      isRightVisible && 'fc-composer--aside-r',
+    ]"
+    >
+      <composer-header :notificationMessage="notification.message" :notificationType="notification.type"/>
+      <div class="fc-composer__content">
+        <composer-aside :className="'left'">
+          <editor v-if="currentLayer" :layer="currentLayer" />
+        </composer-aside>
+        <preview
           :layers="layers"
-          :currentLayerIndex="currentLayerIndex"
         />
-      </composer-aside>
-    </div>
+        <composer-aside :className="'right'">
+          <layers
+            :layers="layers"
+            :currentLayerIndex="currentLayerIndex"
+          />
+        </composer-aside>
+      </div>
 
-    <layouts
-      :layouts="layouts"
-      :layoutStyle="layoutStyle"
-      ref="layouts"
-    />
+      <layouts
+        :layouts="layouts"
+        :layoutStyle="layoutStyle"
+        ref="layouts"
+      />
+    </div>
+    <modal v-if="showModal">
+      <div slot="main" class="fc-guide">
+        <button @click="onHideModal">
+          <i class="material-icons">close</i>
+        </button>
+        <table>
+          <thead>
+            <tr>
+              <td>태그명</td>
+              <td>표시</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>i</td>
+              <td><i>FastComposer</i></td>
+            </tr>
+            <tr>
+              <td>b</td>
+              <td><b>FastComposer</b></td>
+            </tr>
+            <tr>
+              <td>s</td>
+              <td><s>FastComposer</s></td>
+            </tr>
+            <tr>
+              <td>u</td>
+              <td><u>FastComposer</u></td>
+            </tr>
+            <tr>
+              <td>em</td>
+              <td><em>FastComposer</em></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -40,6 +79,7 @@
   import ComposerAside from './../components/content/aside/aside';
   import Layouts from './../components/content/layouts/layouts';
   import Layers from './../components/content/aside/layers/layers';
+  import Modal from './../components/common/modal';
 
   export default {
     components: {
@@ -48,7 +88,8 @@
       ComposerAside,
       Editor,
       Layouts,
-      Layers
+      Layers,
+      Modal
     },
     props: {
       layoutModels: {
@@ -81,6 +122,7 @@
       EventBus.$on('fc-upload', this.onUploadFile);
       EventBus.$on('show-layout-panel', this.onShowLayouts);
       EventBus.$on('clear', this.clearMessageToast);
+      EventBus.$on('showInfoTags', this.onShowModal);
     },
     computed: {
       currentLayer() {
@@ -105,6 +147,7 @@
     },
     data() {
       return {
+        showModal: false,
         layouts: [],
         layers: [],
         layoutStyle: {},
@@ -130,6 +173,12 @@
       };
     },
     methods: {
+      onShowModal() {
+        this.showModal = true;
+      },
+      onHideModal() {
+        this.showModal = false;
+      },
       clearMessageToast() {
         this.notification.message = '';
       },
@@ -261,6 +310,26 @@
       box-shadow: 0 .3rem 1rem rgba($black, 0.24), 0 .3rem 1rem rgba($black,
         0.16);
       @include transition(null, 0.3s);
+    }
+  }
+  .fc-guide {
+    em {
+      font-style: normal;
+      text-decoration: none;
+      color: #424242;
+      background-color: transparent;
+      box-shadow: inset 0 -.8rem 0 #50e3c2;
+    }
+    table {
+      border: .2rem solid #808080;
+      td {
+        border: .1rem solid #808080;
+      }
+      thead {
+        td {
+          text-align: center;
+        }
+      }
     }
   }
 </style>
