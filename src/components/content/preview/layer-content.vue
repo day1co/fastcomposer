@@ -52,6 +52,7 @@ export default {
   position: relative;
   .fc-selected {
     box-shadow: inset 0 0 0 .4rem red;
+    padding: .4rem;
   }
   .fc-layer__preview {
     flex: 0 0 0;
