@@ -1,7 +1,19 @@
 <template>
   <Container @drop="drop" :get-ghost-parent="getGhostParent">
     <Draggable v-for="(layer, index) in layers" :key="index">
-      <div class="__item" :class="{'__item--active': index === currentLayerIndex}">
+      <div
+        class="__item"
+        :class="{ '__item--active': index === currentLayerIndex }"
+        tabindex="0"
+        @focus="select(index)"
+        @keydown.exact.enter.prevent="focusEditor"
+        @keydown.exact.up.prevent="select(currentLayerIndex - 1)"
+        @keydown.exact.down.prevent="select(currentLayerIndex + 1)"
+        @keydown.exact.page-up.prevent="select(currentLayerIndex - 5)"
+        @keydown.exact.page-down.prevent="select(currentLayerIndex + 5)"
+        @keydown.exact.home.prevent="select(0)"
+        @keydown.exact.end.prevent="select(layers.length - 1)"
+      >
         <div class="__item__group" v-if="layer.layout" @click="select(index)">
           <img :src="layer.layout.icon" alt="" />
           <span class="__item__group__info">
@@ -67,7 +79,8 @@
     },
     methods: {
       select(index) {
-        EventBus.$emit('selected-layer', index);
+        const newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
+        EventBus.$emit('selected-layer', newIndex);
         EventBus.$emit('move-selected-layer');
       },
       drop(dropResult) {
@@ -79,8 +92,20 @@
       },
       removeLayer(index) {
         EventBus.$emit('remove-layer', index);
-      }
-    }
+      },
+      focus() {
+        // XXX: focus the selected layer
+        this.$el.focus();
+        const el = this.$el.querySelector('.__item--active');
+        if (el) {
+          el.focus();
+        }
+      },
+      focusEditor() {
+        // XXX: focus to editor
+        EventBus.$emit('focus-editor');
+      },
+    },
   }
 </script>
 <style lang="scss" scoped>
@@ -88,6 +113,7 @@
   .__item {
     position: relative;
     border: 3px solid #ffffff;
+    cursor: pointer;
     &--active {
       border: 3px solid #f74982;
     }

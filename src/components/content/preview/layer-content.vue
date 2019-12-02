@@ -5,12 +5,14 @@
       :id="layer.id"
       :class="['fc-layout-' + layer.layout.id, { 'fc-selected': isSelected }]"
       v-html="html"
+      @click="select"
     ></div>
   </div>
 </template>
 
 <script>
 import marked from 'marked';
+import EventBus from '../../../event-bus/event-bus';
 
 export default {
   props: {
@@ -33,6 +35,11 @@ export default {
         }
       }
       return this.layer.layout.templateFunc({ $markdown: marked, ...this.layer.values });
+    },
+  },
+  methods: {
+    select() {
+      EventBus.$emit('selected-layer', this.index);
     },
   },
 };

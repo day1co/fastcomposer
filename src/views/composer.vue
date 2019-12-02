@@ -1,5 +1,11 @@
 <template>
-  <div>
+  <div
+    tabindex="0"
+    @keydown.exact.alt.shift.left.prevent="focusEditor"
+    @keydown.exact.alt.shift.right.prevent="focusLayers"
+    @keydown.exact.alt.shift.up.prevent="focusPreview"
+    @keydown.exact.alt.shift.down.prevent="onShowLayouts"
+  >
     <div class="fc-composer"
      :class="[
       isLeftVisible && 'fc-composer--aside-l',
@@ -9,15 +15,17 @@
       <composer-header :notificationMessage="notification.message" :notificationType="notification.type"/>
       <div class="fc-composer__content">
         <composer-aside :className="'left'">
-          <editor v-if="currentLayer" :layer="currentLayer" />
+          <editor v-if="currentLayer" :layer="currentLayer" ref="editor" />
         </composer-aside>
         <preview
           :layers="layers"
+          ref="preview"
         />
         <composer-aside :className="'right'">
           <layers
             :layers="layers"
             :currentLayerIndex="currentLayerIndex"
+            ref="layers"
           />
         </composer-aside>
       </div>
@@ -61,6 +69,52 @@
               <td>em</td>
               <td><em>FastComposer</em></td>
             </tr>
+          </tbody>
+        </table>
+        <table>
+          <thead>
+          <tr>
+            <td>단축키</td>
+            <td>기능</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>alt+shift+left</td>
+            <td>레이어 속성</td>
+          </tr>
+          <tr>
+            <td>alt+shift+right</td>
+            <td>레이어 목록</td>
+          </tr>
+          <tr>
+            <td>alt+shift+up</td>
+            <td>미리보기</td>
+          </tr>
+          <tr>
+            <td>alt+shift+down</td>
+            <td>레이아웃 목록</td>
+          </tr>
+          <tr>
+            <td>up</td>
+            <td>이전 항목</td>
+          </tr>
+          <tr>
+            <td>down</td>
+            <td>다음 항목</td>
+          </tr>
+          <tr>
+            <td>home</td>
+            <td>첫 항목</td>
+          </tr>
+          <tr>
+            <td>end</td>
+            <td>마지막 항목</td>
+          </tr>
+          <tr>
+            <td>enter</td>
+            <td>선택 &amp; 편집</td>
+          </tr>
           </tbody>
         </table>
       </div>
@@ -111,6 +165,8 @@
       if (this.layerModals.length) {
         this.setLayerBlockData(this.layerModals);
       }
+
+      this.$el.focus();
     },
     created() {
       EventBus.$on('selected-layer', this.onUpdateCurrentLayerIndex);
@@ -197,11 +253,17 @@
         });
 
         this.currentLayerIndex = this.currentLayerIndex + 1;
+        EventBus.$emit('selected-layer', this.currentLayerIndex);
+        this.focusEditor();
       },
       onRemoveLayer(index) {
         if (index !== -1) {
           this.layers.splice(index, 1);
-          this.currentLayerIndex = -1;
+          console.log(index, this.layers.length);
+          if (index < this.layers.length) {
+            this.currentLayerIndex = index;
+            EventBus.$emit('selected-layer', this.currentLayerIndex);
+          }
         }
       },
       onToggleAside(state) {
@@ -226,6 +288,10 @@
         }
 
         this.layers = Object.assign([], layerBlockData.map(layer => Object.assign({id: uniqueId()}, layer, {layout: this.layoutMaps[layer.layout]})));
+        // select first layer if available
+        if (this.layers.length > 0) {
+          EventBus.$emit('selected-layer', 0);
+        }
       },
       onShowLayouts(event) {
         const layoutsWidth = 200;
@@ -237,6 +303,17 @@
         };
 
         this.$refs.layouts.toggle();
+      },
+      focusEditor() {
+        this.isLeftVisible = true;
+        this.$refs.editor.focus();
+      },
+      focusLayers() {
+        this.isRightVisible = true;
+        this.$refs.layers.focus();
+      },
+      focusPreview() {
+        this.$refs.preview.focus();
       },
       onSave() {
         const layerHtml = this.layerHtml;

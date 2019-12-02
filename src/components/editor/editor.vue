@@ -64,6 +64,7 @@
 </template>
 
 <script>
+  import EventBus from './../../event-bus/event-bus';
   import FileUpload from './file-upload.vue';
 
   export default {
@@ -82,6 +83,26 @@
       upload(name, url) {
         this.layer.values[name] = url;
       },
+      focus() {
+        // XXX: focus the first input element and select all text if possible
+        this.$nextTick(() => {
+          // XXX: reset editor pane scroll position to top
+          this.$el.scrollTop = 0;
+          this.$el.parentElement.scrollTop = 0;
+          this.$el.focus();
+          const el = this.$el.querySelector('input,textarea,select,button');
+          console.log(el);
+          if (el) {
+            el.focus();
+            if (typeof el.select === 'function') {
+              el.select();
+            }
+          }
+        });
+      },
+    },
+    mounted() {
+      EventBus.$on('focus-editor', () => this.focus());
     },
   };
 </script>

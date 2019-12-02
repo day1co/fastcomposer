@@ -1,5 +1,14 @@
 <template>
-  <div class="fc-preview">
+  <div class="fc-preview"
+       tabindex="0"
+       @keydown.exact.enter.prevent="focusEditor"
+       @keydown.exact.up.prevent="select(index-1)"
+       @keydown.exact.down.prevent="select(index+1)"
+       @keydown.exact.home.prevent="select(0)"
+       @keydown.exact.end.prevent="select(layers.length - 1)"
+       @keydown.exact.page-up.prevent="select(index - 5)"
+       @keydown.exact.page-down.prevent="select(index + 5)"
+  >
     <div class="fc-preview__container">
       <layer-content
         v-for="(layer, layerIndex) in layers"
@@ -54,6 +63,17 @@
       }
     },
     methods: {
+      select(index) {
+        const newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
+        EventBus.$emit('selected-layer', newIndex);
+        EventBus.$emit('move-selected-layer');
+      },
+      focus() {
+        this.$el.focus();
+      },
+      focusEditor() {
+        EventBus.$emit('focus-editor');
+      },
       save() {
         console.log(this.html);
         EventBus.$emit('save');

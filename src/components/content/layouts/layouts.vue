@@ -1,10 +1,21 @@
 <template>
   <div class="fc-layout" v-if="flag"
     :style="layoutStyle"
+       tabindex="0"
+       @keydown.exact.enter.prevent="selected(layouts[layoutIndex])"
+       @keydown.exact.up.prevent="focus(layoutIndex - 1)"
+       @keydown.exact.down.prevent="focus(layoutIndex + 1)"
+       @keydown.exact.home.prevent="focus(0)"
+       @keydown.exact.end.prevent="focus(layouts.length - 1)"
+       @keydown.exact.page-up.prevent="focus(layoutIndex - 5)"
+       @keydown.exact.page-down.prevent="focus(layoutIndex + 5)"
+       @keydown.exact.esc.prevent="toggle"
   >
     <ul class="fc-layout__list">
       <li v-for="(layout, index) in layouts" :key="index">
-        <button class="fc-layout__list__item" @click="selected(layout)">
+        <button class="fc-layout__list__item" @click="selected(layout)"
+                @focus="focus(index)"
+                :class="{active: index === layoutIndex}">
           <img :src="layout.icon" alt="" />
           <span class="fc-layout__list__item__info">
           <strong class="fc-layout__list__item__name">{{ layout.id }}</strong>
@@ -32,6 +43,8 @@
     },
     data() {
       return {
+        layoutIndex: 0,
+        savedFocus: null,
         flag: false
       }
     },
@@ -41,10 +54,27 @@
          * composer에서 layers에 push가 일어나며, 추가된 layer가 선택된다.
          */
         EventBus.$emit('add-layer', layout);
+        this.flag = false;
       },
       toggle() {
         this.flag = !this.flag;
-      }
+        this.$nextTick(() => {
+          if(this.flag) {
+            // XXX: save current focus to restore focus for cancel
+            this.savedFocus = document.activeElement;
+            this.$el.focus();
+          } else {
+            // XXX: restore focus if possible
+            if (this.savedFocus) {
+              this.savedFocus.focus();
+              this.savedFocus = null;
+            }
+          }
+        });
+      },
+      focus(index) {
+        this.layoutIndex = Math.min(Math.max(index, 0), this.layouts.length - 1);
+      },
     },
   }
 </script>
@@ -103,6 +133,10 @@
           display: block;
           margin-bottom: 0.5rem;
         }
+      }
+
+      .active {
+        border: 2px solid red;
       }
     }
     li {
