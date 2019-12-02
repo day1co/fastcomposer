@@ -1,10 +1,10 @@
 <template>
   <div
     tabindex="0"
-    @keydown.exact.alt.shift.left.prevent="focusEditor"
-    @keydown.exact.alt.shift.right.prevent="focusLayers"
-    @keydown.exact.alt.shift.up.prevent="focusPreview"
-    @keydown.exact.alt.shift.down.prevent="onShowLayouts"
+    @keydown.exact.ctrl.shift.49.prevent="focusEditor"
+    @keydown.exact.ctrl.shift.50.prevent="focusPreview"
+    @keydown.exact.ctrl.shift.51.prevent="focusLayers"
+    @keydown.exact.ctrl.shift.48.prevent="onShowLayouts"
   >
     <div class="fc-composer"
      :class="[
@@ -44,8 +44,8 @@
         <table>
           <thead>
             <tr>
-              <td>태그명</td>
-              <td>표시</td>
+              <th>태그명</th>
+              <th>표시</th>
             </tr>
           </thead>
           <tbody>
@@ -74,45 +74,33 @@
         <table>
           <thead>
           <tr>
-            <td>단축키</td>
-            <td>기능</td>
+            <th>단축키</th>
+            <th>기능</th>
           </tr>
           </thead>
           <tbody>
           <tr>
-            <td>alt+shift+left</td>
+            <td>Ctrl+Shift+1</td>
             <td>레이어 속성</td>
           </tr>
           <tr>
-            <td>alt+shift+right</td>
-            <td>레이어 목록</td>
-          </tr>
-          <tr>
-            <td>alt+shift+up</td>
+            <td>Ctrl+Shift+2</td>
             <td>미리보기</td>
           </tr>
           <tr>
-            <td>alt+shift+down</td>
+            <td>Ctrl+Shift+3</td>
+            <td>레이어 목록</td>
+          </tr>
+          <tr>
+            <td>Ctrl+Shift+0</td>
             <td>레이아웃 목록</td>
           </tr>
           <tr>
-            <td>up</td>
-            <td>이전 항목</td>
+            <td>Up/Down/Home/End</td>
+            <td>이전/다음/처음/마지막 항목</td>
           </tr>
           <tr>
-            <td>down</td>
-            <td>다음 항목</td>
-          </tr>
-          <tr>
-            <td>home</td>
-            <td>첫 항목</td>
-          </tr>
-          <tr>
-            <td>end</td>
-            <td>마지막 항목</td>
-          </tr>
-          <tr>
-            <td>enter</td>
+            <td>Enter</td>
             <td>선택 &amp; 편집</td>
           </tr>
           </tbody>
