@@ -8,7 +8,7 @@
       >
         <label class="fc-editor__form__label" :for="layer.id + '--' + param.type">
           <strong class="fc-editor__form__name">{{ param.name }}</strong>
-          ({{ param.type }})
+          &nbsp;<small>({{ param.type }})</small>
         </label>
 
         <template v-if="param.type === 'image'">
@@ -143,7 +143,6 @@
       &__name {
         display: inline-block;
         font-size: 1.4rem;
-        text-transform: uppercase;
         margin-bottom: -0.1rem;
         border-bottom: 0.1rem solid $secondary;
       }
@@ -167,7 +166,6 @@
         font-size: 1.6rem;
         background-color: $blue-l2;
         border-radius: 0.5rem;
-        color: $white;
         outline: 0 none;
         @include transition(null, 0.2s);
 

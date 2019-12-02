@@ -282,7 +282,7 @@
         }
       },
       onShowLayouts(event) {
-        const layoutsWidth = 200;
+        const layoutsWidth = 400;
         const { offsetLeft, offsetWidth } = event.currentTarget;
 
         this.layoutStyle = {
