@@ -1,10 +1,10 @@
 <template>
   <div
     tabindex="0"
-    @keydown.exact.ctrl.shift.49.prevent="focusEditor"
-    @keydown.exact.ctrl.shift.50.prevent="focusPreview"
-    @keydown.exact.ctrl.shift.51.prevent="focusLayers"
-    @keydown.exact.ctrl.shift.48.prevent="onShowLayouts"
+    @keydown.exact.alt.shift.49.prevent="focusEditor"
+    @keydown.exact.alt.shift.50.prevent="focusPreview"
+    @keydown.exact.alt.shift.51.prevent="focusLayers"
+    @keydown.exact.alt.shift.48.prevent="onShowLayouts"
   >
     <div class="fc-composer"
      :class="[
@@ -80,19 +80,19 @@
           </thead>
           <tbody>
           <tr>
-            <td>Ctrl+Shift+1</td>
+            <td>Alt+Shift+1</td>
             <td>레이어 속성</td>
           </tr>
           <tr>
-            <td>Ctrl+Shift+2</td>
+            <td>Alt+Shift+2</td>
             <td>미리보기</td>
           </tr>
           <tr>
-            <td>Ctrl+Shift+3</td>
+            <td>Alt+Shift+3</td>
             <td>레이어 목록</td>
           </tr>
           <tr>
-            <td>Ctrl+Shift+0</td>
+            <td>Alt+Shift+0</td>
             <td>레이아웃 목록</td>
           </tr>
           <tr>
