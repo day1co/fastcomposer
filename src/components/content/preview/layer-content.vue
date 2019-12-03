@@ -29,13 +29,13 @@ export default {
   },
   computed: {
     html() {
-      const values = Object.entries(this.layer.layout.values || {}).reduce(
-        (values, [key, value]) => {
-          values[key] = value;
-          return values;
-        },
-        { $markdown: marked }
-      );
+      const values = { $markdown: marked };
+      if (this.layer.layout.params) {
+        for(const { name } of this.layer.layout.params) {
+          const value = this.layer.values[name];
+          values[name] = (value === undefined) ? this.layer.layout.values[name] : values[name] = this.layer.values[name];
+        }
+      }
       return this.layer.layout.templateFunc(values);
     },
   },
