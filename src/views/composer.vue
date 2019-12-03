@@ -15,7 +15,7 @@
       <composer-header :notificationMessage="notification.message" :notificationType="notification.type"/>
       <div class="fc-composer__content">
         <composer-aside :className="'left'">
-          <editor v-if="currentLayer" :layer="currentLayer" ref="editor" />
+          <editor v-show="currentLayer" :layer="currentLayer" ref="editor" />
         </composer-aside>
         <preview
           :layers="layers"

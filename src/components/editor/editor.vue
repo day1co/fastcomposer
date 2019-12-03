@@ -1,6 +1,6 @@
 <template>
   <div class="fc-editor">
-    <form class="fc-editor__form" @submit.prevent="">
+    <form class="fc-editor__form" @submit.prevent="" v-if="layer.layout">
       <fieldset
         v-for="param in layer.layout.params"
         :key="param.name"
