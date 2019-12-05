@@ -275,7 +275,39 @@
           layerBlockData = JSON.parse(layerBlockData);
         }
 
-        this.layers = Object.assign([], layerBlockData.map(layer => Object.assign({id: uniqueId()}, layer, {layout: this.layoutMaps[layer.layout]})));
+        // old format: replace layout id => layout object
+        // this.layers = Object.assign([], layerBlockData.map(layer => Object.assign({id: uniqueId()}, layer, {layout: this.layoutMaps[layer.layout]})));
+
+        this.layers = layerBlockData.map(layer => {
+          console.log(layer.id, layer.layout);
+          if (typeof layer.layout === 'string') {
+            // old format:
+            // replace layout id => layout object
+            layer.layout = this.layoutMaps[layer.layout];
+          } else {
+            // new format: layout object itself
+            // TODO: layout version check!
+            //if(layer.layout.version !== this.layoutMaps[layer.layout.id].version) {
+            //}
+            layer.layout = this.layoutMaps[layer.layout.id];
+          }
+          if (!layer.layout) {
+            layer.layout = {
+              id: 'broken',
+              icon: '',
+              description: '다른 레이아웃으로 새 레이어를 만들고 이 레이어는 삭제하세요',
+              params: [],
+              templateFunc: () => {
+                return `<pre style="background:#fff;"><code>${JSON.stringify(layer.values)}</code></pre>`;
+              },
+              values: {},
+            }
+          }
+          if (!layer.id) {
+            layer.id = uniqueId();
+          }
+          return layer;
+        });
         // select first layer if available
         if (this.layers.length > 0) {
           EventBus.$emit('selected-layer', 0);
@@ -305,9 +337,12 @@
       },
       onSave() {
         const layerHtml = this.layerHtml;
-        // replace layout object => layout id
-        const layers = this.layers.map(layer => Object.assign({}, layer, {layout: layer.layout.id}));
-        const layerJson = JSON.stringify(layers, null, 2);
+        // old format: replace layout object => layout id
+        //const layers = this.layers.map(layer => Object.assign({}, layer, {layout: layer.layout.id}));
+
+        // new format: embed layout itself
+        const layerJson = JSON.stringify(this.layers, null, 2);
+
         // TODO: save html only!
         // AS-IS: save generated html with source json
         this.$emit('save', layerHtml, layerJson);
@@ -395,6 +430,21 @@
           text-align: center;
         }
       }
+    }
+  }
+
+  .fc-layout-broken {
+    padding: 10px;
+    background: repeating-linear-gradient(
+        45deg,
+        #c33,
+        #c33 10px,
+        #ffc 10px,
+        #ffc 20px
+    );
+
+    pre {
+      background: #f00;
     }
   }
 </style>
