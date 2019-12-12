@@ -49,20 +49,32 @@
     },
     computed: {
       html() {
+        this.syncLayerValues();
         return this.layers
-          .map(
-            block => `
+          .map(block => `
             <section class="fc-block fc-layout fc-layout-${block.layout.id}">
               ${block.layout.templateFunc({
               $markdown: marked,
               ...block.values
             })}
             </section>`
-          )
-          .join('\n');
+          ).join('\n');
       }
     },
     methods: {
+      syncLayerValues() {
+        this.layers.forEach((layer) => {
+          const layoutValues = layer.layout.values;
+          const layerValues = layer.values;
+
+          for (const prop in layoutValues) {
+            if (layerValues[prop] === undefined) {
+              layerValues[prop] = '';
+            }
+          }
+        });
+
+      },
       select(index) {
         const newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
         EventBus.$emit('selected-layer', newIndex);
