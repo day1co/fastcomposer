@@ -3,7 +3,7 @@
     <div
       class="fc-layer__container"
       :id="layer.id"
-      :class="['fc-layout-' + layer.layout.id, { 'fc-selected': isSelected }]"
+      :class="['fc-layout-' + layer.layout.id, { 'fc-selected': isSelected }, {'fc-hidden': layer.hidden} ]"
       v-html="html"
       @click="select"
     ></div>
@@ -64,11 +64,10 @@ export default {
     &.active {
       outline: 1px dashed fuchsia;
     }
-
-    &.hidden {
-      opacity: 0.5;
-      background-color: olive;
-    }
+  }
+  .fc-hidden {
+    opacity: 0.5;
+    background-color: olive;
   }
 }
 </style>

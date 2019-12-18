@@ -22,6 +22,11 @@
           </span>
         </div>
         <div class="__utils">
+          <button class="__utils__btn" @click="toggle(index)">
+            <i class="material-icons">
+              visibility{{layer.hidden ? '_off' : ''}}
+            </i>
+          </button>
           <button class="__utils__btn" @click="removeLayer(index)">
             <i class="material-icons">&#xE872;</i>
           </button>
@@ -105,6 +110,9 @@
         // XXX: focus to editor
         EventBus.$emit('focus-editor');
       },
+      toggle(index) {
+        EventBus.$emit('hidden', index, !this.layers[index].hidden);
+      }
     },
   }
 </script>

@@ -167,6 +167,7 @@
       EventBus.$on('show-layout-panel', this.onShowLayouts);
       EventBus.$on('clear', this.clearMessageToast);
       EventBus.$on('showInfoTags', this.onShowModal);
+      EventBus.$on('hidden', this.onToggleLayerState);
     },
     computed: {
       currentLayer() {
@@ -222,6 +223,14 @@
       },
       onHideModal() {
         this.showModal = false;
+      },
+      onToggleLayerState(index, flag) {
+        if (index !== -1) {
+          if (index < this.layers.length) {
+            this.$set(this.layers[index], 'hidden', flag);
+            this.layers[index].hidden = flag;
+          }
+        }
       },
       clearMessageToast() {
         this.notification.message = '';
