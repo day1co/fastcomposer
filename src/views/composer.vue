@@ -174,7 +174,7 @@
         return this.layers[this.currentLayerIndex];
       },
       layerHtml() {
-        return this.layers.map(layer => `
+        return this.layers.filter(layer => !layer.hidden).map(layer => `
             <section class="fc-block fc-layout fc-layout-${layer.layout.id}">
               ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
             </section>`,
