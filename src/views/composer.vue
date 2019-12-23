@@ -160,6 +160,7 @@
       EventBus.$on('selected-layer', this.onUpdateCurrentLayerIndex);
       EventBus.$on('add-layer', this.onAddLayer);
       EventBus.$on('remove-layer', this.onRemoveLayer);
+      EventBus.$on('copy-layer', this.onCopyLayer);
       EventBus.$on('toggle-aside', this.onToggleAside);
       EventBus.$on('save', this.onSave);
       EventBus.$on('move-selected-layer',this.onMoveSelectedLayer);
@@ -258,6 +259,18 @@
             this.currentLayerIndex = index;
             EventBus.$emit('selected-layer', this.currentLayerIndex);
           }
+        }
+      },
+      onCopyLayer(index) {
+        if (index !== -1) {
+          this.layers = [
+            ...this.layers.slice(0, ++index),
+            {
+              id: uniqueId(),
+              layout: this.layers[index].layout,
+              values: cloneDeep(this.layers[index].values) || {}
+            },
+            ...this.layers.slice(index, this.layers.length)];
         }
       },
       onToggleAside(state) {

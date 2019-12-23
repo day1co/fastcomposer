@@ -27,6 +27,9 @@
               visibility{{layer.hidden ? '_off' : ''}}
             </i>
           </button>
+          <button class="__utils__btn" @click="copyLayer(index)">
+            <i class="material-icons">file_copy</i>
+          </button>
           <button class="__utils__btn" @click="removeLayer(index)">
             <i class="material-icons">&#xE872;</i>
           </button>
@@ -94,6 +97,9 @@
       },
       getGhostParent(){
         return document.body;
+      },
+      copyLayer(index) {
+        EventBus.$emit('copy-layer', index);
       },
       removeLayer(index) {
         EventBus.$emit('remove-layer', index);
