@@ -63,6 +63,10 @@
     },
     methods: {
       syncLayerValues() {
+        /**
+         * 레이아웃의 디자인이 변경되거나 property가 추가 삭제가 되는경우 존재하지 않는 property에 대해서
+         * layout.values의 property와 layer.value의 property를 동기화하여 template에러가 발생하지 않도록 함.
+         */
         this.layers.forEach((layer) => {
           const layoutValues = layer.layout.values;
           const layerValues = layer.values;
