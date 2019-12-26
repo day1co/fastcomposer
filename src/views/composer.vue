@@ -160,7 +160,7 @@
       EventBus.$on('selected-layer', this.onUpdateCurrentLayerIndex);
       EventBus.$on('add-layer', this.onAddLayer);
       EventBus.$on('remove-layer', this.onRemoveLayer);
-      EventBus.$on('copy-layer', this.onCopyLayer);
+      EventBus.$on('clone-layer', this.onCloneLayer);
       EventBus.$on('toggle-aside', this.onToggleAside);
       EventBus.$on('save', this.onSave);
       EventBus.$on('move-selected-layer',this.onMoveSelectedLayer);
@@ -261,7 +261,7 @@
           }
         }
       },
-      onCopyLayer(index) {
+      onCloneLayer(index) {
         if (index !== -1) {
           this.layers.splice(index, 0, {
             id: uniqueId(),
