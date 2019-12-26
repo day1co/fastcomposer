@@ -226,10 +226,7 @@
       },
       onToggleLayerState(index, flag) {
         if (index !== -1) {
-          if (index < this.layers.length) {
-            this.$set(this.layers[index], 'hidden', flag);
-            this.layers[index].hidden = flag;
-          }
+          this.$set(this.layers[index], 'hidden', flag);
         }
       },
       clearMessageToast() {
