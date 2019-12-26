@@ -263,14 +263,11 @@
       },
       onCopyLayer(index) {
         if (index !== -1) {
-          this.layers = [
-            ...this.layers.slice(0, ++index),
-            {
-              id: uniqueId(),
-              layout: this.layers[index].layout,
-              values: cloneDeep(this.layers[index].values) || {}
-            },
-            ...this.layers.slice(index, this.layers.length)];
+          this.layers.splice(index, 0, {
+            id: uniqueId(),
+            layout: this.layers[index].layout,
+            values: JSON.parse(JSON.stringify(this.layers[index].values)) || {}
+          });
         }
       },
       onToggleAside(state) {
