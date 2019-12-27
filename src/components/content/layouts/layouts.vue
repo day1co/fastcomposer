@@ -1,6 +1,5 @@
 <template>
   <div class="fc-layout" v-if="flag"
-    :style="layoutStyle"
        tabindex="0"
        @keydown.exact.enter.prevent="selected(layouts[layoutIndex])"
        @keydown.exact.up.prevent="focus(layoutIndex - 1)"
@@ -37,9 +36,6 @@
           return []
         }
       },
-      layoutStyle: {
-        type: Object
-      }
     },
     data() {
       return {
@@ -102,9 +98,9 @@
     position: fixed;
     top:6rem;
     bottom:0;
-    width: 60%;
+    right: 2.5rem;
+    width: 40rem;
     padding-bottom:2rem;
-    right: 0;
     z-index: 9999;
     &__list {
       overflow: scroll;

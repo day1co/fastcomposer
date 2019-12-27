@@ -22,9 +22,12 @@
           </span>
         </div>
         <div class="__utils">
+          <button class="__utils__btn" @click="addFavoriteLayout(layer.layout)">
+            <i class="material-icons">{{ getFavoriteLayoutIconStyle(layer) }}</i>
+          </button>
           <button class="__utils__btn" @click="toggle(index)">
             <i class="material-icons">
-              visibility{{layer.hidden ? '_off' : ''}}
+              {{ getLayoutStateIconStyle(layer) }}
             </i>
           </button>
           <button class="__utils__btn" @click="cloneLayer(index)">
@@ -64,7 +67,15 @@
     data() {
       return {
         dropResult: null,
+        layoutIds: [],
       }
+    },
+    created() {
+      this.layoutIds = this.getLayoutIds();
+
+      EventBus.$on('add-favorite-layer', () => {
+        this.layoutIds = this.getLayoutIds();
+      });
     },
     computed: {
       applyDrag() {
@@ -86,6 +97,15 @@
       }
     },
     methods: {
+      isFavoriteLayout({ id } ) {
+        return this.layoutIds.includes(id);
+      },
+      getFavoriteLayoutIconStyle({ layout }) {
+        return this.isFavoriteLayout(layout) ? 'favorite' : 'favorite_border';
+      },
+      getLayoutStateIconStyle({ hidden }) {
+        return hidden ? 'visibility_off' : 'visibility';
+      },
       select(index) {
         const newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
         EventBus.$emit('selected-layer', newIndex);
@@ -97,6 +117,12 @@
       },
       getGhostParent(){
         return document.body;
+      },
+      addFavoriteLayout(layout) {
+        EventBus.$emit('add-favorite-layer', layout);
+      },
+      getLayoutIds() {
+        return JSON.parse(localStorage.getItem('favoriteLayouts')) || [];
       },
       cloneLayer(index) {
         EventBus.$emit('clone-layer', index);

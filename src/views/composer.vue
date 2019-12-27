@@ -12,7 +12,10 @@
       isRightVisible && 'fc-composer--aside-r',
     ]"
     >
-      <composer-header :notificationMessage="notification.message" :notificationType="notification.type"/>
+      <composer-header
+        :layouts="layoutModels"
+        :notificationMessage="notification.message"
+        :notificationType="notification.type"/>
       <div class="fc-composer__content">
         <composer-aside :className="'left'">
           <editor v-show="currentLayer" :layer="currentLayer" ref="editor" />
@@ -32,7 +35,6 @@
 
       <layouts
         :layouts="layouts"
-        :layoutStyle="layoutStyle"
         ref="layouts"
       />
     </div>
@@ -196,7 +198,6 @@
         showModal: false,
         layouts: [],
         layers: [],
-        layoutStyle: {},
         currentLayerIndex: -1,
         isLeftVisible: true,
         isRightVisible: true,
@@ -329,15 +330,7 @@
           EventBus.$emit('selected-layer', 0);
         }
       },
-      onShowLayouts(event) {
-        const layoutsWidth = 400;
-        const { offsetLeft, offsetWidth } = event.currentTarget;
-
-        this.layoutStyle = {
-          left: `${offsetLeft - ((layoutsWidth / 2) - (offsetWidth / 2))}px`,
-          width: `${layoutsWidth}px`
-        };
-
+      onShowLayouts() {
         this.$refs.layouts.toggle();
       },
       focusEditor() {
