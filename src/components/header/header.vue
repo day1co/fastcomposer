@@ -128,10 +128,11 @@
     &__favorite-layouts {
       display: flex;
       width: 100%;
+      overflow-x: scroll;
     }
     &__favorite-layout {
-      margin-left: 1rem;
       width: 5rem;
+      margin-left: 1rem;
       text-align: center;
       &:first-child {
         margin-left: 0;
@@ -141,6 +142,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      img {
+        max-width: none;
+      }
     }
 
     button {
@@ -152,7 +156,7 @@
         padding-left: 32rem;
       }
       .fc-composer--aside-r & {
-        padding-right: 28rem;
+        padding-right: 33rem;
       }
       width: 100%;
     }
