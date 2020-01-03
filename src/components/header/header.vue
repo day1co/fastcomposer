@@ -46,7 +46,7 @@
       getLayoutIds() {
         return JSON.parse(localStorage.getItem('favoriteLayouts')) || [];
       },
-      addFavoriteLayer(layout) {
+      addFavoriteLayout(layout) {
         if (this.layoutIds.includes(layout.id)) {
           this.layoutIds.splice(this.layoutIds.indexOf(layout.id), 1);
         } else {
@@ -94,7 +94,7 @@
     },
     created() {
       this.init();
-      EventBus.$on('add-favorite-layer', this.addFavoriteLayer);
+      EventBus.$on('add-favorite-layer', this.addFavoriteLayout);
     },
     watch: {
       notificationType (value) {
