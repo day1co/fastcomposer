@@ -255,7 +255,6 @@
       onRemoveLayer(index) {
         if (index !== -1) {
           this.layers.splice(index, 1);
-          console.log(index, this.layers.length);
           if (index < this.layers.length) {
             this.currentLayerIndex = index;
             EventBus.$emit('selected-layer', this.currentLayerIndex);
@@ -269,6 +268,9 @@
             layout: this.layers[index].layout,
             values: JSON.parse(JSON.stringify(this.layers[index].values)) || {}
           });
+
+          this.currentLayerIndex = index + 1;
+          EventBus.$emit('selected-layer', this.currentLayerIndex);
         }
       },
       onToggleAside(state) {
