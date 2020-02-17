@@ -5,7 +5,6 @@
         class="__item"
         :class="{ '__item--active': index === currentLayerIndex }"
         tabindex="0"
-        @focus="select(index)"
         @keydown.exact.enter.prevent="focusEditor"
         @keydown.exact.up.prevent="select(currentLayerIndex - 1)"
         @keydown.exact.down.prevent="select(currentLayerIndex + 1)"
@@ -14,7 +13,7 @@
         @keydown.exact.home.prevent="select(0)"
         @keydown.exact.end.prevent="select(layers.length - 1)"
       >
-        <div class="__item__group" v-if="layer.layout" @click="select(index)">
+        <div class="__item__group" v-if="layer.layout" @click="select(index, $event)">
           <img :src="layer.layout.icon" alt="" />
           <span class="__item__group__info">
             <strong class="__item__group__name">{{ layer.layout.id }}</strong>
@@ -106,9 +105,9 @@
       getLayoutStateIconStyle({ hidden }) {
         return hidden ? 'visibility_off' : 'visibility';
       },
-      select(index) {
+      select(index, event) {
         const newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
-        EventBus.$emit('selected-layer', newIndex);
+        EventBus.$emit('selected-layer', newIndex, event && event.type === 'click');
         EventBus.$emit('move-selected-layer');
       },
       drop(dropResult) {

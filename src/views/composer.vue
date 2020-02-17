@@ -239,8 +239,16 @@
       clearMessageToast() {
         this.notification.message = '';
       },
-      onUpdateCurrentLayerIndex(index) {
+      onUpdateCurrentLayerIndex(index, isClick) {
         this.currentLayerIndex = index;
+
+        if (isClick !== true) {
+          const [, el] = this.$el.querySelectorAll('.fc-aside__container');
+
+          if (this.$el.querySelector('.smooth-dnd-container').children.length) {
+            el.scrollTop = this.$el.querySelector('.smooth-dnd-container').children[index].offsetTop;
+          }
+        }
       },
       onAddLayer(layout) {
         if (this.currentLayerIndex < 0) {
