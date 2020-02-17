@@ -113,6 +113,8 @@
       drop(dropResult) {
         this.dropResult = dropResult;
         this.layers = this.applyDrag;
+        EventBus.$emit('selected-layer', dropResult.addedIndex, true);
+        EventBus.$emit('move-selected-layer');
       },
       getGhostParent(){
         return document.body;
