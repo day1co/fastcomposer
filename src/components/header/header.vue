@@ -10,7 +10,6 @@
           </button>
         </li>
       </ul>
-      <message-toast :message="notificationMessage"/>
     </div>
     <div class="fc-header__right">
       <div class="fc-header__info">
@@ -26,13 +25,9 @@
 
 <script>
   import EventBus from '../../event-bus/event-bus';
-  import MessageToast from './../common/message-toast';
   import moment from 'moment';
 
   export default {
-    components: {
-      MessageToast
-    },
     methods: {
       showLayerPanel($event) {
         EventBus.$emit('show-layout-panel', $event);
@@ -79,12 +74,12 @@
           }
         }
       },
-      notificationType: {
-        type: String,
-        default() {
-          return 'default'
-        }
-      },
+        notificationType: {
+          type: String,
+          default() {
+            return 'default'
+          }
+        },
       layouts: {
         type: Array,
         default() {
@@ -128,10 +123,10 @@
     &__favorite-layouts {
       display: flex;
       width: 100%;
+      height: 7.1rem;
       overflow-x: scroll;
     }
     &__favorite-layout {
-      width: 5rem;
       margin-left: 1rem;
       text-align: center;
       &:first-child {
@@ -152,29 +147,22 @@
     }
 
     &__content {
-      .fc-composer--aside-l & {
-        padding-left: 32rem;
-      }
-      .fc-composer--aside-r & {
-        padding-right: 33rem;
-      }
       width: 100%;
+      height: 100%;
+      padding-top: 1rem;
     }
 
     &__h {
-      position: absolute;
-      left: 0;
-      width: 30rem;
+      width: 42rem;
       font-size: 1.8rem;
       color: $white;
     }
 
     &__right {
-      position: absolute;
-      right: 0;
       display: flex;
       flex-direction: column;
-      width: 26rem;
+      width: 34rem;
+      padding-left: 2.1rem;
       > div {
         color: $white;
         height: 3rem;

@@ -114,8 +114,8 @@
     &__save {
       position: fixed;
       right: 1.75rem;
-      top: .75rem;
-      z-index: 101;
+      top: 2.5rem;
+      z-index: 102;
       width: 4.5rem;
       height: 4.5rem;
       background-color: $accent;

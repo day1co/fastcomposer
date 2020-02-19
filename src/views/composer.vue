@@ -12,6 +12,9 @@
       isRightVisible && 'fc-composer--aside-r',
     ]"
     >
+      <message-toast
+        :message="notification.message"
+        :type="notification.type"/>
       <composer-header
         :layouts="layoutModels"
         :notificationMessage="notification.message"
@@ -124,9 +127,11 @@
   import Layouts from './../components/content/layouts/layouts';
   import Layers from './../components/content/aside/layers/layers';
   import Modal from './../components/common/modal';
+  import MessageToast from './../components/common/message-toast';
 
   export default {
     components: {
+      MessageToast,
       ComposerHeader,
       Preview,
       ComposerAside,

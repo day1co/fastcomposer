@@ -94,11 +94,12 @@
   }
 
   .fc-layout {
+    background-color: red;
     display: flex;
     position: fixed;
-    top:6rem;
+    top: 8rem;
     bottom:0;
-    right: 2.5rem;
+    right: 4rem;
     width: 40rem;
     padding-bottom:2rem;
     z-index: 9999;
