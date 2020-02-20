@@ -12,6 +12,9 @@
       isRightVisible && 'fc-composer--aside-r',
     ]"
     >
+      <div class="fc-tooltip">
+        <div class="fc-tooltip__content"></div>
+      </div>
       <message-toast
         :message="notification.message"
         :type="notification.type"/>
@@ -380,6 +383,36 @@
 
 <style lang="scss">
   @import './../assets/scss/style.scss';
+
+  .fc-tooltip {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    &__content {
+      position: absolute;
+      top: 0;
+      left: 3rem;
+      padding: 0.5rem;
+      max-width: 22rem;
+      background-color: #eaeaea;
+      z-index: 1;
+      font-size: 1.5rem;
+      border-radius: 0.3rem;
+      &:before {
+        position: absolute;
+        top: 0.6rem;
+        left: -0.7rem;
+        width: 0;
+        height: 0;
+        content: '';
+        border-top: 0.6rem solid transparent;
+        border-bottom: 0.6rem solid transparent;
+        border-right: 0.7rem solid #eaeaea;
+      }
+    }
+  }
 
   .fc-composer {
     overflow: hidden;

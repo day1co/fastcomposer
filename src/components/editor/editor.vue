@@ -8,7 +8,11 @@
       >
         <label class="fc-editor__form__label" :for="layer.id + '--' + param.type">
           <strong class="fc-editor__form__name">{{ param.name }}</strong>
-          &nbsp;<small>({{ param.type }})</small>
+          <small>({{ param.type }})</small>
+          <tooltip
+            v-if="param.description"
+            :message="param.description">
+          </tooltip>
         </label>
 
         <template v-if="param.type === 'image'">
@@ -66,9 +70,11 @@
 <script>
   import EventBus from './../../event-bus/event-bus';
   import FileUpload from './file-upload.vue';
+  import Tooltip from '../common/tooltip';
 
   export default {
     components: {
+      Tooltip,
       FileUpload,
     },
     props: {
