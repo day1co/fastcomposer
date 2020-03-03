@@ -80,7 +80,7 @@
   .fc-layout:before {
     position: absolute;
     bottom: 100%;
-    left: calc(50% - 10px);
+    left: calc(50% - 1.2rem);
     height: 0;
     width: 0;
     margin-top: 0;
@@ -94,7 +94,6 @@
   }
 
   .fc-layout {
-    background-color: red;
     display: flex;
     position: fixed;
     top: 8rem;

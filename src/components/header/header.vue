@@ -112,7 +112,7 @@
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 0 1.8rem;
     width: percentage(1);
     height: $header-size;
@@ -147,22 +147,19 @@
     }
 
     &__content {
-      width: 100%;
       height: 100%;
       padding-top: 1rem;
     }
 
     &__h {
-      width: 42rem;
+      width: 32rem;
       font-size: 1.8rem;
       color: $white;
     }
 
     &__right {
-      display: flex;
-      flex-direction: column;
-      width: 34rem;
-      padding-left: 2.1rem;
+      width: 26rem;
+      margin-left: auto;
       > div {
         color: $white;
         height: 3rem;
