@@ -395,7 +395,7 @@
       top: 0;
       left: 3rem;
       padding: 0.5rem;
-      max-width: 22rem;
+      min-width: 22rem;
       background-color: #eaeaea;
       z-index: 1;
       font-size: 1.5rem;
