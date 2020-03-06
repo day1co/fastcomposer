@@ -20,6 +20,7 @@
         :type="notification.type"/>
       <composer-header
         :layouts="layoutModels"
+        :layerCount="layers.length"
         :notificationMessage="notification.message"
         :notificationType="notification.type"/>
       <div class="fc-composer__content">

@@ -13,6 +13,7 @@
     </div>
     <div class="fc-header__right">
       <div class="fc-header__info">
+        <span class="fc-header__layout-count">사용된 레이어 수: {{ layerCount }}개</span>
         <span class="fc-header__save-time" v-show="saveTime">최종저장 시간: {{ saveTime }}</span>
       </div>
       <div class="fc-header__utils">
@@ -74,16 +75,22 @@
           }
         }
       },
-        notificationType: {
-          type: String,
-          default() {
-            return 'default'
-          }
-        },
+      notificationType: {
+        type: String,
+        default() {
+          return 'default'
+        }
+      },
       layouts: {
         type: Array,
         default() {
           return [];
+        }
+      },
+      layerCount: {
+        type: Number,
+        default() {
+          return 0;
         }
       }
     },
@@ -158,12 +165,20 @@
     }
 
     &__right {
-      width: 26rem;
+      width: 26.1rem;
       margin-left: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      padding-left: 2.1rem;
       > div {
         color: $white;
-        height: 3rem;
       }
+    }
+    &__info {
+      display: flex;
+      flex-direction: column;
     }
   }
 </style>
