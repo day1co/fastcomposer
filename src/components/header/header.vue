@@ -18,7 +18,10 @@
       </div>
       <div class="fc-header__utils">
         <button @click="showInfoTags"><i class="material-icons">help</i></button>
-        <button type="button" class="fc-utils__btn" @click="showLayerPanel"><i class="material-icons">add</i></button>
+        <button class="fc-utils__btn" @click="showLayerPanel"><i class="material-icons">add</i></button>
+        <button @click="validateLayer">
+          <i class="material-icons">check</i>
+        </button>
       </div>
     </div>
   </header>
@@ -30,6 +33,9 @@
 
   export default {
     methods: {
+      validateLayer() {
+        EventBus.$emit('validate-layer');
+      },
       showLayerPanel($event) {
         EventBus.$emit('show-layout-panel', $event);
       },

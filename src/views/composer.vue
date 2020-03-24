@@ -180,6 +180,7 @@
       EventBus.$on('clear', this.clearMessageToast);
       EventBus.$on('showInfoTags', this.onShowModal);
       EventBus.$on('hidden', this.onToggleLayerState);
+      EventBus.$on('validate-layer', this.onValidateLayer);
     },
     computed: {
       currentLayer() {
@@ -229,6 +230,30 @@
       };
     },
     methods: {
+      onValidateLayer() {
+        this.layers.forEach((layer) => {
+          const v = layer.values;
+          const selfClosingTags = ['img', 'br', 'hr'];
+
+          for (const prop in v) {
+            const re = /(<([^>]+)>)/igm;
+            let tags = v[prop].match(re);
+
+            if (tags) {
+              tags = tags.map((tag) => tag.replace(/ style=('.*'?|".*"?)/gim,'>'));
+
+              this.$set(layer, 'hasSyntaxErrorTags', tags.every((tag, index, array) => {
+                const tagName = tag.match(/[A-Z0-9]/gim).join('');
+                const openingLen = array.filter((item) => `<${ tagName }>` === item).length;
+                const closingLen = array.filter((item) => `</${ tagName }>` === item).length;
+                const hasSelfClosingTagLen = selfClosingTags.filter((item) => item === tagName).length;
+
+                return openingLen === closingLen || hasSelfClosingTagLen;
+              }));
+            }
+          }
+        });
+      },
       onShowModal() {
         this.showModal = true;
       },

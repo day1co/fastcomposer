@@ -3,7 +3,7 @@
     <Draggable v-for="(layer, index) in layers" :key="index">
       <div
         class="__item"
-        :class="{ '__item--active': index === currentLayerIndex }"
+        :class="{ '__item--active': index === currentLayerIndex, 'has-syntax-error-tags': layer.hasSyntaxErrorTags === false }"
         tabindex="0"
         @keydown.exact.enter.prevent="focusEditor"
         @keydown.exact.up.prevent="select(currentLayerIndex - 1)"
@@ -17,8 +17,8 @@
           <img :src="layer.layout.icon" alt="" />
           <span class="__item__group__info">
             <strong class="__item__group__name">{{ layer.layout.id }}</strong>
-            {{ layer.layout.description }}
-          </span>
+              {{ layer.layout.description }}
+            </span>
         </div>
         <div class="__utils">
           <button class="__utils__btn" @click="addFavoriteLayout(layer.layout)">
@@ -155,6 +155,12 @@
     position: relative;
     border: 3px solid #ffffff;
     cursor: pointer;
+    &.has-syntax-error-tags {
+      background-color: #ffba00;
+      .__item__group {
+        background-color: #ffba00;
+      }
+    }
     &--active {
       border: 3px solid #f74982;
     }
