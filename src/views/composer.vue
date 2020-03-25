@@ -21,6 +21,7 @@
       <composer-header
         :layouts="layoutModels"
         :layerCount="layers.length"
+        :warnCount="layers.filter(layer => layer.hasSyntaxErrorTags).length"
         :notificationMessage="notification.message"
         :notificationType="notification.type"/>
       <div class="fc-composer__content">

@@ -13,7 +13,7 @@
     </div>
     <div class="fc-header__right">
       <div class="fc-header__info">
-        <span class="fc-header__layout-count">사용된 레이어 수: {{ layerCount }}개</span>
+        <span class="fc-header__layout-count">사용된 레이어 수: {{ layerCount }}개 - 점검 할 레이어: {{ warnCount }}개</span>
         <span class="fc-header__save-time" v-show="saveTime">최종저장 시간: {{ saveTime }}</span>
       </div>
       <div class="fc-header__utils">
@@ -94,6 +94,12 @@
         }
       },
       layerCount: {
+        type: Number,
+        default() {
+          return 0;
+        }
+      },
+      warnCount: {
         type: Number,
         default() {
           return 0;
