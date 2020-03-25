@@ -3,7 +3,7 @@
     <Draggable v-for="(layer, index) in layers" :key="index">
       <div
         class="__item"
-        :class="{ '__item--active': index === currentLayerIndex, 'has-syntax-error-tags': layer.hasSyntaxErrorTags === false }"
+        :class="{ '__item--active': index === currentLayerIndex, 'has-syntax-error-tags': layer.hasSyntaxErrorTags }"
         tabindex="0"
         @keydown.exact.enter.prevent="focusEditor"
         @keydown.exact.up.prevent="select(currentLayerIndex - 1)"
