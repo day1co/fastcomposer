@@ -47,7 +47,8 @@ export default {
         return `fc-upload-${seq}-${nonce}`;
       },
       state: 'READY',
-      statePercent: 0
+      statePercent: 0,
+      DEFAULT_SIZE: 1024 * 1024, // 1MB
     };
   },
   methods: {
@@ -58,6 +59,13 @@ export default {
       //setTimeout(()=>this.$root.$emit('fc-upload', {id: this.id, type: 'STATE', state: 'UPLOADED', url: 'test'}), 5*1000);
       // if (!files.length)
       //   return;
+      const [ { size, type } ] = files;
+      const LIMITED_SIZE = type.includes('video') ? this.DEFAULT_SIZE * 5 : this.DEFAULT_SIZE * 2;
+
+      if (size > LIMITED_SIZE) {
+        alert(`${ LIMITED_SIZE / this.DEFAULT_SIZE }Mb 이하의 영상을 올려주세요`);
+      }
+
       if (files.length) {
         this.state = 'UPLOADING';
         this.statePercent = 50;

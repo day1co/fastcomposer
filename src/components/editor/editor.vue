@@ -15,7 +15,7 @@
           </tooltip>
         </label>
 
-        <template v-if="param.type === 'image'">
+        <template v-if="param.type === 'image' || param.type === 'video'">
           <input
             class="fc-editor__form__input"
             type="url"
@@ -27,7 +27,7 @@
           <file-upload
             :name="param.name"
             :layer="layer"
-            accept="image/*"
+            :accept="accept[param.type]"
             @upload="upload"
           ></file-upload>
         </template>
@@ -84,6 +84,14 @@
           return {}
         }
       },
+    },
+    data() {
+      return {
+        accept: {
+          image: 'image/*',
+          video: 'video/mp4'
+        }
+      }
     },
     methods: {
       upload(name, url) {
