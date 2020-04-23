@@ -60,10 +60,11 @@ export default {
       // if (!files.length)
       //   return;
       const [ { size, type } ] = files;
-      const LIMITED_SIZE = type.includes('video') ? this.DEFAULT_SIZE * 5 : this.DEFAULT_SIZE * 2;
+      // video or image
+      const LIMITED_SIZE = type.includes('video') ? this.DEFAULT_SIZE * 5 : this.DEFAULT_SIZE * 1 / 2;
 
       if (size > LIMITED_SIZE) {
-        alert(`${ LIMITED_SIZE / this.DEFAULT_SIZE }Mb 이하의 영상을 올려주세요`);
+        alert(`${ LIMITED_SIZE / this.DEFAULT_SIZE }Mb 이하의 파일을 올려주세요`);
       }
 
       if (files.length) {
