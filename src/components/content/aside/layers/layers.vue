@@ -13,7 +13,10 @@
         @keydown.exact.home.prevent="select(0)"
         @keydown.exact.end.prevent="select(layers.length - 1)"
       >
-        <div class="__item__group" v-if="layer.layout" @click="select(index, $event)">
+        <div class="__item__group" v-if="layer.layout" @click="select(index, $event, layer)">
+          <label :for="`layer-${index}`" >
+            <input :id="`layer-${index}`" type="checkbox" :checked="layer.checked"/>
+          </label>
           <img :src="layer.layout.icon" alt="" />
           <span class="__item__group__info">
             <strong class="__item__group__name">{{ layer.layout.id }}</strong>
@@ -105,7 +108,10 @@
       getLayoutStateIconStyle({ hidden }) {
         return hidden ? 'visibility_off' : 'visibility';
       },
-      select(index, event) {
+      select(index, event, layer) {
+        if (layer) {
+          this.$set(layer, 'checked', event.target.checked);
+        }
         const newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
         EventBus.$emit('selected-layer', newIndex, event && event.type === 'click');
         EventBus.$emit('move-selected-layer');
@@ -155,6 +161,9 @@
     position: relative;
     border: 3px solid #ffffff;
     cursor: pointer;
+    &:focus {
+      outline-style: none;
+    }
     &.has-syntax-error-tags {
       background-color: #ffba00;
       .__item__group {
@@ -180,6 +189,10 @@
       &__name {
         display: block;
         margin-bottom: 0.5rem;
+      }
+      label {
+        display: inline-block;
+        align-self: center;
       }
     }
   }

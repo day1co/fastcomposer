@@ -32,7 +32,7 @@
           :layers="layers"
           ref="preview"
         />
-        <composer-aside :className="'right'">
+        <composer-aside :className="'right'" :checkedCount="layers.filter(layer => layer.checked).length">
           <layers
             :layers="layers"
             :currentLayerIndex="currentLayerIndex"
@@ -169,6 +169,8 @@
       this.$el.focus();
     },
     created() {
+      EventBus.$on('up-block', this.upBlock);
+      EventBus.$on('down-block', this.downBlock);
       EventBus.$on('selected-layer', this.onUpdateCurrentLayerIndex);
       EventBus.$on('add-layer', this.onAddLayer);
       EventBus.$on('remove-layer', this.onRemoveLayer);
@@ -231,6 +233,34 @@
       };
     },
     methods: {
+      upBlock() {
+        const checkedLayer = this.layers.filter(layer => layer.checked);
+        const { uniqueId } = checkedLayer[0];
+        const checkedFirstIndex = this.layers.findIndex(layer => layer.uniqueId === uniqueId);
+
+        if (checkedFirstIndex) {
+          const targetUniqueId = this.layers[checkedFirstIndex - 1].uniqueId;
+          this.layers = [...this.layers.filter(layer => !layer.checked)];
+          const targetIndex = this.layers.findIndex(layer => layer.uniqueId === targetUniqueId);
+          this.layers.splice(targetIndex, 0, ...checkedLayer);
+          EventBus.$emit('selected-layer', targetIndex);
+          EventBus.$emit('move-selected-layer');
+        }
+      },
+      downBlock() {
+        const checkedLayer = this.layers.filter(layer => layer.checked);
+        const { uniqueId } = checkedLayer[checkedLayer.length - 1];
+        const checkedLastIndex = this.layers.findIndex(layer => layer.uniqueId === uniqueId);
+
+        if (checkedLastIndex < this.layers.length - 1) {
+          const targetUniqueId = this.layers[checkedLastIndex + 1].uniqueId;
+          this.layers = [...this.layers.filter(layer => !layer.checked)];
+          const targetIndex = this.layers.findIndex(layer => layer.uniqueId === targetUniqueId);
+          this.layers.splice(targetIndex + 1, 0, ...checkedLayer);
+          EventBus.$emit('selected-layer', checkedLastIndex + 1);
+          EventBus.$emit('move-selected-layer');
+        }
+      },
       onValidateLayer() {
         this.layers.forEach((layer) => {
           const layerValues = layer.values;
@@ -367,6 +397,10 @@
           }
           if (!layer.id) {
             layer.id = uniqueId();
+          }
+
+          if (!layer.uniqueId) {
+            layer.uniqueId = uniqueId();
           }
           return layer;
         });

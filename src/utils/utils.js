@@ -5,10 +5,10 @@ export const restructureLayouts = (layouts) => {
 };
 
 let _blockIdSeq = 0;
-export const uniqueId = () => {
+export const uniqueId = (prefix = 'fc-block') => {
   const seq = (_blockIdSeq = _blockIdSeq  ? ++_blockIdSeq : 1);
   const nonce = Math.random()
     .toString(36)
     .substr(2, 9);
-  return `fc-block-${seq}-${nonce}`;
+  return `${prefix}-${seq}-${nonce}`;
 };

@@ -3,6 +3,15 @@
     class="fc-aside"
     :class="['fc-aside-' + className]">
     <div class="fc-aside__content">
+      <div v-if="className === 'right'">
+        <button @click="onUp">
+          <span class="material-icons">arrow_upward</span>
+        </button>
+        <button @click="onDown">
+          <span class="material-icons">arrow_downward</span>
+        </button>
+        <span>선택된 레이어 수: {{checkedCount}}</span>
+      </div>
       <div class="fc-aside__container">
         <slot></slot>
       </div>
@@ -26,10 +35,22 @@
           return '';
         }
       },
+      checkedCount: {
+        type: Number,
+        default() {
+          return 0;
+        }
+      }
     },
     methods: {
       toggleAside() {
         EventBus.$emit('toggle-aside', this.className);
+      },
+      onUp() {
+        EventBus.$emit('up-block');
+      },
+      onDown() {
+        EventBus.$emit('down-block');
       }
     }
   }
@@ -55,6 +76,12 @@
 
     &__content {
       width: 100%;
+      button {
+        color: #ffffff;
+      }
+      span {
+        vertical-align: top;
+      }
     }
 
     &__container {
