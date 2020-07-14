@@ -90,6 +90,14 @@
           </thead>
           <tbody>
           <tr>
+            <td>Shift+Up/Down</td>
+            <td>레이어 선택</td>
+          </tr>
+          <tr>
+            <td>Alt+Shift+Up/Down</td>
+            <td>선택 레이어 이동</td>
+          </tr>
+          <tr>
             <td>Alt+Shift+1</td>
             <td>레이어 속성</td>
           </tr>
