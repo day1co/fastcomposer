@@ -141,7 +141,7 @@
         return hidden ? 'visibility_off' : 'visibility';
       },
       select(index, event) {
-        const newIndex = Math.min(Math.max(index, 0), this.layers.length);
+        const newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
         EventBus.$emit('selected-layer', newIndex, event && event.type === 'click');
         EventBus.$emit('move-selected-layer');
         this.resetCheckedHistory();
