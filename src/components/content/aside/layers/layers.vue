@@ -74,7 +74,7 @@
       return {
         dropResult: null,
         layoutIds: [],
-        checkedHistoryy: null,
+        checkedHistory: null,
       }
     },
     created() {
