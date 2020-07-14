@@ -8,6 +8,8 @@
         @keydown.exact.enter.prevent="focusEditor"
         @keydown.exact.shift.up="updateCheckedState(currentLayerIndex - 1, $event)"
         @keydown.exact.shift.down="updateCheckedState(currentLayerIndex + 1, $event)"
+        @keydown.exact.shift.alt.up="upBlock"
+        @keydown.exact.shift.alt.down="downBlock"
         @keydown.exact.up.prevent="select(currentLayerIndex - 1)"
         @keydown.exact.down.prevent="select(currentLayerIndex + 1)"
         @keydown.exact.page-up.prevent="select(currentLayerIndex - 5)"
@@ -102,6 +104,12 @@
       }
     },
     methods: {
+      upBlock() {
+        EventBus.$emit('up-block');
+      },
+      downBlock() {
+        EventBus.$emit('down-block');
+      },
       updateCheckedState(index, event) {
         let newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
 
