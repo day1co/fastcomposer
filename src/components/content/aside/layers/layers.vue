@@ -6,6 +6,8 @@
         :class="{ '__item--active': index === currentLayerIndex, 'has-syntax-error-tags': layer.hasSyntaxErrorTags }"
         tabindex="0"
         @keydown.exact.enter.prevent="focusEditor"
+        @keydown.exact.shift.up="updateCheckedState(currentLayerIndex - 1, $event)"
+        @keydown.exact.shift.down="updateCheckedState(currentLayerIndex + 1, $event)"
         @keydown.exact.up.prevent="select(currentLayerIndex - 1)"
         @keydown.exact.down.prevent="select(currentLayerIndex + 1)"
         @keydown.exact.page-up.prevent="select(currentLayerIndex - 5)"
@@ -15,7 +17,7 @@
       >
         <div class="__item__group" v-if="layer.layout" @click="select(index, $event, layer)">
           <label :for="`layer-${index}`" >
-            <input :id="`layer-${index}`" type="checkbox" :checked="layer.checked"/>
+            <input :id="`layer-${index}`" type="checkbox" v-model="layer.isChecked"/>
           </label>
           <img :src="layer.layout.icon" alt="" />
           <span class="__item__group__info">
@@ -70,6 +72,7 @@
       return {
         dropResult: null,
         layoutIds: [],
+        checkedHistoryy: null,
       }
     },
     created() {
@@ -99,6 +102,27 @@
       }
     },
     methods: {
+      updateCheckedState(index, event) {
+        let newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
+
+        if (this.checkedHistory !== event.key) {
+          if (event.key === 'ArrowUp') {
+            newIndex += 1;
+          } else {
+            newIndex -= 1;
+          }
+        }
+
+        this.layers[newIndex].isChecked = !this.layers[newIndex].isChecked;
+
+        EventBus.$emit('selected-layer', newIndex);
+        EventBus.$emit('move-selected-layer');
+
+        this.checkedHistory = event.key;
+      },
+      resetCheckedHistory() {
+        this.checkedHistory = null;
+      },
       isFavoriteLayout({ id } ) {
         return this.layoutIds.includes(id);
       },
@@ -108,13 +132,11 @@
       getLayoutStateIconStyle({ hidden }) {
         return hidden ? 'visibility_off' : 'visibility';
       },
-      select(index, event, layer) {
-        if (layer) {
-          this.$set(layer, 'checked', event.target.checked);
-        }
-        const newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
+      select(index, event) {
+        const newIndex = Math.min(Math.max(index, 0), this.layers.length);
         EventBus.$emit('selected-layer', newIndex, event && event.type === 'click');
         EventBus.$emit('move-selected-layer');
+        this.resetCheckedHistory();
       },
       drop(dropResult) {
         this.dropResult = dropResult;
