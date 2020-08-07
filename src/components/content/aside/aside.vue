@@ -121,7 +121,7 @@
 
   .fc-aside-left {
     left: 0;
-    max-width: $sidebar-size + 4rem;
+    max-width: $sidebar-size + 14rem;
     transform: translate3d(-100%, 0, 0);
 
     .fc-composer--aside-l & {

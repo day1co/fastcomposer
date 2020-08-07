@@ -1,0 +1,81 @@
+{
+  "id": "list",
+  "icon": "icon.svg",
+  "description": "리스트형",
+  "params": [
+    {
+      "name": "title",
+      "type": "text",
+      "description": "title text"
+    },
+    {
+      "name": "cards",
+      "type": "list",
+      "description": "추가/삭제를 이용하여 원하는 만큼 카드 리스트를 구현 할 수 있습니다.",
+      "limit": 3,
+      "params": [
+        {
+          "name": "src",
+          "type": "image",
+          "description": "image url"
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "description": "image width(pixel)"
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "description": "image height(pixel)"
+        },
+        {
+          "name": "alt",
+          "type": "text",
+          "description": "alternative text"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "list",
+      "description": "추가/삭제를 이용하여 원하는 만큼 탭 리스트를 구현 할 수 있습니다.",
+      "limit": 5,
+      "params": [
+        {
+          "name": "content",
+          "type": "textarea",
+          "description": "text area"
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "description": "image width(pixel)"
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "description": "image height(pixel)"
+        },
+        {
+          "name": "alt",
+          "type": "text",
+          "description": "alternative text"
+        }
+      ]
+    }
+
+  ],
+  "values": {
+    "title": "제목",
+    "cards": [
+      {
+        "src": "https://via.placeholder.com/320x320.png/00c",
+        "width": "320",
+        "height": "320",
+        "alt": "simple image"
+      }
+    ],
+    "tabs": []
+  }
+}

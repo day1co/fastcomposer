@@ -1,0 +1,18 @@
+<h1>
+  <div>
+    <%= title %>
+    이것은 리스트 레이아웃을 테스트합니다.
+  </div>
+  <% cards.forEach((item) => { %>
+    <div><img src="<%= item.src %>"/></div>
+    <div><%= item.width%></div>
+    <div><%= item.height %></div>
+    <div><%= item.alt %></div>
+  <% }); %>
+  <% tabs.forEach((item) => { %>
+    <div><%= item.content %></div>
+    <div><%= item.width%></div>
+    <div><%= item.height %></div>
+    <div><%= item.alt %></div>
+  <% }); %>
+</h1>

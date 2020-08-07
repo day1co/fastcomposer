@@ -514,7 +514,7 @@
     }
 
     &--aside-l {
-      padding-left: $sidebar-size + 4rem;
+      padding-left: $sidebar-size + 14rem;
     }
 
     &--aside-r {

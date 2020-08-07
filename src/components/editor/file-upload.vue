@@ -27,6 +27,13 @@
 import EventBus from './../../event-bus/event-bus';
 export default {
   props: {
+    index: Number,
+    params: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
     name: String,
     accept: String,
     layer: {
@@ -71,7 +78,11 @@ export default {
         this.state = 'UPLOADING';
         this.statePercent = 50;
         EventBus.$emit('fc-upload', { id: this.id, type: 'UPLOAD', files }, (res) => {
-          this.layer.values[this.name] = res.url;
+          if (this.index >= 0) {
+            this.layer.values[this.name][this.index][this.params.name] = res.url;
+          } else {
+            this.layer.values[this.name] = res.url;
+          }
           this.state = 'UPLOADED';
           this.statePercent = 100;
         });

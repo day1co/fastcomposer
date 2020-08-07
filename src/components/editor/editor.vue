@@ -52,6 +52,57 @@
           </select>
         </template>
 
+        <template v-else-if="param.type === 'list'">
+          <div class="fc-editor__list">
+            <div class="fc-editor__list-item" v-for="(item, index) in layer.values[param.name]" :key="index">
+              <div class="fc-editor__list-tools">
+                <span class="fc-editor__list-item-number">{{ index + 1 }} / {{ param.limit }}</span>
+                <button v-if="param.type === 'list'" class="fc-editor__remove-btn" @click="onRemove(layer, param, index)">
+                  제거
+                </button>
+              </div>
+
+              <div v-for="(childParams, key) of param.params" :key="key">
+                <strong class="fc-editor__form__name">{{ childParams.name }}</strong>
+                <small>({{ childParams.type }})</small>
+                <template v-if="childParams.type === 'image' || childParams.type === 'video'">
+                  <input
+                    class="fc-editor__form__input"
+                    type="url"
+                    v-model="item[childParams.name]"
+                  />
+                  <file-upload
+                    :name="param.name"
+                    :params="childParams"
+                    :layer="layer"
+                    :accept="accept[childParams.type]"
+                    :index="index"
+                    @upload="upload"
+                  ></file-upload>
+                </template>
+                <template v-else-if="childParams.type === 'textarea'">
+                  <textarea class="fc-editor__form__textarea" rows="20" v-model="item[childParams.name]"></textarea>
+                </template>
+                <template v-else>
+                  <input
+                    class="fc-editor__form__input"
+                    :type="childParams.type"
+                    v-model="item[childParams.name]"
+                  />
+                </template>
+              </div>
+
+              <br/>
+            </div>
+
+            <div class="fc-editor__add-btn">
+              <button @click="onAdd(param, layer)" :disabled="layer.values[param.name].length >= param.limit">
+                추가
+              </button>
+            </div>
+          </div>
+        </template>
+
         <template v-else>
           <input
             class="fc-editor__form__input"
@@ -94,6 +145,18 @@
       }
     },
     methods: {
+      onRemove(layer, param, index) {
+        layer.values[param.name].splice(index, 1);
+      },
+      onAdd(param, layer) {
+        const { params, name } = param;
+        const { values } = layer;
+        const newItem = params.reduce((attr, currentValue) => ({ ...attr,[currentValue.name]: '' }), {});
+
+        if (values[name]) {
+          values[name] = [...values[name], newItem];
+        }
+      },
       upload(name, url) {
         this.layer.values[name] = url;
       },
@@ -117,6 +180,18 @@
     },
     mounted() {
       EventBus.$on('focus-editor', () => this.focus());
+    },
+    watch: {
+      layer(value) {
+        const valuesOfLayout = value.layout.values;
+        const valuesOfValue = value.values;
+
+        for (let propOfLayout in valuesOfLayout) {
+          if (!valuesOfValue.hasOwnProperty(propOfLayout)) {
+            this.$set(valuesOfValue, propOfLayout, valuesOfLayout[propOfLayout]);
+          }
+        }
+      }
     },
   };
 </script>
@@ -188,6 +263,16 @@
           color: $white;
         }
       }
+    }
+    &__list-tools {
+      display: flex;
+    }
+    &__add-btn {
+      display: flex;
+      justify-content: center
+    }
+    &__remove-btn {
+      margin-left: auto;
     }
   }
 </style>
