@@ -175,6 +175,119 @@ methods: {
 | callback | Function | 서버로부터 받은 결과 값을 callback 을 통하여 넘긴다<br> 결과값은 url 정보가 담겨있어야한다.<br> ex: res.url|
 
 
+#### 레이아웃에서의 요소 추가/삭제
+```json
+{
+  ...,
+  "params": [
+    {
+      "name": "...",
+      "type": "list",// type을 list로 지정
+      "maxLength": 3, // 추가될 요소 최대 길이
+      "params": [ // 자식 params를 추가하여 기본 name, type, description 속성을 추가
+        {
+          "name": "...",
+          "type": "...",
+          "description": "..."
+        }
+      ]
+    }
+  ],
+  ...
+}
+```
+
+#### example
+
+##### layout.json
+```json
+{
+  // ...
+  "params": [
+    {
+      "name": "cards",
+      "type": "list",
+      "description": "추가/삭제를 이용하여 원하는 만큼 카드 리스트를 구현 할 수 있습니다.",
+      "maxLength": 3,
+      "params": [
+        {
+          "name": "src",
+          "type": "image",
+          "description": "image url"
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "description": "image width(pixel)"
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "description": "image height(pixel)"
+        },
+        {
+          "name": "alt",
+          "type": "text",
+          "description": "alternative text"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "list",
+      "description": "추가/삭제를 이용하여 원하는 만큼 탭 리스트를 구현 할 수 있습니다.",
+      "maxLength": 5,
+      "params": [
+        {
+          "name": "content",
+          "type": "textarea",
+          "description": "text area"
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "description": "image width(pixel)"
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "description": "image height(pixel)"
+        },
+        {
+          "name": "alt",
+          "type": "text",
+          "description": "alternative text"
+        }
+      ]
+    }
+
+  ],
+  "values": {
+    "title": "제목",
+    "cards": [
+      {
+        "src": "https://via.placeholder.com/320x320.png/00c",
+        "width": "320",
+        "height": "320",
+        "alt": "simple image"
+      }
+    ],
+    "tabs": []
+  }
+}
+
+```
+
+##### layout.ejs
+```ejs
+  <% cards.forEach((item) => { %>
+    <div><img src="<%= item.src %>"/></div>
+    <div><%= item.width%></div>
+    <div><%= item.height %></div>
+    <div><%= item.alt %></div>
+  <% }); %>
+```
+
 ---
 
 may the **SOURCE** be with you...
