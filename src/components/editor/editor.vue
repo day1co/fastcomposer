@@ -56,7 +56,7 @@
           <div class="fc-editor__list">
             <div class="fc-editor__list-item" v-for="(item, index) in layer.values[param.name]" :key="index">
               <div class="fc-editor__list-tools">
-                <span class="fc-editor__list-item-number">{{ index + 1 }} / {{ param.limit }}</span>
+                <span class="fc-editor__list-item-number">{{ index + 1 }} / {{ param.maxLength }}</span>
                 <button v-if="param.type === 'list'" class="fc-editor__remove-btn" @click="onRemove(layer, param, index)">
                   제거
                 </button>
@@ -96,7 +96,7 @@
             </div>
 
             <div class="fc-editor__add-btn">
-              <button @click="onAdd(param, layer)" :disabled="layer.values[param.name].length >= param.limit">
+              <button @click="onAdd(param, layer)" :disabled="layer.values[param.name].length >= param.maxLength">
                 추가
               </button>
             </div>

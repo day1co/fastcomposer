@@ -12,7 +12,7 @@
       "name": "cards",
       "type": "list",
       "description": "추가/삭제를 이용하여 원하는 만큼 카드 리스트를 구현 할 수 있습니다.",
-      "limit": 3,
+      "maxLength": 3,
       "params": [
         {
           "name": "src",
@@ -40,7 +40,7 @@
       "name": "tabs",
       "type": "list",
       "description": "추가/삭제를 이용하여 원하는 만큼 탭 리스트를 구현 할 수 있습니다.",
-      "limit": 5,
+      "maxLength": 5,
       "params": [
         {
           "name": "content",
