@@ -83,6 +83,13 @@
                 <template v-else-if="childParams.type === 'textarea'">
                   <textarea class="fc-editor__form__textarea" rows="20" v-model="item[childParams.name]"></textarea>
                 </template>
+
+                <template v-else-if="childParams.type === 'select'">
+                  <select class="fc-editor__form__select" v-model="item[childParams.name]">
+                    <option disabled value="">타입을 선택하세요</option>
+                    <option v-for="( option, index ) in childParams.options" :key="index">{{ option }}</option>
+                  </select>
+                </template>
                 <template v-else>
                   <input
                     class="fc-editor__form__input"

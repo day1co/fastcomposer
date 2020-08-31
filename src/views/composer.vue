@@ -379,7 +379,6 @@
         // this.layers = Object.assign([], layerBlockData.map(layer => Object.assign({id: uniqueId()}, layer, {layout: this.layoutMaps[layer.layout]})));
 
         this.layers = layerBlockData.map(layer => {
-          console.log(layer.id, layer.layout);
           if (typeof layer.layout === 'string') {
             // old format:
             // replace layout id => layout object
