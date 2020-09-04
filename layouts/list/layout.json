@@ -6,7 +6,8 @@
     {
       "name": "title",
       "type": "text",
-      "description": "title text"
+      "description": "title text",
+      "isRequired": true
     },
     {
       "name": "cards",
@@ -18,19 +19,22 @@
           "name": "src",
           "type": "image",
           "description": "image url",
-          "defaultValue": "https://via.placeholder.com/320x320.png/00c"
+          "defaultValue": "https://via.placeholder.com/320x320.png/00c",
+          "isRequired": true
         },
         {
           "name": "width",
           "type": "number",
           "description": "image width(pixel)",
-          "defaultValue": "320"
+          "defaultValue": "320",
+          "isRequired": true
         },
         {
           "name": "height",
           "type": "number",
           "description": "image height(pixel)",
-          "defaultValue": "320"
+          "defaultValue": "320",
+          "isRequired": true
         },
         {
           "name": "alt",

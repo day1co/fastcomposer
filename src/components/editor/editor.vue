@@ -9,6 +9,7 @@
         <label class="fc-editor__form__label" :for="layer.id + '--' + param.type">
           <strong class="fc-editor__form__name">{{ param.name }}</strong>
           <small>({{ param.type }})</small>
+          <small v-if="param.isRequired" class="required">* 필수</small>
           <tooltip
             v-if="param.description"
             :message="param.description">
@@ -65,6 +66,7 @@
               <div v-for="(childParams, key) of param.params" :key="key">
                 <strong class="fc-editor__form__name">{{ childParams.name }}</strong>
                 <small>({{ childParams.type }})</small>
+                <small v-if="childParams.isRequired" class="required">* 필수</small>
                 <template v-if="childParams.type === 'image' || childParams.type === 'video'">
                   <input
                     class="fc-editor__form__input"
@@ -286,5 +288,9 @@
     &__remove-btn {
       margin-left: auto;
     }
+  }
+  .required {
+    color: #FF0000;
+    font-weight: bold;
   }
 </style>
