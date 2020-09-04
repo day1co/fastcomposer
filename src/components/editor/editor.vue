@@ -64,11 +64,14 @@
               </div>
 
               <div v-for="(childParams, key) of param.params" :key="key">
-                <strong class="fc-editor__form__name">{{ childParams.name }}</strong>
-                <small>({{ childParams.type }})</small>
-                <small v-if="childParams.isRequired" class="required">* 필수</small>
+                <label class="fc-editor__form__label" :for="param.name + '--' + childParams.name + '--' + index">
+                  <strong class="fc-editor__form__name">{{ childParams.name }}</strong>
+                  <small>({{ childParams.type }})</small>
+                  <small v-if="childParams.isRequired" class="required">* 필수</small>
+                </label>
                 <template v-if="childParams.type === 'image' || childParams.type === 'video'">
                   <input
+                    :id="param.name + '--' + childParams.name + '--' + index"
                     class="fc-editor__form__input"
                     type="url"
                     v-model="item[childParams.name]"
@@ -83,11 +86,11 @@
                   ></file-upload>
                 </template>
                 <template v-else-if="childParams.type === 'textarea'">
-                  <textarea class="fc-editor__form__textarea" rows="20" v-model="item[childParams.name]"></textarea>
+                  <textarea class="fc-editor__form__textarea" rows="20" :id="param.name + '--' + childParams.name + '--' + index" v-model="item[childParams.name]"></textarea>
                 </template>
 
                 <template v-else-if="childParams.type === 'select'">
-                  <select class="fc-editor__form__select" v-model="item[childParams.name]">
+                  <select class="fc-editor__form__select" :id="param.name + '--' + childParams.name + '--' + index" v-model="item[childParams.name]">
                     <option disabled value="">타입을 선택하세요</option>
                     <option v-for="( option, index ) in childParams.options" :key="index">{{ option }}</option>
                   </select>
@@ -95,6 +98,7 @@
                 <template v-else>
                   <input
                     class="fc-editor__form__input"
+                    :id="param.name + '--' + childParams.name + '--' + index"
                     :type="childParams.type"
                     v-model="item[childParams.name]"
                   />
