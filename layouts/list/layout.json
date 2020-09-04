@@ -17,22 +17,26 @@
         {
           "name": "src",
           "type": "image",
-          "description": "image url"
+          "description": "image url",
+          "defaultValue": "https://via.placeholder.com/320x320.png/00c"
         },
         {
           "name": "width",
           "type": "number",
-          "description": "image width(pixel)"
+          "description": "image width(pixel)",
+          "defaultValue": "320"
         },
         {
           "name": "height",
           "type": "number",
-          "description": "image height(pixel)"
+          "description": "image height(pixel)",
+          "defaultValue": "320"
         },
         {
           "name": "alt",
           "type": "text",
-          "description": "alternative text"
+          "description": "alternative text",
+          "defaultValue": "설명"
         }
       ]
     },
@@ -45,17 +49,20 @@
         {
           "name": "content",
           "type": "textarea",
-          "description": "text area"
+          "description": "text area",
+          "defaultValue": "본문"
         },
         {
           "name": "width",
           "type": "number",
-          "description": "image width(pixel)"
+          "description": "image width(pixel)",
+          "defaultValue": "320"
         },
         {
           "name": "height",
           "type": "number",
-          "description": "image height(pixel)"
+          "description": "image height(pixel)",
+          "defaultValue": "320"
         },
         {
           "name": "alt",

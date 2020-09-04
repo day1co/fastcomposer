@@ -158,7 +158,12 @@
       onAdd(param, layer) {
         const { params, name } = param;
         const { values } = layer;
-        const newItem = params.reduce((attr, currentValue) => ({ ...attr,[currentValue.name]: '' }), {});
+        const newItem = params.reduce((attr, currentValue) => {
+          if (!attr[currentValue.name]) {
+            attr[currentValue.name] = currentValue.defaultValue || '';
+          }
+          return attr;
+        }, {});
 
         if (values[name]) {
           values[name] = [...values[name], newItem];
