@@ -106,7 +106,9 @@
 
             <div class="fc-editor__add-btn">
               <button @click="onAdd(param, layer)" :disabled="layer.values[param.name].length >= param.maxLength">
-                추가
+                <span>
+                  + 콘텐츠 추가
+                </span>
               </button>
             </div>
           </div>
@@ -283,7 +285,21 @@
     }
     &__add-btn {
       display: flex;
-      justify-content: center
+      justify-content: center;
+      button {
+        width: 100%;
+        height: 100%;
+        padding: 1rem 0;
+        background-color: #607D8B;
+        border-radius: 0.6rem;
+        color: #ffffff;
+        &[disabled] {
+          opacity: 0.6;
+        }
+      }
+      span {
+        font-weight: bold;
+      }
     }
     &__remove-btn {
       margin-left: auto;
