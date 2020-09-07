@@ -64,7 +64,7 @@
               </div>
 
               <div v-for="(childParams, key) of param.params" :key="key">
-                <label class="fc-editor__form__label" :for="param.name + '--' + childParams.name + '--' + index">
+                <label class="fc-editor__form__label" :for="`${param.name}'--'${childParams.name}--${index}`">
                   <strong class="fc-editor__form__name">{{ childParams.name }}</strong>
                   <small>({{ childParams.type }})</small>
                   <small v-if="childParams.isRequired" class="required">* 필수</small>
