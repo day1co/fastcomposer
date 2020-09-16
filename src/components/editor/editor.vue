@@ -220,13 +220,15 @@
   @import '../../assets/scss/utils/utilities';
   .fc-editor {
     position: relative;
-
     &__edit {
       /*display: none;*/
       position: relative;
       margin: 0 1.8rem 1.2rem;
     }
-
+    &__list-item:nth-child(1n + 2) {
+      border-top: 0.1rem solid #ff3232;
+      padding-top: 1.5rem;
+    }
     &__form {
       padding: 1.2rem 1.2rem;
       background-color: $dimmed;
