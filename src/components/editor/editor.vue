@@ -68,6 +68,11 @@
                   <strong class="fc-editor__form__name">{{ childParams.name }}</strong>
                   <small>({{ childParams.type }})</small>
                   <small v-if="childParams.isRequired" class="required">* 필수</small>
+                  <tooltip
+                    v-if="childParams.description"
+                    :message="childParams.description"
+                  >
+                  </tooltip>
                 </label>
                 <template v-if="childParams.type === 'image' || childParams.type === 'video'">
                   <input
