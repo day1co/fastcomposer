@@ -231,7 +231,7 @@
       margin: 0 1.8rem 1.2rem;
     }
     &__list-item:nth-child(1n + 2) {
-      border-top: 0.1rem solid #ff3232;
+      border-top: 0.1rem solid #1976D2;
       padding-top: 1.5rem;
     }
     &__form {
