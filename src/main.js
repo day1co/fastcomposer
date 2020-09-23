@@ -15,9 +15,9 @@ new Vue({
         layoutModels: layouts,
       },
       on: {
-        save(html, json) {
-          console.log('**save: html=', html, 'json=', json);
-          alert('check console log');
+        save() {
+          // console.log('**save: html=', html, 'json=', json);
+          // alert('check console log');
         },
       },
     });

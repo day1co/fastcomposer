@@ -433,7 +433,34 @@
       focusPreview() {
         this.$refs.preview.focus();
       },
+      getInvalidCount() {
+        let count = 0;
+
+        this.layers.forEach(({ layout, values }) => {
+          layout.params.forEach(({ isRequired, name, type, params }) => {
+            // 일반
+            if (isRequired && values[name] === '' || values[name] === undefined) {
+              count+=1;
+            }
+
+            // list type
+            if (type === 'list') {
+              params.forEach(({ isRequired, name }) => {
+                if (isRequired) {
+                  values[name].forEach(child => {
+                    if (child[name] === '' || child[name] === undefined) {
+                      count+=1;
+                    }
+                  });
+                }
+              });
+            }
+          });
+        });
+        return count;
+      },
       onSave() {
+        const invalidCount = this.getInvalidCount();
         const layerHtml = this.layerHtml;
         // old format: replace layout object => layout id
         //const layers = this.layers.map(layer => Object.assign({}, layer, {layout: layer.layout.id}));
@@ -443,7 +470,7 @@
 
         // TODO: save html only!
         // AS-IS: save generated html with source json
-        this.$emit('save', layerHtml, layerJson);
+        this.$emit('save', layerHtml, layerJson, invalidCount);
       },
     },
     beforeDestroy() {

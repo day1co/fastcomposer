@@ -91,7 +91,7 @@
         EventBus.$emit('focus-editor');
       },
       save() {
-        console.log(this.html);
+        // console.log(this.html);
         EventBus.$emit('save');
       }
     },
