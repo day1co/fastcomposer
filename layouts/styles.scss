@@ -1,0 +1,9 @@
+@media screen and (max-width: 599px) {
+  .fc-block { background-color: orange; }
+}
+@media screen and (min-width: 600px) and (max-width: 959px) {
+  .fc-block { background-color: green; }
+}
+@media screen and (min-width: 960px) {
+  .fc-block { background-color: violet; }
+}

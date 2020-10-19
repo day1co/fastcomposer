@@ -125,6 +125,31 @@
         </table>
       </div>
     </modal>
+    <modal v-show="isDevicePreviewMode">
+      <div slot="main" class="fc-frame-wrapper" :class="{
+        'fc-frame-wrapper__desktop': deviceType === 'desktop',
+        'fc-frame-wrapper__mobile': deviceType === 'mobile',
+        'fc-frame-wrapper__tablet': deviceType === 'tablet'
+      }">
+        <div class="fc-frame-wrapper__device-btns">
+          <button @click="onChangeDevice('desktop')" :class="{'fc-frame-wrapper__selected': deviceType === 'desktop'}">
+            <span class="material-icons">desktop_mac</span>
+          </button>
+          <button @click="onChangeDevice('tablet')" :class="{'fc-frame-wrapper__selected': deviceType === 'tablet'}">
+            <span class="material-icons">tablet_mac</span>
+          </button>
+          <button @click="onChangeDevice('mobile')" :class="{'fc-frame-wrapper__selected': deviceType === 'mobile'}">
+            <span class="material-icons">phone_iphone</span>
+          </button>
+          <button @click="onToggleDeviceMode" style="margin-left: auto;">
+            <span class="material-icons">
+              close
+            </span>
+          </button>
+        </div>
+        <iframe class="fc-frame"></iframe>
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -190,6 +215,7 @@
       EventBus.$on('show-layout-panel', this.onShowLayouts);
       EventBus.$on('clear', this.clearMessageToast);
       EventBus.$on('showInfoTags', this.onShowModal);
+      EventBus.$on('toggle-device-mode', this.onToggleDeviceMode);
       EventBus.$on('hidden', this.onToggleLayerState);
       EventBus.$on('validate-layer', this.onValidateLayer);
     },
@@ -237,7 +263,9 @@
             this.message = message;
             this.type = 'default';
           }
-        }
+        },
+        isDevicePreviewMode: false,
+        deviceType: 'desktop'
       };
     },
     methods: {
@@ -445,6 +473,23 @@
         // AS-IS: save generated html with source json
         this.$emit('save', layerHtml, layerJson);
       },
+      onToggleDeviceMode() {
+        this.isDevicePreviewMode = !this.isDevicePreviewMode;
+
+        if (this.isDevicePreviewMode) {
+          this.loadLayers();
+        }
+      },
+      loadLayers() {
+        const usedStyles = document.querySelectorAll("style[type='text/css']");
+        const doc = this.$el.getElementsByClassName('fc-frame')[0].contentWindow.document;
+
+        usedStyles.forEach(usedStyle => doc.head.appendChild(usedStyle.cloneNode(true)));
+        doc.body.innerHTML = this.layerHtml;
+      },
+      onChangeDevice(deviceType) {
+        this.deviceType = deviceType;
+      },
     },
     beforeDestroy() {
       EventBus.$off();
@@ -455,6 +500,42 @@
 <style lang="scss">
   @import './../assets/scss/style.scss';
 
+  .fc-modal-container {
+    main {
+      width: 100%;
+      height: 100vh;
+    }
+  }
+  .fc-modal-content {
+    height: 100%;
+    .fc-frame-wrapper {
+      text-align: center;
+      width: 60rem;
+      height: 100%;
+      margin: 0 auto;
+      &__device-btns {
+        display: flex;
+        justify-content: center;
+      }
+      &__selected {
+        color: #FF0000;
+      }
+      &__desktop {
+        width: 100%;
+      }
+      &__tablet {
+        width: 95.9rem;
+      }
+      &__mobile {
+        width: 59.9rem;
+      }
+      .fc-frame {
+        width: 100%;
+        height: 100%;
+        border-width: 0;
+      }
+    }
+  }
   .fc-tooltip {
     display: none;
     position: absolute;

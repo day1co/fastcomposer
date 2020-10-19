@@ -1,5 +1,18 @@
-.fc-layout-heading {
+.fc-layout-list {
+  background-color: red;
   h1 {
-    color: red;
+    display: flex;
+    div {
+      color: red;
+    }
+    @media screen and (max-width: 599px) {
+      flex-direction: column;
+    }
+    @media screen and (min-width: 600px) and (max-width: 959px) {
+      flex-direction: column;
+    }
+    @media screen and (min-width: 960px) {
+      flex-direction: row;
+    }
   }
 }

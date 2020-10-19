@@ -17,6 +17,7 @@
         <span class="fc-header__save-time" v-show="saveTime">최종저장 시간: {{ saveTime }}</span>
       </div>
       <div class="fc-header__utils">
+        <button @click="onToggleDeviceMode"><span class="material-icons">devices</span></button>
         <button @click="showInfoTags"><i class="material-icons">help</i></button>
         <button class="fc-utils__btn" @click="showLayerPanel"><i class="material-icons">add</i></button>
         <button @click="validateLayer">
@@ -44,6 +45,9 @@
       },
       addLayer(layout) {
         EventBus.$emit('add-layer', layout);
+      },
+      onToggleDeviceMode() {
+        EventBus.$emit('toggle-device-mode');
       },
       getLayoutIds() {
         return JSON.parse(localStorage.getItem('favoriteLayouts')) || [];
