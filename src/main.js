@@ -6,7 +6,7 @@ import Composer from './views/composer.vue';
 
 import layouts from '../layouts';
 import sample from '../layouts/sample.json';
-import './../layouts/styles.scss';
+import '../layouts/styles.scss';
 
 new Vue({
   render(createElement) {

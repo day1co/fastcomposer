@@ -126,11 +126,7 @@
       </div>
     </modal>
     <modal v-show="isDevicePreviewMode">
-      <div slot="main" class="fc-frame-wrapper" :class="{
-        'fc-frame-wrapper__desktop': deviceType === 'desktop',
-        'fc-frame-wrapper__mobile': deviceType === 'mobile',
-        'fc-frame-wrapper__tablet': deviceType === 'tablet'
-      }">
+      <div slot="main" class="fc-frame-wrapper" :class="`fc-frame-wrapper--${deviceType}`">
         <div class="fc-frame-wrapper__device-btns">
           <button @click="onChangeDevice('desktop')" :class="{'fc-frame-wrapper__selected': deviceType === 'desktop'}">
             <span class="material-icons">desktop_mac</span>
@@ -138,7 +134,7 @@
           <button @click="onChangeDevice('tablet')" :class="{'fc-frame-wrapper__selected': deviceType === 'tablet'}">
             <span class="material-icons">tablet_mac</span>
           </button>
-          <button @click="onChangeDevice('mobile')" :class="{'fc-frame-wrapper__selected': deviceType === 'mobile'}">
+          <button @click="onChangeDevice('phone')" :class="{'fc-frame-wrapper__selected': deviceType === 'phone'}">
             <span class="material-icons">phone_iphone</span>
           </button>
           <button @click="onToggleDeviceMode" style="margin-left: auto;">
@@ -520,13 +516,13 @@
       &__selected {
         color: #FF0000;
       }
-      &__desktop {
+      &--desktop {
         width: 100%;
       }
-      &__tablet {
+      &--tablet {
         width: 95.9rem;
       }
-      &__mobile {
+      &--phone {
         width: 59.9rem;
       }
       .fc-frame {
