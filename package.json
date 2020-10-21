@@ -1,7 +1,7 @@
 {
   "name": "@fastcampus/fastcomposer",
   "version": "0.14.2",
-  "author": "Yoosoo Won <yswon@fastcampus.co.kr>",
+  "author": "fastcampus",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -9,6 +9,10 @@
     "lint": "vue-cli-service lint",
     "bundle": "vue-cli-service build --target lib --name fastcomposer ./src/index.js",
     "build-layouts": "node layouts/build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fastcampusgit/fastcomposer.git"
   },
   "dependencies": {
     "lodash": "^4.17.20",
