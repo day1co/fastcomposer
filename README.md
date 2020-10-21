@@ -1,3 +1,6 @@
+[![github version](https://img.shields.io/github/release/fastcampusgit/fastcomposer.svg)](https://github.com/fastcampusgit/fastcomposer/releases/latest)
+[![npm version](https://img.shields.io/npm/v/@fastcampus/fastcomposer.svg)](https://www.npmjs.com/package/@fastcampus/fastcomposer)
+
 # FAST COMPOSER
 
 a layout based WYSIWYG html editor.
@@ -148,7 +151,7 @@ methods: {
   async onUpload(fileInfo, callback) {
     // 이곳에서 파일 업로드 작업 수행 후
     const res = await uploadToServer(fileInfo);
-    
+
     // callback 으로 결과를 넘겨준다(res.url 되어야한다)
     callback(res);
   },
