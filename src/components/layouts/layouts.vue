@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-  import EventBus from './../../../event-bus/event-bus';
+  import EventBus from '../../event-bus/event-bus';
 
   export default {
     props: {
@@ -76,7 +76,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../assets/scss/utils/utilities.scss';
+  @import '../../assets/scss/utils/utilities';
   .fc-layout:before {
     position: absolute;
     bottom: 100%;

@@ -49,7 +49,7 @@
 </template>
 <script>
   import { Container, Draggable } from "vue-smooth-dnd";
-  import EventBus from './../../../../event-bus/event-bus';
+  import EventBus from '../../event-bus/event-bus';
 
   export default {
     components: {
@@ -186,7 +186,7 @@
   }
 </script>
 <style lang="scss" scoped>
-  @import '../../../../assets/scss/utils/utilities.scss';
+  @import '../../assets/scss/utils/utilities';
   .__item {
     position: relative;
     border: 3px solid #ffffff;

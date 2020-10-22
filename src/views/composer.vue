@@ -193,8 +193,8 @@
   import ComposerHeader from './../components/header/header.vue';
   import Editor from './../components/editor/editor';
   import Preview from './../components/content/preview/preview';
-  import Layouts from './../components/content/layouts/layouts';
-  import Layers from './../components/content/aside/layers/layers';
+  import Layouts from '../components/layouts/layouts';
+  import Layers from '../components/layers/layers';
   import Modal from './../components/common/modal';
   import MessageToast from './../components/common/message-toast';
 
