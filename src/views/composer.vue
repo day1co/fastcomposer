@@ -15,23 +15,29 @@
       <div class="fc-tooltip">
         <div class="fc-tooltip__content"></div>
       </div>
+      <!--알림-->
       <message-toast
         :message="notification.message"
         :type="notification.type"/>
+      <!--헤더-->
       <composer-header
         :layouts="layoutModels"
         :layerCount="layers.length"
         :warnCount="layers.filter(layer => layer.hasSyntaxErrorTags).length"
         :notificationMessage="notification.message"
         :notificationType="notification.type"/>
+      <!--preview-->
       <div class="fc-composer__content">
+
         <composer-aside :className="'left'">
           <editor v-show="currentLayer" :layer="currentLayer" ref="editor" />
         </composer-aside>
+
         <preview
           :layers="layers"
           ref="preview"
         />
+
         <composer-aside :className="'right'" :checkedCount="layers.filter(layer => layer.isChecked).length">
           <layers
             :layers="layers"
@@ -39,6 +45,7 @@
             ref="layers"
           />
         </composer-aside>
+
       </div>
 
       <layouts
@@ -233,7 +240,7 @@
         }, {});
       },
       scrollPoint() {
-        return this.$el.getElementsByClassName('fc-layer')[this.currentLayerIndex].offsetTop;
+        return this.$el.getElementsByClassName('fc-block')[this.currentLayerIndex].offsetTop;
       }
     },
     data() {

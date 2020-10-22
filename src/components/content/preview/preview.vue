@@ -10,14 +10,15 @@
        @keydown.exact.page-down.prevent="select(index + 5)"
   >
     <div class="fc-preview__container">
-      <layer-content
-        v-for="(layer, layerIndex) in layers"
-        :isSelected="layerIndex === index"
-        :key="'layer-' + layerIndex"
-        :layer="layer"
-        :index="layerIndex"
-      />
-
+      <div class="fc-block" v-for="(layer, layerIndex) in layers" :key="'layer-' + layerIndex">
+        <div
+          class="fc-block__container"
+          :id="layer.id"
+          :class="['fc-layout-' + layer.layout.id, { 'fc-selected': layerIndex === index }, {'fc-hidden': layer.hidden} ]"
+          v-html="parserToHTML(layer)"
+          @click="select(layerIndex)"
+        ></div>
+      </div>
     </div>
     <button class="fc-preview__save" type="button" @click="save">
       <i class="material-icons">&#xE5CA;</i>
@@ -28,12 +29,8 @@
 <script>
   import EventBus from './../../../event-bus/event-bus';
   import marked from 'marked';
-  import LayerContent from './layer-content.vue';
 
   export default {
-    components: {
-      LayerContent,
-    },
     props: {
       layers: {
         type: Array,
@@ -47,37 +44,16 @@
         index: null
       }
     },
-    computed: {
-      html() {
-        this.syncLayerValues();
-        return this.layers
-          .map(block => `
-            <section class="fc-block fc-layout fc-layout-${block.layout.id}">
-              ${block.layout.templateFunc({
-              $markdown: marked,
-              ...block.values
-            })}
-            </section>`
-          ).join('\n');
-      }
-    },
     methods: {
-      syncLayerValues() {
-        /**
-         * 레이아웃의 디자인이 변경되거나 property가 추가 삭제가 되는경우 존재하지 않는 property에 대해서
-         * layout.values의 property와 layer.value의 property를 동기화하여 template에러가 발생하지 않도록 함.
-         */
-        this.layers.forEach((layer) => {
-          const layoutValues = layer.layout.values;
-          const layerValues = layer.values;
-
-          for (const prop in layoutValues) {
-            if (layerValues[prop] === undefined) {
-              layerValues[prop] = '';
-            }
+      parserToHTML(layer) {
+        const values = { $markdown: marked };
+        if (layer.layout.params) {
+          for(const { name } of layer.layout.params) {
+            const value = layer.values[name];
+            values[name] = (value === undefined) ? layer.layout.values[name] : values[name] = layer.values[name];
           }
-        });
-
+        }
+        return layer.layout.templateFunc(values);
       },
       select(index) {
         const newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
@@ -91,7 +67,6 @@
         EventBus.$emit('focus-editor');
       },
       save() {
-        console.log(this.html);
         EventBus.$emit('save');
       }
     },
@@ -129,6 +104,25 @@
         right: $sidebar-size + 1.75rem;
       }
     }
+  }
+  .fc-block {
+    position: relative;
+    .fc-selected {
+      box-shadow: inset 0 0 0 .4rem red;
+      padding: .4rem;
+    }
+    .fc-block__preview {
+      flex: 0 0 0;
+      width: 100%;
+      outline: 1px dashed lightgray;
 
+      &.active {
+        outline: 1px dashed fuchsia;
+      }
+    }
+    .fc-hidden {
+      opacity: 0.5;
+      background-color: olive;
+    }
   }
 </style>
