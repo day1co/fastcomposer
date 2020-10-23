@@ -8,7 +8,6 @@
   </transition>
 </template>
 <script>
-  import EventBus from './../../event-bus/event-bus';
   export default {
     name: 'message-toast',
     props: {
@@ -36,7 +35,7 @@
           this.isActive = true;
           setTimeout(() => {
             this.isActive = false;
-            EventBus.$emit('clear');
+            this.$emit('clear');
           }, 2000);
         }
       }

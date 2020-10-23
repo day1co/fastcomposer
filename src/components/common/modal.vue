@@ -1,7 +1,8 @@
 <template>
-  <div class="fc-modal-container">
+  <div class="fc-modal-container" v-if="visible">
     <main>
       <div class="fc-modal-content fc-modal-container__content">
+        <button>닫기</button>
         <slot name="main">
           default...
         </slot>
@@ -10,10 +11,21 @@
     <footer>
 
     </footer>
-
   </div>
 
 </template>
+<script>
+  export default {
+    data() {
+      return {
+        isDisplay: false
+      }
+    },
+    methods: {
+
+    }
+  }
+</script>
 <style lang="scss">
   .fc-modal-container {
     display: flex;

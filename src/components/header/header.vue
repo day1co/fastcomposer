@@ -29,30 +29,31 @@
 </template>
 
 <script>
-  import EventBus from '../../event-bus/event-bus';
   import moment from 'moment';
+  import EventBus from '@/event-bus/event-bus';
 
   export default {
     methods: {
       validateLayer() {
-        EventBus.$emit('validate-layer');
+        this.$emit('validate-layer');
       },
       showLayerPanel($event) {
-        EventBus.$emit('show-layout-panel', $event);
+        this.$emit('show-layout-panel', $event);
       },
       showInfoTags() {
-        EventBus.$emit('showInfoTags');
+        this.$emit('showInfoTags');
       },
       addLayer(layout) {
-        EventBus.$emit('add-layer', layout);
+        this.$emit('add-layer', layout);
       },
       onToggleDeviceMode() {
-        EventBus.$emit('toggle-device-mode');
+        this.$emit('toggle-device-mode');
       },
       getLayoutIds() {
         return JSON.parse(localStorage.getItem('favoriteLayouts')) || [];
       },
       addFavoriteLayout(layout) {
+        console.log(layout);
         if (this.layoutIds.includes(layout.id)) {
           this.layoutIds.splice(this.layoutIds.indexOf(layout.id), 1);
         } else {

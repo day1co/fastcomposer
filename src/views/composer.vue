@@ -17,10 +17,16 @@
       </div>
       <!--알림-->
       <message-toast
+        @clear="onClearMessageToast"
         :message="notification.message"
         :type="notification.type"/>
       <!--헤더-->
       <composer-header
+        @validate-layer="onValidateLayer"
+        @show-layout-panel="onShowLayouts"
+        @show-info-tags="onShowModal"
+        @add-layer="onAddLayer"
+        @toggle-device-mode="onToggleDeviceMode"
         :layouts="layoutModels"
         :layerCount="layers.length"
         :warnCount="layers.filter(layer => layer.hasSyntaxErrorTags).length"
@@ -38,7 +44,7 @@
           <button
             type="button"
             class="fc-aside__btn"
-            @click="toggleAside">
+            @click="onToggleAside('left')">
             <i class="material-icons">&#xE3E8;</i>
           </button>
         </div>
@@ -51,15 +57,18 @@
         <div
           class="fc-aside fc-aside--right">
           <div class="fc-aside__content">
-            <button class="btn" @click="onUp">
+            <button class="btn" @click="onUpBlock">
               <span class="material-icons">arrow_upward</span>
             </button>
-            <button class="btn" @click="onDown">
+            <button class="btn" @click="onDownBlock">
               <span class="material-icons">arrow_downward</span>
             </button>
             <span>선택된 레이어 수: {{checkedCount}}</span>
             <div class="fc-aside__container">
               <layers
+                @up="onUpBlock"
+                @down="onDownBlock"
+                @hidden="onToggleLayerState"
                 :layers="layers"
                 :currentLayerIndex="currentLayerIndex"
                 ref="layers"
@@ -70,19 +79,19 @@
           <button
             type="button"
             class="fc-aside__btn"
-            @click="toggleAside">
+            @click="onToggleAside('right')">
             <i class="material-icons">&#xE3E8;</i>
           </button>
         </div>
-
       </div>
 
       <layouts
+        @addLayer="onAddLayer"
         :layouts="layouts"
         ref="layouts"
       />
     </div>
-    <modal v-if="showModal">
+    <modal>
       <div slot="main" class="fc-guide">
         <button @click="onHideModal">
           <i class="material-icons">close</i>
@@ -161,7 +170,7 @@
         </table>
       </div>
     </modal>
-    <modal v-show="isDevicePreviewMode">
+    <modal :visible="isDevicePreviewMode">
       <div slot="main" class="fc-frame-wrapper" :class="`fc-frame-wrapper--${deviceType}`">
         <div class="fc-frame-wrapper__device-btns">
           <button @click="onChangeDevice('desktop')" :class="{'fc-frame-wrapper__selected': deviceType === 'desktop'}">
@@ -232,22 +241,12 @@
       this.$el.focus();
     },
     created() {
-      EventBus.$on('up-block', this.upBlock);
-      EventBus.$on('down-block', this.downBlock);
       EventBus.$on('selected-layer', this.onUpdateCurrentLayerIndex);
-      EventBus.$on('add-layer', this.onAddLayer);
       EventBus.$on('remove-layer', this.onRemoveLayer);
       EventBus.$on('clone-layer', this.onCloneLayer);
-      EventBus.$on('toggle-aside', this.onToggleAside);
       EventBus.$on('save', this.onSave);
       EventBus.$on('move-selected-layer',this.onMoveSelectedLayer);
       EventBus.$on('fc-upload', this.onUploadFile);
-      EventBus.$on('show-layout-panel', this.onShowLayouts);
-      EventBus.$on('clear', this.clearMessageToast);
-      EventBus.$on('showInfoTags', this.onShowModal);
-      EventBus.$on('toggle-device-mode', this.onToggleDeviceMode);
-      EventBus.$on('hidden', this.onToggleLayerState);
-      EventBus.$on('validate-layer', this.onValidateLayer);
     },
     computed: {
       checkedCount() {
@@ -302,16 +301,7 @@
       };
     },
     methods: {
-      toggleAside() {
-        EventBus.$emit('toggle-aside', this.className);
-      },
-      onUp() {
-        EventBus.$emit('up-block');
-      },
-      onDown() {
-        EventBus.$emit('down-block');
-      },
-      upBlock() {
+      onUpBlock() {
         const checkedLayer = this.layers.filter(layer => layer.isChecked);
         const { uniqueId } = checkedLayer[0];
         const checkedFirstIndex = this.layers.findIndex(layer => layer.uniqueId === uniqueId);
@@ -321,11 +311,11 @@
           this.layers = [...this.layers.filter(layer => !layer.isChecked)];
           const targetIndex = this.layers.findIndex(layer => layer.uniqueId === targetUniqueId);
           this.layers.splice(targetIndex, 0, ...checkedLayer);
-          EventBus.$emit('selected-layer', targetIndex);
-          EventBus.$emit('move-selected-layer');
+          this.onUpdateCurrentLayerIndex(targetIndex);
+          this.onMoveSelectedLayer();
         }
       },
-      downBlock() {
+      onDownBlock() {
         const checkedLayer = this.layers.filter(layer => layer.isChecked);
         const { uniqueId } = checkedLayer[checkedLayer.length - 1];
         const checkedLastIndex = this.layers.findIndex(layer => layer.uniqueId === uniqueId);
@@ -335,8 +325,8 @@
           this.layers = [...this.layers.filter(layer => !layer.isChecked)];
           const targetIndex = this.layers.findIndex(layer => layer.uniqueId === targetUniqueId);
           this.layers.splice(targetIndex + 1, 0, ...checkedLayer);
-          EventBus.$emit('selected-layer', checkedLastIndex + 1);
-          EventBus.$emit('move-selected-layer');
+          this.onUpdateCurrentLayerIndex(checkedLastIndex + 1);
+          this.onMoveSelectedLayer();
         }
       },
       onValidateLayer() {
@@ -374,7 +364,7 @@
           this.$set(this.layers[index], 'hidden', flag);
         }
       },
-      clearMessageToast() {
+      onClearMessageToast() {
         this.notification.message = '';
       },
       onUpdateCurrentLayerIndex(index, isClick) {
@@ -400,7 +390,7 @@
         });
 
         this.currentLayerIndex = this.currentLayerIndex + 1;
-        EventBus.$emit('selected-layer', this.currentLayerIndex);
+        this.onUpdateCurrentLayerIndex(this.currentLayerIndex);
         this.focusEditor();
       },
       onRemoveLayer(index) {
@@ -408,7 +398,7 @@
           this.layers.splice(index, 1);
           if (index < this.layers.length) {
             this.currentLayerIndex = index;
-            EventBus.$emit('selected-layer', this.currentLayerIndex);
+            this.onUpdateCurrentLayerIndex(this.currentLayerIndex);
           }
         }
       },
@@ -421,7 +411,7 @@
           });
 
           this.currentLayerIndex = index + 1;
-          EventBus.$emit('selected-layer', this.currentLayerIndex);
+          this.onUpdateCurrentLayerIndex(this.currentLayerIndex);
         }
       },
       onToggleAside(state) {
@@ -486,7 +476,7 @@
         });
         // select first layer if available
         if (this.layers.length > 0) {
-          EventBus.$emit('selected-layer', 0);
+          this.onUpdateCurrentLayerIndex(0);
         }
       },
       onShowLayouts() {
@@ -519,12 +509,16 @@
         this.isDevicePreviewMode = !this.isDevicePreviewMode;
 
         if (this.isDevicePreviewMode) {
-          this.loadLayers();
+          setTimeout(() => {
+            this.loadLayers();
+          });
         }
       },
       loadLayers() {
         const usedStyles = document.querySelectorAll("style[type='text/css']");
+        console.log(this.$el.getElementsByClassName('fc-frame'));
         const doc = this.$el.getElementsByClassName('fc-frame')[0].contentWindow.document;
+        console.log(doc);
 
         usedStyles.forEach(usedStyle => doc.head.appendChild(usedStyle.cloneNode(true)));
         doc.body.innerHTML = this.layerHtml;

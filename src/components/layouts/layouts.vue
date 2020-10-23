@@ -26,8 +26,6 @@
   </div>
 </template>
 <script>
-  import EventBus from '../../event-bus/event-bus';
-
   export default {
     props: {
       layouts: {
@@ -49,7 +47,7 @@
         /**
          * composer에서 layers에 push가 일어나며, 추가된 layer가 선택된다.
          */
-        EventBus.$emit('add-layer', layout);
+        this.$emit('add-layer', layout);
         this.flag = false;
       },
       toggle() {

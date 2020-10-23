@@ -1,5 +1,5 @@
 <template>
-  <Container @drop="drop" :get-ghost-parent="getGhostParent">
+  <Container @drop="onDrop" :get-ghost-parent="getGhostParent">
     <Draggable v-for="(layer, index) in layers" :key="index">
       <div
         class="__item"
@@ -8,8 +8,8 @@
         @keydown.exact.enter.prevent="focusEditor"
         @keydown.exact.shift.up="updateCheckedState(currentLayerIndex - 1, $event)"
         @keydown.exact.shift.down="updateCheckedState(currentLayerIndex + 1, $event)"
-        @keydown.exact.shift.alt.up="upBlock"
-        @keydown.exact.shift.alt.down="downBlock"
+        @keydown.exact.shift.alt.up="onUpBlock"
+        @keydown.exact.shift.alt.down="onDownBlock"
         @keydown.exact.up.prevent="select(currentLayerIndex - 1)"
         @keydown.exact.down.prevent="select(currentLayerIndex + 1)"
         @keydown.exact.page-up.prevent="select(currentLayerIndex - 5)"
@@ -104,11 +104,11 @@
       }
     },
     methods: {
-      upBlock() {
-        EventBus.$emit('up-block');
+      onUpBlock() {
+        this.$emit('up');
       },
-      downBlock() {
-        EventBus.$emit('down-block');
+      onDownBlock() {
+        this.$emit('down');
       },
       updateCheckedState(index, event) {
         let newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
@@ -146,7 +146,7 @@
         EventBus.$emit('move-selected-layer');
         this.resetCheckedHistory();
       },
-      drop(dropResult) {
+      onDrop(dropResult) {
         this.dropResult = dropResult;
         this.layers = this.applyDrag;
         EventBus.$emit('selected-layer', dropResult.addedIndex, true);
@@ -180,7 +180,7 @@
         EventBus.$emit('focus-editor');
       },
       toggle(index) {
-        EventBus.$emit('hidden', index, !this.layers[index].hidden);
+        this.$emit('hidden', index, !this.layers[index].hidden);
       }
     },
   }
