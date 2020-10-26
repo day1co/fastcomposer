@@ -91,39 +91,36 @@
         ref="layouts"
       />
     </div>
-    <modal>
+    <Dialog :visible.sync="showModal">
       <div slot="main" class="fc-guide">
-        <button @click="onHideModal">
-          <i class="material-icons">close</i>
-        </button>
         <table>
           <thead>
-            <tr>
-              <th>태그명</th>
-              <th>표시</th>
-            </tr>
+          <tr>
+            <th>태그명</th>
+            <th>표시</th>
+          </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>i</td>
-              <td><i>FastComposer</i></td>
-            </tr>
-            <tr>
-              <td>b</td>
-              <td><b>FastComposer</b></td>
-            </tr>
-            <tr>
-              <td>s</td>
-              <td><s>FastComposer</s></td>
-            </tr>
-            <tr>
-              <td>u</td>
-              <td><u>FastComposer</u></td>
-            </tr>
-            <tr>
-              <td>em</td>
-              <td><em>FastComposer</em></td>
-            </tr>
+          <tr>
+            <td>i</td>
+            <td><i>FastComposer</i></td>
+          </tr>
+          <tr>
+            <td>b</td>
+            <td><b>FastComposer</b></td>
+          </tr>
+          <tr>
+            <td>s</td>
+            <td><s>FastComposer</s></td>
+          </tr>
+          <tr>
+            <td>u</td>
+            <td><u>FastComposer</u></td>
+          </tr>
+          <tr>
+            <td>em</td>
+            <td><em>FastComposer</em></td>
+          </tr>
           </tbody>
         </table>
         <table>
@@ -169,28 +166,23 @@
           </tbody>
         </table>
       </div>
-    </modal>
-    <modal :visible="isDevicePreviewMode">
+    </Dialog>
+    <Dialog :visible.sync="isDevicePreviewMode" :position="'top'" :dialogStyles="{ width: '100%', height: '100vh' }">
+      <div slot="header" class="fc-frame-wrapper__device-btns">
+        <button @click="onChangeDevice('desktop')" :class="{'fc-frame-wrapper__selected': deviceType === 'desktop'}">
+          <span class="material-icons">desktop_mac</span>
+        </button>
+        <button @click="onChangeDevice('tablet')" :class="{'fc-frame-wrapper__selected': deviceType === 'tablet'}">
+          <span class="material-icons">tablet_mac</span>
+        </button>
+        <button @click="onChangeDevice('phone')" :class="{'fc-frame-wrapper__selected': deviceType === 'phone'}">
+          <span class="material-icons">phone_iphone</span>
+        </button>
+      </div>
       <div slot="main" class="fc-frame-wrapper" :class="`fc-frame-wrapper--${deviceType}`">
-        <div class="fc-frame-wrapper__device-btns">
-          <button @click="onChangeDevice('desktop')" :class="{'fc-frame-wrapper__selected': deviceType === 'desktop'}">
-            <span class="material-icons">desktop_mac</span>
-          </button>
-          <button @click="onChangeDevice('tablet')" :class="{'fc-frame-wrapper__selected': deviceType === 'tablet'}">
-            <span class="material-icons">tablet_mac</span>
-          </button>
-          <button @click="onChangeDevice('phone')" :class="{'fc-frame-wrapper__selected': deviceType === 'phone'}">
-            <span class="material-icons">phone_iphone</span>
-          </button>
-          <button @click="onToggleDeviceMode" style="margin-left: auto;">
-            <span class="material-icons">
-              close
-            </span>
-          </button>
-        </div>
         <iframe class="fc-frame"></iframe>
       </div>
-    </modal>
+    </Dialog>
   </div>
 </template>
 
@@ -204,8 +196,8 @@
   import Preview from './../components/content/preview/preview';
   import Layouts from '../components/layouts/layouts';
   import Layers from '../components/layers/layers';
-  import Modal from './../components/common/modal';
   import MessageToast from './../components/common/message-toast';
+  import Dialog from '@/components/dialog/dialog';
 
   export default {
     components: {
@@ -215,7 +207,7 @@
       Editor,
       Layouts,
       Layers,
-      Modal
+      Dialog,
     },
     props: {
       layoutModels: {
@@ -511,14 +503,14 @@
         if (this.isDevicePreviewMode) {
           setTimeout(() => {
             this.loadLayers();
-          });
+          }, 0);
         }
       },
       loadLayers() {
         const usedStyles = document.querySelectorAll("style[type='text/css']");
-        console.log(this.$el.getElementsByClassName('fc-frame'));
+        // console.log(this.$el.getElementsByClassName('fc-frame'));
         const doc = this.$el.getElementsByClassName('fc-frame')[0].contentWindow.document;
-        console.log(doc);
+        // console.log(doc);
 
         usedStyles.forEach(usedStyle => doc.head.appendChild(usedStyle.cloneNode(true)));
         doc.body.innerHTML = this.layerHtml;
@@ -536,25 +528,26 @@
 <style lang="scss">
   @import './../assets/scss/style.scss';
 
-  .fc-modal-container {
+  .fc-dialog__container {
     main {
       width: 100%;
       height: 100vh;
     }
+    .fc-frame-wrapper {
+      &__selected {
+        color: #FF0000;
+      }
+    }
   }
-  .fc-modal-content {
+  .fc-dialog__content {
     height: 100%;
     .fc-frame-wrapper {
       text-align: center;
-      width: 60rem;
       height: 100%;
       margin: 0 auto;
       &__device-btns {
         display: flex;
         justify-content: center;
-      }
-      &__selected {
-        color: #FF0000;
       }
       &--desktop {
         width: 100%;
@@ -567,7 +560,7 @@
       }
       .fc-frame {
         width: 100%;
-        height: 100%;
+        height: calc(100vh - 10rem);
         border-width: 0;
       }
     }

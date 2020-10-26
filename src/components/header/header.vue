@@ -41,7 +41,7 @@
         this.$emit('show-layout-panel', $event);
       },
       showInfoTags() {
-        this.$emit('showInfoTags');
+        this.$emit('show-info-tags');
       },
       addLayer(layout) {
         this.$emit('add-layer', layout);
