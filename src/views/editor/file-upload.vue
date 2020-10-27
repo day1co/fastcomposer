@@ -24,7 +24,8 @@
 </template>
 
 <script>
-import EventBus from './../../event-bus/event-bus';
+import EventBus from '../../event-bus/event-bus';
+
 export default {
   props: {
     index: Number,

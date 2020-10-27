@@ -16,8 +16,8 @@
         <div class="fc-tooltip__content"></div>
       </div>
       <!--알림-->
-      <message-toast
-        @clear="onClearMessageToast"
+      <toast
+        @clear="onClearToast"
         :message="notification.message"
         :type="notification.type"/>
       <!--헤더-->
@@ -32,10 +32,9 @@
         :warnCount="layers.filter(layer => layer.hasSyntaxErrorTags).length"
         :notificationMessage="notification.message"
         :notificationType="notification.type"/>
-      <!--preview-->
       <div class="fc-composer__content">
-        <div
-          class="fc-aside fc-aside--left">
+        <!--edit-->
+        <div class="fc-aside fc-aside--left">
           <div class="fc-aside__content">
             <div class="fc-aside__container">
               <editor v-show="currentLayer" :layer="currentLayer" ref="editor" />
@@ -48,14 +47,15 @@
             <i class="material-icons">&#xE3E8;</i>
           </button>
         </div>
-
+        <!--preview-->
         <preview
+          @move-selected-layer="onMoveSelectedLayer"
           :layers="layers"
           ref="preview"
         />
 
-        <div
-          class="fc-aside fc-aside--right">
+        <!--layers-->
+        <div class="fc-aside fc-aside--right">
           <div class="fc-aside__content">
             <button class="btn" @click="onUpBlock">
               <span class="material-icons">arrow_upward</span>
@@ -69,6 +69,10 @@
                 @up="onUpBlock"
                 @down="onDownBlock"
                 @hidden="onToggleLayerState"
+                @selected-layer="onUpdateCurrentLayerIndex"
+                @move-selected-layer="onMoveSelectedLayer"
+                @remove-layer="onRemoveLayer"
+                @clone-layer="onCloneLayer"
                 :layers="layers"
                 :currentLayerIndex="currentLayerIndex"
                 ref="layers"
@@ -86,9 +90,9 @@
       </div>
 
       <layouts
+        ref="layouts"
         @addLayer="onAddLayer"
         :layouts="layouts"
-        ref="layouts"
       />
     </div>
     <Dialog :visible.sync="showModal">
@@ -191,17 +195,17 @@
   import { uniqueId, restructureLayouts } from './../utils/utils';
   import EventBus from './../event-bus/event-bus';
   import marked from 'marked';
-  import ComposerHeader from './../components/header/header.vue';
-  import Editor from './../components/editor/editor';
-  import Preview from './../components/content/preview/preview';
-  import Layouts from '../components/layouts/layouts';
-  import Layers from '../components/layers/layers';
-  import MessageToast from './../components/common/message-toast';
+  import Toast from './../components/toast/toast';
   import Dialog from '@/components/dialog/dialog';
+  import ComposerHeader from './header/header.vue';
+  import Editor from './editor/editor';
+  import Preview from './preview/preview';
+  import Layouts from './layouts/layouts';
+  import Layers from './layers/layers';
 
   export default {
     components: {
-      MessageToast,
+      Toast,
       ComposerHeader,
       Preview,
       Editor,
@@ -233,11 +237,7 @@
       this.$el.focus();
     },
     created() {
-      EventBus.$on('selected-layer', this.onUpdateCurrentLayerIndex);
-      EventBus.$on('remove-layer', this.onRemoveLayer);
-      EventBus.$on('clone-layer', this.onCloneLayer);
       EventBus.$on('save', this.onSave);
-      EventBus.$on('move-selected-layer',this.onMoveSelectedLayer);
       EventBus.$on('fc-upload', this.onUploadFile);
     },
     computed: {
@@ -261,6 +261,7 @@
         }, {});
       },
       scrollPoint() {
+        console.log(this.currentLayerIndex); // 이거이 왜 정상적으로 동작하지 않는듯한...
         return this.$el.getElementsByClassName('fc-block')[this.currentLayerIndex].offsetTop;
       }
     },
@@ -356,13 +357,13 @@
           this.$set(this.layers[index], 'hidden', flag);
         }
       },
-      onClearMessageToast() {
+      onClearToast() {
         this.notification.message = '';
       },
-      onUpdateCurrentLayerIndex(index, isClick) {
+      onUpdateCurrentLayerIndex(index, isClicked) {
         this.currentLayerIndex = index;
 
-        if (isClick !== true) {
+        if (isClicked !== true) {
           const [, el] = this.$el.querySelectorAll('.fc-aside__container');
 
           if (this.$el.querySelector('.smooth-dnd-container').children.length) {
@@ -414,10 +415,11 @@
         }
       },
       onMoveSelectedLayer() {
+        console.log(this.scrollPoint, 'onMoveSelectedLayer in composer vue');
         this.$el.getElementsByClassName('fc-composer__content')[0].scrollTop = this.scrollPoint;
       },
       onUploadFile(fileInfo, callback) {
-        this.$emit('uploadFile', fileInfo, callback);
+        this.$emit('upload-file', fileInfo, callback);
       },
       setLayouts(layouts) {
         this.layouts = restructureLayouts(layouts);

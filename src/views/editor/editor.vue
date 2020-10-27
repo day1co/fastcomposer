@@ -29,7 +29,7 @@
             :name="param.name"
             :layer="layer"
             :accept="accept[param.type]"
-            @upload="upload"
+            @upload="onUpload"
           ></file-upload>
         </template>
 
@@ -87,7 +87,7 @@
                     :layer="layer"
                     :accept="accept[childParams.type]"
                     :index="index"
-                    @upload="upload"
+                    @upload="onUpload"
                   ></file-upload>
                 </template>
                 <template v-else-if="childParams.type === 'textarea'">
@@ -139,9 +139,9 @@
 </template>
 
 <script>
-  import EventBus from './../../event-bus/event-bus';
+  import EventBus from '../../event-bus/event-bus';
   import FileUpload from './file-upload.vue';
-  import Tooltip from '../common/tooltip';
+  import Tooltip from '../../components/tooltip/tooltip';
 
   export default {
     components: {
@@ -182,7 +182,7 @@
           values[name] = [...values[name], newItem];
         }
       },
-      upload(name, url) {
+      onUpload(name, url) {
         this.layer.values[name] = url;
       },
       focus() {

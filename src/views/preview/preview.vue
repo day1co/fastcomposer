@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import EventBus from './../../../event-bus/event-bus';
+  import EventBus from '../../event-bus/event-bus';
   import marked from 'marked';
 
   export default {
@@ -57,8 +57,8 @@
       },
       select(index) {
         const newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
-        EventBus.$emit('selected-layer', newIndex);
-        EventBus.$emit('move-selected-layer');
+        this.$emit('selected-layer', newIndex);
+        this.$emit('move-selected-layer');
       },
       focus() {
         this.$el.focus();
@@ -71,7 +71,7 @@
       }
     },
     mounted() {
-      EventBus.$on('selected-layer', (index) => {
+      this.$on('selected-layer', (index) => {
         this.index = index;
       });
       EventBus.$on('remove-layer', () => {
@@ -82,7 +82,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../assets/scss/utils/utilities.scss';
+  @import '../../assets/scss/utils/utilities';
   .fc-preview {
     background-color: $white;
 

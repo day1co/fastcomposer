@@ -1,7 +1,7 @@
 <template>
-  <transition name="message-toast">
-    <div class="fc-message-toast" v-show="isActive" :class="'fc-' + type">
-      <p class="fc-message-toast__content">
+  <transition name="toast">
+    <div class="fc-toast" v-show="isActive" :class="'fc-' + type">
+      <p class="fc-toast__content">
         {{ message }}
       </p>
     </div>
@@ -9,7 +9,7 @@
 </template>
 <script>
   export default {
-    name: 'message-toast',
+    name: 'toast',
     props: {
       message: {
         type: String,
@@ -50,7 +50,7 @@
   .fc-error {
     background: #FFB100;
   }
-  .fc-message-toast {
+  .fc-toast {
     position: absolute;
     top: 0;
     left: 0;
@@ -65,11 +65,11 @@
       text-align: center;
     }
   }
-  .message-toast-enter-active {
+  .toast-enter-active {
     transition: all .5s ease-out;
   }
 
-  .message-toast-enter {
+  .toast-enter {
     transform: translateY(-10px);
     opacity: 0;
   }

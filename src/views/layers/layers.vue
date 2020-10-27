@@ -123,8 +123,8 @@
 
         this.layers[newIndex].isChecked = !this.layers[newIndex].isChecked;
 
-        EventBus.$emit('selected-layer', newIndex);
-        EventBus.$emit('move-selected-layer');
+        this.$emit('selected-layer', newIndex);
+        this.$emit('move-selected-layer');
 
         this.checkedHistory = event.key;
       },
@@ -142,15 +142,16 @@
       },
       select(index, event) {
         const newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
-        EventBus.$emit('selected-layer', newIndex, event && event.type === 'click');
-        EventBus.$emit('move-selected-layer');
+
+        this.$emit('selected-layer', newIndex, event && event.type === 'click');
+        this.$emit('move-selected-layer');
         this.resetCheckedHistory();
       },
       onDrop(dropResult) {
         this.dropResult = dropResult;
         this.layers = this.applyDrag;
-        EventBus.$emit('selected-layer', dropResult.addedIndex, true);
-        EventBus.$emit('move-selected-layer');
+        this.$emit('selected-layer', dropResult.addedIndex, true);
+        this.$emit('move-selected-layer');
       },
       getGhostParent(){
         return document.body;
@@ -162,10 +163,10 @@
         return JSON.parse(localStorage.getItem('favoriteLayouts')) || [];
       },
       cloneLayer(index) {
-        EventBus.$emit('clone-layer', index);
+        this.$emit('clone-layer', index);
       },
       removeLayer(index) {
-        EventBus.$emit('remove-layer', index);
+        this.$emit('remove-layer', index);
       },
       focus() {
         // XXX: focus the selected layer
