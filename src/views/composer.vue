@@ -27,6 +27,7 @@
         @show-info-tags="onShowModal"
         @add="onAddLayer"
         @toggle-device-mode="onToggleDeviceMode"
+        :favoriteLayoutIds="favoriteLayoutIds"
         :layouts="layoutModels"
         :layerCount="layers.length"
         :warnCount="layers.filter(layer => layer.hasSyntaxErrorTags).length"
@@ -72,6 +73,8 @@
                 @selected-layer="onUpdateCurrentLayerIndex"
                 @remove-layer="onRemoveLayer"
                 @clone-layer="onCloneLayer"
+                @add-favorite-layout="onAddFavoriteLayout"
+                :favoriteLayoutIds="favoriteLayoutIds"
                 :layers="layers"
                 :currentLayerIndex.sync="currentLayerIndex"
                 ref="layers"
@@ -201,6 +204,7 @@
   import Preview from './preview/preview';
   import Layouts from './layouts/layouts';
   import Layers from './layers/layers';
+  import LocalStorageService from '@/service/LocalStorage';
 
   export default {
     components: {
@@ -238,6 +242,8 @@
     created() {
       EventBus.$on('save', this.onSave);
       EventBus.$on('fc-upload', this.onUploadFile);
+      this.localStorageService = new LocalStorageService('favoriteLayouts');
+      this.favoriteLayoutIds = this.localStorageService.get();
     },
     computed: {
       checkedCount() {
@@ -262,6 +268,8 @@
     },
     data() {
       return {
+        favoriteLayoutIds: [],
+        localStorageService: null,
         showModal: false,
         layouts: [],
         layers: [],
@@ -289,6 +297,15 @@
       };
     },
     methods: {
+      onAddFavoriteLayout(layoutId) {
+        if (this.favoriteLayoutIds.includes(layoutId)) {
+          this.favoriteLayoutIds.splice(this.favoriteLayoutIds.indexOf(layoutId), 1);
+        } else {
+          this.favoriteLayoutIds.push(layoutId);
+        }
+
+        this.localStorageService.set(this.favoriteLayoutIds);
+      },
       onUpBlock() {
         const checkedLayer = this.layers.filter(layer => layer.isChecked);
         const { uniqueId } = checkedLayer[0];

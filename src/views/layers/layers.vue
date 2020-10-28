@@ -10,14 +10,14 @@
         @keydown.exact.shift.down="updateCheckedState(currentLayerIndex + 1, $event)"
         @keydown.exact.shift.alt.up="onUpBlock"
         @keydown.exact.shift.alt.down="onDownBlock"
-        @keydown.exact.up.prevent="select(currentLayerIndex - 1)"
-        @keydown.exact.down.prevent="select(currentLayerIndex + 1)"
-        @keydown.exact.page-up.prevent="select(currentLayerIndex - 5)"
-        @keydown.exact.page-down.prevent="select(currentLayerIndex + 5)"
-        @keydown.exact.home.prevent="select(0)"
-        @keydown.exact.end.prevent="select(layers.length - 1)"
+        @keydown.exact.up.prevent="onSelect(currentLayerIndex - 1)"
+        @keydown.exact.down.prevent="onSelect(currentLayerIndex + 1)"
+        @keydown.exact.page-up.prevent="onSelect(currentLayerIndex - 5)"
+        @keydown.exact.page-down.prevent="onSelect(currentLayerIndex + 5)"
+        @keydown.exact.home.prevent="onSelect(0)"
+        @keydown.exact.end.prevent="onSelect(layers.length - 1)"
       >
-        <div class="__item__group" v-if="layer.layout" @click="select(index, $event, layer)">
+        <div class="__item__group" v-if="layer.layout" @click="onSelect(index, $event, layer)">
           <label :for="`layer-${index}`" >
             <input :id="`layer-${index}`" type="checkbox" v-model="layer.isChecked"/>
           </label>
@@ -28,18 +28,18 @@
             </span>
         </div>
         <div class="__utils">
-          <button class="__utils__btn" @click="addFavoriteLayout(layer.layout)">
+          <button class="__utils__btn" @click="onAddFavoriteLayout(layer.layout.id)">
             <i class="material-icons">{{ getFavoriteLayoutIconStyle(layer) }}</i>
           </button>
-          <button class="__utils__btn" @click="toggle(index)">
+          <button class="__utils__btn" @click="onToggle(index)">
             <i class="material-icons">
               {{ getLayoutStateIconStyle(layer) }}
             </i>
           </button>
-          <button class="__utils__btn" @click="cloneLayer(index)">
+          <button class="__utils__btn" @click="onCloneLayer(index)">
             <i class="material-icons">file_copy</i>
           </button>
-          <button class="__utils__btn" @click="removeLayer(index)">
+          <button class="__utils__btn" @click="onRemoveLayer(index)">
             <i class="material-icons">&#xE872;</i>
           </button>
         </div>
@@ -68,21 +68,19 @@
         default() {
           return -1
         }
+      },
+      favoriteLayoutIds: {
+        type: Array,
+        default() {
+          return [];
+        }
       }
     },
     data() {
       return {
         dropResult: null,
-        layoutIds: [],
         checkedHistory: null,
       }
-    },
-    created() {
-      this.layoutIds = this.getLayoutIds();
-
-      EventBus.$on('add-favorite-layer', () => {
-        this.layoutIds = this.getLayoutIds();
-      });
     },
     computed: {
       applyDrag() {
@@ -132,7 +130,7 @@
         this.checkedHistory = null;
       },
       isFavoriteLayout({ id } ) {
-        return this.layoutIds.includes(id);
+        return this.favoriteLayoutIds.includes(id);
       },
       getFavoriteLayoutIconStyle({ layout }) {
         return this.isFavoriteLayout(layout) ? 'favorite' : 'favorite_border';
@@ -140,7 +138,7 @@
       getLayoutStateIconStyle({ hidden }) {
         return hidden ? 'visibility_off' : 'visibility';
       },
-      select(index) {
+      onSelect(index) {
         const newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
 
         this.$emit('update:currentLayerIndex', newIndex);
@@ -154,16 +152,13 @@
       getGhostParent(){
         return document.body;
       },
-      addFavoriteLayout(layout) {
-        EventBus.$emit('add-favorite-layer', layout);
+      onAddFavoriteLayout(layoutId) {
+        this.$emit('add-favorite-layout', layoutId);
       },
-      getLayoutIds() {
-        return JSON.parse(localStorage.getItem('favoriteLayouts')) || [];
-      },
-      cloneLayer(index) {
+      onCloneLayer(index) {
         this.$emit('clone-layer', index);
       },
-      removeLayer(index) {
+      onRemoveLayer(index) {
         this.$emit('remove-layer', index);
       },
       focus() {
@@ -178,7 +173,7 @@
         // XXX: focus to editor
         EventBus.$emit('focus-editor');
       },
-      toggle(index) {
+      onToggle(index) {
         this.$emit('hidden', index, !this.layers[index].hidden);
       }
     },

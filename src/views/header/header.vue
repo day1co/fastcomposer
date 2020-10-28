@@ -30,7 +30,6 @@
 
 <script>
   import moment from 'moment';
-  import EventBus from '@/event-bus/event-bus';
 
   export default {
     methods: {
@@ -49,35 +48,24 @@
       onToggleDeviceMode() {
         this.$emit('toggle-device-mode');
       },
-      getLayoutIds() {
-        return JSON.parse(localStorage.getItem('favoriteLayouts')) || [];
-      },
-      addFavoriteLayout(layout) {
-        console.log(layout);
-        if (this.layoutIds.includes(layout.id)) {
-          this.layoutIds.splice(this.layoutIds.indexOf(layout.id), 1);
-        } else {
-          this.layoutIds.push(layout.id);
-        }
-
-        localStorage.setItem('favoriteLayouts', JSON.stringify(this.layoutIds));
-      },
-      init() {
-        this.layoutIds = this.getLayoutIds();
-      }
     },
     data() {
       return {
         saveTime: null,
-        layoutIds: [],
       }
     },
     computed: {
       favoriteLayouts() {
-        return this.layouts.filter((layout) => this.layoutIds.includes(layout.id));
+        return this.layouts.filter((layout) => this.favoriteLayoutIds.includes(layout.id));
       }
     },
     props: {
+      favoriteLayoutIds: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
       notificationMessage: {
         type: String,
         default() {
@@ -110,10 +98,6 @@
           return 0;
         }
       }
-    },
-    created() {
-      this.init();
-      EventBus.$on('add-favorite-layer', this.addFavoriteLayout);
     },
     watch: {
       notificationType (value) {
