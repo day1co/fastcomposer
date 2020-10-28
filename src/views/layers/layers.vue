@@ -1,6 +1,6 @@
 <template>
   <Container @drop="onDrop" :get-ghost-parent="getGhostParent">
-    <Draggable v-for="(layer, index) in layers" :key="index">
+    <Draggable class="fc-layer" v-for="(layer, index) in layers" :key="index">
       <div
         class="__item"
         :class="{ '__item--active': index === currentLayerIndex, 'has-syntax-error-tags': layer.hasSyntaxErrorTags }"
@@ -140,18 +140,16 @@
       getLayoutStateIconStyle({ hidden }) {
         return hidden ? 'visibility_off' : 'visibility';
       },
-      select(index, event) {
+      select(index) {
         const newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
 
-        this.$emit('selected-layer', newIndex, event && event.type === 'click');
-        this.$emit('move-selected-layer');
+        this.$emit('update:currentLayerIndex', newIndex);
         this.resetCheckedHistory();
       },
       onDrop(dropResult) {
         this.dropResult = dropResult;
         this.layers = this.applyDrag;
-        this.$emit('selected-layer', dropResult.addedIndex, true);
-        this.$emit('move-selected-layer');
+        this.$emit('update:currentLayerIndex', dropResult.addedIndex);
       },
       getGhostParent(){
         return document.body;

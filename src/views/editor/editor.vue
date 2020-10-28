@@ -208,12 +208,14 @@
     },
     watch: {
       layer(value) {
-        const valuesOfLayout = value.layout.values;
-        const valuesOfValue = value.values;
+        if (value.values && value.layout) {
+          const valuesOfLayout = value.layout.values;
+          const valuesOfValue = value.values;
 
-        for (let propOfLayout in valuesOfLayout) {
-          if (!valuesOfValue.hasOwnProperty(propOfLayout)) {
-            this.$set(valuesOfValue, propOfLayout, valuesOfLayout[propOfLayout]);
+          for (let propOfLayout in valuesOfLayout) {
+            if (!valuesOfValue.hasOwnProperty(propOfLayout)) {
+              this.$set(valuesOfValue, propOfLayout, valuesOfLayout[propOfLayout]);
+            }
           }
         }
       }

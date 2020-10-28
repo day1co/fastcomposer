@@ -22,10 +22,10 @@
         :type="notification.type"/>
       <!--헤더-->
       <composer-header
-        @validate-layer="onValidateLayer"
+        @validate="onValidateLayer"
         @show-layout-panel="onShowLayouts"
         @show-info-tags="onShowModal"
-        @add-layer="onAddLayer"
+        @add="onAddLayer"
         @toggle-device-mode="onToggleDeviceMode"
         :layouts="layoutModels"
         :layerCount="layers.length"
@@ -49,8 +49,8 @@
         </div>
         <!--preview-->
         <preview
-          @move-selected-layer="onMoveSelectedLayer"
-          :layers="layers"
+          :blocks="layers"
+          :currentLayerIndex.sync="currentLayerIndex"
           ref="preview"
         />
 
@@ -70,11 +70,10 @@
                 @down="onDownBlock"
                 @hidden="onToggleLayerState"
                 @selected-layer="onUpdateCurrentLayerIndex"
-                @move-selected-layer="onMoveSelectedLayer"
                 @remove-layer="onRemoveLayer"
                 @clone-layer="onCloneLayer"
                 :layers="layers"
-                :currentLayerIndex="currentLayerIndex"
+                :currentLayerIndex.sync="currentLayerIndex"
                 ref="layers"
               />
             </div>
@@ -192,10 +191,10 @@
 
 <script>
   import { cloneDeep } from 'lodash';
-  import { uniqueId, restructureLayouts } from './../utils/utils';
+  import { uniqueId, restructureLayouts } from '@/utils/utils';
   import EventBus from './../event-bus/event-bus';
   import marked from 'marked';
-  import Toast from './../components/toast/toast';
+  import Toast from '@/components/toast/toast';
   import Dialog from '@/components/dialog/dialog';
   import ComposerHeader from './header/header.vue';
   import Editor from './editor/editor';
@@ -260,10 +259,6 @@
           return layoutMap;
         }, {});
       },
-      scrollPoint() {
-        console.log(this.currentLayerIndex); // 이거이 왜 정상적으로 동작하지 않는듯한...
-        return this.$el.getElementsByClassName('fc-block')[this.currentLayerIndex].offsetTop;
-      }
     },
     data() {
       return {
@@ -360,16 +355,8 @@
       onClearToast() {
         this.notification.message = '';
       },
-      onUpdateCurrentLayerIndex(index, isClicked) {
+      onUpdateCurrentLayerIndex(index) {
         this.currentLayerIndex = index;
-
-        if (isClicked !== true) {
-          const [, el] = this.$el.querySelectorAll('.fc-aside__container');
-
-          if (this.$el.querySelector('.smooth-dnd-container').children.length) {
-            el.scrollTop = this.$el.querySelector('.smooth-dnd-container').children[index].offsetTop;
-          }
-        }
       },
       onAddLayer(layout) {
         if (this.currentLayerIndex < 0) {
@@ -390,8 +377,7 @@
         if (index !== -1) {
           this.layers.splice(index, 1);
           if (index < this.layers.length) {
-            this.currentLayerIndex = index;
-            this.onUpdateCurrentLayerIndex(this.currentLayerIndex);
+            this.onUpdateCurrentLayerIndex(null);
           }
         }
       },
@@ -403,8 +389,7 @@
             values: JSON.parse(JSON.stringify(this.layers[index].values)) || {}
           });
 
-          this.currentLayerIndex = index + 1;
-          this.onUpdateCurrentLayerIndex(this.currentLayerIndex);
+          this.onUpdateCurrentLayerIndex(index + 1);
         }
       },
       onToggleAside(state) {
@@ -415,8 +400,11 @@
         }
       },
       onMoveSelectedLayer() {
-        console.log(this.scrollPoint, 'onMoveSelectedLayer in composer vue');
-        this.$el.getElementsByClassName('fc-composer__content')[0].scrollTop = this.scrollPoint;
+        const $targetBlock = this.$refs.preview.$el.getElementsByClassName('fc-block')[this.currentLayerIndex];
+        const $targetLayer = this.$refs.layers.$el.getElementsByClassName('fc-layer')[this.currentLayerIndex];
+
+        $targetBlock && $targetBlock.scrollIntoView({ block: 'center' });
+        $targetLayer && $targetLayer.scrollIntoView({ block: 'center' });
       },
       onUploadFile(fileInfo, callback) {
         this.$emit('upload-file', fileInfo, callback);
@@ -520,6 +508,11 @@
       onChangeDevice(deviceType) {
         this.deviceType = deviceType;
       },
+    },
+    watch: {
+      currentLayerIndex() {
+        this.onMoveSelectedLayer();
+      }
     },
     beforeDestroy() {
       EventBus.$off();

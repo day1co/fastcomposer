@@ -5,18 +5,18 @@
        @keydown.exact.up.prevent="select(index-1)"
        @keydown.exact.down.prevent="select(index+1)"
        @keydown.exact.home.prevent="select(0)"
-       @keydown.exact.end.prevent="select(layers.length - 1)"
+       @keydown.exact.end.prevent="select(blocks.length - 1)"
        @keydown.exact.page-up.prevent="select(index - 5)"
        @keydown.exact.page-down.prevent="select(index + 5)"
   >
     <div class="fc-preview__container">
-      <div class="fc-block" v-for="(layer, layerIndex) in layers" :key="'layer-' + layerIndex">
+      <div class="fc-block" v-for="(block, blockIndex) in blocks" :key="'block-' + blockIndex">
         <div
           class="fc-block__container"
-          :id="layer.id"
-          :class="['fc-layout-' + layer.layout.id, { 'fc-selected': layerIndex === index }, {'fc-hidden': layer.hidden} ]"
-          v-html="parserToHTML(layer)"
-          @click="select(layerIndex)"
+          :id="block.id"
+          :class="['fc-layout-' + block.layout.id, { 'fc-selected': blockIndex === currentLayerIndex }, {'fc-hidden': block.hidden} ]"
+          v-html="parserToHTML(block)"
+          @click="select(blockIndex)"
         ></div>
       </div>
     </div>
@@ -32,33 +32,33 @@
 
   export default {
     props: {
-      layers: {
+      blocks: {
         type: Array,
         default() {
           return [];
         },
       },
-    },
-    data() {
-      return {
-        index: null
+      currentLayerIndex: {
+        type: Number,
+        default() {
+          return -1
+        }
       }
     },
     methods: {
-      parserToHTML(layer) {
+      parserToHTML(block) {
         const values = { $markdown: marked };
-        if (layer.layout.params) {
-          for(const { name } of layer.layout.params) {
-            const value = layer.values[name];
-            values[name] = (value === undefined) ? layer.layout.values[name] : values[name] = layer.values[name];
+        if (block.layout.params) {
+          for(const { name } of block.layout.params) {
+            const value = block.values[name];
+            values[name] = (value === undefined) ? block.layout.values[name] : values[name] = block.values[name];
           }
         }
-        return layer.layout.templateFunc(values);
+        return block.layout.templateFunc(values);
       },
       select(index) {
-        const newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
-        this.$emit('selected-layer', newIndex);
-        this.$emit('move-selected-layer');
+        const newIndex = Math.min(Math.max(index, 0), this.blocks.length - 1);
+        this.$emit('update:currentLayerIndex', newIndex);
       },
       focus() {
         this.$el.focus();
@@ -70,19 +70,12 @@
         EventBus.$emit('save');
       }
     },
-    mounted() {
-      this.$on('selected-layer', (index) => {
-        this.index = index;
-      });
-      EventBus.$on('remove-layer', () => {
-        this.index = null;
-      })
-    }
   };
 </script>
 
 <style lang="scss" scoped>
   @import '../../assets/scss/utils/utilities';
+
   .fc-preview {
     background-color: $white;
 

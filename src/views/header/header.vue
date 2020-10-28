@@ -35,7 +35,7 @@
   export default {
     methods: {
       validateLayer() {
-        this.$emit('validate-layer');
+        this.$emit('validate');
       },
       showLayerPanel($event) {
         this.$emit('show-layout-panel', $event);
@@ -44,7 +44,7 @@
         this.$emit('show-info-tags');
       },
       addLayer(layout) {
-        this.$emit('add-layer', layout);
+        this.$emit('add', layout);
       },
       onToggleDeviceMode() {
         this.$emit('toggle-device-mode');
