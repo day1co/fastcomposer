@@ -45,6 +45,11 @@
         }
       }
     },
+    data() {
+      return {
+        index: this.currentLayerIndex
+      }
+    },
     methods: {
       parserToHTML(block) {
         const values = { $markdown: marked };
@@ -70,6 +75,9 @@
         EventBus.$emit('save');
       }
     },
+    updated() {
+      this.index = this.currentLayerIndex;
+    }
   };
 </script>
 
