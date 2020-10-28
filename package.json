@@ -17,7 +17,6 @@
   "dependencies": {
     "lodash": "^4.17.20",
     "marked": "^0.7.0",
-    "moment": "^2.27.0",
     "normalize.css": "^8.0.1",
     "sass-mq": "^5.0.1",
     "vue": "^2.6.12",
