@@ -515,9 +515,7 @@
       },
       loadLayers() {
         const usedStyles = document.querySelectorAll("style[type='text/css']");
-        // console.log(this.$el.getElementsByClassName('fc-frame'));
         const doc = this.$el.getElementsByClassName('fc-frame')[0].contentWindow.document;
-        // console.log(doc);
 
         usedStyles.forEach(usedStyle => doc.head.appendChild(usedStyle.cloneNode(true)));
         doc.body.innerHTML = this.layerHtml;
