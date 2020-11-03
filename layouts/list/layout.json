@@ -43,50 +43,10 @@
           "defaultValue": "설명"
         }
       ]
-    },
-    {
-      "name": "tabs",
-      "type": "list",
-      "description": "추가/삭제를 이용하여 원하는 만큼 탭 리스트를 구현 할 수 있습니다.",
-      "maxLength": 5,
-      "params": [
-        {
-          "name": "content",
-          "type": "textarea",
-          "description": "text area",
-          "defaultValue": "본문"
-        },
-        {
-          "name": "width",
-          "type": "number",
-          "description": "image width(pixel)",
-          "defaultValue": "320"
-        },
-        {
-          "name": "height",
-          "type": "number",
-          "description": "image height(pixel)",
-          "defaultValue": "320"
-        },
-        {
-          "name": "alt",
-          "type": "text",
-          "description": "alternative text"
-        }
-      ]
     }
-
   ],
   "values": {
     "title": "제목",
-    "cards": [
-      {
-        "src": "https://via.placeholder.com/320x320.png/00c",
-        "width": "320",
-        "height": "320",
-        "alt": "simple image"
-      }
-    ],
-    "tabs": []
+    "cards": []
   }
 }

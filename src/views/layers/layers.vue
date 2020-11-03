@@ -40,7 +40,7 @@
             <i class="material-icons">file_copy</i>
           </button>
           <button class="__utils__btn" @click="onRemoveLayer(index)">
-            <i class="material-icons">&#xE872;</i>
+            <i class="material-icons">delete</i>
           </button>
         </div>
       </div>

@@ -90,10 +90,9 @@
           </button>
         </div>
       </div>
-
       <layouts
         ref="layouts"
-        @addLayer="onAddLayer"
+        @add-layer="onAddLayer"
         :layouts="layouts"
       />
     </div>

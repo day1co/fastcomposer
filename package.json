@@ -5,10 +5,12 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test": "mocha-webpack --webpack-config webpack.config.test.js test/**/*.spec.js",
     "lint": "vue-cli-service lint",
     "bundle": "vue-cli-service build --target lib --name fastcomposer ./src/index.js",
-    "build-layouts": "node layouts/build.js"
+    "build-layouts": "node layouts/build.js",
+    "test": "mocha-webpack --webpack-config webpack.config.test.js test/**/*.spec.js",
+    "test:e2e": "cypress run",
+    "test:e2e-visible": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -30,6 +32,7 @@
     "@vue/test-utils": "^1.0.5",
     "babel-eslint": "^10.0.3",
     "chai": "^4.2.0",
+    "cypress": "^5.5.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.3.0",
     "eslint-plugin-prettier": "^3.1.1",
