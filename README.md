@@ -1,5 +1,6 @@
 [![github version](https://img.shields.io/github/release/fastcampusgit/fastcomposer.svg)](https://github.com/fastcampusgit/fastcomposer/releases/latest)
 [![npm version](https://img.shields.io/npm/v/@fastcampus/fastcomposer.svg)](https://www.npmjs.com/package/@fastcampus/fastcomposer)
+![FASTCOMPOSER-Test](https://github.com/fastcampus/fastcomposer/workflows/FASTCOMPOSER-Test/badge.svg?branch=develop)
 
 # FAST COMPOSER
 
