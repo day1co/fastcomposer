@@ -9,7 +9,7 @@
     "bundle": "vue-cli-service build --target lib --name fastcomposer ./src/index.js",
     "build-layouts": "node layouts/build.js",
     "test": "mocha-webpack --webpack-config webpack.config.test.js test/**/*.spec.js",
-    "test:e2e": "cypress run",
+    "test:e2e": "cypress run --browser chrome --headless",
     "test:e2e-visible": "cypress open",
     "ci:test": "./ci_test.sh"
   },
