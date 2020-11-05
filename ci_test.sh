@@ -5,7 +5,7 @@ else
 	echo "Lint Failed"
   exit 2
 fi
-npm run build && npm run serve &
+npm run serve &
 if npm run test; then
   echo "Unit Test Success"
 else
