@@ -10,7 +10,8 @@
     "build-layouts": "node layouts/build.js",
     "test": "mocha-webpack --webpack-config webpack.config.test.js test/**/*.spec.js",
     "test:e2e": "cypress run",
-    "test:e2e-visible": "cypress open"
+    "test:e2e-visible": "cypress open",
+    "ci:test": "npm run test:e2e"
   },
   "repository": {
     "type": "git",
