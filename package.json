@@ -11,7 +11,7 @@
     "test": "mocha-webpack --webpack-config webpack.config.test.js test/**/*.spec.js",
     "test:e2e": "cypress run",
     "test:e2e-visible": "cypress open",
-    "ci:test": "npm run test:e2e"
+    "ci:test": "./ci_test.sh"
   },
   "repository": {
     "type": "git",
