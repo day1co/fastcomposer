@@ -16,8 +16,9 @@ else
 fi
 if npm run test:e2e; then
   echo "E2E Test Success"
+  lsof -ti:8080 | xargs kill
 else
 	echo "E2E Test Failed"
-  #lsof -ti:8089 | xargs kill #kill auth npm run serve &
+  lsof -ti:8080 | xargs kill #kill auth npm run serve &
 	exit 1
 fi
