@@ -1,9 +1,7 @@
-const { describe, it } = require('mocha');
-const { expect } = require('chai');
 const { render } = require('../../src/renderer');
 
 describe('renderer', () => {
-  it('should work!', () => {
+  test('should work!', () => {
     const layouts = [
       {
         id: 'heading',
@@ -151,7 +149,7 @@ describe('renderer', () => {
       },
     ];
     const html = render(layouts, layers);
-    expect(html.replace(/\s/g, '')).equal(
+    expect(html.replace(/\s/g, '')).toEqual(
       `
  <section class="fc-block fc-layout fc-layout-heading">
    <h1>제목</h1>
