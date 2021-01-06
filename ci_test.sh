@@ -5,6 +5,7 @@ else
 	echo "Lint Failed"
   exit 2
 fi
+export NODE_ENV=test
 npm run serve &
 if npm run test; then
   echo "Unit Test Success"
