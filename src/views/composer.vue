@@ -423,7 +423,7 @@
         $targetLayer && $targetLayer.scrollIntoView({ block: 'center' });
       },
       onUploadFile(fileInfo, callback) {
-        this.$emit('upload-file', fileInfo, callback);
+        this.$emit('uploadFile', fileInfo, callback);
       },
       setLayouts(layouts) {
         this.layouts = restructureLayouts(layouts);
