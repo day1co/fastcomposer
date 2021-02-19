@@ -720,7 +720,7 @@
     &__container {
       overflow: scroll;
       box-sizing: border-box;
-      padding: 1.2rem 0.9rem;
+      padding: 1.2rem 0.9rem 11rem;
       height: percentage(1);
       background-color: $secondary;
     }
