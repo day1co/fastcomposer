@@ -477,20 +477,24 @@
           this.onUpdateCurrentLayerIndex(0);
           this.syncParamsAll();
         }
-      },
+      },      
       syncParamsAll(){        
-        this.layers.forEach(layer => layer.values =  this.getSyncedParams(layer));
+        this.layers.forEach( layer => {        
+          layer.values = this.getSyncedParams(layer);
+        });
       },
-      getSyncedParams(block) {                                
+      getSyncedParams(block) {    
         const {params, values} = block.layout;
-        let targetValues = cloneDeep( block.values );
+        let resultValues = cloneDeep( block.values );
         if (params) {
-          params.forEach(param => {          
-            const {name} = param;           
-            if( targetValues[name] === undefined) targetValues[name] = values[name] || params[name];
+          params.forEach( param => {          
+            const {name} = param;                     
+            if( resultValues[name] === undefined) { 
+              resultValues[name] = values[name]; 
+            }
           })          
         }
-        return targetValues;
+        return resultValues;
       },
       onShowLayouts() {
         this.$refs.layouts.toggle();
