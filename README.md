@@ -183,7 +183,7 @@ this.$refs.fastComposer.notification.error('error message');
         {
           "name": "src",
           "type": "image",
-          "description": "image url"
+          "description": "image url",
           "isRequired": true
         },
         {
