@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 describe('Composer TEST', () => {
   before(() => {
     cy.visit('http://localhost:8080');
