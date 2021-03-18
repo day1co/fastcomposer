@@ -475,7 +475,22 @@
         // select first layer if available
         if (this.layers.length > 0) {
           this.onUpdateCurrentLayerIndex(0);
+          this.syncParamsAll();
         }
+      },
+       syncParamsAll(){        
+        this.layers.forEach(layer => layer.values =  this.getSyncedParams(layer));
+      },
+      getSyncedParams(block) {                                
+        const {params, values} = block.layout;
+        let targetValues = cloneDeep( block.values );
+        if (params) {
+          params.forEach(param => {          
+            const {name} = param;           
+            if( targetValues[name] === undefined) targetValues[name] = values[name] ?? params[name];
+          })          
+        }
+        return targetValues;
       },
       onShowLayouts() {
         this.$refs.layouts.toggle();
