@@ -478,7 +478,7 @@
           this.syncParamsAll();
         }
       },
-       syncParamsAll(){        
+      syncParamsAll(){        
         this.layers.forEach(layer => layer.values =  this.getSyncedParams(layer));
       },
       getSyncedParams(block) {                                
