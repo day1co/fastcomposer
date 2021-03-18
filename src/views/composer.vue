@@ -487,7 +487,7 @@
         if (params) {
           params.forEach(param => {          
             const {name} = param;           
-            if( targetValues[name] === undefined) targetValues[name] = values[name] ?? params[name];
+            if( targetValues[name] === undefined) targetValues[name] = values[name] || params[name];
           })          
         }
         return targetValues;
