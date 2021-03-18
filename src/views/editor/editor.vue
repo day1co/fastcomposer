@@ -166,22 +166,7 @@ export default {
         video: 'video/mp4',
       },
     };
-  },
-  watch: {
-    layer(value) {
-      if (value.values && value.layout) {
-        const valuesOfLayout = value.layout.values;
-        const valuesOfValue = value.values;
-
-        for (let propOfLayout in valuesOfLayout) {
-          // XXX: 서버에서 저장된 layer value와  layout의 value의 객체 구조가 일치하지 않는 경우 동기화 시켜준다.
-          if (!Object.prototype.hasOwnProperty.call(valuesOfValue, propOfLayout)) {
-            this.$set(valuesOfValue, propOfLayout, valuesOfLayout[propOfLayout]);
-          }
-        }
-      }
-    },
-  },
+  },  
   mounted() {
     EventBus.$on('focus-editor', () => this.focus());
   },
