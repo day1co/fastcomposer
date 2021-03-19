@@ -483,9 +483,9 @@
           layer.values = this.getSyncedParams(layer);
         });
       },
-      getSyncedParams(block) {    
-        const {params, values} = block.layout;
-        let resultValues = cloneDeep( block.values );
+      getSyncedParams(layer) {    
+        const {params, values} = layer.layout;
+        let resultValues = cloneDeep( layer.values );
         if (params) {
           params.forEach( param => {          
             const {name} = param;                     
