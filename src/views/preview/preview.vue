@@ -85,6 +85,7 @@
   @import '../../assets/scss/utils/utilities';
 
   .fc-preview {
+    overflow: scroll;
     background-color: $white;
 
     &__save {
