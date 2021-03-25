@@ -41,20 +41,25 @@
               <editor v-show="currentLayer" :layer="currentLayer" ref="editor" />
             </div>
           </div>
-          <button
-            type="button"
-            class="fc-aside__btn"
-            @click="onToggleAside('left')">
-            <i class="material-icons">&#xE3E8;</i>
-          </button>
         </div>
+        <button
+          type="button"
+          class="fc-composer__content__btn fc-composer__content__btn--left"
+          @click="onToggleAside('left')">
+          <i class="material-icons">&#xE3E8;</i>
+        </button>
         <!--preview-->
         <preview
           :blocks="layers"
           :currentLayerIndex.sync="currentLayerIndex"
           ref="preview"
         />
-
+        <button
+          type="button"
+          class="fc-composer__content__btn fc-composer__content__btn--right"
+          @click="onToggleAside('right')">
+          <i class="material-icons">&#xE3E8;</i>
+        </button>
         <!--layers-->
         <div class="fc-aside fc-aside--right">
           <div class="fc-aside__content">
@@ -82,12 +87,7 @@
             </div>
           </div>
 
-          <button
-            type="button"
-            class="fc-aside__btn"
-            @click="onToggleAside('right')">
-            <i class="material-icons">&#xE3E8;</i>
-          </button>
+
         </div>
       </div>
       <layouts
@@ -477,22 +477,22 @@
           this.onUpdateCurrentLayerIndex(0);
           this.syncParamsAll();
         }
-      },      
-      syncParamsAll(){        
-        this.layers.forEach( layer => {        
+      },
+      syncParamsAll(){
+        this.layers.forEach( layer => {
           layer.values = this.getSyncedParams(layer);
         });
       },
-      getSyncedParams(layer) {    
+      getSyncedParams(layer) {
         const {params, values} = layer.layout;
         let resultValues = cloneDeep( layer.values );
         if (params) {
-          params.forEach( param => {          
-            const {name} = param;                     
-            if( resultValues[name] === undefined) { 
-              resultValues[name] = values[name]; 
+          params.forEach( param => {
+            const {name} = param;
+            if( resultValues[name] === undefined) {
+              resultValues[name] = values[name];
             }
-          })          
+          })
         }
         return resultValues;
       },
@@ -650,32 +650,58 @@
       padding-right: 0;
     }
 
-    &--aside-l {
-      padding-left: $sidebar-size + 14rem;
-    }
-
-    &--aside-r {
-      padding-right: $sidebar-size;
-    }
-
     &--portrait {
       width: percentage(1);
       max-width: $w-mobile;
       padding-right: 0;
     }
 
+    &--aside-l {
+      .fc-composer__content__btn--left {
+        left: $sidebar-size + 14rem;
+      }
+    }
+    &--aside-r {
+      .fc-composer__content__btn--right {
+        right: $sidebar-size;
+      }
+    }
+
     &__content {
-      overflow: scroll;
+      display: flex;
+      justify-content: space-between;
       position: relative;
-      flex: 1;
-      margin-left: 1.8rem;
-      margin-right: 1.8rem;
-      background: -moz-linear-gradient(top,  rgba(135,224,253,1) 0%, rgba(83,203,241,1) 40%, rgba(5,171,224,1) 100%);
-      background: -webkit-linear-gradient(top,  rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
-      background: linear-gradient(to bottom,  rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
-      box-shadow: 0 .3rem 1rem rgba($black, 0.24), 0 .3rem 1rem rgba($black,
-        0.16);
+      width: 100%;
+
       @include transition(null, 0.3s);
+
+      .fc-preview {
+        width: 100%;
+        margin: 0 1.8rem;
+      }
+
+      &__btn {
+        position: absolute;
+        top: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.8rem 0 1.8rem 0.6rem;
+        background-color: $secondary;
+        border-top-left-radius: 0.5rem;
+        border-bottom-left-radius: 0.5rem;
+        color: $white;
+        transform: translateY(-50%);
+
+        &--left {
+          left: 0;
+          transform: translateY(-50%) rotate(180deg);
+        }
+
+        &--right {
+          right: 0;
+        }
+      }
     }
   }
   .fc-guide {
@@ -715,19 +741,14 @@
   }
 
   .fc-aside {
-    display: flex;
-    position: fixed;
-    top: 0;
-    bottom: 0;
+    display: none;
+    position: relative;
     z-index: 10;
     box-sizing: border-box;
-    padding-top: $header-size;
     padding-bottom: 2rem;
     width: percentage(1);
     max-width: $sidebar-size;
     color: $white;
-    transform: translate3d(100%, 0, 0);
-    @include transition(null, 0.3s);
 
     &__content {
       width: 100%;
@@ -744,29 +765,12 @@
       background-color: $secondary;
     }
 
-    &__btn {
-      position: absolute;
-      top: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.8rem 0 1.8rem 0.6rem;
-      background-color: $secondary;
-      border-top-left-radius: 0.5rem;
-      border-bottom-left-radius: 0.5rem;
-      color: $white;
-      transform: translate3d(-100%, -50%, 0);
-    }
+
 
     &--right {
-      right: 0;
+      margin-left: 1.8rem;
       .fc-composer--aside-r & {
-        transform: translate3d(0, 0, 0);
-      }
-      .fc-aside {
-        &__btn {
-          left: 0;
-        }
+        display: flex;
       }
       .btn {
         color: $white;
@@ -774,18 +778,14 @@
 
     }
     &--left {
-      left: 0;
+      margin-right: 1.8rem;
       max-width: $sidebar-size + 14rem;
-      transform: translate3d(-100%, 0, 0);
 
       .fc-composer--aside-l & {
-        transform: translate3d(0, 0, 0);
-      }
-
-      .fc-aside__btn {
-        right: 0;
-        transform: translate3d(100%, -50%, 0) rotate(180deg);
+        display: flex;
       }
     }
   }
+
+
 </style>
