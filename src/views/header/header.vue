@@ -130,7 +130,6 @@
     justify-content: flex-start;
     padding: 0 1.8rem;
     width: percentage(1);
-    min-width: $w-large;
     height: $header-size;
     background-color: transparent;
     transform: none; // admin과 충돌 이슈

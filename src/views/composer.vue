@@ -624,7 +624,7 @@
   }
 
   .fc-composer {
-    overflow-x: auto;
+    overflow-x: hidden;
     position: relative;
     box-sizing: border-box;
     display: flex;
@@ -632,7 +632,6 @@
     margin-right: auto;
     padding-top: $header-size;
     padding-bottom: 2rem;
-    min-width: $w-large;
     width: percentage(1);
     height: 100vh;
     font-size: $font-size;
