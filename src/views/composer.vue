@@ -41,25 +41,21 @@
               <editor v-show="currentLayer" :layer="currentLayer" ref="editor" />
             </div>
           </div>
+          <button
+            type="button"
+            class="fc-aside__btn fc-aside__btn--left"
+            @click="onToggleAside('left')">
+            <i class="material-icons">&#xE3E8;</i>
+          </button>
         </div>
-        <button
-          type="button"
-          class="fc-composer__content__btn fc-composer__content__btn--left"
-          @click="onToggleAside('left')">
-          <i class="material-icons">&#xE3E8;</i>
-        </button>
+
         <!--preview-->
         <preview
           :blocks="layers"
           :currentLayerIndex.sync="currentLayerIndex"
           ref="preview"
         />
-        <button
-          type="button"
-          class="fc-composer__content__btn fc-composer__content__btn--right"
-          @click="onToggleAside('right')">
-          <i class="material-icons">&#xE3E8;</i>
-        </button>
+
         <!--layers-->
         <div class="fc-aside fc-aside--right">
           <div class="fc-aside__content">
@@ -86,8 +82,12 @@
               />
             </div>
           </div>
-
-
+          <button
+            type="button"
+            class="fc-aside__btn fc-aside__btn--right"
+            @click="onToggleAside('right')">
+            <i class="material-icons">&#xE3E8;</i>
+          </button>
         </div>
       </div>
       <layouts
@@ -679,29 +679,6 @@
         width: 100%;
         margin: 0 1.8rem;
       }
-
-      &__btn {
-        position: absolute;
-        top: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1.8rem 0 1.8rem 0.6rem;
-        background-color: $secondary;
-        border-top-left-radius: 0.5rem;
-        border-bottom-left-radius: 0.5rem;
-        color: $white;
-        transform: translateY(-50%);
-
-        &--left {
-          left: 0;
-          transform: translateY(-50%) rotate(180deg);
-        }
-
-        &--right {
-          right: 0;
-        }
-      }
     }
   }
   .fc-guide {
@@ -741,12 +718,12 @@
   }
 
   .fc-aside {
-    display: none;
+    display: flex;
     position: relative;
     z-index: 10;
     box-sizing: border-box;
     padding-bottom: 2rem;
-    width: percentage(1);
+    width: 0;
     max-width: $sidebar-size;
     color: $white;
 
@@ -765,12 +742,34 @@
       background-color: $secondary;
     }
 
+    &__btn {
+      position: absolute;
+      top: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.8rem 0 1.8rem 0.6rem;
+      background-color: $secondary;
+      border-top-left-radius: 0.5rem;
+      border-bottom-left-radius: 0.5rem;
+      color: $white;
+      transform: translateY(-50%);
+      outline: none;
 
+      &--left {
+        right: 0;
+        transform: translate(100%, -50%) rotate(180deg);
+      }
+
+      &--right {
+        left: 0;
+        transform: translate(-100%, -50%);
+      }
+    }
 
     &--right {
-      margin-left: 1.8rem;
       .fc-composer--aside-r & {
-        display: flex;
+        width: 100%;
       }
       .btn {
         color: $white;
@@ -778,11 +777,10 @@
 
     }
     &--left {
-      margin-right: 1.8rem;
       max-width: $sidebar-size + 14rem;
 
       .fc-composer--aside-l & {
-        display: flex;
+        width: 100%;
       }
     }
   }
