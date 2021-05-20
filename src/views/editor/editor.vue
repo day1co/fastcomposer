@@ -166,7 +166,7 @@ export default {
         video: 'video/mp4',
       },
     };
-  },  
+  },
   mounted() {
     EventBus.$on('focus-editor', () => this.focus());
   },
