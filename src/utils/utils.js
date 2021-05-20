@@ -1,7 +1,13 @@
 import { template } from 'lodash';
 
 export const restructureLayouts = (layouts) => {
-  return layouts.map((layout) => Object.assign(layout, { templateFunc: template(layout.template) }));
+  return layouts.map((layout) =>
+    Object.assign(
+      layout,
+      { defaultValues: JSON.parse(JSON.stringify(layout.values)) },
+      { templateFunc: template(layout.template) }
+    )
+  );
 };
 
 let _blockIdSeq = 0;
