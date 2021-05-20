@@ -146,6 +146,8 @@ import EventBus from '../../event-bus/event-bus';
 import FileUpload from './file-upload.vue';
 import Tooltip from '../../components/tooltip/tooltip';
 
+const getDefaultValues = (tgDefault) => (Array.isArray(tgDefault) ? tgDefault[0] : tgDefault);
+
 export default {
   components: {
     Tooltip,
@@ -176,10 +178,14 @@ export default {
     },
     onAdd(param, layer) {
       const { params, name } = param;
-      const { values } = layer;
+      const { values, layout } = layer;
+
+      const defaultValues = getDefaultValues(layout.defaultValues[name]);
+
       const newItem = params.reduce((attr, currentValue) => {
-        if (!attr[currentValue.name]) {
-          attr[currentValue.name] = currentValue.defaultValue || '';
+        const optName = currentValue.name;
+        if (!attr[optName]) {
+          attr[optName] = defaultValues[optName] || '';
         }
         return attr;
       }, {});
