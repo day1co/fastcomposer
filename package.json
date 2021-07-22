@@ -1,12 +1,13 @@
 {
   "name": "@fastcampus/fastcomposer",
-  "version": "0.15.7",
+  "version": "0.16.0",
   "author": "fastcampus",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "bundle": "vue-cli-service build --target lib --name fastcomposer ./src/index.js",
+    "prepublish": "bundle",
     "build-layouts": "node layouts/build.js",
     "test": "jest",
     "test:e2e": "cypress run --browser chrome --headless",
@@ -17,6 +18,12 @@
     "type": "git",
     "url": "https://github.com/fastcampus/fastcomposer.git"
   },
+  "main": "dist/fastcomposer.umd.js",
+  "files": [
+    "dist",
+    "layouts",
+    "public"
+  ],
   "dependencies": {
     "core-js": "^3.15.2",
     "lodash": "^4.17.20",
