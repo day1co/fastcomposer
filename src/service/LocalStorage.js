@@ -11,6 +11,7 @@ export default class LocalStorageService {
     localStorage.setItem(this._key, JSON.stringify(value));
   }
   checkEnvironment() {
+    // eslint-disable-next-line no-console
     !localStorage && console.warn("This browser doesn't support localStorage");
   }
 }

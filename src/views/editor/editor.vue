@@ -166,7 +166,7 @@ export default {
         video: 'video/mp4',
       },
     };
-  },  
+  },
   mounted() {
     EventBus.$on('focus-editor', () => this.focus());
   },
@@ -199,7 +199,6 @@ export default {
         this.$el.parentElement.scrollTop = 0;
         this.$el.focus();
         const el = this.$el.querySelector('input,textarea,select,button');
-        console.log(el);
         if (el) {
           el.focus();
           if (typeof el.select === 'function') {
