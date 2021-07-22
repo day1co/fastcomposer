@@ -18,6 +18,7 @@
     "url": "https://github.com/fastcampus/fastcomposer.git"
   },
   "dependencies": {
+    "core-js": "^3.15.2",
     "lodash": "^4.17.20",
     "marked": "^0.7.0",
     "normalize.css": "^8.0.1",
