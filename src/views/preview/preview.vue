@@ -82,6 +82,7 @@
 </script>
 
 <style lang="scss" scoped>
+  @use 'sass:math';
   @import '../../assets/scss/utils/utilities';
 
   .fc-preview {
@@ -96,7 +97,7 @@
       width: 4.5rem;
       height: 4.5rem;
       background-color: $accent;
-      border-radius: percentage(1/2);
+      border-radius: percentage(math.div(1, 2));
       color: $white;
       box-shadow: 0 .3rem 1rem rgba($black, 0.24), 0 .3rem 1rem rgba($black,
         0.16);
