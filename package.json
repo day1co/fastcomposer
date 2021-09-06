@@ -1,6 +1,6 @@
 {
   "name": "@fastcampus/fastcomposer",
-  "version": "0.15.8",
+  "version": "0.16.0",
   "author": "fastcampus",
   "scripts": {
     "serve": "vue-cli-service serve",
