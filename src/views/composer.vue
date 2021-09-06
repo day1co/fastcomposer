@@ -193,17 +193,17 @@
 
 <script>
   import { cloneDeep } from 'lodash';
-  import { uniqueId, restructureLayouts } from '@/utils/utils';
+  import { uniqueId, restructureLayouts } from '../utils/utils';
   import EventBus from './../event-bus/event-bus';
   import marked from 'marked';
-  import Toast from '@/components/toast/toast';
-  import Dialog from '@/components/dialog/dialog';
+  import Toast from '../components/toast/toast';
+  import Dialog from '../components/dialog/dialog';
   import ComposerHeader from './header/header.vue';
   import Editor from './editor/editor';
   import Preview from './preview/preview';
   import Layouts from './layouts/layouts';
   import Layers from './layers/layers';
-  import LocalStorageService from '@/service/LocalStorage';
+  import LocalStorageService from '../service/LocalStorage';
 
   export default {
     components: {
