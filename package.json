@@ -1,7 +1,7 @@
 {
   "name": "@day1co/fastcomposer",
-  "version": "0.16.1",
-  "author": "fastcampus",
+  "version": "0.16.2",
+  "author": "day1company",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
