@@ -1,6 +1,6 @@
 {
-  "name": "@fastcampus/fastcomposer",
-  "version": "0.16.0",
+  "name": "@day1co/fastcomposer",
+  "version": "0.16.1",
   "author": "fastcampus",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/fastcampus/fastcomposer.git"
+    "url": "https://github.com/day1co/fastcomposer.git"
   },
   "dependencies": {
     "lodash": "^4.17.20",
