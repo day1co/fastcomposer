@@ -2,6 +2,13 @@
   "name": "@day1co/fastcomposer",
   "version": "0.16.1",
   "author": "fastcampus",
+  "main": "dist/fastcomposer.umd.js",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
