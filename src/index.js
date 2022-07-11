@@ -7,4 +7,4 @@ import Composer from './views/composer.vue';
 
 Vue.component('fast-composer', Composer);
 
-export default { Composer };
+export default Composer;
