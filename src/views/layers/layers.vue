@@ -28,9 +28,6 @@
             </span>
         </div>
         <div class="__utils">
-          <button class="__utils__btn" @click="onAddFavoriteLayout(layer.layout.id)">
-            <i class="material-icons">{{ getFavoriteLayoutIconStyle(layer) }}</i>
-          </button>
           <button class="__utils__btn" @click="onToggle(index)">
             <i class="material-icons">
               {{ getLayoutStateIconStyle(layer) }}
@@ -67,12 +64,6 @@
         type: Number,
         default() {
           return -1
-        }
-      },
-      favoriteLayoutIds: {
-        type: Array,
-        default() {
-          return [];
         }
       }
     },
@@ -129,12 +120,6 @@
       resetCheckedHistory() {
         this.checkedHistory = null;
       },
-      isFavoriteLayout({ id } ) {
-        return this.favoriteLayoutIds.includes(id);
-      },
-      getFavoriteLayoutIconStyle({ layout }) {
-        return this.isFavoriteLayout(layout) ? 'favorite' : 'favorite_border';
-      },
       getLayoutStateIconStyle({ hidden }) {
         return hidden ? 'visibility_off' : 'visibility';
       },
@@ -151,9 +136,6 @@
       },
       getGhostParent(){
         return document.body;
-      },
-      onAddFavoriteLayout(layoutId) {
-        this.$emit('add-favorite-layout', layoutId);
       },
       onCloneLayer(index) {
         this.$emit('clone-layer', index);

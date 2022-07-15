@@ -99,8 +99,6 @@
                 @selected-layer="onUpdateCurrentLayerIndex"
                 @remove-layer="onRemoveLayer"
                 @clone-layer="onCloneLayer"
-                @add-favorite-layout="onAddFavoriteLayout"
-                :favoriteLayoutIds="favoriteLayoutIds"
                 :layers="layers"
                 :currentLayerIndex.sync="currentLayerIndex"
                 ref="layers"
@@ -118,6 +116,8 @@
       <layouts
         ref="layouts"
         @add-layer="onAddLayer"
+        @add-favorite-layout="onAddFavoriteLayout"
+        :favoriteLayoutIds="favoriteLayoutIds"
         :layouts="layouts"
       />
     </div>

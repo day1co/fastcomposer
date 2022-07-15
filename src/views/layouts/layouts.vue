@@ -2,6 +2,7 @@
   <div class="fc-layout" v-if="flag"
        tabindex="0"
        @keydown.exact.enter.prevent="selected(layouts[layoutIndex])"
+       @keydown.exact.space.prevent="selected(layouts[layoutIndex])"
        @keydown.exact.up.prevent="focus(layoutIndex - 1)"
        @keydown.exact.down.prevent="focus(layoutIndex + 1)"
        @keydown.exact.home.prevent="focus(0)"
@@ -11,15 +12,24 @@
        @keydown.exact.esc.prevent="toggle"
   >
     <ul class="fc-layout__list">
-      <li v-for="(layout, index) in layouts" :key="index">
-        <button class="fc-layout__list__item" @click="selected(layout)"
-                @focus="focus(index)"
-                :class="{active: index === layoutIndex}">
+      <li v-for="(layout, index) in layouts" :key="index"
+          class="fc-layout__list__item">
+        <button @click="selected(layout)" @focus="focus(index)"
+                class="fc-layout__list__button"
+                :class="{ active: index === layoutIndex }">
           <img :src="layout.icon" alt="" />
-          <span class="fc-layout__list__item__info">
-          <strong class="fc-layout__list__item__name">{{ layout.id }}</strong>
-          {{ layout.description }}
-        </span>
+          <div class="fc-layout__list__item__info">
+            <strong class="fc-layout__list__item__name">{{ layout.id }}</strong>
+            <br />
+            {{ layout.description }}
+          </div>
+        </button>
+        <button @click="onAddFavoriteLayout(layout.id)"
+                class="fc-layout__list__favorite"
+                tabindex="-1">
+          <i class="material-icons">
+            {{ favoriteLayoutIds.includes(layout.id)? 'favorite' : 'favorite_border' }}
+          </i>
         </button>
       </li>
     </ul>
@@ -29,6 +39,12 @@
   export default {
     props: {
       layouts: {
+        type: Array,
+        default() {
+          return []
+        }
+      },
+      favoriteLayoutIds: {
         type: Array,
         default() {
           return []
@@ -69,6 +85,9 @@
       focus(index) {
         this.layoutIndex = Math.min(Math.max(index, 0), this.layouts.length - 1);
       },
+      onAddFavoriteLayout(layoutId) {
+        this.$emit('add-favorite-layout', layoutId);
+      },
     },
   }
 </script>
@@ -100,6 +119,7 @@
     width: 40rem;
     padding-bottom:2rem;
     z-index: 9999;
+
     &__list {
       overflow: scroll;
       box-sizing: border-box;
@@ -112,25 +132,29 @@
       &__item {
         display: flex;
         flex-direction: row;
-        width: percentage(1);
-        color: $white;
 
         &__info {
           flex: 1;
-          padding-top: 0.5rem;
+          padding-top: 0.4rem;
           padding-left: 1rem;
-          padding-bottom: 0.5rem;
+          padding-bottom: 0.4rem;
           text-align: left;
-        }
-
-        &__name {
-          display: block;
-          margin-bottom: 0.5rem;
+          color: $white;
+          line-height: 1.5em;
         }
       }
 
+      &__button {
+        display: flex;
+        flex-grow: 100;
+        margin-right: 0.8rem;
+      }
+      &__favorite {
+        color: $white;
+      }
+
       .active {
-        border: 2px solid red;
+        box-shadow: 0 0 0 0.2rem red;
       }
     }
     li {
