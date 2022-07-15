@@ -1,50 +1,30 @@
 <template>
   <header class="fc-header">
-    <h1 class="fc-header__h">FastComposer</h1>
-    <div class="fc-header__content">
-      <ul class="fc-header__favorite-layouts">
-        <li class="fc-header__favorite-layout" v-for="(layout, index) in favoriteLayouts" :key="index">
-          <button class="fc-header__favorite-btn" @click="addLayer(layout)">
-            <img :src="layout.icon" alt="" />
-            {{ layout.id }}
-          </button>
-        </li>
-      </ul>
+    <div class="fc-header__h">
+      <h1>FastComposer</h1>
+      <span class="fc-header__save-time" v-show="saveTime">
+        최종 저장: {{ saveTime }}
+      </span>
     </div>
-    <div class="fc-header__right">
-      <div class="fc-header__info">
-        <span class="fc-header__layout-count">사용된 레이어 수: {{ layerCount }}개 - 점검 할 레이어: {{ warnCount }}개</span>
-        <span class="fc-header__save-time" v-show="saveTime">최종저장 시간: {{ saveTime }}</span>
-      </div>
-      <div class="fc-header__utils">
-        <button @click="onToggleDeviceMode"><span class="material-icons">devices</span></button>
-        <button @click="showInfoTags"><i class="material-icons">help</i></button>
-        <button class="fc-utils__btn" @click="showLayerPanel"><i class="material-icons">add</i></button>
-        <button @click="validateLayer">
-          <i class="material-icons">check</i>
+    <ul class="fc-header__favorite-layouts">
+      <li class="fc-header__favorite-layout" v-for="(layout, index) in favoriteLayouts" :key="index">
+        <button class="fc-header__favorite-btn" @click="addLayer(layout)">
+          <img :src="layout.icon" alt="" />
+          {{ layout.id }}
         </button>
-      </div>
-    </div>
+      </li>
+    </ul>
   </header>
 </template>
 
 <script>
   export default {
     methods: {
-      validateLayer() {
-        this.$emit('validate');
-      },
       showLayerPanel($event) {
         this.$emit('show-layout-panel', $event);
       },
-      showInfoTags() {
-        this.$emit('show-info-tags');
-      },
       addLayer(layout) {
         this.$emit('add', layout);
-      },
-      onToggleDeviceMode() {
-        this.$emit('toggle-device-mode');
       },
     },
     data() {
@@ -128,7 +108,6 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: 0 1.8rem;
     width: percentage(1);
     height: $header-size;
     background-color: transparent;
@@ -137,12 +116,15 @@
 
     &__favorite-layouts {
       display: flex;
+      flex-grow: 100;
+      justify-items: flex-end;
       width: 100%;
       height: 7.1rem;
+      padding: 0 1.6rem 0 0.8rem;
       overflow-x: scroll;
     }
     &__favorite-layout {
-      margin-left: 1rem;
+      margin-right: 1rem;
       text-align: center;
       &:first-child {
         margin-left: 0;
@@ -164,12 +146,17 @@
     &__content {
       height: 100%;
       padding-top: 1rem;
+      flex-grow: 100;
     }
 
     &__h {
-      width: 32rem;
-      font-size: 1.8rem;
+      min-width: 24rem;
       color: $white;
+      padding: 0 0.8rem 0 1.6rem;
+
+      > h1 {
+        font-size: 1.8rem;
+      }
     }
 
     &__right {

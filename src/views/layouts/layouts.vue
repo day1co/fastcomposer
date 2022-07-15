@@ -77,16 +77,16 @@
   @import '../../assets/scss/utils/utilities';
   .fc-layout:before {
     position: absolute;
-    bottom: 100%;
-    left: calc(50% + 1.2rem);
+    left: 100%;
+    top: 4.2rem;
     height: 0;
     width: 0;
     margin-top: 0;
     border-top: solid transparent;
-    border-left: solid transparent;
+    border-left: solid #fff;
     border-right: solid transparent;
-    border-bottom: solid #fff;
-    border-width: 10px;
+    border-bottom: solid transparent;
+    border-width: 1rem;
     pointer-events: none;
     content: " ";
   }

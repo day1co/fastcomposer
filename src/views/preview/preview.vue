@@ -20,9 +20,6 @@
         ></div>
       </div>
     </div>
-    <button class="fc-preview__save" type="button" @click="save">
-      <i class="material-icons">&#xE5CA;</i>
-    </button>
   </div>
 </template>
 
@@ -70,9 +67,6 @@
       },
       focusEditor() {
         EventBus.$emit('focus-editor');
-      },
-      save() {
-        EventBus.$emit('save');
       }
     },
     updated() {
@@ -88,26 +82,8 @@
   .fc-preview {
     overflow: auto;
     background-color: $white;
-
-    &__save {
-      position: fixed;
-      right: 1.75rem;
-      top: 2.5rem;
-      z-index: 102;
-      width: 4.5rem;
-      height: 4.5rem;
-      background-color: $accent;
-      border-radius: percentage(math.div(1, 2));
-      color: $white;
-      box-shadow: 0 .3rem 1rem rgba($black, 0.24), 0 .3rem 1rem rgba($black,
-        0.16);
-      @include transition(null, 0.3s);
-
-      .fc-composer--aside-r & {
-        right: $sidebar-size + 1.75rem;
-      }
-    }
   }
+
   .fc-block {
     position: relative;
     .fc-selected {

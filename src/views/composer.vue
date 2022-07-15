@@ -59,13 +59,38 @@
         <!--layers-->
         <div class="fc-aside fc-aside--right">
           <div class="fc-aside__content">
-            <button class="btn" @click="onUpBlock">
-              <span class="material-icons">arrow_upward</span>
-            </button>
-            <button class="btn" @click="onDownBlock">
-              <span class="material-icons">arrow_downward</span>
-            </button>
-            <span>선택된 레이어 수: {{checkedCount}}</span>
+            <header class="fc-aside__header">
+              <button class="btn" @click="onToggleDeviceMode">
+                <span class="material-icons">devices</span>
+                </button>
+              <button class="btn" @click="onShowModal">
+                <span class="material-icons">help</span>
+              </button>
+              <button class="btn" @click="onValidateLayer">
+                <span class="material-icons">check</span>
+                <label>검증</label>
+              </button>
+              <button class="btn" @click="onSave">
+                <span class="material-icons">save</span>
+                <label>저장</label>
+              </button>
+            </header>
+            <header class="fc-aside__header">
+              <button class="btn" @click="onUpBlock">
+                <span class="material-icons">arrow_upward</span>
+              </button>
+              <button class="btn" @click="onDownBlock">
+                <span class="material-icons">arrow_downward</span>
+              </button>
+              <label class="fc-aside__header__label">
+                {{layers.length}} 레이어
+                <span v-show="warnCount">・ {{warnCount}} 점검 필요</span>
+                <span v-show="checkedCount">・ {{checkedCount}} 선택</span>
+              </label>
+              <button class="btn" @click="onShowLayouts">
+                <span class="material-icons">add</span>
+              </button>
+            </header>
             <div class="fc-aside__container">
               <layers
                 @up="onUpBlock"
@@ -247,6 +272,9 @@
     computed: {
       checkedCount() {
         return this.layers.filter(layer => layer.isChecked).length;
+      },
+      warnCount() {
+        return this.layers.filter(layer => layer.hasSyntaxErrorTags).length;
       },
       currentLayer() {
         return this.layers[this.currentLayerIndex];
@@ -631,7 +659,6 @@
     margin-left: auto;
     margin-right: auto;
     padding-top: $header-size;
-    padding-bottom: 2rem;
     width: percentage(1);
     height: 100vh;
     font-size: $font-size;
@@ -726,7 +753,22 @@
     max-width: $sidebar-size;
     color: $white;
 
+    &__header {
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
+
+      margin-bottom: 0.4rem;
+      line-height: 3.2rem;
+
+      &__label {
+        flex-grow: 10000;
+        text-align: center;
+      }
+    }
     &__content {
+      display: flex;
+      flex-direction: column;
       width: 100%;
       span {
         vertical-align: top;
@@ -772,6 +814,15 @@
       }
       .btn {
         color: $white;
+        padding: 0.4rem;
+
+        label {
+          padding: 0 0.4rem;
+          line-height: 2.4rem;
+        }
+        &:hover {
+          background: #0002;
+        }
       }
 
     }
