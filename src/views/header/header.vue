@@ -1,12 +1,15 @@
 <template>
-  <header class="fc-header">
+  <header :class="[
+    'fc-header',
+    !favoriteLayouts.length && 'fc-header--no-favorites'
+  ]">
     <div class="fc-header__h">
       <h1>FastComposer</h1>
-      <span class="fc-header__save-time" v-show="saveTime">
+      <span class="fc-header__save-time" v-show="true">
         최종 저장: {{ saveTime }}
       </span>
     </div>
-    <ul class="fc-header__favorite-layouts">
+    <ul class="fc-header__favorite-layouts" v-if="favoriteLayouts.length">
       <li class="fc-header__favorite-layout" v-for="(layout, index) in favoriteLayouts" :key="index">
         <button class="fc-header__favorite-btn" @click="addLayer(layout)">
           <img :src="layout.icon" alt="" />
@@ -103,7 +106,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 101;
+    /* z-index: 101; */
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -113,6 +116,19 @@
     background-color: transparent;
     transform: none; // admin과 충돌 이슈
     transition: none;  // admin과 충돌 이슈
+
+    &--no-favorites {
+      height: $header-size * 0.5;
+
+      .fc-header__h {
+        width: 100%;
+        display: flex;
+      }
+      .fc-header__save-time {
+        margin-left: 1.6rem;
+        line-height: 2.8rem;
+      }
+    }
 
     &__favorite-layouts {
       display: flex;

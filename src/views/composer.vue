@@ -10,6 +10,7 @@
      :class="[
       isLeftVisible && 'fc-composer--aside-l',
       isRightVisible && 'fc-composer--aside-r',
+      !favoriteLayoutIds.length && 'fc-composer--no-favorites'
     ]"
     >
       <div class="fc-tooltip">
@@ -690,6 +691,17 @@
     &--aside-r {
       .fc-composer__content__btn--right {
         right: $sidebar-size;
+      }
+    }
+    &--no-favorites {
+      padding-top: $header-size * 0.5;
+
+      .fc-aside--right {
+        margin-top: $header-size * -0.5;
+
+        .fc-aside__header {
+          justify-content: flex-end;
+        }
       }
     }
 
