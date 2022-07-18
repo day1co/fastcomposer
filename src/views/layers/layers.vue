@@ -171,9 +171,9 @@
       outline-style: none;
     }
     &.has-syntax-error-tags {
-      background-color: #ffba00;
+      background-color: #e65100;
       .__item__group {
-        background-color: #ffba00;
+        background-color: #e65100;
       }
     }
     &--active {
@@ -183,7 +183,7 @@
       display: flex;
       flex-direction: row;
       width: percentage(1);
-      background: #0fd961;
+      background: #1a237e;
       color: $white;
       &__info {
         flex: 1;
@@ -206,6 +206,10 @@
     position: absolute;
     top: 0;
     right: 0;
+
+    &__btn {
+      color: transparentize($white, 0.5);
+    }
   }
   .smooth-dnd-draggable-wrapper {
     & + .smooth-dnd-draggable-wrapper {
