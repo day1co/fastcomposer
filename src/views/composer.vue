@@ -77,16 +77,19 @@
               </button>
             </header>
             <header class="fc-aside__header">
-              <button class="btn" @click="onUpBlock">
+              <button class="btn" @click="onUpBlock" :disabled="!checkedCount">
                 <span class="material-icons">arrow_upward</span>
               </button>
-              <button class="btn" @click="onDownBlock">
+              <button class="btn" @click="onDownBlock" :disabled="!checkedCount">
                 <span class="material-icons">arrow_downward</span>
               </button>
               <label class="fc-aside__header__label">
                 {{layers.length}} 레이어
-                <span v-show="warnCount">・ {{warnCount}} 점검 필요</span>
-                <span v-show="checkedCount">・ {{checkedCount}} 선택</span>
+                <small v-if="warnCount || checkedCount">
+                  (<template v-if="warnCount">{{warnCount}} 점검 필요</template>
+                  <template v-if="warnCount && checkedCount"> ・ </template>
+                  <template v-if="checkedCount">{{checkedCount}} 선택</template>)
+                </small>
               </label>
               <button class="btn" @click="onShowLayouts">
                 <span class="material-icons">add</span>
@@ -696,6 +699,9 @@
     &--no-favorites {
       padding-top: $header-size * 0.5;
 
+      > .fc-layout {
+        top: 0;
+      }
       .fc-aside--right {
         margin-top: $header-size * -0.5;
 
@@ -827,6 +833,10 @@
       .btn {
         color: $white;
         padding: 0.4rem;
+
+        &:disabled {
+          opacity: 0.3333;
+        }
 
         label {
           padding: 0 0.4rem;

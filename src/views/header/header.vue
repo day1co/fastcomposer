@@ -5,7 +5,7 @@
   ]">
     <div class="fc-header__h">
       <h1>FastComposer</h1>
-      <span class="fc-header__save-time" v-show="true">
+      <span class="fc-header__save-time" v-show="saveTime">
         최종 저장: {{ saveTime }}
       </span>
     </div>
