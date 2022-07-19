@@ -46,7 +46,7 @@
             type="button"
             class="fc-aside__btn fc-aside__btn--left"
             @click="onToggleAside('left')">
-            <i class="material-icons">&#xE3E8;</i>
+            <i class="material-icons">{{ 'chevron_' + (isLeftVisible? 'right' : 'left') }}</i>
           </button>
         </div>
 
@@ -113,7 +113,7 @@
             type="button"
             class="fc-aside__btn fc-aside__btn--right"
             @click="onToggleAside('right')">
-            <i class="material-icons">&#xE3E8;</i>
+            <i class="material-icons">{{ 'chevron_' + (isRightVisible? 'right' : 'left') }}</i>
           </button>
         </div>
       </div>
@@ -767,7 +767,8 @@
     z-index: 10;
     box-sizing: border-box;
     padding-bottom: 2rem;
-    width: 0;
+    /* width: 0; */
+    width: 100%;
     max-width: $sidebar-size;
     color: $white;
 
@@ -815,6 +816,9 @@
       transform: translateY(-50%);
       outline: none;
 
+      > .material-icons {
+        margin: 0 -0.8rem;
+      }
       &--left {
         right: 0;
         transform: translate(100%, -50%) rotate(180deg);
@@ -827,8 +831,10 @@
     }
 
     &--right {
+      margin-right: -$sidebar-size;
+
       .fc-composer--aside-r & {
-        width: 100%;
+        margin-right: 0;
       }
       .btn {
         color: $white;
@@ -849,10 +855,11 @@
 
     }
     &--left {
+      margin-left: -$sidebar-size - 14rem;
       max-width: $sidebar-size + 14rem;
 
       .fc-composer--aside-l & {
-        width: 100%;
+        margin-left: 0;
       }
     }
   }
