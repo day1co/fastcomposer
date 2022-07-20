@@ -165,7 +165,7 @@
   @import '../../assets/scss/utils/utilities';
   .__item {
     position: relative;
-    border: 3px solid #ffffff;
+    padding: 0.3rem;
     cursor: pointer;
     &:focus {
       outline-style: none;
@@ -177,7 +177,7 @@
       }
     }
     &--active {
-      border: 3px solid #f74982;
+      box-shadow: 0 0 0 0.3rem #ffffff inset;
     }
     &__group {
       display: flex;
