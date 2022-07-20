@@ -127,6 +127,7 @@
         border-width: 0.4rem 0.4rem 0.4rem 0;
         z-index: 1;
         box-sizing: content-box;
+        pointer-events: none;
       }
     }
     &__info {
