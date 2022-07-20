@@ -140,6 +140,10 @@
 
       user-select: none;
       cursor: pointer;
+
+      > div {
+        position: absolute;
+      }
     }
 
     .fc-block__preview {
