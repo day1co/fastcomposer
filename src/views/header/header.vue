@@ -5,8 +5,9 @@
   ]">
     <div class="fc-header__h">
       <h1>FastComposer</h1>
-      <span class="fc-header__save-time" v-show="saveTime">
-        최종 저장: {{ saveTime }}
+      <span class="fc-header__subtitle">
+        버전 {{ version }}
+        <span v-show="saveTime">・ 최종 저장: {{ saveTime }}</span>
       </span>
     </div>
     <ul class="fc-header__favorite-layouts" v-if="favoriteLayouts.length">
@@ -21,6 +22,8 @@
 </template>
 
 <script>
+  import packageinfo from '../../../package.json';
+
   export default {
     methods: {
       showLayerPanel($event) {
@@ -33,6 +36,7 @@
     data() {
       return {
         saveTime: null,
+        version: packageinfo.version,
       }
     },
     computed: {
@@ -124,8 +128,8 @@
         width: 100%;
         display: flex;
       }
-      .fc-header__save-time {
-        margin-left: 1.6rem;
+      .fc-header__subtitle {
+        margin-left: 1.2rem;
         line-height: 2.8rem;
       }
     }
