@@ -10,7 +10,10 @@
        @keydown.exact.page-down.prevent="select(index + 5)"
   >
     <div class="fc-preview__container">
-      <div :class="['fc-block', { 'fc-selected': blockIndex === currentLayerIndex }]"
+      <div :class="['fc-block', {
+             'fc-selected': blockIndex === currentLayerIndex,
+             'fc-hidden': block.hidden
+           }]"
            v-for="(block, blockIndex) in blocks"
            :key="'block-' + blockIndex"
            @click="select(blockIndex)">
@@ -24,7 +27,7 @@
         <div
           class="fc-block__container"
           :id="block.id"
-          :class="['fc-layout-' + block.layout.id, {'fc-hidden': block.hidden} ]"
+          :class="'fc-layout-' + block.layout.id"
           v-html="parserToHTML(block)"
         ></div>
       </div>
@@ -105,7 +108,6 @@
     border-right: 0.4rem solid $primary;
 
     &.fc-selected {
-
       .fc-block__info {
         background: $accent;
         &::after {
@@ -128,6 +130,19 @@
         z-index: 1;
         box-sizing: content-box;
         pointer-events: none;
+      }
+    }
+    &.fc-hidden {
+      .fc-block__container {
+        opacity: 0.5;
+        background-color: olive;
+      }
+
+      .fc-block__info {
+        color: #fff8;
+        b {
+          text-decoration: line-through;
+        }
       }
     }
     &__info {
@@ -154,10 +169,6 @@
       &.active {
         outline: 1px dashed fuchsia;
       }
-    }
-    .fc-hidden {
-      opacity: 0.5;
-      background-color: olive;
     }
   }
 </style>

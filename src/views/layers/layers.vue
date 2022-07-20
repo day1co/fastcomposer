@@ -24,8 +24,8 @@
           <img :src="layer.layout.icon" alt="" />
           <span class="__item__group__info">
             <strong class="__item__group__name">{{ layer.layout.id }}</strong>
-              {{ layer.layout.description }}
-            </span>
+            {{ layer.layout.description }}
+          </span>
         </div>
         <div class="__utils">
           <button class="__utils__btn" @click="onToggle(index)">
