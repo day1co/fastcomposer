@@ -150,7 +150,8 @@
       position: relative;
       background: $primary;
       color: white;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
+      line-height: 1.8rem;
       overflow: hidden;
       border-bottom: 0.1rem solid white;
 

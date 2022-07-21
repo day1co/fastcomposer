@@ -165,8 +165,11 @@
   @import '../../assets/scss/utils/utilities';
   .__item {
     position: relative;
-    padding: 0.3rem;
+    margin-bottom: 0.2rem;
+    padding: 0.4rem;
     cursor: pointer;
+    background: #1a237e;
+    font-size: 1.4rem;
     &:focus {
       outline-style: none;
     }
@@ -183,8 +186,9 @@
       display: flex;
       flex-direction: row;
       width: percentage(1);
-      background: #1a237e;
       color: $white;
+      line-height: 2rem;
+
       &__info {
         flex: 1;
         padding-top: 0.5rem;
@@ -195,7 +199,7 @@
       &__name {
         @include readable-font-features;
         display: block;
-        margin-bottom: 0.5rem;
+        font-size: 1.6rem;
       }
       label {
         display: inline-block;
@@ -205,16 +209,11 @@
   }
   .__utils {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 0.4rem;
+    right: 0.4rem;
 
     &__btn {
       color: transparentize($white, 0.5);
-    }
-  }
-  .smooth-dnd-draggable-wrapper {
-    & + .smooth-dnd-draggable-wrapper {
-      margin-top: 0.5rem;
     }
   }
 </style>

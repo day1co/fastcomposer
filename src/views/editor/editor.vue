@@ -12,7 +12,7 @@
       <fieldset v-for="param in layer.layout.params" :key="param.name" class="fc-editor__form__fieldset">
         <label class="fc-editor__form__label" :for="toInputId(param)">
           <strong class="fc-editor__form__name">{{ param.name }}</strong>
-          <small>({{ param.type }})</small>
+          <small>{{ param.type }}</small>
           <span class="spacer"></span>
           <mark v-if="param.isRequired" class="required">* 필수</mark>
           <tooltip v-if="param.description" :message="param.description"> </tooltip>
@@ -76,7 +76,7 @@
               <div v-for="(childParams, key) of param.params" :key="key" class="fc-editor__form__fieldset">
                 <label class="fc-editor__form__label" :for="toInputId(param, childParams, index)">
                   <strong class="fc-editor__form__name">{{ childParams.name }}</strong>
-                  <small>({{ childParams.type }})</small>
+                  <small>{{ childParams.type }}</small>
                   <span class="spacer"></span>
                   <mark v-if="childParams.isRequired" class="required">* 필수</mark>
                   <tooltip v-if="childParams.description" :message="childParams.description"> </tooltip>
@@ -270,9 +270,13 @@ export default {
     &__label {
       @include readable-font-features;
       display: flex;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       align-items: baseline;
 
+      > small {
+        font-size: 1.2rem;
+        margin-left: 0.4rem;
+      }
       > .spacer {
         flex-grow: 10000;
       }
@@ -285,35 +289,46 @@ export default {
 
     &__name {
       display: inline-block;
-      font-size: 1.4rem;
-      margin-bottom: -0.1rem;
-      border-bottom: 0.1rem solid $secondary;
-    }
-
-    &__textarea {
-      width: 100%;
+      font-size: 1.6rem;
     }
 
     &__select {
       width: 100%;
     }
 
-    &__input {
+    &__textarea, &__input {
+      @include readable-font-features;
       box-sizing: border-box;
       display: block;
       border: none;
       padding-left: 0.8rem;
       width: 100%;
+
       font-size: 1.4rem;
-      line-height: 2.5em;
+
       background-color: #1a237e;
       color: white;
       outline: 0 none;
-      @include transition(null, 0.2s);
+
+      @include transition(background-color, 0.2s);
 
       &:focus {
         background-color: #303f9f;
       }
+
+      &::selection {
+        background: white;
+        color: black;
+      }
+    }
+
+    &__textarea {
+      resize: vertical;
+      padding-top: 0.8rem;
+    }
+
+    &__input {
+      line-height: 2.5em;
     }
 
     .required {
