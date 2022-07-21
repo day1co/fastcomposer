@@ -142,6 +142,9 @@
           color: $white;
           line-height: 1.5em;
         }
+        &__name {
+          @include readable-font-features;
+        }
       }
 
       &__button {

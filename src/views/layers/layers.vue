@@ -193,6 +193,7 @@
         text-align: left;
       }
       &__name {
+        @include readable-font-features;
         display: block;
         margin-bottom: 0.5rem;
       }

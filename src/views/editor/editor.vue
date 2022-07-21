@@ -247,6 +247,10 @@ export default {
     margin-bottom: 0.8rem;
     line-height: 2.4rem;
 
+    strong {
+      @include readable-font-features;
+      font-size: 1.6rem;
+    }
     > img {
       margin-right: 0.8rem;
     }
@@ -264,6 +268,7 @@ export default {
     }
 
     &__label {
+      @include readable-font-features;
       display: flex;
       font-size: 1.2rem;
       align-items: baseline;

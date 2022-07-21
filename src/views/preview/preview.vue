@@ -146,6 +146,7 @@
       }
     }
     &__info {
+      @include readable-font-features;
       position: relative;
       background: $primary;
       color: white;

@@ -114,3 +114,7 @@
   font-family: 'Font Awesome 5 Free', sans-serif;
   font-weight: 900;
 }
+
+@mixin readable-font-features {
+  font-feature-settings: "calt" off, "ss01", "ss02", "ss03", "ss04", "ss06", "ss08", "zero";
+}
