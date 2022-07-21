@@ -1,17 +1,26 @@
 <template>
   <div class="fc-editor">
+    <header class="fc-editor__current-layout">
+      <img :src="layer.layout.icon" :alt="layer.layout.id" />
+      <p class="__item__group__info">
+        <strong class="__item__group__name">{{ layer.layout.id }}</strong>
+        <br />
+        {{ layer.layout.description }}
+      </p>
+	</header>
     <form v-if="layer.layout" class="fc-editor__form" @submit.prevent="">
       <fieldset v-for="param in layer.layout.params" :key="param.name" class="fc-editor__form__fieldset">
-        <label class="fc-editor__form__label" :for="layer.id + '--' + param.type">
+        <label class="fc-editor__form__label" :for="toInputId(param)">
           <strong class="fc-editor__form__name">{{ param.name }}</strong>
           <small>({{ param.type }})</small>
-          <small v-if="param.isRequired" class="required">* 필수</small>
+          <span class="spacer"></span>
+          <mark v-if="param.isRequired" class="required">* 필수</mark>
           <tooltip v-if="param.description" :message="param.description"> </tooltip>
         </label>
 
         <template v-if="param.type === 'image' || param.type === 'video'">
           <input
-            :id="layer.id + '--' + param.type"
+            :id="toInputId(param)"
             v-model="layer.values[param.name]"
             class="fc-editor__form__input"
             type="url"
@@ -23,7 +32,7 @@
 
         <template v-else-if="param.type === 'datetime-local'">
           <input
-            :id="layer.id + '--' + param.type"
+            :id="toInputId(param)"
             v-model="layer.values[param.name]"
             class="fc-editor__form__input"
             :type="param.type"
@@ -33,11 +42,18 @@
         </template>
 
         <template v-else-if="param.type === 'textarea'">
-          <textarea v-model="layer.values[param.name]" class="fc-editor__form__textarea" rows="20"></textarea>
+          <textarea
+            :id="toInputId(param)"
+            v-model="layer.values[param.name]"
+            class="fc-editor__form__textarea"
+            rows="20"></textarea>
         </template>
 
         <template v-else-if="param.type === 'select'">
-          <select v-model="layer.values[param.name]" class="fc-editor__form__select">
+          <select
+            :id="toInputId(param)"
+            v-model="layer.values[param.name]"
+            class="fc-editor__form__select">
             <option v-for="(option, index) in param.options" :key="index">{{ option }}</option>
           </select>
         </template>
@@ -53,20 +69,21 @@
                   class="fc-editor__remove-btn"
                   @click="onRemove(layer, param, index)"
                 >
-                  제거
+                  <i class="material-icons">clear</i>
                 </button>
               </div>
 
-              <div v-for="(childParams, key) of param.params" :key="key">
-                <label class="fc-editor__form__label" :for="`${param.name}'--'${childParams.name}--${index}`">
+              <div v-for="(childParams, key) of param.params" :key="key" class="fc-editor__form__fieldset">
+                <label class="fc-editor__form__label" :for="toInputId(param, childParams, index)">
                   <strong class="fc-editor__form__name">{{ childParams.name }}</strong>
                   <small>({{ childParams.type }})</small>
-                  <small v-if="childParams.isRequired" class="required">* 필수</small>
+                  <span class="spacer"></span>
+                  <mark v-if="childParams.isRequired" class="required">* 필수</mark>
                   <tooltip v-if="childParams.description" :message="childParams.description"> </tooltip>
                 </label>
                 <template v-if="childParams.type === 'image' || childParams.type === 'video'">
                   <input
-                    :id="param.name + '--' + childParams.name + '--' + index"
+                    :id="toInputId(param, childParams, index)"
                     v-model="item[childParams.name]"
                     class="fc-editor__form__input"
                     type="url"
@@ -82,7 +99,7 @@
                 </template>
                 <template v-else-if="childParams.type === 'textarea'">
                   <textarea
-                    :id="param.name + '--' + childParams.name + '--' + index"
+                    :id="toInputId(param, childParams, index)"
                     v-model="item[childParams.name]"
                     class="fc-editor__form__textarea"
                     rows="20"
@@ -91,7 +108,7 @@
 
                 <template v-else-if="childParams.type === 'select'">
                   <select
-                    :id="param.name + '--' + childParams.name + '--' + index"
+                    :id="toInputId(param, childParams, index)"
                     v-model="item[childParams.name]"
                     class="fc-editor__form__select"
                   >
@@ -101,15 +118,13 @@
                 </template>
                 <template v-else>
                   <input
-                    :id="param.name + '--' + childParams.name + '--' + index"
+                    :id="toInputId(param, childParams, index)"
                     v-model="item[childParams.name]"
                     class="fc-editor__form__input"
                     :type="childParams.type"
                   />
                 </template>
               </div>
-
-              <br />
             </div>
 
             <div class="fc-editor__add-btn">
@@ -208,6 +223,16 @@ export default {
         }
       });
     },
+    toInputId(param, child, index) {
+      let id = this.layer.id
+      id += '--' + param.name
+      id += '-' + param.type
+      if(child && index >= 0) {
+        id += '-n' + index
+        id += '-' + child.type
+      }
+      return id
+    }
   },
 };
 </script>
@@ -216,35 +241,41 @@ export default {
 @import '../../assets/scss/utils/utilities';
 .fc-editor {
   position: relative;
+
+  &__current-layout {
+    display: flex;
+    margin-bottom: 0.8rem;
+    line-height: 2.4rem;
+
+    > img {
+      margin-right: 0.8rem;
+    }
+  }
   &__edit {
     /*display: none;*/
     position: relative;
     margin: 0 1.8rem 1.2rem;
   }
-  &__list-item:nth-child(1n + 2) {
-    border-top: 0.1rem solid #1976d2;
-    padding-top: 1.5rem;
-  }
+
   &__form {
-    padding: 1.2rem 1.2rem;
-    background-color: $dimmed;
 
     &__fieldset {
-      padding: 1.8rem 1.8rem;
-      border-radius: 0.5rem;
-      background-color: $white;
-      color: $black;
-
-      & + & {
-        margin-top: 1rem;
-      }
+      padding: 0.4rem 0;
     }
 
     &__label {
-      display: block;
-      margin-bottom: 1rem;
+      display: flex;
       font-size: 1.2rem;
-      border-bottom: 0.1rem solid $grey-l5;
+      align-items: baseline;
+
+      > .spacer {
+        flex-grow: 10000;
+      }
+      .fc-tooltip-icon {
+        align-self: center;
+        margin-right: 0.2rem;
+        color: #fff6;
+      }
     }
 
     &__name {
@@ -265,25 +296,51 @@ export default {
     &__input {
       box-sizing: border-box;
       display: block;
-      border: 0 none;
+      border: none;
       padding-left: 0.8rem;
-      padding-right: 0.8rem;
-      width: percentage(1);
-      height: 4.2rem;
-      font-size: 1.6rem;
-      background-color: $blue-l2;
-      border-radius: 0.5rem;
+      width: 100%;
+      font-size: 1.4rem;
+      line-height: 2.5em;
+      background-color: #1a237e;
+      color: white;
       outline: 0 none;
       @include transition(null, 0.2s);
 
       &:focus {
-        background-color: $accent;
-        color: $white;
+        background-color: #303f9f;
       }
     }
+
+    .required {
+      color: #f44;
+      background: none;
+      font-weight: bold;
+      margin-right: 0.4rem;
+    }
   }
-  &__list-tools {
-    display: flex;
+  &__list {
+    &-item {
+      border-left: 0.4rem solid $primary;
+      padding-left: 1.6rem;
+      margin-bottom: 1.2rem;
+
+      &:nth-child(2n + 1) {
+        border-left-color: lighten($primary, 12%);
+      }
+    }
+    &-tools {
+      display: flex;
+      margin-left: -0.8rem;
+      line-height: 2.6rem;
+
+      button {
+        line-height: 1;
+        color: inherit;
+        > i {
+          vertical-align: top;
+        }
+      }
+    }
   }
   &__add-btn {
     display: flex;
@@ -306,9 +363,5 @@ export default {
   &__remove-btn {
     margin-left: auto;
   }
-}
-.required {
-  color: #ff0000;
-  font-weight: bold;
 }
 </style>

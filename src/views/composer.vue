@@ -855,8 +855,8 @@
 
     }
     &--left {
-      margin-left: -$sidebar-size - 14rem;
-      max-width: $sidebar-size + 14rem;
+      margin-left: -$sidebar-size - 8rem;
+      max-width: $sidebar-size + 8rem;
 
       .fc-composer--aside-l & {
         margin-left: 0;
