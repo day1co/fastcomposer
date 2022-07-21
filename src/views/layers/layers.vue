@@ -21,7 +21,7 @@
           <label :for="`layer-${index}`" >
             <input :id="`layer-${index}`" type="checkbox" v-model="layer.isChecked"/>
           </label>
-          <img :src="layer.layout.icon" alt="" />
+          <img :src="layer.layout.icon" alt="layer.layout.id" />
           <span class="__item__group__info">
             <strong class="__item__group__name">{{ layer.layout.id }}</strong>
             {{ layer.layout.description }}
