@@ -292,11 +292,7 @@ export default {
       font-size: 1.6rem;
     }
 
-    &__select {
-      width: 100%;
-    }
-
-    &__textarea, &__input {
+    &__textarea, &__input, &__select {
       @include readable-font-features;
       box-sizing: border-box;
       display: block;
@@ -306,14 +302,14 @@ export default {
 
       font-size: 1.4rem;
 
-      background-color: #1a237e;
+      background-color: #080808;
       color: white;
       outline: 0 none;
 
       @include transition(background-color, 0.2s);
 
       &:focus {
-        background-color: #303f9f;
+        background-color: darken(#1a237e, 15%);
       }
 
       &::selection {
@@ -327,8 +323,14 @@ export default {
       padding-top: 0.8rem;
     }
 
-    &__input {
-      line-height: 2.5em;
+    &__input, &__select {
+      height: 2.5em;
+      line-height: 1.5em;
+    }
+
+    &__select {
+      padding-right: 0.4rem;
+      padding-left: 0.4rem;
     }
 
     .required {
