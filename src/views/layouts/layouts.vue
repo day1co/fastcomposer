@@ -17,12 +17,7 @@
         <button @click="selected(layout)" @focus="focus(index)"
                 class="fc-layout__list__button"
                 :class="{ active: index === layoutIndex }">
-          <img :src="layout.icon" alt="" />
-          <div class="fc-layout__list__item__info">
-            <strong class="fc-layout__list__item__name">{{ layout.id }}</strong>
-            <br />
-            {{ layout.description }}
-          </div>
+          <layout-info :layout="layout" />
         </button>
         <button @click="onAddFavoriteLayout(layout.id)"
                 class="fc-layout__list__favorite"
@@ -36,7 +31,12 @@
   </div>
 </template>
 <script>
+  import LayoutInfo from '../../components/layout-info.vue';
+
   export default {
+    components: {
+      LayoutInfo
+    },
     props: {
       layouts: {
         type: Array,
@@ -119,6 +119,7 @@
     width: 40rem;
     padding-bottom:2rem;
     z-index: 9999;
+    color: white;
 
     &__list {
       overflow: scroll;
@@ -132,25 +133,13 @@
       &__item {
         display: flex;
         flex-direction: row;
-
-        &__info {
-          flex: 1;
-          padding-top: 0.4rem;
-          padding-left: 1rem;
-          padding-bottom: 0.4rem;
-          text-align: left;
-          color: $white;
-          line-height: 1.5em;
-        }
-        &__name {
-          @include readable-font-features;
-        }
       }
 
       &__button {
         display: flex;
         flex-grow: 100;
         margin-right: 0.8rem;
+        color: inherit;
       }
       &__favorite {
         color: $white;

@@ -21,11 +21,7 @@
           <label :for="`layer-${index}`" >
             <input :id="`layer-${index}`" type="checkbox" v-model="layer.isChecked"/>
           </label>
-          <img :src="layer.layout.icon" alt="layer.layout.id" />
-          <span class="__item__group__info">
-            <strong class="__item__group__name">{{ layer.layout.id }}</strong>
-            {{ layer.layout.description }}
-          </span>
+          <layout-info :layout="layer.layout"></layout-info>
         </div>
         <div class="__utils">
           <button class="__utils__btn" @click="onToggle(index)">
@@ -45,11 +41,13 @@
   </Container>
 </template>
 <script>
+  import LayoutInfo from '../../components/layout-info.vue';
   import { Container, Draggable } from "vue-smooth-dnd";
   import EventBus from '../../event-bus/event-bus';
 
   export default {
     components: {
+      LayoutInfo,
       Container,
       Draggable,
     },
@@ -189,18 +187,6 @@
       color: $white;
       line-height: 2rem;
 
-      &__info {
-        flex: 1;
-        padding-top: 0.5rem;
-        padding-left: 1rem;
-        padding-bottom: 0.5rem;
-        text-align: left;
-      }
-      &__name {
-        @include readable-font-features;
-        display: block;
-        font-size: 1.6rem;
-      }
       label {
         display: inline-block;
         align-self: center;

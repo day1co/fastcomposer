@@ -1,13 +1,6 @@
 <template>
   <div class="fc-editor">
-    <header class="fc-editor__current-layout">
-      <img :src="layer.layout.icon" :alt="layer.layout.id" />
-      <p class="__item__group__info">
-        <strong class="__item__group__name">{{ layer.layout.id }}</strong>
-        <br />
-        {{ layer.layout.description }}
-      </p>
-	</header>
+    <layout-info :layout="layer.layout" />
     <form v-if="layer.layout" class="fc-editor__form" @submit.prevent="">
       <fieldset v-for="param in layer.layout.params" :key="param.name" class="fc-editor__form__fieldset">
         <label class="fc-editor__form__label" :for="toInputId(param)">
@@ -158,13 +151,15 @@
 
 <script>
 import EventBus from '../../event-bus/event-bus';
+import LayoutInfo from '../../components/layout-info.vue';
 import FileUpload from './file-upload.vue';
 import Tooltip from '../../components/tooltip/tooltip';
 
 export default {
   components: {
-    Tooltip,
+    LayoutInfo,
     FileUpload,
+    Tooltip,
   },
   props: {
     layer: {
@@ -242,18 +237,8 @@ export default {
 .fc-editor {
   position: relative;
 
-  &__current-layout {
-    display: flex;
+  > .fc-layout-info  {
     margin-bottom: 0.8rem;
-    line-height: 2.4rem;
-
-    strong {
-      @include readable-font-features;
-      font-size: 1.6rem;
-    }
-    > img {
-      margin-right: 0.8rem;
-    }
   }
   &__edit {
     /*display: none;*/

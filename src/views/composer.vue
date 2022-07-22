@@ -784,14 +784,14 @@
         flex-grow: 10000;
         text-align: center;
       }
+      .material-icons {
+        vertical-align: top;
+      }
     }
     &__content {
       display: flex;
       flex-direction: column;
       width: 100%;
-      span {
-        vertical-align: top;
-      }
     }
 
     &__container {
