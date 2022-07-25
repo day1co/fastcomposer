@@ -224,7 +224,7 @@
   import { cloneDeep } from 'lodash';
   import { uniqueId, restructureLayouts } from '../utils/utils';
   import EventBus from './../event-bus/event-bus';
-  import marked from 'marked';
+  import { parse as marked } from 'marked';
   import Toast from '../components/toast/toast';
   import Dialog from '../components/dialog/dialog';
   import ComposerHeader from './header/header.vue';

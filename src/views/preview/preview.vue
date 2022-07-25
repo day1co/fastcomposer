@@ -37,7 +37,7 @@
 
 <script>
   import EventBus from '../../event-bus/event-bus';
-  import marked from 'marked';
+  import { parse as marked } from 'marked';
 
   export default {
     props: {

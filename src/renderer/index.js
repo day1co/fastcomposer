@@ -1,4 +1,4 @@
-import marked from 'marked';
+import { parse as marked } from 'marked';
 import { restructureLayouts } from '../utils/utils';
 
 export const render = (layouts, layers) => {
