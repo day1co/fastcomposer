@@ -7,6 +7,20 @@
       "name": "title",
       "type": "text",
       "description": "title text"
+    },
+    {
+      "name": "contentSize",
+      "type": "select",
+      "description": "content size",
+      "options": [
+        "fc-h1-text",
+        "fc-h2-text",
+        "fc-h3-text",
+        "fc-h4-text",
+        "fc-h5-text",
+        "fc-h6-text",
+        "fc-content-text"
+      ]
     }
   ],
   "values": {
