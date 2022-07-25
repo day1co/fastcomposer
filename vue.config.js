@@ -1,5 +1,10 @@
 
 module.exports = {
+  devServer: {
+    client: {
+      progress: false
+    }
+  },
   chainWebpack: config => {
     config.module
       .rule('ejs')
