@@ -1,25 +1,25 @@
 <template>
   <div class="fc-file-upload">
-    <div class="progress">
-      <div class="progress-bar" :style="`width: ${ statePercent }%`"></div>
-    </div>
     <template v-if="state === 'READY'">
       <form enctype="multipart/form-data">
         <input type="file" :name="name" :accept="accept" @change="upload($event.target.files)" />
       </form>
     </template>
     <template v-if="state === 'UPLOADING'">
-      <div>업로드 중</div>
+      <div> 업로드 중 </div>
       <button type="button" @click="cancel">취소</button>
     </template>
     <template v-if="state === 'ERROR'">
-      <div>업로드 실패</div>
+      <div> 업로드 실패 </div>
       <button type="button" @click="cancel">취소</button>
     </template>
     <template v-if="state === 'UPLOADED'">
-      <div>업로드 완료</div>
+      <div> 업로드 완료 </div>
       <button type="button" @click="cancel">취소</button>
     </template>
+    <div class="progress" v-if="state !== 'READY'">
+      <div class="progress-bar" :style="`width: ${ statePercent }%`"></div>
+    </div>
   </div>
 </template>
 
