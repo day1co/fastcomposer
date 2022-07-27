@@ -77,10 +77,19 @@
               </button>
             </header>
             <header class="fc-aside__header">
-              <button class="btn" @click="onUpBlock" :disabled="!checkedCount">
+              <button class="btn narrow" @click="onSelectToggleAll" :disabled="!layers.length">
+                <span class="material-icons">{{
+                  checkedCount?
+                    checkedCount === layers.length?
+                      'check_box'
+                    : 'indeterminate_check_box'
+                 : 'check_box_outline_blank'
+                }}</span>
+              </button>
+              <button class="btn narrow" @click="onUpBlock" :disabled="!checkedCount || layers.length < 2">
                 <span class="material-icons">arrow_upward</span>
               </button>
-              <button class="btn" @click="onDownBlock" :disabled="!checkedCount">
+              <button class="btn narrow" @click="onDownBlock" :disabled="!checkedCount || layers.length < 2">
                 <span class="material-icons">arrow_downward</span>
               </button>
               <label class="fc-aside__header__label">
@@ -336,6 +345,10 @@
         }
 
         this.localStorageService.set(this.favoriteLayoutIds);
+      },
+      onSelectToggleAll() {
+        const to = !(this.checkedCount === this.layers.length)
+        this.layers.forEach(layer => this.$set(layer, 'isChecked', to))
       },
       onUpBlock() {
         const checkedLayer = this.layers.filter(layer => layer.isChecked);
@@ -851,8 +864,9 @@
           padding: 0 0.4rem;
           line-height: 2.4rem;
         }
-        &:hover {
-          background: #0002;
+        &.narrow {
+          padding-right: 0;
+          padding-left: 0;
         }
       }
 
