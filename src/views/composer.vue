@@ -643,7 +643,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 10000;
+    z-index: 20000;
     &__content {
       position: absolute;
       top: 0;
@@ -777,7 +777,7 @@
   .fc-aside {
     display: flex;
     position: relative;
-    z-index: 10;
+    z-index: 10000;
     box-sizing: border-box;
     padding-bottom: 2rem;
     /* width: 0; */
