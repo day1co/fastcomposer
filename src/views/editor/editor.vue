@@ -221,10 +221,9 @@ export default {
     toInputId(param, child, index) {
       let id = this.layer.id
       id += '--' + param.name
-      id += '-' + param.type
       if(child && index >= 0) {
-        id += '-n' + index
-        id += '-' + child.type
+        id += '-item' + index
+        id += '-' + child.name
       }
       return id
     }
