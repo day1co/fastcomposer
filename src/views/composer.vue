@@ -843,6 +843,9 @@
         &:disabled {
           opacity: 0.3333;
         }
+        &:hover {
+          background: #8886;
+        }
 
         label {
           padding: 0 0.4rem;

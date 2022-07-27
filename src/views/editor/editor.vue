@@ -51,6 +51,14 @@
           </select>
         </template>
 
+        <template v-else-if="param.type === 'text'">
+          <textarea
+            :id="toInputId(param)"
+            v-model="layer.values[param.name]"
+            class="fc-editor__form__textarea fc-editor__form__textarea--short"
+          ></textarea>
+        </template>
+
         <template v-else-if="param.type === 'list'">
           <div class="fc-editor__list">
             <div v-for="(item, index) in layer.values[param.name]" :key="index" class="fc-editor__list-item">
@@ -109,6 +117,14 @@
                     <option v-for="(option, index) in childParams.options" :key="index">{{ option }}</option>
                   </select>
                 </template>
+                <template v-else-if="childParams.type === 'text'">
+                  <textarea
+                    :id="toInputId(param, childParams, index)"
+                    v-model="item[childParams.name]"
+                    class="fc-editor__form__textarea fc-editor__form__textarea--short"
+                  ></textarea>
+                </template>
+
                 <template v-else>
                   <input
                     :id="toInputId(param, childParams, index)"
@@ -257,6 +273,8 @@ export default {
       font-size: 1.4rem;
       align-items: baseline;
 
+      user-select: none;
+
       > small {
         font-size: 1.2rem;
         margin-left: 0.4rem;
@@ -279,42 +297,106 @@ export default {
     &__textarea, &__input, &__select {
       @include readable-font-features;
       box-sizing: border-box;
-      display: block;
       border: none;
-      padding-left: 0.8rem;
-      width: 100%;
+      padding: 0 0 0 0.8rem;
 
       font-size: 1.4rem;
+      line-height: 2.2rem;
 
-      background-color: #080808;
-      color: white;
+      background-color: #242424;
+      color: #eee;
       outline: 0 none;
+      border-bottom: 0.2rem solid #444;
 
-      @include transition(background-color, 0.2s);
+      transition: background-color 250ms ease, border-color 250ms ease;
 
       &:focus {
-        background-color: darken(#1a237e, 15%);
+        background-color: #404040;
+        border-color: #eee;
       }
 
       &::selection {
         background: white;
-        color: black;
       }
+    }
+
+    &__textarea, &__input, &__select {
+      display: block;
+      width: 100%;
     }
 
     &__textarea {
       resize: vertical;
-      padding-top: 0.8rem;
+      padding-top: 0.4rem;
+      min-height: 3.4rem;
+      max-height: 32rem;
+
+      &--short {
+        height: 3.4rem;
+      }
     }
 
     &__input, &__select {
-      height: 2.5em;
-      line-height: 1.5em;
+      height: 3.4rem;
     }
 
     &__select {
-      padding-right: 0.4rem;
-      padding-left: 0.4rem;
+      padding: 0.8rem 0.4rem;
+    }
+
+    input[type="file"] {
+      color: #888;
+      cursor: pointer;
+    }
+    ::file-selector-button {
+      background-color: #8883;
+      color: inherit;
+      border: none;
+      padding: 0.2rem 0.6rem;
+
+      border: 0.2rem solid #444;
+
+      cursor: pointer;
+      transition: background-color 250ms ease, border-color 250ms ease;
+
+      &:hover {
+        background-color: #8884;
+      }
+      &:active {
+        background-color: #8885;
+      }
+      &:active, &:focus {
+        border-color: #eee;
+      }
+    }
+
+    ::-webkit-inner-spin-button {
+      margin-right: 0.4rem;
+    }
+
+    .fc-file-upload {
+      display: flex;
+      flex-wrap: wrap;
+      color: inherit;
+      margin-top: 0.4rem;
+
+      button {
+        margin-left: auto;
+        color: inherit;
+      }
+
+      .progress {
+        width: 100%;
+        height: 0.4rem;
+        margin: 0.4rem 0 0 0;
+        background: $primary;
+        border-radius: 0;
+
+        &-bar {
+          height: 100%;
+          background: #fff;
+        }
+      }
     }
 
     .required {
@@ -327,7 +409,7 @@ export default {
   &__list {
     &-item {
       border-left: 0.4rem solid $primary;
-      padding-left: 1.6rem;
+      padding-left: 1.2rem;
       margin-bottom: 1.2rem;
 
       &:nth-child(2n + 1) {
@@ -336,7 +418,7 @@ export default {
     }
     &-tools {
       display: flex;
-      margin-left: -0.8rem;
+      margin-left: -0.6rem;
       line-height: 2.6rem;
 
       button {
