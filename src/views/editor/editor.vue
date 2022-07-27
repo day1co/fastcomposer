@@ -232,7 +232,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '../../assets/scss/utils/utilities';
 .fc-editor {
   position: relative;
