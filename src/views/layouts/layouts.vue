@@ -118,7 +118,7 @@
     right: 4rem;
     width: 40rem;
     padding-bottom:2rem;
-    z-index: 9999;
+    z-index: 19999;
     color: white;
 
     &__list {
