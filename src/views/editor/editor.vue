@@ -349,25 +349,31 @@ export default {
     input[type="file"] {
       color: #888;
       cursor: pointer;
-    }
-    ::file-selector-button {
-      background-color: #8883;
-      color: inherit;
-      border: none;
-      padding: 0.2rem 0.6rem;
+      outline: none;
 
-      border: 0.2rem solid #555;
+      &::file-selector-button {
+        background-color: #8883;
+        color: inherit;
+        border: none;
+        padding: 0.2rem 0.6rem;
 
-      cursor: pointer;
-      transition: background-color 250ms ease, border-color 250ms ease;
+        border: 0.2rem solid #555;
 
-      &:hover {
-        background-color: #8884;
+        cursor: pointer;
+        transition: background-color 250ms ease, border-color 250ms ease;
+
+        &:hover {
+          background-color: #8884;
+        }
+        &:active {
+          background-color: #8885;
+        }
+        &:active, &:focus {
+          border-color: #eee;
+        }
       }
-      &:active {
+      &:focus::file-selector-button {
         background-color: #8885;
-      }
-      &:active, &:focus {
         border-color: #eee;
       }
     }
