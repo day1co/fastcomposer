@@ -308,7 +308,7 @@ export default {
       background-color: #242424;
       color: #eee;
       outline: 0 none;
-      border-bottom: 0.2rem solid #444;
+      border-bottom: 0.2rem solid #555;
 
       transition: background-color 250ms ease, border-color 250ms ease;
 
@@ -356,7 +356,7 @@ export default {
       border: none;
       padding: 0.2rem 0.6rem;
 
-      border: 0.2rem solid #444;
+      border: 0.2rem solid #555;
 
       cursor: pointer;
       transition: background-color 250ms ease, border-color 250ms ease;
