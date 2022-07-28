@@ -52,11 +52,12 @@
         </template>
 
         <template v-else-if="param.type === 'text'">
-          <textarea
+          <input
+            type="text"
             :id="toInputId(param)"
             v-model="layer.values[param.name]"
-            class="fc-editor__form__textarea fc-editor__form__textarea--short"
-          ></textarea>
+            class="fc-editor__form__input"
+          />
         </template>
 
         <template v-else-if="param.type === 'list'">
@@ -118,11 +119,12 @@
                   </select>
                 </template>
                 <template v-else-if="childParams.type === 'text'">
-                  <textarea
+                  <input
+                    type="text"
                     :id="toInputId(param, childParams, index)"
                     v-model="item[childParams.name]"
-                    class="fc-editor__form__textarea fc-editor__form__textarea--short"
-                  ></textarea>
+                    class="fc-editor__form__input"
+                  />
                 </template>
 
                 <template v-else>
