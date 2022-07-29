@@ -56,6 +56,8 @@
             :id="toInputId(param)"
             v-model="layer.values[param.name]"
             class="fc-editor__form__textarea fc-editor__form__textarea--short"
+            @focus="resizeTextarea"
+            @input="resizeTextarea"
           ></textarea>
         </template>
 
@@ -122,6 +124,8 @@
                     :id="toInputId(param, childParams, index)"
                     v-model="item[childParams.name]"
                     class="fc-editor__form__textarea fc-editor__form__textarea--short"
+                    @focus="resizeTextarea"
+                    @input="resizeTextarea"
                   ></textarea>
                 </template>
 
@@ -242,6 +246,13 @@ export default {
         id += '-' + child.name
       }
       return id
+    },
+    resizeTextarea(event) {
+      const { target } = event
+      const { scrollHeight, clientHeight } = target
+      if(scrollHeight > clientHeight) {
+        target.style.height = (scrollHeight + 4) + 'px'
+      }
     }
   },
 };
