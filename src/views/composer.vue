@@ -797,7 +797,7 @@
         flex-grow: 10000;
         text-align: center;
       }
-      .material-icons {
+      small, .material-icons {
         vertical-align: top;
       }
     }
@@ -813,6 +813,10 @@
       padding: 1.2rem 0.9rem 11rem;
       height: percentage(1);
       background-color: $secondary;
+
+      .fc-aside--right & {
+        padding: 0;
+      }
     }
 
     &__btn {
