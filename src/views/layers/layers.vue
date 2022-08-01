@@ -5,6 +5,7 @@
         class="__item"
         :class="{
           '__item--active': index === currentLayerIndex,
+          '__item--checked': layer.isChecked,
           '__item--hidden': layer.hidden,
           'has-syntax-error-tags': layer.hasSyntaxErrorTags
         }"
@@ -197,6 +198,11 @@
         text-decoration: line-through;
       }
     }
+    &--checked {
+       .__item__group label .material-icons {
+        color: #fffe;
+      }
+    }
     &__group {
       display: flex;
       flex-direction: row;
@@ -210,7 +216,7 @@
 
         > .material-icons {
           vertical-align: top;
-          color: #fff8;
+          color: #fff6;
         }
       }
     }
