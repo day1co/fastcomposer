@@ -3,7 +3,11 @@
     <Draggable class="fc-layer" v-for="(layer, index) in layers" :key="index">
       <div
         class="__item"
-        :class="{ '__item--active': index === currentLayerIndex, 'has-syntax-error-tags': layer.hasSyntaxErrorTags }"
+        :class="{
+          '__item--active': index === currentLayerIndex,
+          '__item--hidden': layer.hidden,
+          'has-syntax-error-tags': layer.hasSyntaxErrorTags
+        }"
         tabindex="0"
         @keydown.exact.enter.prevent="focusEditor"
         @keydown.exact.shift.up="updateCheckedState(currentLayerIndex - 1, $event)"
@@ -19,9 +23,10 @@
       >
         <div class="__item__group" v-if="layer.layout" @click="onSelect(index, $event, layer)">
           <label :for="`layer-${index}`" >
-            <input :id="`layer-${index}`" type="checkbox" v-model="layer.isChecked"/>
+            <input :id="`layer-${index}`" type="checkbox" v-model="layer.isChecked" style="display: none" />
+            <i class="material-icons">{{ layer.isChecked? 'check_box' : 'check_box_outline_blank' }}</i>
           </label>
-          <layout-info :layout="layer.layout"></layout-info>
+          <layout-info :layout="layer.layout" class="small"></layout-info>
         </div>
         <div class="__utils">
           <button class="__utils__btn" @click="onToggle(index)">
@@ -159,15 +164,20 @@
     },
   }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   @import '../../assets/scss/utils/utilities';
-  .__item {
+  .fc-layer {
+    overflow: visible !important;
+    z-index: 10001 !important; /* overrided INLINE by vue plugin :facepalm: */
+  }
+  .fc-layer .__item {
     position: relative;
-    margin-bottom: 0.2rem;
-    padding: 0.4rem;
+    margin: 0.3rem 0 0 0.3rem;
+    padding: 0.4rem 0.4rem 0.4rem 0;
     cursor: pointer;
-    background: #1a237e;
+    background: $primary;
     font-size: 1.4rem;
+
     &:focus {
       outline-style: none;
     }
@@ -178,7 +188,14 @@
       }
     }
     &--active {
-      box-shadow: 0 0 0 0.3rem #ffffff inset;
+      background: lighten($primary, 15%);
+      box-shadow: 0 0 0 0.3rem #ffffff;
+    }
+    &--hidden .fc-layout-info {
+      opacity: 0.5;
+      strong {
+        text-decoration: line-through;
+      }
     }
     &__group {
       display: flex;
@@ -190,16 +207,22 @@
       label {
         display: inline-block;
         align-self: center;
+
+        > .material-icons {
+          vertical-align: top;
+          color: #fff8;
+        }
       }
     }
-  }
-  .__utils {
-    position: absolute;
-    top: 0.4rem;
-    right: 0.4rem;
 
-    &__btn {
-      color: transparentize($white, 0.5);
+    .__utils {
+      position: absolute;
+      top: 0.4rem;
+      right: 0.4rem;
+
+      &__btn {
+        color: #fff8;
+      }
     }
   }
 </style>

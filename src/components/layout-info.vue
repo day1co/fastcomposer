@@ -39,6 +39,10 @@ export default {
 
     margin-right: 0.8rem;
   }
+  &.small &__icon {
+    width: $layer-icon-size * 0.64;
+    height: $layer-icon-size * 0.64;
+  }
 
   &__label {
     line-height: 2rem;
@@ -46,6 +50,14 @@ export default {
     > strong {
       @include readable-font-features;
       font-size: 1.6rem;
+    }
+  }
+  &.small &__label {
+    line-height: 1.6rem;
+    font-size: 1.2rem;
+
+    > strong {
+      font-size: 1.4rem;
     }
   }
 }
