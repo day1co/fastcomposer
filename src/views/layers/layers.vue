@@ -174,7 +174,7 @@
   .fc-layer .__item {
     position: relative;
     margin: 0.3rem 0 0 0.3rem;
-    padding: 0.4rem 0.4rem 0.4rem 0;
+    padding: 0;
     cursor: pointer;
     background: $primary;
     font-size: 1.4rem;
@@ -205,19 +205,24 @@
     }
     &__group {
       display: flex;
+      align-items: stretch;
       flex-direction: row;
       width: percentage(1);
       color: $white;
       line-height: 2rem;
 
       label {
-        display: inline-block;
-        align-self: center;
+        display: inline-flex;
+        align-self: stretch;
+        align-items: center;
 
         > .material-icons {
           vertical-align: top;
           color: #fff6;
         }
+      }
+      .fc-layout-info {
+        padding: 0.4rem 0;
       }
     }
 
