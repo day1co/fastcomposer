@@ -779,7 +779,6 @@
     position: relative;
     z-index: 10000;
     box-sizing: border-box;
-    padding-bottom: 2rem;
     /* width: 0; */
     width: 100%;
     max-width: $sidebar-size;
