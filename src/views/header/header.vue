@@ -10,6 +10,7 @@
         <span v-show="saveTime">・ 최종 저장: {{ saveTime }}</span>
       </span>
     </div>
+    <!-- TODO: move/reimpl elsewhere -->
     <ul class="fc-header__favorite-layouts" v-if="favoriteLayouts.length">
       <li class="fc-header__favorite-layout" v-for="(layout, index) in favoriteLayouts" :key="index">
         <button class="fc-header__favorite-btn" @click="addLayer(layout)">
@@ -45,6 +46,7 @@
       }
     },
     props: {
+      // TODO cleanup unknowns & dirties (where's notif?) */
       favoriteLayoutIds: {
         type: Array,
         default() {
@@ -121,6 +123,7 @@
     transform: none; // admin과 충돌 이슈
     transition: none;  // admin과 충돌 이슈
 
+    /* TODO reconsider with other layout elms */
     &--no-favorites {
       height: $header-size * 0.5;
 

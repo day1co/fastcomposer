@@ -1,6 +1,7 @@
 <template>
   <div class="fc-editor">
     <layout-info :layout="layer.layout" />
+    <!-- TODO - rewrite with <edit> component -->
     <form v-if="layer.layout" class="fc-editor__form" @submit.prevent="">
       <fieldset v-for="param in layer.layout.params" :key="param.name" class="fc-editor__form__fieldset">
         <label class="fc-editor__form__label" :for="toInputId(param)">
@@ -271,7 +272,7 @@ export default {
     position: relative;
     margin: 0 1.8rem 1.2rem;
   }
-
+  /* TODO will be refactored into separated components (all below this) */
   &__form {
 
     &__fieldset {
