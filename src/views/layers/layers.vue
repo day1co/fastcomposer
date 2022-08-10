@@ -198,6 +198,7 @@
         text-decoration: line-through;
       }
     }
+    /* TODO cleanup */
     &--checked {
        .__item__group label .material-icons {
         color: #fffe;

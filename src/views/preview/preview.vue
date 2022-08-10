@@ -116,6 +116,8 @@
       }
 
       &::after {
+        /* FIXME some layouts collide with this due to z-index */
+        /* remove those OR somehow just solve it (by creating new stack context? idk) */
         display: block;
         content: '';
         width: calc(100% - $gutter-width);

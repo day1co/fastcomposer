@@ -350,6 +350,7 @@
         const to = !(this.checkedCount === this.layers.length)
         this.layers.forEach(layer => this.$set(layer, 'isChecked', to))
       },
+      // FIXME this whole up/down logics totally does not work
       onUpBlock() {
         const checkedLayer = this.layers.filter(layer => layer.isChecked);
         const { uniqueId } = checkedLayer[0];
@@ -468,6 +469,7 @@
         $targetLayer && $targetLayer.scrollIntoView({ block: 'center' });
       },
       onUploadFile(fileInfo, callback) {
+        // FIXME ???
         this.$emit('uploadFile', fileInfo, callback);
       },
       setLayouts(layouts) {
@@ -544,6 +546,7 @@
       onShowLayouts() {
         this.$refs.layouts.toggle();
       },
+      // TODO what does focuses do?
       focusEditor() {
         this.isLeftVisible = true;
         this.$refs.editor.focus();
@@ -784,6 +787,7 @@
     max-width: $sidebar-size;
     color: $white;
 
+    /* TODO rewrite markup (dirty class names/selectors) */
     &__header {
       width: 100%;
       display: flex;
@@ -818,6 +822,8 @@
       }
     }
 
+    /* TODO rewrite markup (dirty class names/selectors) */
+    /* (yes, whole header buttons) */
     &__btn {
       position: absolute;
       top: 50%;

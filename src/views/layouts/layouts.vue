@@ -11,6 +11,7 @@
        @keydown.exact.page-down.prevent="focus(layoutIndex + 5)"
        @keydown.exact.esc.prevent="toggle"
   >
+    <!-- TODO: favorite layouts here? reimpl as sidebar?-->
     <ul class="fc-layout__list">
       <li v-for="(layout, index) in layouts" :key="index"
           class="fc-layout__list__item">
