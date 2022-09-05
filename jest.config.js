@@ -1,9 +1,10 @@
 module.exports = {
-  moduleFileExtensions: ['js'],
+  moduleFileExtensions: ['js', 'ts'],
+  extensionsToTreatAsEsm: ['.ts'],
   transform: {
-    '^.+\\.js?$': 'babel-jest',
+    '^.+\\.[jt]s?$': 'babel-jest',
   },
   testEnvironment: 'node',
-  testMatch: ['<rootDir>/**/*.spec.js'],
+  testMatch: ['<rootDir>/**/*.spec.js', '<rootDir>/**/*.spec.ts'],
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
 };
