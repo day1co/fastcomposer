@@ -9,6 +9,10 @@ export default class Layout {
   constructor(
     public readonly id: string,
     public readonly description: string,
+    /* TODO:
+     - use Map instead of Array
+     - then... add 'payload order'? or just trust Map's ordering?
+     */
     public readonly params: Array<LayoutParameter>
   ) {}
 
