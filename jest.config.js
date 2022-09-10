@@ -1,11 +1,22 @@
 module.exports = {
   preset: 'ts-jest/presets/default',
   moduleFileExtensions: ['js', 'ts'],
-  // extensionsToTreatAsEsm: ['.ts'], // ¯\_(ツ)_/¯
+  // ↓ DO NOT try to make test work w/ node16 esmodule support
+  // ↓ it's almost unable to mock and totally unable to diag
+  // extensionsToTreatAsEsm: ['.ts'],
   transform: {
-    '^.+\\.[t]s?$': [ 'ts-jest', { useESM: false } ]
+    '^.+\\.ts$': [ 'ts-jest', {
+      useESM: false,
+      diagnostics: {
+        ignoreCodes: [
+          'TS151001' // If you have issues related to imports, …
+        ]
+      }
+    } ]
   },
   testEnvironment: 'node',
   testMatch: ['<rootDir>/**/*.spec.js', '<rootDir>/**/*.spec.ts'],
-  transformIgnorePatterns: ['<rootDir>/node_modules/']
+  transformIgnorePatterns: ['<rootDir>/node_modules/'],
+
+  resetMocks: true
 };
