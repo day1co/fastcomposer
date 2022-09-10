@@ -1,10 +1,11 @@
 module.exports = {
+  preset: 'ts-jest/presets/default',
   moduleFileExtensions: ['js', 'ts'],
-  extensionsToTreatAsEsm: ['.ts'],
+  // extensionsToTreatAsEsm: ['.ts'], // ¯\_(ツ)_/¯
   transform: {
-    '^.+\\.[jt]s?$': 'babel-jest',
+    '^.+\\.[t]s?$': [ 'ts-jest', { useESM: false } ]
   },
   testEnvironment: 'node',
   testMatch: ['<rootDir>/**/*.spec.js', '<rootDir>/**/*.spec.ts'],
-  transformIgnorePatterns: ['<rootDir>/node_modules/'],
+  transformIgnorePatterns: ['<rootDir>/node_modules/']
 };

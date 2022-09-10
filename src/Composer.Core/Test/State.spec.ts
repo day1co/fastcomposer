@@ -1,9 +1,9 @@
-import {jest} from '@jest/globals'
+import { jest } from '@jest/globals'
+
+import * as setup from './setup'
 
 import Act from '../Act'
 import State from '../State'
-
-import * as setup from './setup'
 
 describe('Main State Manager', () => {
 
