@@ -2,8 +2,7 @@ import type Act from './Act'
 import type Path from './Structs/Path'
 import type Layout from './Layout'
 
-import uniqueId from './Util/uniqueId'
-import clone from './Util/clone'
+import { clone, uniqueId } from './Util'
 
 export default class Layer {
 

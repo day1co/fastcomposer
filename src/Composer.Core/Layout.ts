@@ -2,8 +2,7 @@ import type LayoutParameter from './Structs/LayoutParameter'
 
 import Layer from './Layer'
 
-import uniqueId from './Util/uniqueId'
-import clone from './Util/clone'
+import { clone, uniqueId } from './Util'
 
 export default class Layout {
   constructor(
