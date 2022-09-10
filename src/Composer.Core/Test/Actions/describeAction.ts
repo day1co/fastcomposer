@@ -20,7 +20,7 @@ export default function describeAction(
   // place helpers inside closuers to (maybe)make use of local scope
   const helpers: any = {
     mocked: {
-      uniqueId: jest.mocked(uniqueId)
+      uniqueId: <jest.Mocked<typeof uniqueId>>jest.mocked(uniqueId)
     },
     createStateWithActionAlone(layouts = setup.MinimalLayouts) {
       const action = Actions.get(actionName)
@@ -34,11 +34,5 @@ export default function describeAction(
     }
   }
 
-  describe('Action: ' + actionName, (...args) => {
-    beforeEach(() => {
-      jest.resetAllMocks()
-    })
-
-    cb(helpers, ...args)
-  })
+  describe('Action: ' + actionName, (...args) => cb(helpers, ...args))
 }
