@@ -162,12 +162,12 @@ export default class State {
   }
   duplicateLayer(after: Path, layerId?: string) {
     const index = this.pathToIndex(after)
-    if(!index)
+    if(index == null)
       throw new Error()
     const oldLayer = this._state[index]
     const newLayer = oldLayer.clone(layerId)
     
-    this._state.splice(index, 0, newLayer)
+    this._state.splice(index + 1, 0, newLayer)
 
     return newLayer
   }
