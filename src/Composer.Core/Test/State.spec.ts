@@ -13,7 +13,7 @@ describe('Main State Manager', () => {
 
   it('should be able to initiate normally', () => {
     const state = new State(setup.MinimalLayouts, setup.MinimalActions)
-    
+
     expect(state._actions.size).toBe(1)
     expect(state._layouts.size).toBe(1)
   })
@@ -33,12 +33,12 @@ describe('Main State Manager', () => {
 
     const act = new Act('noop')
     const rememberedAct = state.perform(act)!;
-    
+
     expect(perform).toBeCalledWith(state, act)
     expect(rememberedAct.remember).toBeTruthy()
 
     state.rollback(rememberedAct)
-    
+
     expect(rollback).toBeCalledWith(state, rememberedAct)
   })
 
@@ -62,7 +62,7 @@ describe('Main State Manager', () => {
     expect(rollback).toBeCalledWith(state, rememberedAct)
     expect(state._history.length).toEqual(0)
     expect(state._future.length).toEqual(1)
-    
+
     state.redo()
 
     expect(perform).toHaveBeenNthCalledWith(2, state, rememberedAct)
