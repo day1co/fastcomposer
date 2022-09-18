@@ -5,7 +5,7 @@ import type Path from '../Structs/Path'
 export default interface Action {
   id: string
   perform(self: State, act: Act): Act
-  compose?(self: State, act: Act, previousAct: Act): Act | undefined
+  compose?(self: State, previousAct: Act, act: Act): Act
   rollback(self: State, rememberedAct: Act): Path | undefined
   doNotRemember?: boolean
   // TODO: icon/stringifier/whatever for user interfaces
