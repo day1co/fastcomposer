@@ -5,17 +5,17 @@ describeAction('layer.new', helpers => {
 
   it('should work: do, undo, redo', () => {
     const state = helpers.createState()
-    const act = helpers.createAct(null, setup.MinimalLayout.id)
 
+    let act = helpers.createAct(null, setup.MinimalLayout.id)
     helpers.mocked.uniqueId.mockReturnValueOnce('a')
-    
-    state.perform(act)
-    
+    act = state.perform(act)
+
+    expect(act.destination.layer).toEqual('a')
     expect(state._state.length).toEqual(1)
     expect(state._state[0].id).toBe('a')
 
     // undo
-    
+
     state.undo()
     expect(state._state.length).toEqual(0)
 

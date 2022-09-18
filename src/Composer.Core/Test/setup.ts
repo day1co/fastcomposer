@@ -4,7 +4,7 @@ import Layout from '../Layout'
 import LayoutParameter from '../Structs/LayoutParameter'
 import ListLayoutParameter from '../Structs/ListLayoutParameter'
 
-export const MinimalLayoutDefinition = <Layout>{
+export const MinimalLayoutDefinition = {
   id: 'test',
   description: 'test layout type 0',
   params: [
@@ -13,7 +13,10 @@ export const MinimalLayoutDefinition = <Layout>{
       type: 'text',
       description: 'text'
     }
-  ]
+  ],
+  values: {
+    name: 'asdf'
+  }
 }
 
 export const MinimalLayout = Layout.fromDefinition(MinimalLayoutDefinition)
@@ -26,11 +29,11 @@ export const MinimalLayoutsAsObject = {
   [MinimalLayout.id]: MinimalLayout
 }
 
-export const ListLayout = Layout.fromDefinition(<Layout>{
+export const ListLayout = Layout.fromDefinition({
   id: 'test',
   description: 'test layout type 1 - includes all possible layout types',
   params: [
-    <ListLayoutParameter>{
+    {
       name: 'list',
       type: 'list',
       description: 'list',
