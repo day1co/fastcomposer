@@ -1,9 +1,11 @@
 import type Path from './Structs/Path'
+import { uniqueId } from './Util'
 
 export default class Act {
   capturedState?: any
   destination?: Path
   remembered: boolean = false
+  id: string
 
   constructor(
     public action: string,
@@ -12,7 +14,9 @@ export default class Act {
     public target?: Path,
     public arg?: any,
     public composable: boolean = false
-  ) {}
+  ) {
+    this.id = action + '#' + uniqueId()
+  }
 
   // this stores state BEFORE action performed
   remember(capturedState?: any, destination?: Path) {
