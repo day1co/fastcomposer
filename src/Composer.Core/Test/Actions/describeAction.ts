@@ -2,7 +2,7 @@ import { jest } from '@jest/globals'
 
 jest.mock('../../Util', () => ({
   ...<object>jest.requireActual('../../Util'),
-  uniqueId: jest.fn()
+  uniqueId: jest.fn().mockReturnValue('INVALID')
 }))
 
 import { uniqueId } from '../../Util'

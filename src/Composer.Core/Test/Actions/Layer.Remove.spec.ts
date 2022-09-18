@@ -6,14 +6,14 @@ describeAction('layer.remove', ['layer.new'], helpers => {
   it('should work: do, undo', () => {
     const state = helpers.createState()
 
-    helpers.mocked.uniqueId.mockReturnValueOnce('a')
 
     let actNew = helpers.createAct('layer.new', null, setup.MinimalLayout.id)
+    helpers.mocked.uniqueId.mockReturnValueOnce('a')
     actNew = state.perform(actNew)
     expect(actNew.destination.layer).toBe('a')
-    
-    const act = helpers.createAct(actNew.destination)
-    state.perform(act)
+
+    let act = helpers.createAct(actNew.destination)
+    act = state.perform(act)
     expect(state._state.length).toEqual(0)
 
     // undo

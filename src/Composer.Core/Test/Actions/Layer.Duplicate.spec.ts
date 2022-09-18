@@ -6,16 +6,16 @@ describeAction('layer.duplicate', ['layer.new'], helpers => {
   it('should work: do, undo, redo', () => {
     const state = helpers.createState()
 
-    helpers.mocked.uniqueId
-      .mockReturnValueOnce('a')
-      .mockReturnValueOnce('b')
-
     let actNew = helpers.createAct('layer.new', null, setup.MinimalLayout.id)
+    helpers.mocked.uniqueId.mockReturnValueOnce('a')
     actNew = state.perform(actNew)
+
     expect(actNew.destination.layer).toBe('a')
 
     let act = helpers.createAct(actNew.destination)
+    helpers.mocked.uniqueId.mockReturnValueOnce('b')
     act = state.perform(act)
+
     expect(state._state.length).toEqual(2)
     expect(act.destination.layer).toBe('b')
     // assert that duplicated layer to be placed AFTER of original
