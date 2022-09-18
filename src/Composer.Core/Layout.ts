@@ -1,33 +1,70 @@
 import type LayoutParameter from './Structs/LayoutParameter'
+import type { SingularLayoutParameter } from './Structs/LayoutParameter'
+import type ListLayoutParameter from './Structs/ListLayoutParameter'
+import type LegacyLayoutParameter from './Structs/LegacyLayoutParameter'
 
 import Layer from './Layer'
 
 import { clone, uniqueId } from './Util'
 
+const paramArrayToMap = (params: Array<LegacyLayoutParameter>):
+  Map<string, LayoutParameter> =>
+    new Map(params.map(param => [
+      param.name,
+      param.type === 'list'?
+        <ListLayoutParameter>{ ...param, params: paramArrayToMap(param.params) }
+      : <SingularLayoutParameter>param
+    ]))
+
 export default class Layout {
+
   constructor(
     public readonly id: string,
     public readonly description: string,
-    /* TODO:
-     - use Map instead of Array
-     - then... add 'payload order'? or just trust Map's ordering?
-     */
-    public readonly params: Array<LayoutParameter>
+    public readonly params: Map<string, LayoutParameter>,
+    public readonly defaultValues?: { [key: string]: any }
   ) {}
 
-  static fromDefinition({ id, description, params }: Layout) {
-    return new Layout(id, description, params)
+  static fromDefinition({ id, description, params, values = null }) {
+    // JSON definition were used
+    if(Array.isArray(params))
+      params = paramArrayToMap(params)
+
+    return new Layout(id, description, params, values)
   }
 
   get layout() {
     return <Layout>{
       id: this.id,
       description: this.description,
-      params: this.params 
+      params: this.params
     }
   }
 
   createLayer(id: string = uniqueId(), existingValue?: any): Layer {
-    return new Layer(id, this, existingValue ?? clone(this.layout.params))
+    return new Layer(id, this, existingValue ?? this.getDefualtValues())
+  }
+
+  getDefualtValues(key?: string) {
+    let params
+
+    if(key) {
+      const ldef = <ListLayoutParameter>this.params.get(key)
+      if(!ldef || ldef.type !== 'list')
+        throw new ReferenceError(`given key ${key} does not exist, or not a list`)
+
+      params = ldef.params
+    } else if(!this.defaultValues) {
+      params = this.params
+    } else {
+      return clone(this.defaultValues)
+    }
+
+    const entries = [ ...this.params.entries() ]
+
+    return Object.entries(entries.map(([ k, v ]) => [
+      k,
+      v.defaultValue || v.type === 'list'? [] : ''
+    ]))
   }
 }

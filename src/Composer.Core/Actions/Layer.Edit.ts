@@ -5,24 +5,28 @@ import type Act from '../Act'
 export default <Action>{
   id: 'layer.edit',
   perform(self, act) {
-    const { path, value } = act.arg!
+    const path = act.target!
+    const value = act.arg!
+
     const layer = self.getLayerByPath(path)
     if(!layer)
       throw new ReferenceError('attempted to edit nonexistent layer')
 
+    if(!act.remembered)
+      act.remember(layer.get(path))
+
     layer.set(path, value)
     return act
   },
-  compose(self, act, previousAct) {
-    if(previousAct.remembered ||
-      previousAct.action !== act.action ||
-      previousAct.target?.layer !== act.target?.layer ||
-      previousAct.target?.child !== act.target?.child)
-      return
-    
+  compose(self, previousAct, act) {
+    if(!previousAct.isComposableWith(act))
+      return false
 
+    previousAct.update(act.arg)
+    return previousAct
   },
   rollback(self, rememberedAct) {
-
+    rememberedAct.seal()
+    const oldPayload = rememberedAct.capturedState
   }
 }

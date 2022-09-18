@@ -53,45 +53,44 @@ export default class State {
     this._history.push(present)
     return present
   }
-  sealPresent() {
-    if(this._lastAct) {
-      this._lastAct.composable = false
-    }
-  }
 
   isComposable(action: Action) {
     return this._lastAct?.action === action.id
-        && this._lastAct.composable
-        && !this._lastAct.remembered
+        && this._lastAct.sealed
         && action.compose != null
   }
 
   perform(act: Act, isRedo?: boolean) {
     const action = this._actions.get(act.action)
-    if (!action)
+    if(!action)
       throw new Error(`No action specified or action not found (to ${isRedo ? 'redo' : 'perform'})`)
 
-    if (!isRedo && this.isComposable(action)) {
-      action.compose!(this, act, this._lastAct)
+    if(action.compose) {
+      action.compose(this, this._lastAct, act)
+      action.perform(this, this._lastAct)
     } else {
-      const history = action.perform(this, act)
+      action.perform(this, act)
+
       // TODO: move focus
 
-      if (!action.doNotRemember)
-        this._writePresent(history)
-      
-        return history // for what? idk
+      if(!action.doNotRemember)
+        this._writePresent(act)
+
+      if(!action.compose)
+        act.seal()
+
+      return act // for what? idk
     }
   }
 
   rollback(history: Act) {
     const action = this._actions.get(history.action)
-    if (!action)
+    if(!action)
       throw new Error('No action specified or action not found (to undo)')
 
-    history.composable = false
+    history.seal()
 
-    if (action.rollback) {
+    if(action.rollback) {
       const target = action.rollback(this, history)
       // TODO: move focus
     } else {
@@ -109,8 +108,7 @@ export default class State {
   }
   undo() {
     const present = this._getPast()
-    if (!present) return
-    present.composable = false
+    if(!present) return
     this.rollback(present)
   }
 
@@ -146,7 +144,7 @@ export default class State {
     const layer = this.createLayer(layoutId, layerId)
     const length = this._state.length
     const index = after? this.pathToIndex(after) ?? length : length
-    
+
     this._state.splice(index, 0, layer)
 
     return layer
@@ -157,7 +155,7 @@ export default class State {
     const index = after? this.pathToIndex(after) ?? length : length
 
     this._state.splice(index, 0, oldLayer)
-    
+
     return oldLayer
   }
   duplicateLayer(after: Path, layerId?: string) {
@@ -166,7 +164,7 @@ export default class State {
       throw new Error()
     const oldLayer = this._state[index]
     const newLayer = oldLayer.clone(layerId)
-    
+
     this._state.splice(index + 1, 0, newLayer)
 
     return newLayer
@@ -177,7 +175,7 @@ export default class State {
     const [ target ] = this._state.splice(from, 1)
 
     this._state.splice(to, 0, target)
-    
+
     // kindly tell back as indexes
     return [ from, to ]
   }

@@ -13,17 +13,41 @@ export default class Act {
     // b) subject of this action
     public target?: Path,
     public arg?: any,
-    public composable: boolean = false
+    public sealed: boolean = false
   ) {
     this.id = action + '#' + uniqueId()
   }
 
+  isComposableWith(act: Act) {
+    return this.action === act.action &&
+          !this.sealed &&
+           this.target?.layer === act.target?.layer &&
+           this.target?.child === act.target?.child &&
+           this.capturedState === act.capturedState // FIXME
+
+  }
+
   // this stores state BEFORE action performed
-  remember(capturedState?: any, destination?: Path) {
+  remember(capturedState?: any, destination?: Path, force: boolean = false) {
+    if(this.remembered && !force)
+      return
     this.remembered = true
     this.capturedState = capturedState
     this.destination = destination
-    
+
     return this
+  }
+
+  // this modifies act's argument AFTER performed, no idea atm tbh
+  update(arg: any) {
+    if(this.sealed)
+      return // TODO: throw?
+    this.arg = arg
+  }
+
+  // disable
+  seal() {
+    this.remembered = true
+    this.sealed = true
   }
 }

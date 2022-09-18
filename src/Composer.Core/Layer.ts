@@ -1,32 +1,20 @@
 import type Act from './Act'
+import type ListLayoutParameter from './Structs/ListLayoutParameter'
 import type Path from './Structs/Path'
 import type Layout from './Layout'
 
 import { clone, uniqueId } from './Util'
 
 export default class Layer {
+  public values: any
 
   constructor(
     public id: string,
     public layout: Layout,
-    public values: any
-  ) {}
-
-  getValueByPath(path: Path) {
-    if(!path.child)
-      throw new ReferenceError('no child in path given')
-    
-    const objpath = path.child.split('.')
-    return objpath.reduce((p, c) => p?.[c], this.values)
-  }
-  setValueByPath(path: Path, value: any) {
-    if(!path.child)
-      throw new ReferenceError('no child in path given')
-  
-    const objpath = path.child.split('.')
-    const ref = objpath.slice(0, -1).reduce((p, c) => p?.[c], this.values)
-    const [lastKey] = objpath.slice(-1)
-    ref[lastKey] = value
+    values: any
+  ) {
+    if(values == null)
+      values = layout.getDefualtValues()
   }
 
   get path() {
@@ -36,6 +24,39 @@ export default class Layer {
   clone(id = uniqueId()) {
     return new Layer(id, this.layout, clone(this.values))
   }
+
+  _getDef(key: string) {
+    const def = this.layout.params.get(key)
+    if(!def)
+      throw new ReferenceError(`layer param ${key} does not exist`)
+
+    return def
+  }
+  addItemFor(key: string) {
+    const def = <ListLayoutParameter>this._getDef(key)
+    if(def.type !== 'list')
+      throw new TypeError('trying to add item to non-list type item')
+
+    const list = this.values[key]
+    // TODO: not to throw?
+    if(list.length >= def.maxLength)
+      throw new TypeError(`value '${key}' has already exceeded its maxLength`)
+
+    list.push(this.layout.getDefualtValues(key))
+  }
+  removeItemFor(key: string, at: number) {
+    const def = <ListLayoutParameter>this._getDef(key)
+    if(def.type !== 'list')
+      throw new TypeError('trying to remove item from non-list type item')
+
+    const list = this.values[key]
+    // TODO: not to throw?
+    if(list.length - 1 < at)
+      throw new TypeError(`value '${key}' has already exceeded its maxLength`)
+
+    list.slice(at, 1)
+  }
+
   get({ child }: Path) {
     const path = child?.split('/') ?? []
     const ref = path.reduce((p, c) => p?.[c], this.values)
