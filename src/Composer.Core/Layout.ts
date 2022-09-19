@@ -42,10 +42,10 @@ export default class Layout {
   }
 
   createLayer(id: string = uniqueId(), existingValue?: any): Layer {
-    return new Layer(id, this, existingValue ?? this.getDefualtValues())
+    return new Layer(id, this, existingValue ?? this.getDefaultValues())
   }
 
-  getDefualtValues(key?: string) {
+  getDefaultValues(key?: string) {
     let params
 
     if(key) {

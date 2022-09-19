@@ -13,8 +13,7 @@ export default class Layer {
     public layout: Layout,
     values: any
   ) {
-    if(values == null)
-      values = layout.getDefualtValues()
+    this.values = values ?? layout.getDefaultValues()
   }
 
   get path() {
@@ -42,7 +41,7 @@ export default class Layer {
     if(list.length >= def.maxLength)
       throw new TypeError(`value '${key}' has already exceeded its maxLength`)
 
-    list.push(this.layout.getDefualtValues(key))
+    list.push(this.layout.getDefaultValues(key))
   }
   removeItemFor(key: string, at: number) {
     const def = <ListLayoutParameter>this._getDef(key)
@@ -66,7 +65,7 @@ export default class Layer {
     if(!child)
       throw new ReferenceError('attempted to set nowhere on layer')
     const path = child.split('/')
-    const ref = path.slice(-1).reduce((p, c) => p?.[c], this.values)
+    const ref = path.slice(0, -1).reduce((p, c) => p?.[c], this.values)
     const [lastKey] = path.slice(-1)
     ref[lastKey] = value
   }
