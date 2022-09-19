@@ -53,7 +53,7 @@ export default class Layer {
     if(list.length - 1 < at)
       throw new TypeError(`value '${child}' has no element at index ${at}`)
 
-    list.slice(at, 1)
+    list.splice(at, 1)
   }
 
   get({ child, index, grandchild }: Path) {

@@ -60,11 +60,11 @@ export default class Layout {
       return clone(this.defaultValues)
     }
 
-    const entries = [ ...this.params.entries() ]
+    const entries = [ ...params.entries() ]
 
-    return Object.entries(entries.map(([ k, v ]) => [
+    return Object.fromEntries(entries.map(([ k, v ]) => [
       k,
-      v.defaultValue || v.type === 'list'? [] : ''
+      v.defaultValue ?? (v.type === 'list'? [] : '')
     ]))
   }
 }
