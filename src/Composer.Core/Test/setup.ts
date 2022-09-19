@@ -1,21 +1,21 @@
 import Action from '../Actions/IAction'
 
 import Layout from '../Layout'
-import LayoutParameter from '../Structs/LayoutParameter'
-import ListLayoutParameter from '../Structs/ListLayoutParameter'
+
+export const DEFAULT_VALUE = 'default value'
 
 export const MinimalLayoutDefinition = {
   id: 'test',
   description: 'test layout type 0',
   params: [
     {
-      name: 'text',
+      name: 'param1',
       type: 'text',
       description: 'text'
     }
   ],
   values: {
-    name: 'asdf'
+    param1: DEFAULT_VALUE
   }
 }
 
@@ -29,6 +29,10 @@ export const MinimalLayoutsAsObject = {
   [MinimalLayout.id]: MinimalLayout
 }
 
+///
+
+export const DEFAULT_LIST_VALUE = 'default list value'
+
 export const ListLayout = Layout.fromDefinition({
   id: 'test',
   description: 'test layout type 1 - includes all possible layout types',
@@ -40,18 +44,17 @@ export const ListLayout = Layout.fromDefinition({
       maxLength: 3,
       params: [
         {
-          name: 'a',
+          name: 'param1',
           type: 'string',
           description: 'test',
-          params: [
-            {
-              name: 'b'
-            }
-          ]
+          defaultValue: DEFAULT_LIST_VALUE
         }
       ]
     }
-  ]
+  ],
+  values: {
+    list: []
+  }
 })
 
 ///
