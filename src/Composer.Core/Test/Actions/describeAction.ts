@@ -14,6 +14,7 @@ import Actions from '../../Actions'
 import State from '../../State'
 
 import * as setup from '../setup'
+import Layout from '../../Layout'
 
 function describeAction(
   actionName: string,
@@ -35,36 +36,33 @@ function describeAction(
     dependentActions = []
   }
 
-  // still can't believe this *is* most beloved programming language
-  // https://github.com/microsoft/TypeScript/issues/9998
-  const _dependentActions = dependentActions
+  const actions = [ actionName, ...dependentActions ].map(action =>
+    <const>[ action, Actions.get(action)
+  ])
+  const notfound = actions.filter(l => l[1] == null).map(l => l[0]).join(', ')
+  if(notfound)
+    throw new ReferenceError(`following actions requested, \
+      but not found in Actions: ${notfound}`)
+
+  const actionsMap = new Map(actions)
 
   const helpers: any = {
     mocked: {
       uniqueId: <jest.Mocked<typeof uniqueId>>jest.mocked(uniqueId)
     },
     createState(layouts = setup.MinimalLayouts) {
-      const actions = [ actionName, ..._dependentActions ]
-        .map(action => <const>[ action, Actions.get(action) ])
-      const notfound = actions
-        .filter(l => l[1] == null)
-        .map(l => l[0])
-        .join(', ')
+      if(layouts instanceof Layout)
+        layouts = new Map([ [ layouts.id, layouts ] ])
 
-      if(notfound)
-        throw new ReferenceError(`following actions requested, \
-          but not found in Actions: ${notfound}`)
-
-      return new State(layouts, new Map(actions))
+      return new State(layouts, new Map(actionsMap))
     },
-    createAct(...args: ConstructorParameters<typeof Act> | Omit<ConstructorParameters<typeof Act>, 0>) {
-      if(typeof args[0] !== 'string') {
-        return new Act(actionName, ...args)
-      } else {
-        // ¯\_(ツ)_/¯
+    createAct(...args: ConstructorParameters<typeof Act> |
+                  Omit<ConstructorParameters<typeof Act>, 0>) {
+      // ¯\_(ツ)_/¯
+      if(typeof args[0] === 'string' && actionsMap.has(args[0])) // FIXME
         return new Act(...<ConstructorParameters<typeof Act>>args)
-      }
-
+      else
+        return new Act(actionName, ...args)
     },
   }
 
