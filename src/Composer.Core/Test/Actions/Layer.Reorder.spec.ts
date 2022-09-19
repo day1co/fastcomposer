@@ -18,14 +18,15 @@ describeAction('layer.reorder', ['layer.new'], helpers => {
     helpers.mocked.uniqueId.mockReturnValueOnce('c')
     state.perform(actC)
 
-    const act = helpers.createAct(actA.destination, actB.destination)
-    state.perform(act)
-    expect(state._state.map(layer => layer.id)).toEqual([ 'b', 'a', 'c' ])
-
-    state.undo()
-    expect(state._state.map(layer => layer.id)).toEqual([ 'a', 'b', 'c' ])
-
-    state.redo()
-    expect(state._state.map(layer => layer.id)).toEqual([ 'b', 'a', 'c' ])
+    helpers.checkTimeParadox(state, {
+      before() {
+        expect(state._state.map(layer => layer.id)).toEqual([ 'a', 'b', 'c' ])
+      },
+      act: helpers.createAct(actA.destination, actB.destination),
+      after() {
+        expect(state._state.map(layer => layer.id)).toEqual([ 'b', 'a', 'c' ])
+      }
+    })
   })
+
 })
