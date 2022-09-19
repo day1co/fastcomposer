@@ -1,6 +1,6 @@
 import type Act from './Act'
 import type ListLayoutParameter from './Structs/ListLayoutParameter'
-import type Path from './Structs/Path'
+import type Path from './Path'
 import type Layout from './Layout'
 
 import { clone, uniqueId } from './Util'
@@ -43,14 +43,10 @@ export default class Layer {
 
     list.push(this.layout.getDefaultValues(child))
   }
-  removeItemFor({ child }: Path, at?: number | string) {
+  removeItemFor({ child, index }: Path, at: number | string = index) {
     const def = <ListLayoutParameter>this._getDef(child)
     if(def.type !== 'list')
       throw new TypeError('trying to remove item from non-list type item')
-
-    if(at === null) {
-      at = child.split('/')[1]
-    }
 
     const list = this.values[child]
     // TODO: not to throw?
@@ -60,17 +56,24 @@ export default class Layer {
     list.slice(at, 1)
   }
 
-  get({ child }: Path) {
-    const path = child?.split('/') ?? []
-    const ref = path.reduce((p, c) => p?.[c], this.values)
-    return ref
+  get({ child, index, grandchild }: Path) {
+    if(grandchild != null && index != null)
+      return this.values[child][index][grandchild]
+    else if(index != null)
+      return this.values[child][index]
+    else if(child != null)
+      return this.values[child]
+    else
+      throw new ReferenceError('attempted to get nowhere on layer')
   }
-  set({ child }: Path, value: any) {
-    if(!child)
+  set({ child, index, grandchild }: Path, value: any) {
+    if(grandchild != null && index != null)
+      this.values[child][index][grandchild] = value
+    else if(index != null)
+      this.values[child][index] = value
+    else if(child != null)
+      this.values[child] = value
+    else
       throw new ReferenceError('attempted to set nowhere on layer')
-    const path = child.split('/')
-    const ref = path.slice(0, -1).reduce((p, c) => p?.[c], this.values)
-    const [lastKey] = path.slice(-1)
-    ref[lastKey] = value
   }
 }

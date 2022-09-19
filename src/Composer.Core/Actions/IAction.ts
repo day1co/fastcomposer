@@ -1,6 +1,6 @@
 import type Act from '../Act'
 import type State from '../State'
-import type Path from '../Structs/Path'
+import type Path from '../Path'
 
 export default interface Action {
   id: string

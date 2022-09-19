@@ -1,6 +1,6 @@
 import type Action from './Actions/IAction'
 import type Act from './Act'
-import type Path from './Structs/Path'
+import type Path from './Path'
 
 import Layout from './Layout'
 import Layer from './Layer'
