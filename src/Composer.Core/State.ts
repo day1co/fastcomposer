@@ -63,9 +63,9 @@ export default class State {
   perform(act: Act, isRedo?: boolean) {
     const action = this._actions.get(act.action)
     if(!action)
-      throw new Error(`No action specified or action not found (to ${isRedo ? 'redo' : 'perform'})`)
+      throw new Error(`Action '${act.action}' not found (to ${isRedo ? 'redo' : 'perform'})`)
 
-    if(action.compose) {
+    if(action.compose && this._lastAct.isComposableWith(act)) {
       action.compose(this, this._lastAct, act)
       action.perform(this, this._lastAct)
     } else {
@@ -86,7 +86,7 @@ export default class State {
   rollback(history: Act) {
     const action = this._actions.get(history.action)
     if(!action)
-      throw new Error('No action specified or action not found (to undo)')
+      throw new Error(`Action '${history.action}' not found (to undo)`)
 
     history.seal()
 
