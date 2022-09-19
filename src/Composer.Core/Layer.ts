@@ -1,8 +1,8 @@
 import type Act from './Act'
 import type ListLayoutParameter from './Structs/ListLayoutParameter'
-import type Path from './Path'
 import type Layout from './Layout'
 
+import Path from './Path'
 import { clone, uniqueId } from './Util'
 
 export default class Layer {
@@ -17,7 +17,7 @@ export default class Layer {
   }
 
   get path() {
-    return <Path>{ layer: this.id }
+    return new Path(this.id)
   }
 
   clone(id = uniqueId()) {

@@ -1,5 +1,6 @@
 import describeAction from './describeAction'
 import * as setup from '../setup'
+import Path from '../../Path'
 
 describeAction('layer.duplicate', ['layer.new'], helpers => {
 
