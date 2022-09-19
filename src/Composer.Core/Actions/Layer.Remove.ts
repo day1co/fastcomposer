@@ -1,5 +1,5 @@
 import type Action from './IAction'
-import type Path from '../Structs/Path'
+import Path from '../Path'
 
 export default <Action>{
   id: 'layer.remove',

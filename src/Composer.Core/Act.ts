@@ -1,4 +1,4 @@
-import type Path from './Structs/Path'
+import type Path from './Path'
 import { uniqueId } from './Util'
 
 export default class Act {
@@ -21,7 +21,7 @@ export default class Act {
   isComposableWith(act: Act) {
     return this.action === act.action &&
           !this.sealed &&
-           this.target?.layer === act.target?.layer &&
+          (this.target === act.target || this.target?.isEqual(act.target!)) &&
            this.target?.child === act.target?.child &&
            this.capturedState === act.capturedState // FIXME
 
