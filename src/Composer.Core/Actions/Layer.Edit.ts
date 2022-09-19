@@ -1,6 +1,4 @@
 import type Action from './IAction'
-import type State from '../State'
-import type Act from '../Act'
 
 export default <Action>{
   id: 'layer.edit',
@@ -19,14 +17,18 @@ export default <Action>{
     return act
   },
   compose(self, previousAct, act) {
-    if(!previousAct.isComposableWith(act))
-      return false
-
     previousAct.update(act.arg)
     return previousAct
   },
   rollback(self, rememberedAct) {
     rememberedAct.seal()
-    const oldPayload = rememberedAct.capturedState
+    const path = rememberedAct.target
+    const value = rememberedAct.capturedState
+
+    const layer = self.getLayerByPath(path)
+    if(!layer)
+      throw new ReferenceError('layer or path to rollback couldn\'t be found…maybe time paradox?')
+
+    layer.set(path, value)
   }
 }
