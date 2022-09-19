@@ -50,20 +50,35 @@ function describeAction(
     mocked: {
       uniqueId: <jest.Mocked<typeof uniqueId>>jest.mocked(uniqueId)
     },
-    createState(layouts = setup.MinimalLayouts) {
+    createState(layouts = setup.MinimalLayouts): State {
       if(layouts instanceof Layout)
         layouts = new Map([ [ layouts.id, layouts ] ])
 
       return new State(layouts, new Map(actionsMap))
     },
     createAct(...args: ConstructorParameters<typeof Act> |
-                  Omit<ConstructorParameters<typeof Act>, 0>) {
+                  Omit<ConstructorParameters<typeof Act>, 0>): Act {
       // ¯\_(ツ)_/¯
       if(typeof args[0] === 'string' && actionsMap.has(args[0])) // FIXME
         return new Act(...<ConstructorParameters<typeof Act>>args)
       else
         return new Act(actionName, ...args)
     },
+    checkTimeParadox(state: State, { before, act, after }) {
+      before()
+
+      if(act instanceof Function)
+        act = act()
+      if(act instanceof Act)
+        state.perform(act)
+
+      after(act)
+
+      state.undo()
+      before()
+      state.redo()
+      after(act)
+    }
   }
 
   return describe('Action: ' + actionName, (...args) => cb(helpers, ...args))
