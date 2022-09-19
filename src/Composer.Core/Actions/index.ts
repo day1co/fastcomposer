@@ -7,6 +7,7 @@ import Layer_Remove from './Layer.Remove'
 import Layer_Duplicate from './Layer.Duplicate'
 import Layer_Reorder from './Layer.Reorder'
 import Layer_Edit from './Layer.Edit'
+import Layer_Item_New from './Layer.Item.New'
 // './Layer.Clear'
 
 export default new Map<string, Action>([
@@ -16,6 +17,7 @@ export default new Map<string, Action>([
   Layer_Duplicate,
   Layer_Reorder,
   Layer_Edit,
+  Layer_Item_New
   // Layer_Clear
 ].map(module => [ module.id, module ])
 )
