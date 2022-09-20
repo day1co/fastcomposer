@@ -11,7 +11,6 @@ describeAction('layer.item.new', ['layer.new'], helpers => {
   const fullpath = new Path('layer1', 'list', 0, 'param1')
 
   const defaultValue = setup.DEFAULT_LIST_VALUE
-  const newValue = 'new value'
 
   it('should work: do, undo, redo', () => {
     const state = helpers.createState(setup.ListLayout)
