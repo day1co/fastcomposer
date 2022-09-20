@@ -31,7 +31,7 @@ export default class Layer {
 
     return def
   }
-  addItemFor({ child }: Path) {
+  addItem({ child, index }: Path, state?: any) {
     const def = <ListLayoutParameter>this._getDef(child)
     if(def.type !== 'list')
       throw new TypeError('trying to add item to non-list type item')
@@ -41,9 +41,9 @@ export default class Layer {
     if(list.length >= def.maxLength)
       throw new TypeError(`value '${child}' has already exceeded its maxLength`)
 
-    list.push(this.layout.getDefaultValues(child))
+    list.splice(index ?? list.length, 0, state ?? this.layout.getDefaultValues(child))
   }
-  removeItemFor({ child, index }: Path, at: number | string = index) {
+  removeItem({ child, index }: Path, at: number | string = index) {
     const def = <ListLayoutParameter>this._getDef(child)
     if(def.type !== 'list')
       throw new TypeError('trying to remove item from non-list type item')
