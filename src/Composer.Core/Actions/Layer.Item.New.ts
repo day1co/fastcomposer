@@ -11,7 +11,7 @@ export default <Action>{
     if(!layer)
       throw new ReferenceError('attempted to edit nonexistent layer')
 
-    layer.addItemFor(path)
+    layer.addItem(path)
 
     return act.remember(null, new Path(path.layer, path.child, layer.get(path).length - 1))
   },
@@ -22,6 +22,6 @@ export default <Action>{
     if(!layer)
       throw new ReferenceError('layer or path to rollback couldn\'t be found')
 
-    layer.removeItemFor(path)
+    layer.removeItem(path)
   }
 }
