@@ -1,10 +1,9 @@
-import type Action from './IAction'
+import type Action from '../../Composer/IAction'
+import type Page from '..'
 
-import Path from '../Path'
-
-export default <Action>{
+export default <Action<Page>>{
   id: 'layer.item.remove',
-  perform(self, act) {
+  perform(root, self, act) {
     const path = act.target!
 
     const layer = self.getLayerByPath(path)
@@ -16,7 +15,7 @@ export default <Action>{
 
     return act.remember(oldPayload, path)
   },
-  rollback(self, rememberedAct) {
+  rollback(root, self, rememberedAct) {
     const path = rememberedAct.destination
 
     const layer = self.getLayerByPath(path)

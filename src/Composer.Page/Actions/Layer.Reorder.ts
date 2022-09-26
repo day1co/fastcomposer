@@ -1,8 +1,9 @@
-import type Action from './IAction'
+import type Action from '../../Composer/IAction'
+import type Page from '..'
 
-export default <Action>{
+export default <Action<Page>>{
   id: 'layer.reorder',
-    perform(self, act) {
+  perform(root, self, act) {
     const [from, to] = self.reorderLayer(act.target!, act.arg)
     // store as indexes
     // better to have destination but...
@@ -10,7 +11,7 @@ export default <Action>{
     // will editor focus it again? I hope so...
     return act.remember({ from, to })
   },
-  rollback(self, { capturedState }) {
+  rollback(root, self, { capturedState }) {
     const { from, to } = capturedState
     self.reorderLayer(from, to)
   }

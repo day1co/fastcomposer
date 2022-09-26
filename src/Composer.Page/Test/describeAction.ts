@@ -1,20 +1,21 @@
 import { jest } from '@jest/globals'
 
-jest.mock('../../Util', () => ({
-  ...<object>jest.requireActual('../../Util'),
+jest.mock('../../Composer/Util', () => ({
+  ...<object>jest.requireActual('../../Composer/Util'),
   uniqueId: jest.fn().mockReturnValue('INVALID')
 }))
 
-import { uniqueId } from '../../Util'
+import { uniqueId } from '../../Composer/Util'
 
-import type Action from '../../Actions/IAction'
+import type Action from '../../Composer/IAction'
 
-import Act from '../../Act'
-import Actions from '../../Actions'
-import State from '../../State'
+import Act from '../../Composer/Act'
+import Actions from '../Actions'
+import State from '../../Composer'
 
-import * as setup from '../setup'
-import Layout from '../../Layout'
+import * as setup from '../../Composer/Test/setup'
+import Layout from '../Layout'
+import Page from '..'
 
 function describeAction(
   actionName: string,
@@ -50,11 +51,13 @@ function describeAction(
     mocked: {
       uniqueId: <jest.Mocked<typeof uniqueId>>jest.mocked(uniqueId)
     },
-    createState(layouts = setup.MinimalLayouts): State {
+    createState(layouts = setup.MinimalLayouts): [ Page, State ] {
       if(layouts instanceof Layout)
         layouts = new Map([ [ layouts.id, layouts ] ])
 
-      return new State(layouts, new Map(actionsMap))
+      const page = new Page(layouts, new Map(actionsMap))
+      const state = new State({ modules: { page }})
+      return [ page, state ]
     },
     createAct(...args: ConstructorParameters<typeof Act> |
                   Omit<ConstructorParameters<typeof Act>, 0>): Act {

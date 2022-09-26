@@ -1,10 +1,10 @@
 import describeAction from './describeAction'
-import * as setup from '../setup'
+import * as setup from '../../Composer/Test/setup'
 
 describeAction('layer.reorder', ['layer.new'], helpers => {
 
   it('should work: do, undo, redo', () => {
-    const state = helpers.createState()
+    const [ page, state ] = helpers.createState()
 
     const actA = helpers.createAct('layer.new', null, setup.MinimalLayout.id)
     helpers.mocked.uniqueId.mockReturnValueOnce('a')
@@ -20,11 +20,11 @@ describeAction('layer.reorder', ['layer.new'], helpers => {
 
     helpers.checkTimeParadox(state, {
       before() {
-        expect(state._state.map(layer => layer.id)).toEqual([ 'a', 'b', 'c' ])
+        expect(page.state.map(layer => layer.id)).toEqual([ 'a', 'b', 'c' ])
       },
       act: helpers.createAct(actA.destination, actB.destination),
       after() {
-        expect(state._state.map(layer => layer.id)).toEqual([ 'b', 'a', 'c' ])
+        expect(page.state.map(layer => layer.id)).toEqual([ 'b', 'a', 'c' ])
       }
     })
   })

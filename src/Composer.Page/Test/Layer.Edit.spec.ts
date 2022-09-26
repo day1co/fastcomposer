@@ -1,14 +1,14 @@
 import describeAction from './describeAction'
-import * as setup from '../setup'
+import * as setup from '../../Composer/Test/setup'
 
-import Path from '../../Path'
+import Path from '../Path'
 
 describeAction('layer.edit', ['layer.new', 'layer.item.new'], helpers => {
 
   const newValue = 'new value'
 
   it('should work: do, undo, redo', () => {
-    const state = helpers.createState()
+    const [ page, state ] = helpers.createState()
 
     const path = new Path('layer1', 'param1')
     const defaultValue = setup.DEFAULT_VALUE
@@ -19,17 +19,17 @@ describeAction('layer.edit', ['layer.new', 'layer.item.new'], helpers => {
 
     helpers.checkTimeParadox(state, {
       before() {
-        expect(state.state[0].get(path)).toEqual(defaultValue)
+        expect(page.state[0].get(path)).toEqual(defaultValue)
       },
       act: helpers.createAct(path, newValue),
       after() {
-        expect(state.state[0].get(path)).toEqual(newValue)
+        expect(page.state[0].get(path)).toEqual(newValue)
       }
     })
   })
 
   it('should work against fields inside list items', () => {
-    const state = helpers.createState(setup.ListLayout)
+    const [ page, state ] = helpers.createState(setup.ListLayout)
 
     const path = new Path('layer1', 'list')
     const fullpath = new Path('layer1', 'list', 0, 'param1')
@@ -42,15 +42,15 @@ describeAction('layer.edit', ['layer.new', 'layer.item.new'], helpers => {
     const actNewItem = helpers.createAct('layer.item.new', path)
     state.perform(actNewItem)
 
-    expect(state.state[0].get(path).length).toBe(1)
+    expect(page.state[0].get(path).length).toBe(1)
 
     helpers.checkTimeParadox(state, {
       before() {
-        expect(state.state[0].get(fullpath)).toBe(defaultValue)
+        expect(page.state[0].get(fullpath)).toBe(defaultValue)
       },
       act: helpers.createAct(fullpath, newValue),
       after() {
-        expect(state.state[0].get(fullpath)).toBe(newValue)
+        expect(page.state[0].get(fullpath)).toBe(newValue)
       }
     })
   })

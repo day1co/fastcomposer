@@ -1,10 +1,10 @@
 import describeAction from './describeAction'
-import * as setup from '../setup'
+import * as setup from '../../Composer/Test/setup'
 
 describeAction('layer.remove', ['layer.new'], helpers => {
 
   it('should work: do, undo', () => {
-    const state = helpers.createState()
+    const [ page, state ] = helpers.createState()
 
     let actNew = helpers.createAct('layer.new', null, setup.MinimalLayout.id)
     helpers.mocked.uniqueId.mockReturnValueOnce('a')
@@ -13,12 +13,12 @@ describeAction('layer.remove', ['layer.new'], helpers => {
 
     helpers.checkTimeParadox(state, {
       before() {
-        expect(state._state.length).toEqual(1)
-        expect(state._state[0].id).toBe('a')
+        expect(page.state.length).toEqual(1)
+        expect(page.state[0].id).toBe('a')
       },
       act: helpers.createAct(actNew.destination),
       after() {
-        expect(state._state.length).toEqual(0)
+        expect(page.state.length).toEqual(0)
       }
     })
   })

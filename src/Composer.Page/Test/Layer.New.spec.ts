@@ -1,16 +1,16 @@
 import describeAction from './describeAction'
-import * as setup from '../setup'
+import * as setup from '../../Composer/Test/setup'
 
-import Path from '../../Path'
+import Path from '../Path'
 
 describeAction('layer.new', helpers => {
 
   it('should work: do, undo, redo', () => {
-    const state = helpers.createState()
+    const [ page, state ] = helpers.createState()
 
     helpers.checkTimeParadox(state, {
       before() {
-        expect(state._state.length).toBe(0)
+        expect(page.state.length).toBe(0)
       },
       act() {
         const act = helpers.createAct(null, setup.MinimalLayout.id)
@@ -18,15 +18,15 @@ describeAction('layer.new', helpers => {
         return act
       },
       after() {
-        expect(state._state.length).toBe(1)
-        expect(state._state[0].id).toBe('a')
-        expect(state._state[0].values).toEqual(setup.MinimalLayout.defaultValues)
+        expect(page.state.length).toBe(1)
+        expect(page.state[0].id).toBe('a')
+        expect(page.state[0].values).toEqual(setup.MinimalLayout.defaultValues)
       }
     })
   })
 
   it('should not fill default value of list (which isn\'t specified)', () => {
-    const state = helpers.createState(setup.ListLayout)
+    const [ page, state ] = helpers.createState(setup.ListLayout)
 
     const path = new Path('layer1', 'list')
 
@@ -34,7 +34,7 @@ describeAction('layer.new', helpers => {
     actNew = actNew.remember(null, path)
     state.perform(actNew)
 
-    expect(state.state[0].get(path).length).toBe(0)
+    expect(page.state[0].get(path).length).toBe(0)
   })
 
 })

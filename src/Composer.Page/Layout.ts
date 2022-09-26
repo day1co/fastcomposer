@@ -5,7 +5,7 @@ import type LegacyLayoutParameter from './Structs/LegacyLayoutParameter'
 
 import Layer from './Layer'
 
-import { clone, uniqueId } from './Util'
+import { clone, uniqueId } from '../Composer/Util'
 
 const paramArrayToMap = (params: Array<LegacyLayoutParameter>):
   Map<string, LayoutParameter> =>

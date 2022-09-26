@@ -1,8 +1,9 @@
-import type Action from './IAction'
+import type Action from '../../Composer/IAction'
+import type Page from '..'
 
-export default <Action>{
+export default <Action<Page>>{
   id: 'layer.edit',
-  perform(self, act) {
+  perform(root, self, act) {
     const path = act.target!
     const value = act.arg!
 
@@ -16,11 +17,11 @@ export default <Action>{
     layer.set(path, value)
     return act
   },
-  compose(self, previousAct, act) {
+  compose(root, self, previousAct, act) {
     previousAct.update(act.arg)
     return previousAct
   },
-  rollback(self, rememberedAct) {
+  rollback(root, self, rememberedAct) {
     rememberedAct.seal()
     const path = rememberedAct.target
     const value = rememberedAct.capturedState
