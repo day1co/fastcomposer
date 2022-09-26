@@ -1,9 +1,11 @@
-import type Action from './IAction'
+import type Action from '../../Composer/IAction'
+import type Page from '..'
+
 import Path from '../Path'
 
-export default <Action>{
+export default <Action<Page>>{
   id: 'layer.remove',
-  perform(self, act) {
+  perform(root, self, act) {
     const target = act.target!
 
     const oldLayer = self.getLayerByPath(target)
@@ -12,12 +14,12 @@ export default <Action>{
 
     const removedIndex = self.removeLayer(target) ?? 0
     let moveFocusTo: Path | undefined
-    if(self._state.length > removedIndex)
-      moveFocusTo = self._state[removedIndex - 1]?.path
+    if(self.state.length > removedIndex)
+      moveFocusTo = self.state[removedIndex - 1]?.path
 
     return act.remember({ layer: oldLayer }, moveFocusTo)
   },
-  rollback(self, { destination, capturedState }) {
+  rollback(root, self, { destination, capturedState }) {
     // XXX does it really work?
     self.restoreLayer(destination!, capturedState.layer)
   }

@@ -1,9 +1,9 @@
 import describeAction from './describeAction'
-import * as setup from '../setup'
+import * as setup from '../../Composer/Test/setup'
 
-import type ListLayoutParameter from '../../Structs/ListLayoutParameter'
+import type ListLayoutParameter from '../Structs/ListLayoutParameter'
 
-import Path from '../../Path'
+import Path from '../Path'
 
 describeAction('layer.item.new', ['layer.new'], helpers => {
 
@@ -13,7 +13,7 @@ describeAction('layer.item.new', ['layer.new'], helpers => {
   const defaultValue = setup.DEFAULT_LIST_VALUE
 
   it('should work: do, undo, redo', () => {
-    const state = helpers.createState(setup.ListLayout)
+    const [ page, state ] = helpers.createState(setup.ListLayout)
 
     let actNew = helpers.createAct('layer.new', null, setup.ListLayout.id)
     actNew = actNew.remember(null, path)
@@ -21,18 +21,18 @@ describeAction('layer.item.new', ['layer.new'], helpers => {
 
     helpers.checkTimeParadox(state, {
       before() {
-        expect(state.state[0].get(path).length).toBe(0)
+        expect(page.state[0].get(path).length).toBe(0)
       },
       act: helpers.createAct(path),
       after() {
-        expect(state.state[0].get(path).length).toBe(1)
-        expect(state.state[0].get(fullpath)).toBe(defaultValue)
+        expect(page.state[0].get(path).length).toBe(1)
+        expect(page.state[0].get(fullpath)).toBe(defaultValue)
       }
     })
   })
 
   it('should throw when adding more item than maxLength', () => {
-    const state = helpers.createState(setup.ListLayout)
+    const [ page, state ] = helpers.createState(setup.ListLayout)
 
     let actNew = helpers.createAct('layer.new', null, setup.ListLayout.id)
     actNew = actNew.remember(null, path)

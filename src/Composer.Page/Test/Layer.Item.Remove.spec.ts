@@ -1,9 +1,9 @@
 import describeAction from './describeAction'
-import * as setup from '../setup'
+import * as setup from '../../Composer/Test/setup'
 
-import type ListLayoutParameter from '../../Structs/ListLayoutParameter'
+import type ListLayoutParameter from '../Structs/ListLayoutParameter'
 
-import Path from '../../Path'
+import Path from '../Path'
 
 describeAction('layer.item.remove', ['layer.new', 'layer.item.new', 'layer.edit'], helpers => {
 
@@ -14,7 +14,7 @@ describeAction('layer.item.remove', ['layer.new', 'layer.item.new', 'layer.edit'
   const defaultValue = setup.DEFAULT_LIST_VALUE
 
   it('should work: do, undo, redo', () => {
-    const state = helpers.createState(setup.ListLayout)
+    const [ page, state ] = helpers.createState(setup.ListLayout)
 
     let actNew = helpers.createAct('layer.new', null, setup.ListLayout.id)
     actNew = actNew.remember(null, path)
@@ -28,15 +28,14 @@ describeAction('layer.item.remove', ['layer.new', 'layer.item.new', 'layer.edit'
 
     helpers.checkTimeParadox(state, {
       before() {
-        console.dir(state.state, { depth: 4 })
-        expect(state.state[0].get(path).length).toBe(2)
-        expect(state.state[0].get(childpath0)).toBe('item value 1')
-        expect(state.state[0].get(childpath1)).toBe('item value 2')
+        expect(page.state[0].get(path).length).toBe(2)
+        expect(page.state[0].get(childpath0)).toBe('item value 1')
+        expect(page.state[0].get(childpath1)).toBe('item value 2')
       },
       act: helpers.createAct(childpath0),
       after() {
-        expect(state.state[0].get(path).length).toBe(1)
-        expect(state.state[0].get(childpath0)).toBe('item value 2')
+        expect(page.state[0].get(path).length).toBe(1)
+        expect(page.state[0].get(childpath0)).toBe('item value 2')
       }
     })
   })

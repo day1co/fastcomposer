@@ -1,4 +1,4 @@
-import type Path from './Path'
+import type Path from '../Composer.Page/Path'
 import { uniqueId } from './Util'
 
 export default class Act {

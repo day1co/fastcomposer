@@ -1,14 +1,15 @@
-import type Action from './IAction'
+import type Action from '../../Composer/IAction'
+import type Page from '..'
 
-export default <Action>{
+export default <Action<Page>>{
   id: 'layer.new',
-  perform(self, act) {
+  perform(root, self, act) {
     const { target, arg, destination } = act
     const newLayer = self.appendLayer(target, arg, destination?.layer)
 
     return act.remember(null, newLayer.path)
   },
-  rollback(self, { destination }) {
+  rollback(root, self, { destination }) {
     self.removeLayer(destination!)
   }
 }

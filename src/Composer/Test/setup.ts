@@ -1,6 +1,7 @@
-import Action from '../Actions/IAction'
+import Action from '../IAction'
 
-import Layout from '../Layout'
+import Layout from '../../Composer.Page/Layout'
+import Module from '../Module'
 
 export const DEFAULT_VALUE = 'default value'
 
@@ -59,13 +60,24 @@ export const ListLayout = Layout.fromDefinition({
 
 ///
 
-export const NoopAction = <Action>{
+export const NoopAction = <Action<NoopModule>>{
   id: 'noop',
-  perform(self, act) {
+  perform(root, self, act) {
     return act.remember()
   },
-  rollback(self, act) { }
+  rollback(root, self, act) { }
 }
+
+export class NoopModule extends Module {
+  actions: Map<string, Action<NoopModule>> = new Map([
+    [ 'noop', NoopAction ]
+  ])
+
+  constructor() {
+    super(MinimalActions)
+  }
+}
+
 
 export const MinimalActions = new Map([
   [ NoopAction.id, NoopAction ]

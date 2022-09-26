@@ -1,4 +1,5 @@
-import type Action from './IAction'
+import type Action from '../../Composer/IAction'
+import type Page from '..'
 
 // FIXME: ?????
 // './Document.Clear',
@@ -11,7 +12,7 @@ import Layer_Item_New from './Layer.Item.New'
 import Layer_Item_Remove from './Layer.Item.Remove'
 // './Layer.Clear'
 
-export default new Map<string, Action>([
+export default new Map<string, Action<Page>>([
   // Document_Clear
   Layer_New,
   Layer_Remove,
