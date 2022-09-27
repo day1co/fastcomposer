@@ -1,8 +1,6 @@
 import describeAction from './describeAction'
 import * as setup from '../../Composer/Test/setup'
 
-import type ListLayoutParameter from '../Structs/ListLayoutParameter'
-
 import Path from '../Path'
 
 describeAction('layer.item.remove', ['layer.new', 'layer.item.new', 'layer.edit'], helpers => {
@@ -10,8 +8,6 @@ describeAction('layer.item.remove', ['layer.new', 'layer.item.new', 'layer.edit'
   const path = new Path('layer1', 'list')
   const childpath0 = new Path('layer1', 'list', 0, 'param1')
   const childpath1 = new Path('layer1', 'list', 1, 'param1')
-
-  const defaultValue = setup.DEFAULT_LIST_VALUE
 
   it('should work: do, undo, redo', () => {
     const [ page, state ] = helpers.createState(setup.ListLayout)

@@ -7,8 +7,6 @@ jest.mock('../../Composer/Util', () => ({
 
 import { uniqueId } from '../../Composer/Util'
 
-import type Action from '../../Composer/IAction'
-
 import Act from '../../Composer/Act'
 import Actions from '../Actions'
 import State from '../../Composer'
