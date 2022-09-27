@@ -1,6 +1,5 @@
-import type Act from '../Composer/Act'
 import type ListLayoutParameter from './Structs/ListLayoutParameter'
-import type Layout from './Layout'
+import Layout from './Layout'
 
 import Path from './Path'
 import { clone, uniqueId } from '../Composer/Util'

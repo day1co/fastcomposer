@@ -101,11 +101,12 @@ export default class State {
     history.seal()
 
     if(action.rollback) {
-      const target = action.rollback(this, module, history)
+      // eslint-disable-next-line no-unused-vars
       // TODO: move focus
+      const target = action.rollback(this, module, history)
     } else {
       // means we have nothing able to undo, do nothing
-      // why it does even registered on history then???
+      // why it did even registered on history then???
       // ¯\_(ツ)_/¯
       // originally meant to be multiple redo methods, but idk huh
     }
