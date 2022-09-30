@@ -35,4 +35,11 @@ describeAction('layer.item.remove', ['layer.new', 'layer.item.new', 'layer.edit'
       }
     })
   })
+
+  it('should throw on nonexistent layer', () => {
+    const [ page, state ] = helpers.createState(setup.ListLayout)
+
+    expect(() => state.perform(helpers.createAct(path))).toThrowError()
+  })
+
 })

@@ -31,6 +31,12 @@ describeAction('layer.item.new', ['layer.new'], helpers => {
     })
   })
 
+  it('should throw on nonexistent layer', () => {
+    const [ page, state ] = helpers.createState(setup.ListLayout)
+
+    expect(() => state.perform(helpers.createAct(path))).toThrowError()
+  })
+
   it('should throw when adding more item than maxLength', () => {
     const [ page, state ] = helpers.createState(setup.ListLayout)
 

@@ -31,5 +31,11 @@ describeAction('layer.duplicate', ['layer.new'], helpers => {
     })
   })
 
+  it('should throw on nonexistent layer', () => {
+    const [ page, state ] = helpers.createState(setup.ListLayout)
+
+    expect(() => state.perform(helpers.createAct(new Path('?')))).toThrowError()
+  })
+
   // it('should clone() to cut reference of its value', () => {})
 })

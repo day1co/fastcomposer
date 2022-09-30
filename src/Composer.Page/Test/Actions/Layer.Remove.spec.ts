@@ -1,6 +1,8 @@
 import describeAction from './describeAction'
 import * as setup from '../setup'
 
+import Path from '../../Path'
+
 describeAction('layer.remove', ['layer.new'], helpers => {
 
   it('should work: do, undo', () => {
@@ -21,6 +23,12 @@ describeAction('layer.remove', ['layer.new'], helpers => {
         expect(page.state.length).toEqual(0)
       }
     })
+  })
+
+  it('should throw on nonexistent layer', () => {
+    const [ page, state ] = helpers.createState(setup.ListLayout)
+
+    expect(() => state.perform(helpers.createAct(new Path('?')))).toThrowError()
   })
 
 })

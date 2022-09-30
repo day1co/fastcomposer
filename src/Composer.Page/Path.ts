@@ -28,7 +28,9 @@ export default class Path {
     }
   }
 
-  override({ layer, child, index, grandchild }) {
+  override({ layer, child, index, grandchild }:
+    { layer?: string, child?: string, index?: number, grandchild?: string}) {
+
     layer = layer ?? this.layer
     child = child ?? this.child
     if(index != null)

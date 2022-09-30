@@ -5,6 +5,7 @@ node_modules
 dist
 *.tar.gz
 *.tgz
+coverage
 
 # local env files
 .env.local

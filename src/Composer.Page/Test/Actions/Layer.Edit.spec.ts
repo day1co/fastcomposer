@@ -28,6 +28,26 @@ describeAction('layer.edit', ['layer.new', 'layer.item.new'], helpers => {
     })
   })
 
+  it('should throw on nonexistent layer', () => {
+    const [ page, state ] = helpers.createState(setup.ListLayout)
+    const path = new Path('layer1', 'param1')
+
+    expect(() => state.perform(helpers.createAct(path))).toThrowError()
+  })
+
+  it('should throw on nonexistent field', () => {
+    const [ page, state ] = helpers.createState(setup.ListLayout)
+
+    const path = new Path('layer1', 'list')
+    const fullpath = new Path('layer1', 'list', 0, 'param1')
+
+    let actNew = helpers.createAct('layer.new', null, setup.ListLayout.id)
+    actNew = actNew.remember(null, path)
+    state.perform(actNew)
+
+    expect(() => state.perform(helpers.createAct(fullpath))).toThrowError()
+  })
+
   it('should \'compose\' into single act when possible', () => {
     const [ page, state ] = helpers.createState(setup.MinimalLayout)
 

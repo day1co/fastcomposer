@@ -29,9 +29,8 @@ export default class Page extends Module {
     return layouts instanceof Map
      ? layouts
      : new Map(
-        Object.entries(layouts)
-              .map(([ k, v ]) => Layout.fromDefinition(v))
-              .map(layout => [ layout.id, layout ])
+        Object.values(layouts)
+              .map(def => [ def.id, Layout.fromDefinition(def) ])
       )
   }
 
@@ -155,7 +154,4 @@ export default class Page extends Module {
     return index
   }
 
-  // edit methods (how??)
-  // finalizers (save, etc)
-  // how the f**k i should handle list args?
 }
