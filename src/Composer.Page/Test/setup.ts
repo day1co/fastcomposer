@@ -34,8 +34,8 @@ export const MinimalLayoutsAsObject = {
 
 export const DEFAULT_LIST_VALUE = 'default list value'
 
-export const ListLayout = Layout.fromDefinition({
-  id: 'test',
+export const ListLayoutDefinition = {
+  id: 'list',
   description: 'test layout type 1 - includes all possible layout types',
   params: [
     {
@@ -56,8 +56,11 @@ export const ListLayout = Layout.fromDefinition({
   values: {
     list: []
   },
-  template: `
-    <% list.forEach((item, index) => { %>
-      item #<%= index %>: <%= item %>
-    <% }); %>`.replace(/(?:^\s*\r?\n|\s*\r?(\n)\s*)/gm, '$1')
-})
+  template: [
+    '<% list.forEach((item, index) => { %>',
+      'item #<%= index %>: <%= item.param1 %>\n',
+    '<% }) %>',
+  ].join('')
+}
+
+export const ListLayout = Layout.fromDefinition(ListLayoutDefinition)

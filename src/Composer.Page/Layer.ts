@@ -10,9 +10,29 @@ export default class Layer {
   constructor(
     public id: string,
     public layout: Layout,
-    values: any
+    values?: any
   ) {
     this.values = values ?? layout.getDefaultValues()
+  }
+
+  static fromDump(dump: any, layout?: Layout) {
+    const { id, layout: layoutFromDump, values } = dump
+    if(!layout)
+      layout = Layout.fromDefinition(layoutFromDump)
+    else if(typeof layoutFromDump === 'string')
+      void 0 // TODO: assert given layout is same…? shud I?
+
+    return new Layer(id, layout, values)
+  }
+  dump(includeFullLayout = true) {
+    return {
+      id: this.id,
+      layout: includeFullLayout? this.layout.dump() : this.layout.id,
+      values: this.values
+    }
+  }
+  render() {
+    return this.layout.render(this.values)
   }
 
   get path() {

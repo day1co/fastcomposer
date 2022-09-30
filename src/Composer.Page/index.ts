@@ -1,8 +1,13 @@
-import Action from '../Composer/IAction'
+import type Action from '../Composer/IAction'
+
 import Module from '../Composer/Module'
+import Actions from './Actions'
 import Path from './Path'
 import Layer from './Layer'
 import Layout from './Layout'
+
+type Layouts = Map<string, Layout>
+type LooseLayouts = Layouts | object
 
 export default class Page extends Module {
 
@@ -11,17 +16,68 @@ export default class Page extends Module {
 
   _layouts: Map<string, Layout>
 
-  constructor(layouts: Map<string, Layout> | object, actions: Map<string, Action<Page>>) {
+  constructor(
+    layouts: Map<string, Layout> | object,
+    actions: Map<string, Action<Page>> = Actions
+  ) {
     super(actions)
 
-    if(!(layouts instanceof Map))
-      this._layouts = new Map(
-        Object.entries(layouts)
-              .map(([ k, v ]) => [ k, Layout.fromDefinition(v) ])
-      )
-    else
-      this._layouts = layouts
+    this._layouts = Page.layoutsObjectToMap(layouts)
   }
+
+  static layoutsObjectToMap(layouts: LooseLayouts): Layouts {
+    return layouts instanceof Map
+     ? layouts
+     : new Map(
+        Object.entries(layouts)
+              .map(([ k, v ]) => Layout.fromDefinition(v))
+              .map(layout => [ layout.id, layout ])
+      )
+  }
+
+  // save/load
+
+  static fromDump(state: Array<any>, providedLayouts?: LooseLayouts) {
+    const layouts = providedLayouts !== null
+      ? Page.layoutsObjectToMap(providedLayouts)
+      : new Map()
+
+    const result = state.map(layerdef => {
+      const { id, layout } = layerdef
+      const layoutId = typeof layout === 'string'? layout : layout.id
+      const foundLayout = layouts.get(layoutId)
+
+      if(providedLayouts && !foundLayout)
+        throw new ReferenceError(`layout '${layoutId}' of layer '${id}' `
+          + `couldn't be found from layout list which was provided`)
+
+      // foundLayout will automatically fill missing layout definitions
+      // AND prevent re-initialize Layouts, this is bit tricky
+      // so TODO: should we consider inconsistent layout defs between layers?
+      const layer = Layer.fromDump(layerdef, foundLayout)
+
+      if(!providedLayouts && !foundLayout)
+        layouts.set(layer.layout.id, layer.layout)
+
+      return layer
+    })
+
+    const page = new Page(layouts)
+    page.state = result
+    return page
+  }
+  dump(includeFullLayout = true) {
+    return this.state.map(layer => layer.dump(includeFullLayout))
+  }
+  render() {
+    // TODO isolate?
+    return this.state.flatMap(layer => [
+      `<section class="fc-block fc-layout fc-layout-${layer.layout.id}">`,
+      layer.render(),
+      `</section>`
+    ]).join('\n')
+  }
+
   // state utils
 
   getLayerByPath(path: Path): Layer | undefined {
