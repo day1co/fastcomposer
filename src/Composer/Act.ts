@@ -21,9 +21,7 @@ export default class Act {
   isComposableWith(act: Act) {
     return this.action === act.action &&
           !this.sealed &&
-          (this.target === act.target || this.target?.isEqual(act.target!)) &&
-           this.target?.child === act.target?.child &&
-           this.capturedState === act.capturedState // FIXME
+          (this.target === act.target || this.target?.isEqual(act.target!))
 
   }
 

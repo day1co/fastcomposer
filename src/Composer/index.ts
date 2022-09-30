@@ -69,9 +69,9 @@ export default class State {
   }
 
   isComposable(action: Action<any>) {
-    return this._lastAct?.action === action.id
-        && this._lastAct.sealed
-        && action.compose != null
+    return action.compose != null
+        && this._lastAct?.action === action.id
+        && !this._lastAct.sealed
   }
 
   perform(act: Act, isRedo?: boolean) {
@@ -80,6 +80,8 @@ export default class State {
     if(action.compose && this._lastAct.isComposableWith(act)) {
       action.compose(this, module, this._lastAct, act)
       action.perform(this, module, this._lastAct)
+
+      return this._lastAct
     } else {
       action.perform(this, module, act)
 
@@ -91,7 +93,7 @@ export default class State {
       if(!action.compose)
         act.seal()
 
-      return act // for what? idk
+      return act
     }
   }
 
