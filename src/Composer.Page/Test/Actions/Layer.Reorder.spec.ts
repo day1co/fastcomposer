@@ -1,5 +1,5 @@
 import describeAction from './describeAction'
-import * as setup from '../../Composer/Test/setup'
+import * as setup from '../setup'
 
 describeAction('layer.reorder', ['layer.new'], helpers => {
 

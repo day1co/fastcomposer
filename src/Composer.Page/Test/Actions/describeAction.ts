@@ -1,19 +1,19 @@
 import { jest } from '@jest/globals'
 
-jest.mock('../../Composer/Util', () => ({
-  ...<object>jest.requireActual('../../Composer/Util'),
+jest.mock('../../../Composer/Util', () => ({
+  ...<object>jest.requireActual('../../../Composer/Util'),
   uniqueId: jest.fn().mockReturnValue('INVALID')
 }))
 
-import { uniqueId } from '../../Composer/Util'
+import { uniqueId } from '../../../Composer/Util'
 
-import Act from '../../Composer/Act'
-import Actions from '../Actions'
-import State from '../../Composer'
+import Act from '../../../Composer/Act'
+import Actions from '../../Actions'
+import State from '../../../Composer'
 
-import * as setup from '../../Composer/Test/setup'
-import Layout from '../Layout'
-import Page from '..'
+import * as setup from '../setup'
+import Layout from '../../Layout'
+import Page from '../../'
 
 function describeAction(
   actionName: string,

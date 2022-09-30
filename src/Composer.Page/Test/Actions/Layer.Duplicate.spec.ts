@@ -1,6 +1,6 @@
 import describeAction from './describeAction'
-import * as setup from '../../Composer/Test/setup'
-import Path from '../Path'
+import * as setup from '../setup'
+import Path from '../../Path'
 
 describeAction('layer.duplicate', ['layer.new'], helpers => {
 

@@ -1,7 +1,7 @@
 import describeAction from './describeAction'
-import * as setup from '../../Composer/Test/setup'
+import * as setup from '../setup'
 
-import Path from '../Path'
+import Path from '../../Path'
 
 describeAction('layer.new', helpers => {
 

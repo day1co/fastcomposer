@@ -1,9 +1,9 @@
 import describeAction from './describeAction'
-import * as setup from '../../Composer/Test/setup'
+import * as setup from '../setup'
 
-import type ListLayoutParameter from '../Structs/ListLayoutParameter'
+import type ListLayoutParameter from '../../Structs/ListLayoutParameter'
 
-import Path from '../Path'
+import Path from '../../Path'
 
 describeAction('layer.item.new', ['layer.new'], helpers => {
 
