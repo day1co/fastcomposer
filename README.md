@@ -93,6 +93,42 @@ export default {
 
 ```
 
+## 사용하기 - any other
+
+see also: src/main.js
+
+```js
+import Vue from 'vue'; // vue@2
+import Composer from '@day1co/composer';
+
+import layouts from '../layouts-somewhere';
+import sample from '../layouts-somewhere/sample.json';
+import 'layouts-somewhere/styles';
+
+const vm = new Vue({
+  data: () => ({
+  render(h) {
+    return h(Composer, {
+      props: {
+        layerModals: sample,
+        layoutModels: layouts,
+      },
+      on: {
+        save(html, json) {
+          // ...
+        },
+        uploadFile(file, callback) {
+          // handle file upload here
+          // file: { id, type: enum, files: File[0-1] }
+          // callback: (res: { url: string }) => void
+        }
+      }
+    })
+  }
+}).$mount('#app');
+// call vm.$destroy or handle onDestroy as required
+```
+
 ### Properties
 | Name | Type | Default | Optional | Description |
 |---|---|---|---|---|
