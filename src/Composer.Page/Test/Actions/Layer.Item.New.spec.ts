@@ -1,7 +1,7 @@
 import describeAction from './describeAction'
 import * as setup from '../setup'
 
-import type ListLayoutParameter from '../../Structs/ListLayoutParameter'
+import type { ListLayoutParameter } from '../../../Structs/LayoutParameter'
 
 import Path from '../../Path'
 
