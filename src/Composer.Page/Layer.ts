@@ -1,4 +1,4 @@
-import type ListLayoutParameter from './Structs/ListLayoutParameter'
+import type ListLayoutParameter from '../Structs/ListLayoutParameter'
 import Layout from './Layout'
 
 import Path from './Path'

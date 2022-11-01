@@ -1,7 +1,10 @@
-import type LayoutParameter from './Structs/LayoutParameter'
-import type { SingularLayoutParameter } from './Structs/LayoutParameter'
-import type ListLayoutParameter from './Structs/ListLayoutParameter'
-import type LegacyLayoutParameter from './Structs/LegacyLayoutParameter'
+import type LayoutMeta from '../Structs/LayoutMeta'
+import type LayoutParameter from '../Structs/LayoutParameter'
+import type {
+  SingularLayoutParameter,
+  ListLayoutParameter,
+  LegacyLayoutParameter
+} from '../Structs/LayoutParameter'
 
 import lotemplate from 'lodash.template'
 import { marked } from 'marked'
@@ -30,16 +33,16 @@ const paramMapToArray = (params: Map<string, LayoutParameter>):
 
 export default class Layout {
 
-  templateExecutor: ReturnType<typeof lotemplate>
+  renderer: any
 
   constructor(
     public readonly id: string,
-    public readonly description: string,
+    public readonly meta: LayoutMeta,
     public readonly params: Map<string, LayoutParameter>,
-    public readonly template: string,
+    public readonly template: any,
     public readonly defaultValues?: { [key: string]: any }
   ) {
-    this.templateExecutor = lotemplate(template)
+    this.renderer = lotemplate(template)
   }
 
   static fromDefinition({ id, description, params, template, values = null }) {
@@ -47,12 +50,12 @@ export default class Layout {
     if(Array.isArray(params))
       params = paramArrayToMap(params)
 
-    return new Layout(id, description, params, template, values)
+    return new Layout(id, { description }, params, template, values)
   }
   dump() {
     return <ReturnType<typeof Layout.fromDefinition>>clone({
       id: this.id,
-      description: this.description,
+      meta: this.meta,
       params: paramMapToArray(this.params),
       template: this.template,
       values: this.defaultValues
@@ -87,7 +90,7 @@ export default class Layout {
   }
 
   render(values: any) {
-    return this.templateExecutor({
+    return this.renderer({
       $markdown(text) { // FIXME isolate?
         return marked.parse(text)
       },
