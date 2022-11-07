@@ -12,7 +12,7 @@ import Actions from '../../Actions'
 import State from '../../../Composer'
 
 import * as setup from '../setup'
-import Layout from '../../Layout'
+import Layout from '../../../Composer.Layout/Legacy'
 import Page from '../../'
 
 function describeAction(

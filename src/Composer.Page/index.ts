@@ -4,10 +4,12 @@ import Module from '../Composer/Module'
 import Actions from './Actions'
 import Path from './Path'
 import Layer from './Layer'
-import Layout from './Layout'
+import Layout from '../Composer.Layout/Base'
+import * as Layouts from '../Composer.Layout'
+import { uniqueId } from '../Composer/Util'
 
-type Layouts = Map<string, Layout>
-type LooseLayouts = Layouts | object
+type LayoutMap = Map<string, Layout>
+type LooseLayoutMap = LayoutMap | object
 
 export default class Page extends Module {
 
@@ -22,23 +24,23 @@ export default class Page extends Module {
   ) {
     super(actions)
 
-    this._layouts = Page.layoutsObjectToMap(layouts)
+    this._layouts = Page.registerLegacyLayouts(layouts)
   }
 
-  static layoutsObjectToMap(layouts: LooseLayouts): Layouts {
+  static registerLegacyLayouts(layouts: LooseLayoutMap): LayoutMap {
     return layouts instanceof Map
      ? layouts
      : new Map(
         Object.values(layouts)
-              .map(def => [ def.id, Layout.fromDefinition(def) ])
+              .map(def => [ def.id, Layouts.Legacy.fromDefinition(def) ])
       )
   }
 
   // save/load
 
-  static fromDump(state: Array<any>, providedLayouts?: LooseLayouts) {
+  static fromDump(state: Array<any>, providedLayouts?: LooseLayoutMap) {
     const layouts = providedLayouts !== null
-      ? Page.layoutsObjectToMap(providedLayouts)
+      ? Page.registerLegacyLayouts(providedLayouts)
       : new Map()
 
     const result = state.map(layerdef => {
@@ -65,14 +67,14 @@ export default class Page extends Module {
     page.state = result
     return page
   }
-  dump(includeFullLayout = true) {
-    return this.state.map(layer => layer.dump(includeFullLayout))
+  dump() {
+    return this.state.map(layer => layer.dump())
   }
   render() {
     // TODO isolate?
     return this.state.flatMap(layer => [
       `<section class="fc-block fc-layout fc-layout-${layer.layout.id}">`,
-      layer.render(),
+      layer.render(null),
       `</section>`
     ]).join('\n')
   }
@@ -99,8 +101,9 @@ export default class Page extends Module {
 
     return layout
   }
-  createLayer(layoutId: string, layerId?: any) {
-    return this.getLayout(layoutId).createLayer(layerId)
+  createLayer(layoutId: string, layerId: string = uniqueId()) {
+    const layout = this.getLayout(layoutId)
+    return new Layer(layerId, layout)
   }
 
   // editor actions
