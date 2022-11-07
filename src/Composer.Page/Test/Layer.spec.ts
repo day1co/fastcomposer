@@ -17,7 +17,7 @@ describe('Composer.Page: Layer', () => {
 
     expect(dump).toEqual({
       id: 'test1',
-      layout: setup.ListLayoutDefinition,
+      layout: setup.ListLayoutDefinition.id,
       values: {
         list: [
           { param1: 'foo' },
@@ -27,7 +27,7 @@ describe('Composer.Page: Layer', () => {
     })
 
     // this also checks for any remaining Map, which shouldn't exist in dump
-    const layer2 = Layer.fromDump(dump)
+    const layer2 = Layer.fromDump(dump, setup.ListLayout)
     const dump2 = layer2.dump()
     expect(dump).toEqual(dump2)
   })

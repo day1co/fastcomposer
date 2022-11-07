@@ -1,5 +1,5 @@
-import type ListLayoutParameter from '../Structs/ListLayoutParameter'
-import Layout from './Layout'
+import type { ListLayoutParameter } from '../Structs/LayoutParameter'
+import LayoutBase, { DynamicLayoutBase } from '../Composer.Layout/Base'
 
 import Path from './Path'
 import { clone, uniqueId } from '../Composer/Util'
@@ -9,30 +9,34 @@ export default class Layer {
 
   constructor(
     public id: string,
-    public layout: Layout,
+    public layout: LayoutBase,
     values?: any
   ) {
     this.values = values ?? layout.getDefaultValues()
   }
 
-  static fromDump(dump: any, layout?: Layout) {
-    const { id, layout: layoutFromDump, values } = dump
-    if(!layout)
-      layout = Layout.fromDefinition(layoutFromDump)
-    else if(typeof layoutFromDump === 'string')
-      void 0 // TODO: assert given layout is same…? shud I?
-
+  static fromDump(
+    { id, values }: { id: string, values: any },
+    layout: LayoutBase
+  ) {
     return new Layer(id, layout, values)
   }
-  dump(includeFullLayout = true) {
+
+  dump() {
     return {
       id: this.id,
-      layout: includeFullLayout? this.layout.dump() : this.layout.id,
+      layout: this.layout.id,
       values: this.values
     }
   }
-  render() {
-    return this.layout.render(this.values)
+  render(el: any) {
+    return this.layout.render(el, this.values)
+  }
+  renderToString() {
+    return this.layout.renderToString(this.values)
+  }
+  hydrate(el: any) {
+    return (<DynamicLayoutBase>this.layout)?.hydrate(el, this.values)
   }
 
   get path() {

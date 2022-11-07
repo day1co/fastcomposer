@@ -4,6 +4,10 @@
     "module": "ES2022",
     "moduleResolution": "node",
     "target": "ES2018",
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+    "jsx": "react",
+    "jsxFragmentFactory": "Fragment",
+    "jsxFactory": "h",
+    "outDir": ""
+  },
 }

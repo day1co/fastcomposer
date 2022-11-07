@@ -1,6 +1,11 @@
 export * from '../../Composer/Test/setup'
 
-import Layout from '../../Composer.Page/Layout'
+import {
+  SingularLayoutParameter,
+  ListLayoutParameter,
+  LegacyListLayoutParameter
+} from '../../Structs/LayoutParameter'
+import LegacyLayout from '../../Composer.Layout/Legacy'
 
 export const DEFAULT_VALUE = 'default value'
 
@@ -8,7 +13,7 @@ export const MinimalLayoutDefinition = {
   id: 'test',
   description: 'test layout type 0',
   params: [
-    {
+    <SingularLayoutParameter>{
       name: 'param1',
       type: 'text',
       description: 'text'
@@ -20,7 +25,7 @@ export const MinimalLayoutDefinition = {
   template: '<%= param1 %>'
 }
 
-export const MinimalLayout = Layout.fromDefinition(MinimalLayoutDefinition)
+export const MinimalLayout = LegacyLayout.fromDefinition(MinimalLayoutDefinition)
 
 export const MinimalLayouts = new Map([
   [ MinimalLayout.id, MinimalLayout ]
@@ -38,7 +43,7 @@ export const ListLayoutDefinition = {
   id: 'list',
   description: 'test layout type 1 - includes all possible layout types',
   params: [
-    {
+    <LegacyListLayoutParameter>{
       name: 'list',
       type: 'list',
       description: 'list',
@@ -63,4 +68,4 @@ export const ListLayoutDefinition = {
   ].join('')
 }
 
-export const ListLayout = Layout.fromDefinition(ListLayoutDefinition)
+export const ListLayout = LegacyLayout.fromDefinition(ListLayoutDefinition)
