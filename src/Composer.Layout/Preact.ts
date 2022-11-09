@@ -1,3 +1,5 @@
+import type { LayoutOptions } from './Base'
+
 import renderToString from 'preact-render-to-string'
 import preact from 'preact'
 import { h, Fragment } from 'preact'
@@ -6,7 +8,7 @@ import { DynamicLayoutBase } from './Base'
 
 export default class PreactLayout extends DynamicLayoutBase {
 
-  constructor(layout) {
+  constructor(layout: LayoutOptions) {
     super(layout)
 
     this.component = opt => h(layout.template, { opt })
