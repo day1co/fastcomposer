@@ -29,11 +29,13 @@
     "lodash.template": "^4.5.0",
     "marked": "^4.0.18",
     "normalize.css": "^8.0.1",
-    "preact": "^10.11.2",
-    "preact-render-to-string": "^5.2.6",
     "sass-mq": "^5.0.1",
     "vue": "^2.6.12",
     "vue-smooth-dnd": "^0.8.1"
+  },
+  "peerDependencies": {
+    "preact": "^10.11.2",
+    "preact-render-to-string": "^5.2.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
