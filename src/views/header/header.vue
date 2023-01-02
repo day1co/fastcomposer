@@ -54,7 +54,7 @@
         }
       },
       notificationMessage: {
-        type: String,
+        type: Object,
         default() {
           return {
             message: '',
