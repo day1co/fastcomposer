@@ -197,7 +197,7 @@ export default {
         video: 'video/mp4',
       },
     };
-  },  
+  },
   mounted() {
     EventBus.$on('focus-editor', () => this.focus());
   },
@@ -312,21 +312,25 @@ export default {
       border: none;
       padding: 0 0 0 0.8rem;
 
-      font-size: 1.4rem;
-      line-height: 2.2rem;
+      font-size: 1.5rem;
+      line-height: 2.4rem;
 
       background-color: #242424;
-      color: #eee;
+      color: #d0d0d0;
       outline: 0 none;
-      border-bottom: 0.2rem solid #555;
+      border: 0.1rem solid #555;
 
       transition: background-color 250ms ease, border-color 250ms ease;
 
       &:focus {
         background-color: #404040;
         border-color: #eee;
+        color: #eee;
       }
 
+      &::placeholder {
+        color: #666;
+      }
       &::selection {
         background: white;
       }
@@ -349,7 +353,7 @@ export default {
     }
 
     &__input, &__select {
-      height: 3.4rem;
+      height: 3.6rem;
     }
 
     &__select {
@@ -367,7 +371,7 @@ export default {
         border: none;
         padding: 0.2rem 0.6rem;
 
-        border: 0.2rem solid #555;
+        border: 0.1rem solid #555;
 
         cursor: pointer;
         transition: background-color 250ms ease, border-color 250ms ease;
