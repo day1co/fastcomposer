@@ -1,6 +1,6 @@
 {
   "name": "@day1co/fastcomposer",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "fastcampus",
   "main": "dist/fastcomposer.umd.js",
   "publishConfig": {
