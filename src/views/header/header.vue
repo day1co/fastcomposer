@@ -161,7 +161,7 @@
     }
 
     button {
-      color: $white;
+      color: $foreground;
     }
 
     &__content {
@@ -172,7 +172,7 @@
 
     &__h {
       min-width: 24rem;
-      color: $white;
+      color: $foreground;
       padding: 0 0.8rem 0 1.6rem;
 
       > h1 {
@@ -190,7 +190,7 @@
       height: 100%;
       padding-left: 2.1rem;
       > div {
-        color: $white;
+        color: $foreground;
       }
     }
     &__info {

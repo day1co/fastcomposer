@@ -143,7 +143,7 @@
         color: inherit;
       }
       &__favorite {
-        color: $white;
+        color: $foreground;
       }
 
       .active {

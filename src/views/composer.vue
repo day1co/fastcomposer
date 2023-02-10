@@ -683,7 +683,7 @@
     height: 100vh;
     font-size: $font-size;
     font-family: $font-base !important;
-    background: #222;
+    background: $background;
     @include transition(null, 0.3s);
 
     &--flush {
@@ -787,7 +787,7 @@
     /* width: 0; */
     width: 100%;
     max-width: $sidebar-size;
-    color: $white;
+    color: $foreground;
 
     /* TODO rewrite markup (dirty class names/selectors) */
     &__header {
@@ -836,7 +836,7 @@
       background-color: $secondary;
       border-top-left-radius: 0.5rem;
       border-bottom-left-radius: 0.5rem;
-      color: $white;
+      color: $foreground;
       transform: translateY(-50%);
       outline: none;
 
@@ -861,7 +861,7 @@
         margin-right: 0;
       }
       .btn {
-        color: $white;
+        color: $foreground;
         padding: 0.4rem;
 
         &:disabled {

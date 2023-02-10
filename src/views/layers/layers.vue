@@ -189,19 +189,24 @@
       }
     }
     &--active {
-      background: lighten($primary, 15%);
+      background: $primary-active;
       box-shadow: 0 0 0 0.3rem #ffffff;
     }
-    &--hidden .fc-layout-info {
-      opacity: 0.5;
-      strong {
-        text-decoration: line-through;
+    &--hidden {
+      .fc-layout-info {
+        opacity: 0.5;
+        strong {
+          text-decoration: line-through;
+        }
+      }
+      .__utils {
+        opacity: 0.2;
       }
     }
     /* TODO cleanup */
     &--checked {
-       .__item__group label .material-icons {
-        color: #fffe;
+      .__item__group label .material-icons {
+        opacity: 0.9;
       }
     }
     &__group {
@@ -209,7 +214,7 @@
       align-items: stretch;
       flex-direction: row;
       width: percentage(1);
-      color: $white;
+      color: $foreground;
       line-height: 2rem;
 
       label {
@@ -219,7 +224,8 @@
 
         > .material-icons {
           vertical-align: top;
-          color: #fff6;
+          color: $foreground;
+          opacity: 0.4;
         }
       }
       .fc-layout-info {
@@ -231,9 +237,10 @@
       position: absolute;
       top: 0.4rem;
       right: 0.4rem;
+      opacity: 0.4;
 
       &__btn {
-        color: #fff8;
+        color: $foreground;
       }
     }
   }

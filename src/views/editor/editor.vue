@@ -296,7 +296,7 @@ export default {
       .fc-tooltip-icon {
         align-self: center;
         margin-right: 0.2rem;
-        color: #fff6;
+        opacity: 0.5;
       }
     }
 
@@ -315,24 +315,24 @@ export default {
       font-size: 1.5rem;
       line-height: 2.4rem;
 
-      background-color: #242424;
-      color: #d0d0d0;
+      background-color: $input-background;
+      color: $input-foreground;
       outline: 0 none;
       border: 0.1rem solid #555;
 
       transition: background-color 250ms ease, border-color 250ms ease;
 
       &:focus {
-        background-color: #404040;
-        border-color: #eee;
-        color: #eee;
+        background-color: $input-background-active;
+        border-color: $input-foreground-active;
+        color: $input-foreground-active;
       }
 
       &::placeholder {
-        color: #666;
+        color: #888;
       }
       &::selection {
-        background: white;
+        background: $primary-active;
       }
     }
 
@@ -435,7 +435,7 @@ export default {
       margin-bottom: 1.2rem;
 
       &:nth-child(2n + 1) {
-        border-left-color: lighten($primary, 12%);
+        border-left-color: #8884;
       }
     }
     &-tools {
@@ -459,9 +459,9 @@ export default {
       width: 100%;
       height: 100%;
       padding: 1rem 0;
-      background-color: #607d8b;
-      border-radius: 0.6rem;
-      color: #ffffff;
+      background-color: $primary-active;
+      color: inherit;
+      font: inherit;
       &[disabled] {
         opacity: 0.6;
       }
