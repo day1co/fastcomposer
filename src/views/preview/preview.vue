@@ -96,7 +96,7 @@
 
   .fc-preview {
     overflow: auto;
-    background-color: $white;
+    background-color: $foreground;
 
     box-shadow: $gutter-width 0 0 $primary inset, -0.4rem 0 0 $primary inset;
   }
@@ -109,7 +109,7 @@
 
     &.fc-selected {
       .fc-block__info {
-        background: $accent;
+        background: $gutter-active;
         &::after {
           display: none;
         }
@@ -141,7 +141,7 @@
       }
 
       .fc-block__info {
-        color: #fff8;
+        background: $gutter-disabled;
         b {
           text-decoration: line-through;
         }
@@ -150,7 +150,7 @@
     &__info {
       @include readable-font-features;
       position: relative;
-      background: $primary;
+      background: $gutter-default;
       color: white;
       font-size: 1.3rem;
       line-height: 1.8rem;

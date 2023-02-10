@@ -91,14 +91,26 @@ $white-d1: #f8f8f8;
 $white-d2: #f2f2f2;
 
 // color schemes (temporary)
-$primary: #292929; // $blue;
-$secondary: #181818; // $blue-d1;
+$foreground: var(--composer-color-foreground, hsl(0deg 0% 97%));
+$primary: var(--composer-color-primary, hsl(0deg 0% 16%));
+$primary-active: var(--composer-color-primary-active, hsl(0deg 0% 30%));
+$secondary: var(--composer-color-secondary, hsl(0deg 0% 8%));
+$background: var(--composer-color-background, hsl(0deg 0% 12%));
+
+$input-background: var(--composer-color-input-background, hsl(0deg 0% 14%));
+$input-foreground: var(--composer-color-input-foreground, hsl(0deg 0% 80%));
+$input-background-active: var(--composer-color-input-background-active, hsl(0deg 0% 25%));
+$input-foreground-active: var(--composer-color-input-foreground-active, hsl(0deg 0% 95%));
+
+$gutter-default: var(--composer-color-gutter-default, hsl(0deg 0% 12%));
+$gutter-active: var(--composer-color-gutter-active, hsl(0deg 100% 50%));
+$gutter-disabled: var(--composer-color-gutter-disabled, hsl(0deg 0% 50%));
+
 $accent: $blue-d1;
 $dimmed: $white-d1;
 $placehold: $grey-d2;
 
 $surface: $blue;
-$background: $blue-d1;
 
 $color-body: $grey-d4;
 $color-accent: $red;

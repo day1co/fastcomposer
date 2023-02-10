@@ -1,0 +1,39 @@
+@mixin color-scheme-dark {
+  --composer-color-foreground: hsl(0deg 0% 97%);
+  --composer-color-primary: hsl(0deg 0% 16%);
+  --composer-color-primary-active: hsl(0deg 0% 30%);
+  --composer-color-secondary: hsl(0deg 0% 8%);
+  --composer-color-background: hsl(0deg 0% 12%);
+
+  --composer-color-input-background: hsl(0deg 0% 14%);
+  --composer-color-input-foreground: hsl(0deg 0% 80%);
+  --composer-color-input-background-active: hsl(0deg 0% 25%);
+  --composer-color-input-foreground-active: hsl(0deg 0% 95%);
+}
+
+@mixin color-scheme-light {
+  --composer-tint-degree: 210deg;
+
+  --composer-color-foreground: hsl(0deg 0% 4%);
+  --composer-color-primary: hsl(0deg 0% 85%);
+  --composer-color-primary-active: hsl(var(--composer-tint-degree) 80% 70%);
+  --composer-color-secondary: hsl(0deg 0% 90%);
+  --composer-color-background: hsl(var(--composer-tint-degree) 50% 70%);
+
+  --composer-color-input-background: hsl(var(--composer-tint-degree) 30% 100%);
+  --composer-color-input-foreground: hsl(0deg 0% 25%);
+  --composer-color-input-background-active: hsl(var(--composer-tint-degree) 40% 90%);
+  --composer-color-input-foreground-active: hsl(0deg 0% 2%);
+}
+
+.fc-composer, .fc-composer.color-scheme-light {
+  @include color-scheme-dark;
+}
+.fc-composer.color-scheme-light {
+  @include color-scheme-light;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    @include color-scheme-light;
+  }
+}
