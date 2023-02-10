@@ -17,7 +17,9 @@ new Vue({
       },
       on: {
         save(html, json) {
-          console.log('**save: html=', html, 'json=', json);
+          if(process.env !== 'production') {
+            console.log('**save: html=', html, 'json=', json);
+          }
           alert('check console log');
         },
       },

@@ -1,7 +1,5 @@
 export default class LocalStorageService {
   constructor(key) {
-    this.checkEnvironment();
-
     this._key = key;
   }
   get() {
@@ -9,8 +7,5 @@ export default class LocalStorageService {
   }
   set(value) {
     localStorage.setItem(this._key, JSON.stringify(value));
-  }
-  checkEnvironment() {
-    !localStorage && console.warn("This browser doesn't support localStorage");
   }
 }

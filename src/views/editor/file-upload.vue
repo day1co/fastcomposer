@@ -98,7 +98,6 @@ export default {
   created() {
     // EventBus.$on('fc-upload', event => {
     //   if (event.id === this.id) {
-    //     console.log('fc-upload', event);
     //     if (event.type === 'STATE') {
     //       if (event.state === 'UPLOADED' && this.state !== 'UPLOADED') {
     //         this.$emit('upload', this.name, event.url);
