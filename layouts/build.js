@@ -15,7 +15,6 @@ const previewTemplate = _.template(fs.readFileSync(path.resolve(srcDir, 'preview
 fs.readdirSync(srcDir).forEach(name => {
   const dir = path.resolve(srcDir, name);
   if (fs.statSync(dir).isDirectory()) {
-    console.log('layout', name);
     const layoutFile = path.resolve(dir, 'layout.json');
     const templateFile = path.resolve(dir, 'template.ejs');
     const styleFile = path.resolve(dir, 'style.scss');
