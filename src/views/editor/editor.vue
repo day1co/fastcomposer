@@ -16,7 +16,7 @@
           <input
             :id="toInputId(param)"
             v-model="layer.values[param.name]"
-            class="fc-editor__form__input"
+            class="fc-editor__form__text"
             type="url"
             :name="param.name"
             :placeholder="param.description"
@@ -28,7 +28,7 @@
           <input
             :id="toInputId(param)"
             v-model="layer.values[param.name]"
-            class="fc-editor__form__input"
+            class="fc-editor__form__text"
             :type="param.type"
             :name="param.name"
             :placeholder="param.description"
@@ -89,7 +89,7 @@
                   <input
                     :id="toInputId(param, childParams, index)"
                     v-model="item[childParams.name]"
-                    class="fc-editor__form__input"
+                    class="fc-editor__form__text"
                     type="url"
                   />
                   <file-upload
@@ -134,7 +134,7 @@
                   <input
                     :id="toInputId(param, childParams, index)"
                     v-model="item[childParams.name]"
-                    class="fc-editor__form__input"
+                    class="fc-editor__form__text"
                     :type="childParams.type"
                   />
                 </template>
@@ -159,7 +159,7 @@
           <input
             :id="layer.id + '--' + param.type"
             v-model="layer.values[param.name]"
-            class="fc-editor__form__input"
+            class="fc-editor__form__text"
             :type="param.type"
             :name="param.name"
             :placeholder="param.description"
@@ -305,7 +305,7 @@ export default {
       font-size: 1.6rem;
     }
 
-    &__textarea, &__input, &__select {
+    &__textarea, &__text, &__select {
       @include readable-font-features;
       font-family: inherit;
       box-sizing: border-box;
@@ -336,7 +336,7 @@ export default {
       }
     }
 
-    &__textarea, &__input, &__select {
+    &__textarea, &__text, &__select {
       display: block;
       width: 100%;
     }
@@ -352,7 +352,7 @@ export default {
       }
     }
 
-    &__input, &__select {
+    &__text, &__select {
       height: 3.6rem;
     }
 
