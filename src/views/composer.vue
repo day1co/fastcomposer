@@ -682,6 +682,7 @@
     width: percentage(1);
     height: 100vh;
     font-size: $font-size;
+    font-family: $font-base !important;
     @include transition(null, 0.3s);
 
     &--flush {
