@@ -26,10 +26,10 @@
   --composer-color-input-foreground-active: hsl(0deg 0% 2%);
 }
 
-.fc-composer, .fc-composer.color-scheme-light {
+.fc-composer, .fc-composer__dark {
   @include color-scheme-dark;
 }
-.fc-composer.color-scheme-light {
+.fc-composer__light {
   @include color-scheme-light;
 }
 @media (prefers-color-scheme: light) {
