@@ -308,6 +308,7 @@ export default {
 
     &__textarea, &__input, &__select {
       @include readable-font-features;
+      font-family: inherit;
       box-sizing: border-box;
       border: none;
       padding: 0 0 0 0.8rem;
