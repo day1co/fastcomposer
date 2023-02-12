@@ -361,17 +361,17 @@ export default {
     }
 
     input[type="file"] {
-      color: #888;
+      color: $input-foreground;
       cursor: pointer;
       outline: none;
 
       &::file-selector-button {
-        background-color: #8883;
+        background-color: $input-background;
         color: inherit;
         border: none;
         padding: 0.2rem 0.6rem;
 
-        border: 0.1rem solid #555;
+        border: 0.1rem solid $input-foreground;
 
         cursor: pointer;
         transition: background-color 250ms ease, border-color 250ms ease;
