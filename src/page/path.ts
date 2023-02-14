@@ -12,6 +12,15 @@ export default class Path {
            this?.index === path?.index &&
            this?.grandchild === path?.grandchild
   }
+  includes(path: Path) {
+    return (path.layer === this.layer) &&
+           (this.child == null || path?.child === this?.child) &&
+           (this.index == null || path?.index === this?.index) &&
+           (this.grandchild == null || path?.grandchild === this?.grandchild)
+  }
+  isSubsetOf(path: Path) {
+    return path?.includes?.(this)
+  }
 
   partial(until: string) {
     switch(until) {
