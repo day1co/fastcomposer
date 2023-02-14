@@ -33,7 +33,7 @@
   @include color-scheme-light;
 }
 @media (prefers-color-scheme: light) {
-  :root {
+  .fc-composer.fc-composer {
     @include color-scheme-light;
   }
 }
