@@ -24,23 +24,25 @@ export default class Page extends Module {
   ) {
     super(actions)
 
-    this._layouts = Page.registerLegacyLayouts(layouts)
+    this._layouts = Page.tightenLooseLayouts(layouts)
   }
 
-  static registerLegacyLayouts(layouts: LooseLayoutMap): LayoutMap {
-    return layouts instanceof Map
-     ? layouts
-     : new Map(
-        Object.values(layouts)
-              .map(def => [ def.id, LegacyLayout.fromDefinition(def) ])
-      )
+  static tightenLooseLayouts(layouts: LooseLayoutMap): LayoutMap {
+    return Object.freeze(
+      layouts instanceof Map
+      ? layouts
+      : new Map(
+          Object.values(layouts)
+                .map(def => [ def.id, LegacyLayout.fromDefinition(def) ])
+        )
+    )
   }
 
   // save/load
 
   static fromDump(state: Array<any>, providedLayouts?: LooseLayoutMap) {
     const layouts = providedLayouts !== null
-      ? Page.registerLegacyLayouts(providedLayouts)
+      ? Page.tightenLooseLayouts(providedLayouts)
       : new Map()
 
     const result = state.map(layerdef => {
