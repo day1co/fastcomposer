@@ -14,6 +14,8 @@ export interface LayoutOptions {
 
 abstract class LayoutBase {
 
+  static _specVersion = 2
+
   constructor(layout: LayoutOptions) {
     Object.assign(this, layout)
   }
