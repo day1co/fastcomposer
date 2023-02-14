@@ -10,10 +10,9 @@
     "dist"
   ],
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "bundle": "vue-cli-service build --target lib --name fastcomposer ./src/index.js",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "build-layouts": "node layouts/build.js",
     "test": "jest",
     "test:e2e": "cypress run --browser chrome --headless",
@@ -25,31 +24,24 @@
     "url": "https://github.com/day1co/fastcomposer.git"
   },
   "dependencies": {
-    "@types/lodash.template": "^4.5.1",
     "lodash": "^4.17.20",
     "lodash.template": "^4.5.0",
     "marked": "^4.0.18",
     "normalize.css": "^8.0.1",
     "sass-mq": "^5.0.1",
-    "vue": "^2.6.12",
-    "vue-smooth-dnd": "^0.8.1"
+    "vue": "^3.2.47"
   },
   "peerDependencies": {
     "preact": "^10.11.2",
     "preact-render-to-string": "^5.2.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
-    "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^29.0.0",
+    "@types/lodash.template": "^4.5.1",
     "@types/marked": "^4.0.7",
     "@typescript-eslint/eslint-plugin": "^5.38.0",
     "@typescript-eslint/parser": "^5.38.0",
-    "@vue/cli-plugin-babel": "^5.0.8",
-    "@vue/cli-plugin-eslint": "^5.0.8",
-    "@vue/cli-service": "^5.0.8",
-    "@vue/test-utils": "^1.0.5",
+    "@vitejs/plugin-vue": "^4.0.0",
     "babel-eslint": "^10.1.0",
     "core-js": "^3.16.0",
     "cypress": "^5.5.0",
