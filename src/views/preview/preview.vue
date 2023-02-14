@@ -96,16 +96,16 @@
 
   .fc-preview {
     overflow: auto;
-    background-color: $foreground;
+    background: #fff;
 
-    box-shadow: $gutter-width 0 0 $primary inset, -0.4rem 0 0 $primary inset;
+    box-shadow: $gutter-width 0 0 $gutter-default inset, -0.4rem 0 0 $gutter-default inset;
   }
 
   .fc-block {
     position: relative;
     display: grid;
     grid-template-columns: $gutter-width auto;
-    border-right: 0.4rem solid $primary;
+    border-right: 0.4rem solid $gutter-default;
 
     &.fc-selected {
       .fc-block__info {
