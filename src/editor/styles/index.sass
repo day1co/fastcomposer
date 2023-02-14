@@ -1,0 +1,29 @@
+@import variables
+@import native-vars
+@import reset
+
+@import components
+
+::-webkit-scrollbar
+  width: 0.5rem
+  height: 0.5rem
+  background: none
+
+  margin-right: 0
+
+::-webkit-scrollbar-track, ::-webkit-scrollbar-thumb
+  background-size: #{$_1px * 2} calc(100% - 0.5rem)
+  background-position: 25% center
+  background-repeat: no-repeat
+  border-radius: 0
+
+::-webkit-scrollbar-track
+  background-image: single-color-image(var(--c-regional-hint))
+  background-size: $_1px calc(100% - 0.5rem)
+  opacity: 0.5
+
+::-webkit-scrollbar-thumb
+  background-image: single-color-image(var(--c-fg))
+
+::-webkit-scrollbar-corner
+  background: none

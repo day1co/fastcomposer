@@ -1,0 +1,45 @@
+
+.composer-input
+
+  &-row
+    display: block
+
+    margin: 0.5rem 0
+
+    line-height: 1.25rem
+
+    &-title
+      margin-bottom: 0.25rem
+
+      user-select: none
+
+  &-group
+    display: flex
+    align-content: stretch
+
+    border: $_1px solid var(--current-border)
+    background: var(--c-bg-outer)
+
+    transition: var(--transition-button)
+
+    --current-border: var(--c-fg-outline)
+
+    &:has(:focus)
+      --current-border: var(--c-fg-outline-active)
+
+    > *
+      margin: $_1px * -1
+
+    > input, > select, > textarea
+      flex-grow: 1
+      flex-shrink: 1
+
+      padding: 0.375rem 0.5rem
+
+      outline: none
+
+      min-width: 1rem
+
+    > select
+      @include background-image-icon(20, 16, 'M6 6.5l4 4l4-4')
+      background-position: right center

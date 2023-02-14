@@ -1,0 +1,17 @@
+.composer-sidebar
+  @include visual-box-outer
+  display: flex
+  flex-direction: column
+  gap: 0.125rem
+
+  width: $sidebar-default-width
+
+  padding: 0.125rem
+
+  &.left
+    padding-left: 0
+    // box-shadow: inner-border-for(right)
+
+  &.right
+    padding-right: 0
+    // box-shadow: inner-border-for(left)
