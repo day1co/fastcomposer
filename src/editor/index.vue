@@ -33,11 +33,11 @@
         <composer-pane title="히스토리">
           <ul class="composer-pane-content inner-border composer-pane-tree">
             <composer-item-history
-              v-for="history in pastHistory"
+              v-for="history in history.past"
               :key="history.id"
               :act="history"></composer-item-history>
             <composer-item-history
-              v-for="history in futureHistory"
+              v-for="history in history.future"
               :key="history.id"
               :act="history"
               future></composer-item-history>
@@ -108,12 +108,6 @@ export default {
     },
     layers() {
       return this.page?.state ?? []
-    },
-    pastHistory() {
-      return this.state._history
-    },
-    futureHistory() {
-      return this.state._future
     }
   },
   created() {

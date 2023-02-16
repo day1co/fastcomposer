@@ -7,8 +7,8 @@ export default class State {
 
   modules: { [key: string]: Module } = {}
 
-  _history: Array<Act> = []
-  _future: Array<Act> = []
+  past: Array<Act> = []
+  future: Array<Act> = []
 
   _actionMap: Map<string, string> = new Map()
 
@@ -49,23 +49,23 @@ export default class State {
   // history helpers
 
   get _lastAct() {
-    return this._history[this._history.length - 1]
+    return this.past[this.past.length - 1]
   }
 
   _getPast(): Act | undefined {
-    const present = this._history.pop()
+    const present = this.past.pop()
     if(!present) return
-    this._future.push(present)
+    this.future.push(present)
     return present
   }
   _writePresent(act: Act) {
-    this._history.push(act)
-    this._future.length = 0
+    this.past.push(act)
+    this.future.length = 0
   }
   _getFuture(): Act | undefined {
-    const present = this._future.pop()
+    const present = this.future.pop()
     if(!present) return
-    this._history.push(present)
+    this.past.push(present)
     return present
   }
 
