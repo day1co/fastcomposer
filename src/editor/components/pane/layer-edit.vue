@@ -2,7 +2,9 @@
   <composer-pane title="레이어 속성">
     <form class="composer-pane-content" @submit.prevent.stop>
       <!-- layout info -->
-      {{ currentLayer }}
+      <composer-layout-info
+        v-if="currentLayer"
+        :layout="currentLayer.layout"></composer-layout-info>
       <!-- parameters -->
       <composer-item-group title="데모">
         <composer-input-text title="집에 가고 싶다" placeholder="으어어"></composer-input-text>
@@ -21,6 +23,7 @@
 import ComposerPane from './index.vue'
 
 import ComposerItemGroup from '../listitem/group.vue'
+import ComposerLayoutInfo from '../layout-info.vue'
 
 import ComposerInputText from '../form/text.vue'
 import ComposerInputNumber from '../form/number.vue'
@@ -32,6 +35,7 @@ export default {
   components: {
     ComposerPane,
     ComposerItemGroup,
+    ComposerLayoutInfo,
     ComposerInputText,
     ComposerInputNumber,
     ComposerInputSelect,
