@@ -5,8 +5,8 @@
   ]">
     <div class="composer-list-group-header composer-listitem" @click="toggle">
       <button class="composer-list-group-icon">
-        <svg width="28" height="28" fill="none" stroke="currentColor">
-          <path d="M8 11L14 17L20 11" />
+        <svg width="18" height="28" fill="none" stroke="currentColor">
+          <path d="M5 12l4 4l4-4" />
         </svg>
       </button>
       <label>
@@ -66,5 +66,8 @@ export default {
   &-content
     box-shadow: inner-border-for(left, $color: var(--c-regional-hint))
     margin-left: 1rem
+
+  &.opened .composer-list-group-icon > svg
+    transform: rotate(-90deg)
 
 </style>
