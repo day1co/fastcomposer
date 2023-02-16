@@ -51,6 +51,7 @@ export default {
       box-shadow: 0 0 0 $_1px var(--c-regional-hint)
 
   &-wrap
+    @include unselectable
     @include visual-box-outer
     display: flex
     flex-direction: column

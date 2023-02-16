@@ -84,7 +84,12 @@ $__possible_sides: 'top', 'right', 'bottom', 'left'
 
 // Utilities
 
+@mixin unselectable
+  user-select: none
+  cursor: inherit
+
 @mixin clickable
+  @include unselectable
   transition: var(--transition-button)
   cursor: pointer
   user-select: none

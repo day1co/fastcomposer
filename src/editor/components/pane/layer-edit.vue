@@ -47,9 +47,8 @@ export default {
   }),
   computed: {
     currentLayer() {
-      if(!this.$composer.focus) {
+      if(!this.$composer.focus)
         return null
-      }
 
       return this.$composer.page.getLayerByPath(this.$composer.focus)
     }

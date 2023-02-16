@@ -6,7 +6,7 @@
         :key="key"
         :layer="layer"
         @click="$composer.focus = layer.path"
-        :focused="$composer.focus?.includes(layer.path) || null"></composer-item-layer>
+        :class="{ focused: $composer.focus?.includes(layer.path) }"></composer-item-layer>
     </ul>
   </composer-pane>
 </template>
