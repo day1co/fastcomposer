@@ -113,7 +113,7 @@ export default class Page extends Module {
   appendLayer(after: Path | undefined, layoutId: string, layerId?: string) {
     const layer = this.createLayer(layoutId, layerId)
     const length = this.state.length
-    const index = after? this.pathToIndex(after) ?? length : length
+    const index = (after? this.pathToIndex(after) ?? length : length) + 1
 
     this.state.splice(index, 0, layer)
 
