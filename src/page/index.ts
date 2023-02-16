@@ -16,7 +16,7 @@ export default class Page extends Module {
   actions: Map<string, Action<Page>>
   state: Array<Layer> = []
 
-  _layouts: Map<string, Layout>
+  layouts: Map<string, Layout>
 
   constructor(
     layouts: Map<string, Layout> | object,
@@ -24,7 +24,7 @@ export default class Page extends Module {
   ) {
     super(actions)
 
-    this._layouts = Page.tightenLooseLayouts(layouts)
+    this.layouts = Page.tightenLooseLayouts(layouts)
   }
 
   static tightenLooseLayouts(layouts: LooseLayoutMap): LayoutMap {
@@ -97,7 +97,7 @@ export default class Page extends Module {
   // layout
 
   getLayout(id: string): Layout {
-    const layout: Layout | undefined = this._layouts.get(id)
+    const layout: Layout | undefined = this.layouts.get(id)
     if(!layout)
       throw new Error(`specified layout '${id}' not found`)
 

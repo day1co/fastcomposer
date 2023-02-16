@@ -21,8 +21,8 @@ describe('Main State Manager', () => {
   it('should be able to initiate with legacy layout list', () => {
     const state = new State(setup.MinimalLayoutsAsObject, setup.MinimalActions)
 
-    expect(state._layouts).toBeInstanceOf(Map)
-    expect(state._layouts.get(setup.MinimalLayout.id)).not.toBeUndefined()
+    expect(state.layouts).toBeInstanceOf(Map)
+    expect(state.layouts.get(setup.MinimalLayout.id)).not.toBeUndefined()
   })
   */
   it('should perform/rollback action (manually)', () => {
