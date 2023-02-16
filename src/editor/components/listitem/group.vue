@@ -6,7 +6,7 @@
     <div class="composer-list-group-header composer-listitem" @click="toggle">
       <button class="composer-list-group-icon">
         <svg width="18" height="28" fill="none" stroke="currentColor">
-          <path d="M5 12l4 4l4-4" />
+          <path d="M7 10l4 4l-4 4" />
         </svg>
       </button>
       <label>
@@ -68,6 +68,6 @@ export default {
     margin-left: 1rem
 
   &.opened .composer-list-group-icon > svg
-    transform: rotate(-90deg)
+    transform: rotate(90deg)
 
 </style>
