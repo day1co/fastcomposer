@@ -3,6 +3,7 @@ import LegacyLayout from '../src/layout/legacy'
 
 const imports = Object.values({
   ...import.meta.glob('./*/index.js', { eager: true }),
+  ...import.meta.glob('../layouts/*/index.js', { eager: true }),
   ...import.meta.glob('./*/index.jsx', { eager: true }),
   ...import.meta.glob('./*/index.ts', { eager: true }),
   // ...import.meta.glob('./*/index.tsx', { eager: true })
