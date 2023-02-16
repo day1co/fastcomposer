@@ -56,14 +56,14 @@ describe('Main State Manager', () => {
 
     expect(perform).toBeCalledWith(state, noop, act)
     expect(rememberedAct.remember).toBeTruthy()
-    expect(state._history.length).toEqual(1)
-    expect(state._future.length).toEqual(0)
+    expect(state.past.length).toEqual(1)
+    expect(state.future.length).toEqual(0)
 
     state.undo()
 
     expect(rollback).toBeCalledWith(state, noop, rememberedAct)
-    expect(state._history.length).toEqual(0)
-    expect(state._future.length).toEqual(1)
+    expect(state.past.length).toEqual(0)
+    expect(state.future.length).toEqual(1)
 
     state.redo()
 
