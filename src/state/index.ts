@@ -55,7 +55,7 @@ export default class State {
   _getPast(): Act | undefined {
     const present = this.past.pop()
     if(!present) return
-    this.future.push(present)
+    this.future.unshift(present)
     return present
   }
   _writePresent(act: Act) {
@@ -63,10 +63,13 @@ export default class State {
     this.future.length = 0
   }
   _getFuture(): Act | undefined {
-    const present = this.future.pop()
+    const present = this.future.shift()
     if(!present) return
     this.past.push(present)
     return present
+  }
+  _writeFuture(act: Act) {
+    this.future.unshift(act)
   }
 
   isComposable(action: Action<any>) {
@@ -92,7 +95,7 @@ export default class State {
 
       // TODO: move focus
 
-      if(!action.doNotRemember)
+      if(!action.doNotRemember && !isRedo)
         this._writePresent(act)
 
       if(!action.compose)
