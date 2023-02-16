@@ -5,7 +5,10 @@ import vue from '@vitejs/plugin-vue2'
 export default defineConfig({
   root: __dirname,
   plugins: [
-    vue()
+    vue(),
+    viteRawPlugin({
+      match: /\.(ejs|svg)$/i
+    })
   ],
   resolve: {
     alias: {
