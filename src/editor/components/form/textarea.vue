@@ -1,5 +1,5 @@
 <template>
-  <label class="composer-input-row composer-input-number">
+  <label class="composer-input-row composer-input-textarea">
     <div class="composer-input-title">{{ title }}</div>
     <div class="composer-input-group">
       <textarea
