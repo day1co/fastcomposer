@@ -1,6 +1,6 @@
 <template>
   <ol class="composer-input-list" start="0">
-    <li class="composer-input-list-title composer-input-row-title">
+    <li class="composer-input-title">
       <button
         class="composer-input-button composer-input-list-button"
         @click="addItem">
@@ -72,8 +72,19 @@ $indent-padding: 0.125rem
 .composer-input-list
   list-style: decimal
 
-  &-title
+  > .composer-input-title
     display: flex
+    align-items: center
+
+    margin-bottom: 0
+
+    > label
+      flex-grow: 1
+      margin-left: $indent-padding
+
+    > var
+      font: var(--font-ui-small)
+      font-style: inherit
 
   &-button
     @include clickable
@@ -85,11 +96,11 @@ $indent-padding: 0.125rem
 
   &-item
     position: relative
-    padding-left: $indent-width + $indent-padding
+    margin-left: $indent-width + $indent-padding
 
   &-item > &-button
     position: absolute
     bottom: 0
-    left: 0
+    left: -$indent-width - $indent-padding
 
 </style>

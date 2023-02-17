@@ -1,17 +1,20 @@
+$row-spacing: 0.375rem
+$label-spacing: $row-spacing / 2
 
 .composer-input
 
-  &-row
+  &-row, &-list
     display: block
 
-    margin: 0.5rem 0
+    margin: $row-spacing 0
 
     line-height: 1.25rem
 
-    &-title
-      margin-bottom: 0.25rem
+  &-title
+    line-height: 1.25rem
+    margin-bottom: $label-spacing
 
-      user-select: none
+    user-select: none
 
   &-group, &-button
     border: $_1px solid var(--current-border)

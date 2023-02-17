@@ -1,6 +1,6 @@
 <template>
   <label class="composer-input-row composer-input-select">
-    <div class="composer-input-row-title">{{ title }}</div>
+    <div class="composer-input-title">{{ title }}</div>
     <div class="composer-input-group">
       <select v-model="value">
         <option
