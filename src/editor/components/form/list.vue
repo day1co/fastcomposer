@@ -134,5 +134,29 @@ $indent-padding: 0.25rem
     bottom: 0
     left: 0
 
+.composer-pane-wide
+
+  .composer-input-list-item
+    padding-top: $indent-width
+    padding-left: 0
+
+    background-image: single-color-image(var(--c-regional-hint))
+    background-size: calc(100% - $indent-width * 2 - 0.875rem) $_1px
+    background-position: right ($indent-width - 0.125rem) / 2
+
+    &::before
+      content: '#' counter(index)
+      width: unset
+      left: $indent-width + $indent-padding
+
+      text-align: left
+      line-height: $indent-width
+
+    > .composer-input-list-button
+      top: 0
+      bottom: unset
+
+    .composer-input-title
+      text-indent: $indent-padding
 
 </style>

@@ -64,8 +64,8 @@ export default {
     @include clickable
     flex-shrink: 0
 
-    line-height: 2rem
-    padding: 0 0.375rem
+    line-height: var(--input-line-height)
+    padding: var(--input-padding-y) var(--input-padding-x)
 
     margin: 0
     box-shadow: $_1px * -1 0 0 var(--current-border)

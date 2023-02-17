@@ -1,18 +1,14 @@
-$row-spacing: 0.375rem
-$label-spacing: $row-spacing / 2
 
 .composer-input
+  line-height: var(--input-line-height)
 
   &-row, &-list
     display: block
 
-    margin: $row-spacing 0
-
-    line-height: 1.25rem
+    margin: var(--input-spacing-row) 0
 
   &-title
-    line-height: 1.25rem
-    margin-bottom: $label-spacing
+    margin-bottom: calc(var(--input-spacing-row) / 2)
 
     user-select: none
 
@@ -38,7 +34,7 @@ $label-spacing: $row-spacing / 2
       flex-grow: 1
       flex-shrink: 1
 
-      padding: 0.375rem 0.5rem
+      padding: var(--input-padding-y) var(--input-padding-x)
 
       outline: none
 
@@ -47,3 +43,28 @@ $label-spacing: $row-spacing / 2
     > select
       @include background-image-icon(20, 16, 'M6 6.5l4 4l4-4')
       background-position: right center
+
+.composer-pane-wide
+
+  --input-padding-y: 0.25rem
+  --input-padding-x: 0.5rem
+
+  .composer-input
+
+    &-row
+      display: flex
+      align-items: center
+
+    &-row, &-list
+      margin: calc(var(--input-spacing-row) / 2) 0
+
+    &-list-item
+      margin: var(--input-spacing-row) 0
+
+    &-title
+      flex-basis: 6rem // FIXME
+      margin-bottom: 0
+
+    &-group
+      flex-basis: 80% // FIXME ??
+      flex-grow: 1

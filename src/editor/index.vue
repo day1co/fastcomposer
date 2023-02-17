@@ -10,7 +10,7 @@
       <main>
         content
       </main>
-      <aside class="composer-sidebar right">
+      <aside class="composer-sidebar right" style="width: 480px">
         <composer-pane-history></composer-pane-history>
         <composer-pane-layer-edit></composer-pane-layer-edit>
       </aside>
