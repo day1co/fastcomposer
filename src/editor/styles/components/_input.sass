@@ -13,10 +13,7 @@
 
       user-select: none
 
-  &-group
-    display: flex
-    align-content: stretch
-
+  &-group, &-button
     border: $_1px solid var(--current-border)
     background: var(--c-bg-outer)
 
@@ -26,6 +23,10 @@
 
     &:has(:focus)
       --current-border: var(--c-fg-outline-active)
+
+  &-group
+    display: flex
+    align-content: stretch
 
     > *
       margin: $_1px * -1

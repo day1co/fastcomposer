@@ -1,19 +1,19 @@
 <template>
   <composer-pane title="레이어 속성">
-    <form class="composer-pane-content" @submit.prevent.stop>
+    <form
+      v-if="currentLayer"
+      class="composer-pane-content"
+      @submit.prevent.stop>
+
       <!-- layout info -->
       <composer-layout-info
-        v-if="currentLayer"
         :layout="currentLayer.layout"></composer-layout-info>
+
       <!-- parameters -->
-      <composer-item-group title="데모">
-        <composer-input-text title="집에 가고 싶다" placeholder="으어어"></composer-input-text>
-        <composer-input-text title="내일의 일을" placeholder="내일로 미루자!"></composer-input-text>
-        <composer-input-number title="모레의 일을" placeholder="1234"></composer-input-number>
-        <composer-input-select title="글피의 일을" placeholder="1234"></composer-input-select>
-        <composer-input-file title="이거됨??" placeholder="1234"></composer-input-file>
-        <composer-input-textarea title="진짜 집에 가고 싶다" placeholder="으어어"></composer-input-textarea>
-      </composer-item-group>
+      <composer-form
+        :layer="currentLayer"
+        :path="currentLayer.path"
+        :params="currentLayer.layout.params"></composer-form>
     </form>
   </composer-pane>
 </template>
@@ -25,26 +25,15 @@ import ComposerPane from './index.vue'
 import ComposerItemGroup from '../listitem/group.vue'
 import ComposerLayoutInfo from '../layout-info.vue'
 
-import ComposerInputText from '../form/text.vue'
-import ComposerInputNumber from '../form/number.vue'
-import ComposerInputSelect from '../form/select.vue'
-import ComposerInputFile from '../form/file.vue'
-import ComposerInputTextarea from '../form/textarea.vue'
+import ComposerForm from '../form/index.vue'
 
 export default {
   components: {
     ComposerPane,
     ComposerItemGroup,
     ComposerLayoutInfo,
-    ComposerInputText,
-    ComposerInputNumber,
-    ComposerInputSelect,
-    ComposerInputFile,
-    ComposerInputTextarea
+    ComposerForm,
   },
-  data: () => ({
-    //
-  }),
   computed: {
     currentLayer() {
       if(!this.$composer.focus)

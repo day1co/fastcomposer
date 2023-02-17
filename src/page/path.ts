@@ -52,4 +52,14 @@ export default class Path {
     grandchild = grandchild ?? this.grandchild
     return new Path(layer, child, index, grandchild)
   }
+
+  withChild(child: string) {
+    if(this.child == null) {
+      return this.partial('layer').override({ child })
+    } else if(this.index != null && this.grandchild == null) {
+      return this.partial('index').override({ grandchild: child })
+    } else {
+      return this
+    }
+  }
 }

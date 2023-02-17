@@ -4,7 +4,7 @@
     <div class="composer-input-group">
       <select v-model="value">
         <option
-          v-for="[key, value] of options"
+          v-for="[key, value] of _options"
           :key="key"
           :value="key">{{ value }}</option>
       </select>
@@ -21,15 +21,19 @@ export default {
       default: '문자열 속성'
     },
     modelValue: null,
-    options: {
-      type: Map,
-      default: () => new Map([ ['a', 1], ['b', 2] ])
-    }
+    options: [ Array, Map ]
   },
   computed: {
     value: {
       get() { return this.modelValue },
       set(v) { this.$emit('update:modelValue', v) }
+    },
+    _options() {
+      if(Array.isArray(this.options)) {
+        return new Map(this.options.map(_ => [ _, _ ]))
+      } else {
+        return this.options
+      }
     }
   }
 }
