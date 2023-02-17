@@ -1,6 +1,6 @@
 <template>
   <composer-pane title="레이어 속성">
-    <form
+    <div
       v-if="currentLayer"
       class="composer-pane-content"
       @submit.prevent.stop>
@@ -14,7 +14,7 @@
         :layer="currentLayer"
         :path="currentLayer.path"
         :params="currentLayer.layout.params"></composer-form>
-    </form>
+    </div>
   </composer-pane>
 </template>
 
