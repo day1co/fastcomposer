@@ -5,7 +5,7 @@
       <textarea
         :maxlength="maxlength"
         :placeholder="placeholder"
-        v-model="value" />
+        v-model="value"></textarea>
     </div>
   </label>
 </template>
@@ -14,10 +14,7 @@
 
 export default {
   props: {
-    title: {
-      type: String,
-      default: '긴 문자열 속성'
-    },
+    title: String,
     modelValue: null,
     maxlength: Number,
     placeholder: String

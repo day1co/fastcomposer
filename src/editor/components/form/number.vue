@@ -28,10 +28,7 @@
 
 export default {
   props: {
-    title: {
-      type: String,
-      default: '숫자 속성'
-    },
+    title: String,
     modelValue: {
       type: [ Number, String ],
       default: 0

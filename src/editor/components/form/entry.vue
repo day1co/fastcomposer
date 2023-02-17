@@ -8,6 +8,9 @@
   <component
     v-else
     :is="component"
+    :title="param.title ?? param.name"
+    :maxlength="param.maxLength ?? param.maxlength"
+    :placeholder="param.placeholder"
     v-model="value">
   </component>
 </template>

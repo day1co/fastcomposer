@@ -15,10 +15,7 @@
 
 export default {
   props: {
-    title: {
-      type: String,
-      default: '문자열 속성'
-    },
+    title: String,
     modelValue: null,
     maxlength: Number,
     placeholder: String

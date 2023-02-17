@@ -24,10 +24,7 @@
 
 export default {
   props: {
-    title: {
-      type: String,
-      default: '파일 속성'
-    },
+    title: String,
     modelValue: String,
     placeholder: String
   },
