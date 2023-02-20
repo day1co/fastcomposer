@@ -115,7 +115,7 @@ $indent-padding: 0.25rem
 
     background-image: single-color-image(var(--c-fg-hint))
     background-size: 0.125rem calc(100% - $indent-width * 2 - 0.5rem)
-    background-position: ($indent-width - 0.125rem) / 2 $indent-width + 0.25rem
+    background-position: ($indent-width - 0.125rem) * 0.5 $indent-width + 0.25rem
     background-repeat: no-repeat
 
     &::before
@@ -142,7 +142,7 @@ $indent-padding: 0.25rem
 
     background-image: single-color-image(var(--c-regional-hint))
     background-size: calc(100% - $indent-width * 2 - 0.875rem) $_1px
-    background-position: right ($indent-width - 0.125rem) / 2
+    background-position: right ($indent-width - 0.125rem) * 0.5
 
     &::before
       content: '#' counter(index)
