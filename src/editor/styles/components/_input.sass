@@ -40,9 +40,24 @@
 
       min-width: 1rem
 
-    > select
-      @include background-image-icon(20, 16, 'M6 6.5l4 4l4-4')
-      background-position: right center
+  &-group > select, &-group-caret
+    @include background-image-icon(20, 16, 'M7 6.5l3 3l3-3')
+
+  &-group > select
+    padding-left: 1.5rem
+
+    background-position-x: $_1px
+
+  &-group-caret
+    display: inline-flex
+    flex: 0
+
+    margin: 0
+    padding-left: 1.25rem
+
+    background-position: left center
+
+    cursor: pointer
 
 .composer-pane-wide
 
@@ -62,9 +77,34 @@
       margin: var(--input-spacing-row) 0
 
     &-title
-      flex-basis: 6rem // FIXME
+      flex-basis: 8rem // FIXME
+      padding-right: 0.25rem
       margin-bottom: 0
 
     &-group
       flex-basis: 80% // FIXME ??
       flex-grow: 1
+
+
+.composer-input-helper-button
+  display: flex
+  flex-direction: column
+
+  width: 1.25rem
+
+  margin: 0 -0.25rem 0 0
+  transition: var(--transition-button)
+
+  // box-shadow: $_1px 0 0 var(--current-border)
+
+  > button
+    flex-grow: 1
+
+    overscroll-behavior: none
+
+    &.interactive
+      @include clickable
+    &.up
+      @include background-image-icon(20, 16, 'M7 10l3-3l3 3')
+    &.down
+      @include background-image-icon(20, 16, 'M7 6l3 3l3-3')

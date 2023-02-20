@@ -24,6 +24,7 @@ import ComposerInputSelect from './select.vue'
 import ComposerInputFile from './file.vue'
 import ComposerInputTextarea from './textarea.vue'
 import ComposerInputList from './list.vue'
+import ComposerInputColor from './color.vue'
 
 export default {
   props: {
@@ -47,7 +48,10 @@ export default {
         case 'image':
           return ComposerInputFile
         default:
-          return ComposerInputText
+          if(/color$/i.test(this.param?.name))
+            return ComposerInputColor
+          else
+            return ComposerInputText
       }
     },
     value: {

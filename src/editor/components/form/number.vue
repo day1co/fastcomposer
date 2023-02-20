@@ -10,14 +10,14 @@
         @keypress="keypress"
         v-model="value" />
       <!-- implict <label> targets first input! -->
-      <div class="composer-input-helper nud">
+      <div class="composer-input-helper-button nud">
         <button
           tabindex="-1"
-          class="up"
+          class="up interactive"
           @click="up"></button>
         <button
           tabindex="-1"
-          class="down"
+          class="down interactive"
           @click="down"></button>
       </div>
     </div>
@@ -89,28 +89,6 @@ export default {
 
 .composer-input-number
   .composer-input-group
-      flex-direction: row-reverse // implict <label> targets first input!
-
-.composer-input-helper.nud
-  display: flex
-  flex-direction: column
-
-  width: 1.25rem
-
-  margin: 0 //$_1px solid transparent
-  transition: var(--transition-button)
-
-  box-shadow: $_1px 0 0 var(--current-border)
-
-  > button
-    @include clickable
-    flex-grow: 1
-
-    overscroll-behavior: none
-
-    &.up
-      @include background-image-icon(20, 16, 'M7 10l3-3l3 3')
-    &.down
-      @include background-image-icon(20, 16, 'M7 6l3 3l3-3')
+    flex-direction: row-reverse // implict <label> targets first input!
 
 </style>
