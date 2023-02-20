@@ -11,6 +11,7 @@
     :title="param.title ?? param.name"
     :maxlength="param.maxLength ?? param.maxlength"
     :placeholder="param.placeholder"
+    :options="param?.options"
     v-model="value">
   </component>
 </template>
