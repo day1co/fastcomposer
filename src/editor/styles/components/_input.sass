@@ -1,6 +1,5 @@
 
 .composer-input
-  line-height: var(--input-line-height)
 
   &-row, &-list
     display: block
@@ -26,6 +25,7 @@
   &-group
     display: flex
     align-content: stretch
+    line-height: var(--input-line-height)
 
     > *
       margin: $_1px * -1
@@ -82,7 +82,7 @@
       margin-bottom: 0
 
     &-group
-      flex-basis: 80% // FIXME ??
+      // flex-basis: 80% // FIXME ??
       flex-grow: 1
 
 
