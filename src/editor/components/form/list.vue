@@ -1,5 +1,5 @@
 <template>
-  <ol class="composer-input-list">
+  <ol :class="[ 'composer-input-list', { closed: !opened } ]">
     <li class="composer-input-title">
       <button
         class="composer-input-button composer-input-list-button"
@@ -9,7 +9,7 @@
           <path d="M4 8h8M8 4v8" />
         </svg>
       </button>
-      <label> {{ param.name }} </label>
+      <label> {{ param.label ?? param.name }} </label>
       <var> {{ value.length }}/{{ param.maxLength }} </var>
     </li>
     <li
@@ -29,6 +29,15 @@
         :params="param.params">
       </composer-form>
     </li>
+    <li class="composer-input-list-footer">
+      <button
+        class="composer-input-list-button composer-input-button"
+        @click="this.opened = !this.opened">
+        <svg width="16" height="16" fill="none" stroke="currentColor">
+          <path d="M4 8l4-4l4 4M4 12l4-4l4 4" />
+        </svg>
+      </button>
+    </li>
   </ol>
 </template>
 
@@ -45,12 +54,17 @@ export default {
   components: {
     ComposerForm: defineAsyncComponent(() => import('./index.vue'))
   },
+  data: () => ({
+    opened: true
+  }),
   methods: {
     addItem() {
+      this.opened = true
       if(this.spaceLeft)
         this.$composer.state.improvise('layer.item.new', this.path)
     },
     removeItem(index) {
+      this.opened = true
       this.$composer.state.improvise(
         'layer.item.remove',
         this.path.override({ index })
@@ -106,7 +120,6 @@ $indent-padding: 0.25rem
       > svg
         opacity: 0.25
 
-
   &-item
     position: relative
     padding-left: $indent-width + $indent-padding
@@ -134,15 +147,27 @@ $indent-padding: 0.25rem
     bottom: 0
     left: 0
 
+  &.closed
+    .composer-input-list-item
+      display: none
+    .composer-input-list-footer button
+      transform: scaleY(-1)
+
+  &-footer
+    background-size: calc(100% - $indent-width - $indent-padding) $_1px
+
+.composer-pane-wide .composer-input-list-item, .composer-input-list-footer
+  background-image: single-color-image(var(--c-regional-hint))
+  background-position: right ($indent-width - 0.125rem) * 0.5
+  background-repeat: no-repeat
+
 .composer-pane-wide
 
   .composer-input-list-item
     padding-top: $indent-width
     padding-left: 0
 
-    background-image: single-color-image(var(--c-regional-hint))
     background-size: calc(100% - $indent-width * 2 - 0.875rem) $_1px
-    background-position: right ($indent-width - 0.125rem) * 0.5
 
     &::before
       content: '#' counter(index)
