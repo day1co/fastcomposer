@@ -24,6 +24,7 @@ import ComposerInputSelect from './select.vue'
 import ComposerInputFile from './file.vue'
 import ComposerInputTextarea from './textarea.vue'
 import ComposerInputList from './list.vue'
+import ComposerInputCheckbox from './checkbox.vue'
 import ComposerInputColor from './color.vue'
 
 export default {
@@ -47,6 +48,8 @@ export default {
         case 'file':
         case 'image':
           return ComposerInputFile
+        case 'checkbox':
+          return ComposerInputCheckbox
         default:
           if(/color$/i.test(this.param?.name))
             return ComposerInputColor

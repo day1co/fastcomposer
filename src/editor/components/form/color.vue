@@ -44,7 +44,9 @@ export default {
   input[type=color]
     flex-grow: 0
     flex-shrink: 0
+
     width: calc(var(--input-line-height) + var(--input-padding-y) * 2)
+    height: 100%
 
     margin: unset
 
