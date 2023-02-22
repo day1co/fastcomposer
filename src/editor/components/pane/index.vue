@@ -28,6 +28,8 @@ export default {
 
 <style lang="sass">
 
+$content-margin: 0.5rem
+
 .composer-pane
   display: flex
   flex-direction: column
@@ -41,7 +43,7 @@ export default {
   &-content
     flex: 1 1 auto
 
-    margin: 0.5rem
+    margin: $content-margin
 
     min-height: 0
     overflow-y: auto
@@ -103,5 +105,12 @@ export default {
 
     &:not(.active) > button
       visibility: hidden
+
+
+.composer-pane-menu
+  display: flex
+
+  margin-top: -$content-margin
+
 
 </style>
