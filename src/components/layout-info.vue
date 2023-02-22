@@ -1,6 +1,6 @@
 <template>
   <figure class="fc-layout-info">
-    <img class="fc-layout-info__icon" :src="layout.icon" :alt="layout.id" />
+    <img class="fc-layout-info__icon" :src="icon" :alt="layout.id" />
     <figcaption class="fc-layout-info__label">
       <strong class="__item__group__name">{{ layout.id }}</strong>
       <br />
@@ -17,6 +17,20 @@ export default {
       type: Object,
       default() { return {} },
       required: true
+    }
+  },
+  computed: {
+    icon() {
+      const icon = this.layout.icon
+      if(!icon) {
+        return
+      } else if(/^<(?:\?xml |svg )/.test(icon)) {
+        return 'data:image/svg+xml;utf8,' + encodeURIComponent(icon)
+      } else if(/^data:image\//.test(icon)) {
+        return icon
+      } else {
+        return null
+      }
     }
   }
 }
