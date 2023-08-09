@@ -813,7 +813,8 @@
     }
 
     &__container {
-      overflow: scroll;
+      overflow-x: hidden;
+      overflow-y: scroll;
       box-sizing: border-box;
       padding: 1.2rem 0.9rem 11rem;
       height: percentage(1);
