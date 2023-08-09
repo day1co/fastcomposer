@@ -583,7 +583,7 @@
         const usedStyles = document.querySelectorAll("style[type='text/css']");
         const doc = this.$el.getElementsByClassName('fc-frame')[0].contentWindow.document;
 
-        usedStyles.forEach(usedStyle => doc.head.appendChild(usedStyle.cloneNode(true)));
+        [...usedStyles].filter(el => el.innerHTML.includes('layout-001')).forEach(usedStyle => doc.head.appendChild(usedStyle.cloneNode(true)));
         doc.body.innerHTML = this.layerHtml;
       },
       onChangeDevice(deviceType) {
