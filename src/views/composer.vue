@@ -581,9 +581,13 @@
       },
       loadLayers() {
         const usedStyles = document.querySelectorAll("style[type='text/css']");
+        const usedLinks = document.querySelectorAll("link[rel='stylesheet']");
+
         const doc = this.$el.getElementsByClassName('fc-frame')[0].contentWindow.document;
 
-        [...usedStyles].filter(el => el.innerHTML.includes('layout-001')).forEach(usedStyle => doc.head.appendChild(usedStyle.cloneNode(true)));
+        [...usedStyles, ...usedLinks].forEach(el => doc.head.appendChild(el.cloneNode(true)));
+        doc.head.innerHTML += '<style>body{background:#fff;color:#000}</style>'
+
         doc.body.innerHTML = this.layerHtml;
       },
       onChangeDevice(deviceType) {
