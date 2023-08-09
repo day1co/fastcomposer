@@ -151,9 +151,10 @@
       flex-grow: 100;
       justify-items: flex-end;
       width: 100%;
-      height: 7.1rem;
+      height: 7.6rem;
       padding: 0 1.6rem 0 0.8rem;
       overflow-x: scroll;
+      overflow-y: hidden;
     }
     &__favorite-layout {
       margin-right: 1rem;
@@ -207,6 +208,16 @@
     &__info {
       display: flex;
       flex-direction: column;
+    }
+
+    ::-webkit-scrollbar {
+      width: 0.5rem;
+      height: 0.5rem;
+      background: #6668;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: $foreground;
+      border-radius: 0;
     }
   }
 </style>
