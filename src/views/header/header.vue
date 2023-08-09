@@ -11,7 +11,7 @@
       </span>
     </div>
     <!-- TODO: move/reimpl elsewhere -->
-    <ul class="fc-header__favorite-layouts" v-if="favoriteLayouts.length">
+    <ul class="fc-header__favorite-layouts" v-if="favoriteLayouts.length" @scroll="redirectScroll">
       <li class="fc-header__favorite-layout" v-for="(layout, index) in favoriteLayouts" :key="index">
         <button class="fc-header__favorite-btn" @click="addLayer(layout)">
           <img :src="toIcon(layout.icon)" alt="" />
@@ -43,6 +43,13 @@
         } else {
           return null
         }
+      },
+      redirectScroll(e) {
+        if(!e.deltaY || e.deltaX !== 0) {
+          return
+        }
+        e.currentTarget.scrollLeft += e.deltaY + e.deltaX
+        e.preventDefault()
       }
     },
     data() {
