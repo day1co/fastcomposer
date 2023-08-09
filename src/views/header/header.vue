@@ -14,7 +14,7 @@
     <ul class="fc-header__favorite-layouts" v-if="favoriteLayouts.length">
       <li class="fc-header__favorite-layout" v-for="(layout, index) in favoriteLayouts" :key="index">
         <button class="fc-header__favorite-btn" @click="addLayer(layout)">
-          <img :src="layout.icon" alt="" />
+          <img :src="toIcon(layout.icon)" alt="" />
           {{ layout.id }}
         </button>
       </li>
@@ -33,6 +33,17 @@
       addLayer(layout) {
         this.$emit('add', layout);
       },
+      toIcon(icon) {
+        if(!icon) {
+          return
+        } else if(/^<(?:\?xml |svg )/.test(icon)) {
+          return 'data:image/svg+xml;utf8,' + encodeURIComponent(icon)
+        } else if(/^data:image\//.test(icon)) {
+          return icon
+        } else {
+          return null
+        }
+      }
     },
     data() {
       return {
