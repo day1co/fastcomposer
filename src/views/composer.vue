@@ -10,7 +10,8 @@
      :class="[
       isLeftVisible && 'fc-composer--aside-l',
       isRightVisible && 'fc-composer--aside-r',
-      !favoriteLayoutIds.length && 'fc-composer--no-favorites'
+      !favoriteLayoutIds.length && 'fc-composer--no-favorites',
+      'fc-composer__' + currentColorMode
     ]"
     >
       <div class="fc-tooltip">
@@ -66,6 +67,9 @@
                 </button>
               <button class="btn" @click="onShowModal">
                 <span class="material-icons">help</span>
+              </button>
+              <button class="btn" @click="onToggleLightMode">
+                <span class="material-icons">{{ currentColorModeIcon }}</span>
               </button>
               <button class="btn" @click="onValidateLayer">
                 <span class="material-icons">check</span>
@@ -281,6 +285,8 @@
       EventBus.$on('fc-upload', this.onUploadFile);
       this.localStorageService = new LocalStorageService('favoriteLayouts');
       this.favoriteLayoutIds = this.localStorageService.get();
+
+      this.currentColorMode = localStorage['fastcomposer-color-mode'] || '';
     },
     computed: {
       checkedCount() {
@@ -305,6 +311,15 @@
           return layoutMap;
         }, {});
       },
+      currentColorModeIcon() {
+        if(this.currentColorMode === 'dark') {
+          return 'brightness_3'
+        } else if(this.currentColorMode === 'light') {
+          return 'light_mode'
+        } else {
+          return 'brightness_auto'
+        }
+      }
     },
     data() {
       return {
@@ -316,6 +331,7 @@
         currentLayerIndex: -1,
         isLeftVisible: true,
         isRightVisible: true,
+        currentColorMode: '',
         notification: {
           message: '',
           type: '',
@@ -593,10 +609,22 @@
       onChangeDevice(deviceType) {
         this.deviceType = deviceType;
       },
+      onToggleLightMode() {
+        if(this.currentColorMode === 'dark') {
+          this.currentColorMode = 'light'
+        } else if(this.currentColorMode === 'light') {
+          this.currentColorMode = ''
+        } else {
+          this.currentColorMode = 'dark'
+        }
+      }
     },
     watch: {
       currentLayerIndex() {
         this.onMoveSelectedLayer();
+      },
+      currentColorMode(to) {
+        localStorage['fastcomposer-color-mode'] = to
       }
     },
     beforeDestroy() {
