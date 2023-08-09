@@ -1,4 +1,6 @@
 @mixin color-scheme-dark {
+  color-scheme: dark;
+
   --composer-color-foreground: hsl(0deg 0% 97%);
   --composer-color-primary: hsl(0deg 0% 16%);
   --composer-color-primary-active: hsl(0deg 0% 30%);
@@ -12,6 +14,8 @@
 }
 
 @mixin color-scheme-light {
+  color-scheme: light;
+
   --composer-tint-degree: 210deg;
 
   --composer-color-foreground: hsl(0deg 0% 4%);
