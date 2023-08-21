@@ -153,7 +153,7 @@
       width: 100%;
       height: 7.6rem;
       padding: 0 1.6rem 0 0.8rem;
-      overflow-x: scroll;
+      overflow-x: auto;
       overflow-y: hidden;
     }
     &__favorite-layout {
