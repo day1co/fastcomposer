@@ -11,7 +11,8 @@
       isLeftVisible && 'fc-composer--aside-l',
       isRightVisible && 'fc-composer--aside-r',
       !favoriteLayoutIds.length && 'fc-composer--no-favorites',
-      'fc-composer__' + options.colorMode
+      'fc-composer__' + options.colorMode,
+      'fc-composer__hide-layer-' + options.hideLayerMode,
     ]"
     >
       <div class="fc-tooltip">
@@ -251,6 +252,7 @@
           </label>
           <select v-model="options.hideLayerMode" id="fc-options-hidelayermode">
             <option value=""> 흐리게 보이기 </option>
+            <option value="hatched"> 흐리게 + 빗금 </option>
             <option value="gutter-only"> 레이어 정보만 보이기 </option>
             <option value="hide"> 완전히 숨기기 </option>
           </select>

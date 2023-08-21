@@ -135,11 +135,6 @@
       }
     }
     &.fc-hidden {
-      .fc-block__container {
-        opacity: 0.5;
-        background-color: olive;
-      }
-
       .fc-block__info {
         background: $gutter-disabled;
         b {
@@ -172,6 +167,49 @@
 
       &.active {
         outline: 1px dashed fuchsia;
+      }
+    }
+  }
+
+  .fc-block.fc-hidden {
+
+    .fc-composer__hide-layer- & {
+      .fc-block__container {
+        opacity: 0.5;
+      }
+
+      background-color: #fff;
+    }
+    .fc-composer__hide-layer-hatched &,
+    .fc-composer__hide-layer-gutter-only & {
+      .fc-block__container {
+        opacity: 0.5;
+      }
+
+      background-image: linear-gradient(-45deg,
+        #888,
+        #888 calc(25% - 0.707px),
+        #666 calc(25% - 0.707px),
+        #666 calc(25% + 0.707px),
+        #888 calc(25% + 0.707px),
+        #888 calc(75% - 0.707px),
+        #666 calc(75% - 0.707px),
+        #666 calc(75% + 0.707px),
+        #888 calc(75% + 0.707px),
+        #888
+      );
+      background-size: 1rem 1rem;
+      background-repeat: repeat;
+    }
+    .fc-composer__hide-layer-gutter-only &,
+    .fc-composer__hide-layer-hide & {
+      .fc-block__container {
+        display: none;
+      }
+    }
+    .fc-composer__hide-layer-gutter-only & {
+      .fc-block__info {
+        min-height: 1.5em;
       }
     }
   }
