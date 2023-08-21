@@ -770,7 +770,7 @@
 
     &--aside-l {
       .fc-composer__content__btn--left {
-        left: $sidebar-size + 14rem;
+        left: $sidebar-size + 10rem;
       }
     }
     &--aside-r {

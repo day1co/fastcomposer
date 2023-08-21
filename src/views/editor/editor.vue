@@ -287,7 +287,7 @@ export default {
       user-select: none;
 
       > small {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         margin-left: 0.4rem;
       }
       > .spacer {
