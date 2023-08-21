@@ -11,7 +11,7 @@
       isLeftVisible && 'fc-composer--aside-l',
       isRightVisible && 'fc-composer--aside-r',
       !favoriteLayoutIds.length && 'fc-composer--no-favorites',
-      'fc-composer__' + currentColorMode
+      'fc-composer__' + options.colorMode
     ]"
     >
       <div class="fc-tooltip">
@@ -68,8 +68,8 @@
               <button class="btn" @click="onShowModal">
                 <span class="material-icons">help</span>
               </button>
-              <button class="btn" @click="onToggleLightMode">
-                <span class="material-icons">{{ currentColorModeIcon }}</span>
+              <button class="btn" @click="showConfigWindow = true">
+                <span class="material-icons">settings</span>
               </button>
               <button class="btn" @click="onValidateLayer">
                 <span class="material-icons">check</span>
@@ -230,6 +230,33 @@
         <iframe class="fc-frame"></iframe>
       </div>
     </Dialog>
+    <Dialog :visible.sync="showConfigWindow">
+      <div slot="header">
+        <h3> FastComposer 설정 </h3>
+      </div>
+      <div slot="main">
+        <p class="fc-option-row">
+          <label for="fc-options-colormode">
+            테마:
+          </label>
+          <select v-model="options.colorMode" id="fc-options-colormode">
+            <option value=""> 자동 </option>
+            <option value="light"> 밝게 </option>
+            <option value="dark"> 어둡게 </option>
+          </select>
+        </p>
+        <p class="fc-option-row">
+          <label for="fc-options-hidelayermode">
+            미리보기 영역에서 <i class="material-icons">visibility_off</i> 레이어를:
+          </label>
+          <select v-model="options.hideLayerMode" id="fc-options-hidelayermode">
+            <option value=""> 흐리게 보이기 </option>
+            <option value="gutter-only"> 레이어 정보만 보이기 </option>
+            <option value="hide"> 완전히 숨기기 </option>
+          </select>
+        </p>
+      </div>
+    </Dialog>
   </div>
 </template>
 
@@ -286,7 +313,17 @@
       this.localStorageService = new LocalStorageService('favoriteLayouts');
       this.favoriteLayoutIds = this.localStorageService.get();
 
-      this.currentColorMode = localStorage['fastcomposer-color-mode'] || '';
+      this.options = {
+        ...this.options,
+        colorMode: localStorage['fastcomposer-color-mode'] || '',
+        ...(() => {
+          try {
+            return JSON.parse(localStorage['fastcomposer-options']) ?? {};
+          } catch(e) {
+            return {}
+          }
+        })()
+      }
     },
     computed: {
       checkedCount() {
@@ -311,15 +348,6 @@
           return layoutMap;
         }, {});
       },
-      currentColorModeIcon() {
-        if(this.currentColorMode === 'dark') {
-          return 'brightness_3'
-        } else if(this.currentColorMode === 'light') {
-          return 'light_mode'
-        } else {
-          return 'brightness_auto'
-        }
-      }
     },
     data() {
       return {
@@ -331,7 +359,10 @@
         currentLayerIndex: -1,
         isLeftVisible: true,
         isRightVisible: true,
-        currentColorMode: '',
+        options: {
+          colorMode: '',
+          hideLayerMode: '',
+        },
         notification: {
           message: '',
           type: '',
@@ -349,7 +380,8 @@
           }
         },
         isDevicePreviewMode: false,
-        deviceType: 'desktop'
+        deviceType: 'desktop',
+        showConfigWindow: true,
       };
     },
     methods: {
@@ -609,22 +641,20 @@
       onChangeDevice(deviceType) {
         this.deviceType = deviceType;
       },
-      onToggleLightMode() {
-        if(this.currentColorMode === 'dark') {
-          this.currentColorMode = 'light'
-        } else if(this.currentColorMode === 'light') {
-          this.currentColorMode = ''
-        } else {
-          this.currentColorMode = 'dark'
-        }
-      }
     },
     watch: {
       currentLayerIndex() {
         this.onMoveSelectedLayer();
       },
-      currentColorMode(to) {
-        localStorage['fastcomposer-color-mode'] = to
+      options: {
+        handler(to) {
+          try {
+            localStorage['fastcomposer-options'] = JSON.stringify(this.options) ?? {}
+          } catch(e) {
+            console.error(e);
+          }
+        },
+        deep: true,
       }
     },
     beforeDestroy() {
@@ -925,5 +955,19 @@
     }
   }
 
+  .fc-option-row {
+    display: grid;
+    grid-template-columns: auto 16rem;
+    gap: 1rem;
+
+    margin: 1rem 0;
+
+    > label {
+      text-align: right;
+    }
+    .material-icons {
+      vertical-align: -0.25em;
+    }
+  }
 
 </style>
