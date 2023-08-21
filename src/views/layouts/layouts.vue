@@ -120,7 +120,7 @@
     width: 40rem;
     padding-bottom:2rem;
     z-index: 19999;
-    color: white;
+    color: $foreground;
 
     &__list {
       overflow: scroll;
