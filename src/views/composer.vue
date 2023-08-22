@@ -383,7 +383,7 @@
         },
         isDevicePreviewMode: false,
         deviceType: 'desktop',
-        showConfigWindow: true,
+        showConfigWindow: false,
       };
     },
     methods: {
