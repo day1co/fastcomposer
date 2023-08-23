@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import EventBus from '../../event-bus/event-bus';
+import EventBus from '../../event-bus/event-bus.vue';
 
 export default {
   props: {

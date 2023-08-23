@@ -49,7 +49,7 @@
 <script>
   import LayoutInfo from '../../components/layout-info.vue';
   import { Container, Draggable } from "vue-smooth-dnd";
-  import EventBus from '../../event-bus/event-bus';
+  import EventBus from '../../event-bus/event-bus.vue';
 
   export default {
     components: {

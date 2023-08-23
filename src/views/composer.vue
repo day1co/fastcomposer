@@ -265,15 +265,15 @@
 <script>
   import { cloneDeep } from 'lodash';
   import { uniqueId, restructureLayouts } from '../utils/utils';
-  import EventBus from './../event-bus/event-bus';
+  import EventBus from './../event-bus/event-bus.vue';
   import { parse as marked } from 'marked';
-  import Toast from '../components/toast/toast';
-  import Dialog from '../components/dialog/dialog';
+  import Toast from '../components/toast/toast.vue';
+  import Dialog from '../components/dialog/dialog.vue';
   import ComposerHeader from './header/header.vue';
-  import Editor from './editor/editor';
-  import Preview from './preview/preview';
-  import Layouts from './layouts/layouts';
-  import Layers from './layers/layers';
+  import Editor from './editor/editor.vue';
+  import Preview from './preview/preview.vue';
+  import Layouts from './layouts/layouts.vue';
+  import Layers from './layers/layers.vue';
   import LocalStorageService from '../service/LocalStorage';
 
   export default {
