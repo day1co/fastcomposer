@@ -105,6 +105,9 @@
                   <template v-if="checkedCount">{{checkedCount}} 선택</template>)
                 </small>
               </label>
+              <button class="btn" @click="onToggleLayerVisibility" :disabled="!checkedCount">
+                <span class="material-icons">{{ checkedCount && isEverySelectedLayerVisible? 'visibility_off' : 'visibility' }}</span>
+              </button>
               <button class="btn" @click="onShowLayouts">
                 <span class="material-icons">add</span>
               </button>
@@ -350,6 +353,10 @@
           return layoutMap;
         }, {});
       },
+      // onToggleLayerVisibility
+      isEverySelectedLayerVisible() {
+        return !this.layers.filter(layer => layer.isChecked).some(layer => layer.hidden)
+      }
     },
     data() {
       return {
@@ -592,6 +599,11 @@
           })
         }
         return resultValues;
+      },
+      onToggleLayerVisibility() {
+        const selected = this.layers.filter(_ => _.isChecked)
+        const isVisible = this.layers.filter(_ => _.isChecked).some(_ => _.hidden)
+        this.layers.filter(_ => _.isChecked).forEach(_ => this.$set(_, 'hidden', !isVisible))
       },
       onShowLayouts() {
         this.$refs.layouts.toggle();
