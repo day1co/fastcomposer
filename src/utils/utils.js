@@ -1,7 +1,11 @@
+import Vue from 'vue';
 import {template} from "lodash";
 
 export const restructureLayouts = (layouts) => {
-  return layouts.map(layout => Object.assign(layout, {templateFunc: template(layout.template)}));
+  for(const layout of layouts) {
+    Vue.set(layout, 'templateFunc', template(layout.template))
+  }
+  return layouts
 };
 
 let _blockIdSeq = 0;

@@ -486,7 +486,8 @@
           id: uniqueId(),
           layout,
           values: cloneDeep(layout.values) || {},
-        });
+          hidden: false
+        })
 
         this.currentLayerIndex = this.currentLayerIndex + 1;
         this.onUpdateCurrentLayerIndex(this.currentLayerIndex);
@@ -530,7 +531,7 @@
         this.$emit('uploadFile', fileInfo, callback);
       },
       setLayouts(layouts) {
-        this.layouts = restructureLayouts(layouts);
+        this.layouts = layouts;
       },
       setLayerBlockData(layerBlockData) {
         if (typeof layerBlockData === 'string') {

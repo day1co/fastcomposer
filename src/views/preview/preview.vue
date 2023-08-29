@@ -38,6 +38,7 @@
 <script>
   import EventBus from '../../event-bus/event-bus.vue';
   import { parse as marked } from 'marked';
+  import { template } from 'lodash';
 
   export default {
     props: {
@@ -56,7 +57,8 @@
     },
     data() {
       return {
-        index: this.currentLayerIndex
+        index: this.currentLayerIndex,
+        cachedRenderFunctions: {}
       }
     },
     methods: {
@@ -68,7 +70,7 @@
             values[name] = (value === undefined) ? block.layout.values[name] : values[name] = block.values[name];
           }
         }
-        return block.layout.templateFunc(values);
+        return (this.cachedRenderFunctions[block.layout.id] ||= template(block.layout.template))(values);
       },
       select(index) {
         const newIndex = Math.min(Math.max(index, 0), this.blocks.length - 1);
