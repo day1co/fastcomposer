@@ -287,61 +287,6 @@
         }
       },
     },
-    mounted() {
-      this.setLayouts(this.layoutModels);
-
-      if (this.layerModals.length) {
-        this.setLayerBlockData(this.layerModals);
-      }
-
-      this.$el.focus();
-    },
-    created() {
-      EventBus.$on('save', this.onSave);
-      EventBus.$on('fc-upload', this.onUploadFile);
-      this.localStorageService = new LocalStorageService('favoriteLayouts');
-      this.favoriteLayoutIds = this.localStorageService.get();
-
-      this.options = {
-        ...this.options,
-        colorMode: localStorage['fastcomposer-color-mode'] || '',
-        ...(() => {
-          try {
-            return JSON.parse(localStorage['fastcomposer-options']) ?? {};
-          } catch(e) {
-            return {}
-          }
-        })()
-      }
-    },
-    computed: {
-      checkedCount() {
-        return this.layers.filter(layer => layer.isChecked).length;
-      },
-      warnCount() {
-        return this.layers.filter(layer => layer.hasSyntaxErrorTags).length;
-      },
-      currentLayer() {
-        return this.layers[this.currentLayerIndex];
-      },
-      layerHtml() {
-        return this.layers.filter(layer => !layer.hidden).map(layer => `
-            <section class="fc-block fc-layout fc-layout-${layer.layout.id}">
-              ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
-            </section>`,
-          ).join('\n');
-      },
-      layoutMaps() {
-        return this.layouts.reduce((layoutMap, layout) => {
-          layoutMap[layout.id] = layout;
-          return layoutMap;
-        }, {});
-      },
-      // onToggleLayerVisibility
-      isEverySelectedLayerVisible() {
-        return !this.layers.filter(layer => layer.isChecked).some(layer => layer.hidden)
-      }
-    },
     data() {
       return {
         favoriteLayoutIds: [],
@@ -640,6 +585,61 @@
       onChangeDevice(deviceType) {
         this.deviceType = deviceType;
       },
+    },
+    computed: {
+      checkedCount() {
+        return this.layers.filter(layer => layer.isChecked).length;
+      },
+      warnCount() {
+        return this.layers.filter(layer => layer.hasSyntaxErrorTags).length;
+      },
+      currentLayer() {
+        return this.layers[this.currentLayerIndex];
+      },
+      layerHtml() {
+        return this.layers.filter(layer => !layer.hidden).map(layer => `
+            <section class="fc-block fc-layout fc-layout-${layer.layout.id}">
+              ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
+            </section>`,
+          ).join('\n');
+      },
+      layoutMaps() {
+        return this.layouts.reduce((layoutMap, layout) => {
+          layoutMap[layout.id] = layout;
+          return layoutMap;
+        }, {});
+      },
+      // onToggleLayerVisibility
+      isEverySelectedLayerVisible() {
+        return !this.layers.filter(layer => layer.isChecked).some(layer => layer.hidden)
+      }
+    },
+    mounted() {
+      this.setLayouts(this.layoutModels);
+
+      if (this.layerModals.length) {
+        this.setLayerBlockData(this.layerModals);
+      }
+
+      this.$el.focus();
+    },
+    created() {
+      EventBus.$on('save', this.onSave);
+      EventBus.$on('fc-upload', this.onUploadFile);
+      this.localStorageService = new LocalStorageService('favoriteLayouts');
+      this.favoriteLayoutIds = this.localStorageService.get();
+
+      this.options = {
+        ...this.options,
+        colorMode: localStorage['fastcomposer-color-mode'] || '',
+        ...(() => {
+          try {
+            return JSON.parse(localStorage['fastcomposer-options']) ?? {};
+          } catch(e) {
+            return {}
+          }
+        })()
+      }
     },
     watch: {
       currentLayerIndex() {
