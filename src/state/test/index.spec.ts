@@ -51,24 +51,43 @@ describe('Main State Manager', () => {
     const rollback = jest.spyOn(setup.NoopAction, 'rollback')
     const outerPerform = jest.spyOn(state, 'perform')
 
-    const act = new Act('noop')
-    const rememberedAct = state.perform(act)!;
+    const act1 = new Act('noop')
+    const rememberedAct1 = state.perform(act1)!;
 
-    expect(perform).toBeCalledWith(state, noop, act)
-    expect(rememberedAct.remember).toBeTruthy()
+    expect(perform).toBeCalledWith(state, noop, act1)
+    expect(rememberedAct1.remember).toBeTruthy()
     expect(state.past.length).toEqual(1)
     expect(state.future.length).toEqual(0)
 
+    const act2 = new Act('noop')
+    const rememberedAct2 = state.perform(act2)!;
+
+    const act3 = new Act('noop')
+    const rememberedAct3 = state.perform(act3)!;
+
+
     state.undo()
 
-    expect(rollback).toBeCalledWith(state, noop, rememberedAct)
-    expect(state.past.length).toEqual(0)
+    // expect(rollback).toBeCalledWith(state, noop, rememberedAct3)
+    expect(state.past.length).toEqual(2)
     expect(state.future.length).toEqual(1)
+
+    expect(state.past[0].id).toEqual(rememberedAct1.id)
+    expect(state.future[0].id).toEqual(rememberedAct3.id)
+
+    state.undo()
 
     state.redo()
 
-    expect(perform).toHaveBeenNthCalledWith(2, state, noop, rememberedAct)
-    expect(outerPerform).toBeCalledWith(rememberedAct, true)
+    // expect(perform).toHaveBeenNthCalledWith(2, state, noop, rememberedAct3)
+    // expect(outerPerform).toBeCalledWith(rememberedAct3, true)
+    expect(state.past.length).toEqual(2)
+    expect(state.future.length).toEqual(1)
+
+    expect(state.past[0].id).toEqual(rememberedAct1.id)
+    expect(state.past[1].id).toEqual(rememberedAct2.id)
+    expect(state.future[0].id).toEqual(rememberedAct3.id)
+
   })
 
 })

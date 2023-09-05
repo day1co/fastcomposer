@@ -92,7 +92,7 @@ export default class State {
 
       // TODO: move focus
 
-      if(!action.doNotRemember)
+      if(!action.doNotRemember && !isRedo)
         this._writePresent(act)
 
       if(!action.compose)
