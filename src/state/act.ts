@@ -13,16 +13,14 @@ export default class Act {
     // b) subject of this action
     public target?: Path,
     public arg?: any,
-    public sealed: boolean = false
-  ) {
-    this.id = action + '#' + uniqueId()
-  }
+    public sealed: boolean = false,
+    public id: string = action + '#' + uniqueId()
+  ) {}
 
   isComposableWith(act: Act) {
     return this.action === act.action &&
           !this.sealed &&
           (this.target === act.target || this.target?.isEqual(act.target!))
-
   }
 
   // this stores state BEFORE action performed
