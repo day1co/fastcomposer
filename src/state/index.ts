@@ -75,10 +75,11 @@ export default class State {
         && !this._lastAct.sealed
   }
 
-  act(actionName: string, target?: Path, arg?: any) {
-    const act = new Act(actionName, target, arg)
+  act(...params: ConstructorParameters<typeof Act>) {
+    const act = new Act(...params)
     return this.perform(act)
   }
+
   perform(act: Act, isRedo?: boolean) {
     const [ module, action ] = this.resolveAction(act.action)
 
