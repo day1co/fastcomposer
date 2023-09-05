@@ -218,22 +218,6 @@
         </table>
       </div>
     </Dialog>
-    <Dialog :visible.sync="isDevicePreviewMode" :position="'top'" :dialogStyles="{ width: '100%', height: '100vh' }">
-      <div slot="header" class="fc-frame-wrapper__device-btns">
-        <button @click="onChangeDevice('desktop')" :class="{'fc-frame-wrapper__selected': deviceType === 'desktop'}">
-          <span class="material-icons">desktop_mac</span>
-        </button>
-        <button @click="onChangeDevice('tablet')" :class="{'fc-frame-wrapper__selected': deviceType === 'tablet'}">
-          <span class="material-icons">tablet_mac</span>
-        </button>
-        <button @click="onChangeDevice('phone')" :class="{'fc-frame-wrapper__selected': deviceType === 'phone'}">
-          <span class="material-icons">phone_iphone</span>
-        </button>
-      </div>
-      <div slot="main" class="fc-frame-wrapper" :class="`fc-frame-wrapper--${deviceType}`">
-        <iframe class="fc-frame"></iframe>
-      </div>
-    </Dialog>
     <Dialog :visible.sync="showConfigWindow">
       <div slot="header">
         <h3> FastComposer 설정 </h3>
