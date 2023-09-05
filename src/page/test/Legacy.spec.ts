@@ -81,6 +81,85 @@ const layouts = [
     style: '.fc-layout-image img {\n  border: 1px solid blue; }\n',
   },
   {
+    id: 'list',
+    icon: 'icon.svg',
+    description: '리스트형',
+    params: [
+      {
+        name: 'title',
+        type: 'text',
+        description: 'title text',
+        isRequired: true
+      },
+      {
+        name: 'cards',
+        type: 'list',
+        description: '추가/삭제를 이용하여 원하는 만큼 카드 리스트를 구현 할 수 있습니다.',
+        maxLength: 3,
+        params: [
+          {
+            name: 'src',
+            type: 'image',
+            description: 'image url',
+            defaultValue: 'https://via.placeholder.com/320x320.png/00c',
+            isRequired: true
+          },
+          {
+            name: 'width',
+            type: 'number',
+            description: 'image width(pixel)',
+            defaultValue: '320',
+            isRequired: true
+          },
+          {
+            name: 'height',
+            type: 'number',
+            description: 'image height(pixel)',
+            defaultValue: '320',
+            isRequired: true
+          },
+          {
+            name: 'alt',
+            type: 'text',
+            description: 'alternative text',
+            defaultValue: '설명'
+          }
+        ]
+      }
+    ],
+    values: {
+      title: '제목',
+      cards: []
+    },
+    template:
+      `<h1>
+        <div>
+          <%= title %>
+          이것은 리스트 레이아웃을 테스트합니다.
+        </div>
+        <% cards.forEach((item) => { %>
+          <div><img src="<%= item.src %>"/></div>
+          <div><%= item.width %></div>
+          <div><%= item.height %></div>
+          <div><%= item.alt %></div>
+        <% }); %>
+      </h1>`,
+    style:
+     `.fc-layout-list h1 { display: flex; }
+      .fc-layout-list h1 div { color: red; }
+      @media screen and (max-width: 599px) {
+        .fc-layout-list h1 { flex-direction: column; }
+      }
+      @media screen and (min-width: 600px) and (max-width: 959px) {
+        .fc-layout-list h1 { flex-direction: column; }
+      }
+      @media screen and (min-width: 960px) {
+        .fc-layout-list h1 {
+          flex-direction: row;
+        }
+      }`
+  },
+  {
     id: 'markdown',
     icon: 'icon.svg',
     description: 'markdown',
@@ -150,6 +229,27 @@ const layers = [
   },
   {
     id: 'fc-block-5',
+    layout: 'list',
+    values: {
+      title: '제목',
+      cards: [
+        {
+          src: 'https://via.placeholder.com/320x320.png/00c',
+          width: '320',
+          height: '320',
+          alt: '설명'
+        },
+        {
+          src: 'https://via.placeholder.com/320x320.png/00c',
+          width: '320',
+          height: '320',
+          alt: '설명'
+        }
+      ]
+    }
+  },
+  {
+    id: 'fc-block-6',
     layout: 'markdown',
     values: {
       content: 'may the **markdown** be with you!',
@@ -170,10 +270,26 @@ const reference = `
 <section class="fc-block fc-layout fc-layout-html">
   <h1>hello</h1><p>world</p>
 </section>
+<section class="fc-block fc-layout fc-layout-list">
+  <h1>
+    <div>
+      제목
+      이것은 리스트 레이아웃을 테스트합니다.
+    </div>
+    <div><img src="https://via.placeholder.com/320x320.png/00c"/></div>
+    <div>320</div>
+    <div>320</div>
+    <div>설명</div>
+    <div><img src="https://via.placeholder.com/320x320.png/00c"/></div>
+    <div>320</div>
+    <div>320</div>
+    <div>설명</div>
+  </h1>
+</section>
 <section class="fc-block fc-layout fc-layout-markdown">
   <p>may the <strong>markdown</strong> be with you!</p>
 </section>
-   `
+`
 
 describe(`Legacy test cases from 'renderer'`, () => {
 
