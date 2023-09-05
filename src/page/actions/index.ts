@@ -10,6 +10,7 @@ import Layer_Reorder from './Layer.Reorder'
 import Layer_Edit from './Layer.Edit'
 import Layer_Item_New from './Layer.Item.New'
 import Layer_Item_Remove from './Layer.Item.Remove'
+import Layer_Hide from './Layer.Hide'
 // './Layer.Clear'
 
 export default new Map<string, Action<Page>>([
@@ -20,7 +21,8 @@ export default new Map<string, Action<Page>>([
   Layer_Reorder,
   Layer_Edit,
   Layer_Item_New,
-  Layer_Item_Remove
+  Layer_Item_Remove,
+  Layer_Hide
   // Layer_Clear
 ].map(module => [ module.id, module ])
 )
