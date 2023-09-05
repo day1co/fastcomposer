@@ -36,7 +36,7 @@
 </template>
 
 <script>
-  import EventBus from '../../event-bus/event-bus.vue';
+  import EventBus from '../event-bus.vue';
   import { parse as marked } from 'marked';
   import { template } from 'lodash';
 
@@ -91,7 +91,7 @@
 
 <style lang="scss" scoped>
   @use 'sass:math';
-  @import '../../assets/scss/utils/utilities';
+  @import '../assets/scss/utils/utilities';
 
   $accent: #f00;
   $gutter-width: 3.2rem;

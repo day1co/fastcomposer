@@ -32,7 +32,7 @@
   </div>
 </template>
 <script>
-  import LayoutInfo from '../../components/layout-info.vue';
+  import LayoutInfo from '../components/layout-info.vue';
 
   export default {
     components: {
@@ -94,7 +94,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../assets/scss/utils/utilities';
+  @import '../assets/scss/utils/utilities';
   .fc-layout:before {
     position: absolute;
     left: 100%;

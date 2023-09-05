@@ -47,9 +47,9 @@
   </Container>
 </template>
 <script>
-  import LayoutInfo from '../../components/layout-info.vue';
+  import LayoutInfo from '../components/layout-info.vue';
   import { Container, Draggable } from "vue-smooth-dnd";
-  import EventBus from '../../event-bus/event-bus.vue';
+  import EventBus from '../event-bus.vue';
 
   export default {
     components: {
@@ -166,7 +166,7 @@
   }
 </script>
 <style lang="scss">
-  @import '../../assets/scss/utils/utilities';
+  @import '../assets/scss/utils/utilities';
   .fc-layer {
     overflow: visible !important;
     z-index: 10001 !important; /* overrided INLINE by vue plugin :facepalm: */

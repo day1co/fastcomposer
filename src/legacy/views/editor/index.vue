@@ -171,10 +171,10 @@
 </template>
 
 <script>
-import EventBus from '../../event-bus/event-bus.vue';
+import EventBus from '../../event-bus.vue';
 import LayoutInfo from '../../components/layout-info.vue';
 import FileUpload from './file-upload.vue';
-import Tooltip from '../../components/tooltip/tooltip.vue';
+import Tooltip from '../../components/tooltip.vue';
 
 export default {
   components: {

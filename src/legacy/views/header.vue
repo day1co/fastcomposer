@@ -115,7 +115,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../assets/scss/style';
+  @import '../assets/scss/style';
 
   .fc-header {
     position: fixed;

@@ -2,7 +2,7 @@
 // entry-point for vue-cli-service build/serve
 //
 import Vue from 'vue';
-import Composer from './views/composer.vue';
+import Composer from './views/index.vue';
 
 import layouts from '../../layouts';
 import sample from '../../layouts/sample.json';
