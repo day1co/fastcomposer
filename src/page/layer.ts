@@ -1,11 +1,19 @@
 import type { ListLayoutParameter } from '../structs/LayoutParameter'
 import LayoutBase, { DynamicLayoutBase } from '../layout'
+import LegacyLayout from '../layout/legacy'
 
 import Path from './path'
 import { clone, uniqueId } from '../util'
 
+export type LayerMeta = {
+  hidden: Boolean
+}
+
 export default class Layer {
   public values: any
+  public meta: LayerMeta = {
+    hidden: false
+  }
 
   constructor(
     public id: string,
@@ -15,11 +23,14 @@ export default class Layer {
     this.values = values ?? layout.getDefaultValues()
   }
 
-  static fromDump(
-    { id, values }: { id: string, values: any },
-    layout: LayoutBase
-  ) {
-    return new Layer(id, layout, values)
+  static fromDump(dump: any, layout?: LegacyLayout) { // FIXME: will not work with non-legacy layout
+    const { id, uniqueId, layout: layoutFromDump, values } = dump
+    if(!layout)
+      layout = LegacyLayout.fromDefinition(layoutFromDump)
+    else if(typeof layoutFromDump === 'string')
+      void 0 // TODO: assert given layout is same…? shud I?
+
+    return new Layer(id ?? uniqueId, layout, values)
   }
 
   dump() {

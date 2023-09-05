@@ -5,7 +5,6 @@ export default class Act {
   capturedState?: any
   destination?: Path
   remembered: boolean = false
-  id: string
 
   constructor(
     public action: string,

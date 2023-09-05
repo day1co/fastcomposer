@@ -4,11 +4,11 @@ import Module from '../state/module'
 import Actions from './actions'
 import Path from './path'
 import Layer from './layer'
-import Layout from '../layout'
+import LayoutBase from '../layout'
 import LegacyLayout from '../layout/legacy'
 import { uniqueId } from '../util'
 
-type LayoutMap = Map<string, Layout>
+type LayoutMap = Map<string, LayoutBase>
 type LooseLayoutMap = LayoutMap | object
 
 export default class Page extends Module {
@@ -16,10 +16,10 @@ export default class Page extends Module {
   actions: Map<string, Action<Page>>
   state: Array<Layer> = []
 
-  _layouts: Map<string, Layout>
+  _layouts: Map<string, LayoutBase>
 
   constructor(
-    layouts: Map<string, Layout> | object,
+    layouts: Map<string, LayoutBase> | object,
     actions: Map<string, Action<Page>> = Actions
   ) {
     super(actions)
@@ -43,12 +43,17 @@ export default class Page extends Module {
   static fromDump(state: Array<any>, providedLayouts?: LooseLayoutMap) {
     const layouts = providedLayouts !== null
       ? Page.tightenLooseLayouts(providedLayouts)
-      : new Map()
+      : <LayoutMap>new Map()
 
     const result = state.map(layerdef => {
       const { id, layout } = layerdef
       const layoutId = typeof layout === 'string'? layout : layout.id
-      const foundLayout = layouts.get(layoutId)
+      const foundLayout = <LegacyLayout>layouts.get(layoutId) // FIXME: will not work with non-legacy layout
+
+      // TODO: reconsider recover level; now using lv1
+      // lv0: throw
+      // lv1: use layout from layer, or throw
+      // lv2: use 'broken' layout even for worst case
 
       if(providedLayouts && !foundLayout)
         throw new ReferenceError(`layout '${layoutId}' of layer '${id}' `
@@ -96,8 +101,8 @@ export default class Page extends Module {
 
   // layout
 
-  getLayout(id: string): Layout {
-    const layout: Layout | undefined = this._layouts.get(id)
+  getLayout(id: string): LayoutBase {
+    const layout: LayoutBase | undefined = this._layouts.get(id)
     if(!layout)
       throw new Error(`specified layout '${id}' not found`)
 

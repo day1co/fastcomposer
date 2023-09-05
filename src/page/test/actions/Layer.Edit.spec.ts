@@ -67,12 +67,12 @@ describeAction('layer.edit', ['layer.new', 'layer.item.new'], helpers => {
     expect(act.sealed).toBeFalsy()
     expect(act.capturedState).toBe(defaultValue)
 
-    expect(state._history.length).toEqual(2)
+    expect(state.past.length).toEqual(2)
 
     act.seal()
 
     act = state.perform(helpers.createAct(path, '12345'))
-    expect(state._history.length).toEqual(3)
+    expect(state.past.length).toEqual(3)
 
     state.undo()
     expect(page.state[0].get(path)).toBe('1234')
