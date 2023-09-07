@@ -6,6 +6,12 @@ export default class Path {
     public grandchild?: string
   ) {}
 
+  toString() {
+    return this.layer
+      + '/' + (this.child ?? '')
+      + '#' + (this.index ?? '')
+      + '/' + (this.grandchild ?? '')
+  }
   isEqual(path: Path) {
     return this.layer === path.layer &&
            this?.child === path?.child &&

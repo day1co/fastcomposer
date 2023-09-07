@@ -4,7 +4,7 @@
     <figcaption class="fc-layout-info__label">
       <strong class="__item__group__name">{{ layout.id }}</strong>
       <br />
-      {{ layout.description }}
+      {{ layout.meta.description }}
     </figcaption>
   </figure>
 </template>
@@ -21,7 +21,7 @@ export default {
   },
   computed: {
     icon() {
-      const icon = this.layout.icon
+      const icon = this.layout.meta.icon
       if(!icon) {
         return
       } else if(/^<(?:\?xml |svg )/.test(icon)) {

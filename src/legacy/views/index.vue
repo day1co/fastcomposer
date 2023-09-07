@@ -55,7 +55,7 @@
         <!--preview-->
         <preview
           :blocks="layers"
-          :currentLayerIndex.sync="currentLayerIndex"
+          :selected.sync="selected"
           ref="preview"
         />
 
@@ -121,7 +121,7 @@
                 @remove-layer="onRemoveLayer"
                 @clone-layer="onCloneLayer"
                 :layers="layers"
-                :currentLayerIndex.sync="currentLayerIndex"
+                :selected.sync="selected"
                 ref="layers"
               />
             </div>
@@ -262,6 +262,9 @@
   import Layouts from './layouts.vue';
   import Layers from './layers.vue';
 
+  import Page from '../../page';
+  import State from '../../state';
+
   export default {
     components: {
       Toast,
@@ -288,11 +291,11 @@
     },
     data() {
       return {
+        page: null,
+        state: null,
+        selected: 0,
         favoriteLayoutIds: [],
         showModal: false,
-        layouts: [],
-        layers: [],
-        currentLayerIndex: -1,
         isLeftVisible: true,
         isRightVisible: true,
         options: {
@@ -335,13 +338,13 @@
       // FIXME this whole up/down logics totally does not work
       onUpBlock() {
         const checkedLayer = this.layers.filter(layer => layer.isChecked);
-        const { uniqueId } = checkedLayer[0];
-        const checkedFirstIndex = this.layers.findIndex(layer => layer.uniqueId === uniqueId);
+        const { id } = checkedLayer[0];
+        const checkedFirstIndex = this.layers.findIndex(layer => layer.id === id);
 
         if (checkedFirstIndex) {
-          const targetUniqueId = this.layers[checkedFirstIndex - 1].uniqueId;
+          const targetid = this.layers[checkedFirstIndex - 1].id;
           this.layers = [...this.layers.filter(layer => !layer.isChecked)];
-          const targetIndex = this.layers.findIndex(layer => layer.uniqueId === targetUniqueId);
+          const targetIndex = this.layers.findIndex(layer => layer.id === targetid);
           this.layers.splice(targetIndex, 0, ...checkedLayer);
           this.onUpdateCurrentLayerIndex(targetIndex);
           this.onMoveSelectedLayer();
@@ -349,13 +352,13 @@
       },
       onDownBlock() {
         const checkedLayer = this.layers.filter(layer => layer.isChecked);
-        const { uniqueId } = checkedLayer[checkedLayer.length - 1];
-        const checkedLastIndex = this.layers.findIndex(layer => layer.uniqueId === uniqueId);
+        const { id } = checkedLayer[checkedLayer.length - 1];
+        const checkedLastIndex = this.layers.findIndex(layer => layer.id === id);
 
         if (checkedLastIndex < this.layers.length - 1) {
-          const targetUniqueId = this.layers[checkedLastIndex + 1].uniqueId;
+          const targetid = this.layers[checkedLastIndex + 1].id;
           this.layers = [...this.layers.filter(layer => !layer.isChecked)];
-          const targetIndex = this.layers.findIndex(layer => layer.uniqueId === targetUniqueId);
+          const targetIndex = this.layers.findIndex(layer => layer.id === targetid);
           this.layers.splice(targetIndex + 1, 0, ...checkedLayer);
           this.onUpdateCurrentLayerIndex(checkedLastIndex + 1);
           this.onMoveSelectedLayer();
@@ -385,46 +388,33 @@
           }
         });
       },
+      moveFocusByAct(path) {
+        if(path?.destination)
+          this.selected = this.page.pathToIndex(path.destination)
+      },
       onShowModal() {
         this.showModal = true;
       },
       onHideModal() {
         this.showModal = false;
       },
-      onToggleLayerState(index, flag) {
-        if (index !== -1) {
-          this.$set(this.layers[index], 'hidden', flag);
-        }
+      onToggleLayerState(index) {
+        this.state.act('layer.hide', this.layers[index].path)
       },
       onClearToast() {
         this.notification.message = '';
       },
       onUpdateCurrentLayerIndex(index) {
-        this.currentLayerIndex = index;
+        this.selected = index;
       },
       onAddLayer(layout) {
-        if (this.currentLayerIndex < 0) {
-          this.currentLayerIndex = this.layers.length - 1
-        }
+        this.moveFocusByAct(this.state.act('layer.new', this.currentLayer?.path, layout))
 
-        this.layers.splice(this.currentLayerIndex + 1, 0, {
-          id: uniqueId(),
-          layout,
-          values: cloneDeep(layout.values) || {},
-          hidden: false
-        })
-
-        this.currentLayerIndex = this.currentLayerIndex + 1;
-        this.onUpdateCurrentLayerIndex(this.currentLayerIndex);
+        this.onUpdateCurrentLayerIndex(this.selected);
         this.focusEditor();
       },
       onRemoveLayer(index) {
-        if (index !== -1) {
-          this.layers.splice(index, 1);
-          if (index < this.layers.length) {
-            this.onUpdateCurrentLayerIndex(null);
-          }
-        }
+        this.moveFocusByAct(this.state.act('layer.remove', this.layers[index].path))
       },
       onCloneLayer(index) {
         if (index !== -1) {
@@ -445,8 +435,8 @@
         }
       },
       onMoveSelectedLayer() {
-        const $targetBlock = this.$refs.preview.$el.getElementsByClassName('fc-block')[this.currentLayerIndex];
-        const $targetLayer = this.$refs.layers.$el.getElementsByClassName('fc-layer')[this.currentLayerIndex];
+        const $targetBlock = this.$refs.preview.$el.getElementsByClassName('fc-block')[this.selected];
+        const $targetLayer = this.$refs.layers.$el.getElementsByClassName('fc-layer')[this.selected];
 
         $targetBlock && $targetBlock.scrollIntoView({ block: 'center' });
         $targetLayer && $targetLayer.scrollIntoView({ block: 'center' });
@@ -457,56 +447,6 @@
       },
       setLayouts(layouts) {
         this.layouts = layouts;
-      },
-      setLayerBlockData(layerBlockData) {
-        if (typeof layerBlockData === 'string') {
-          layerBlockData = JSON.parse(layerBlockData);
-        }
-
-        // old format: replace layout id => layout object
-        // this.layers = Object.assign([], layerBlockData.map(layer => Object.assign({id: uniqueId()}, layer, {layout: this.layoutMaps[layer.layout]})));
-
-        this.layers = layerBlockData.map(layer => {
-          if (typeof layer.layout === 'string') {
-            // old format:
-            // replace layout id => layout object
-            layer.layout = this.layoutMaps[layer.layout];
-          } else {
-            // new format: layout object itself
-            // TODO: layout version check!
-            //if(layer.layout.version !== this.layoutMaps[layer.layout.id].version) {
-            //}
-            layer.layout = this.layoutMaps[layer.layout.id];
-          }
-          if (!layer.layout) {
-            layer.layout = {
-              id: 'broken',
-              icon: '',
-              description: '다른 레이아웃으로 새 레이어를 만들고 이 레이어는 삭제하세요',
-              params: [],
-              templateFunc: () => {
-                return `<pre style="background:#fff;"><code>${JSON.stringify(layer.values)}</code></pre>`;
-              },
-              values: {},
-            }
-          }
-          if (!layer.id) {
-            layer.id = uniqueId();
-          }
-
-          if (!layer.uniqueId) {
-            layer.uniqueId = uniqueId();
-          }
-          return {
-            ...layer,
-            isChecked: false
-          };
-        });
-        // select first layer if available
-        if (this.layers.length > 0) {
-          this.onUpdateCurrentLayerIndex(0);
-          this.syncParamsAll();
-        }
       },
       syncParamsAll(){
         this.layers.forEach( layer => {
@@ -583,6 +523,12 @@
       },
     },
     computed: {
+      layers() {
+        return this.page?.state
+      },
+      layouts() {
+        return this.page?._layouts
+      },
       checkedCount() {
         return this.layers.filter(layer => layer.isChecked).length;
       },
@@ -590,7 +536,7 @@
         return this.layers.filter(layer => layer.hasSyntaxErrorTags).length;
       },
       currentLayer() {
-        return this.layers[this.currentLayerIndex];
+        return this.layers[this.selected];
       },
       layerHtml() {
         return this.layers.filter(layer => !layer.hidden).map(layer => `
@@ -610,16 +556,10 @@
         return !this.layers.filter(layer => layer.isChecked).some(layer => layer.hidden)
       }
     },
-    mounted() {
-      this.setLayouts(this.layoutModels);
-
-      if (this.layerModals.length) {
-        this.setLayerBlockData(this.layerModals);
-      }
-
-      this.$el.focus();
-    },
     created() {
+      this.page = Page.fromDump(this.layerModals, this.layoutModels)
+      this.state = new State({ modules: { page: this.page }})
+
       EventBus.$on('save', this.onSave);
       EventBus.$on('fc-upload', this.onUploadFile);
       try {
@@ -640,8 +580,10 @@
         })()
       }
     },
+    mounted() {
+    },
     watch: {
-      currentLayerIndex() {
+      selected() {
         this.onMoveSelectedLayer();
       },
       favoriteLayoutIds: {

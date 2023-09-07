@@ -1,6 +1,6 @@
 {
-  "allowJs": true,
   "compilerOptions": {
+    "allowJs": true,
     "module": "ES2022",
     "moduleResolution": "node",
     "target": "ES2018",
@@ -8,6 +8,7 @@
     "jsx": "react",
     "jsxFragmentFactory": "Fragment",
     "jsxFactory": "h",
-    "outDir": ""
+    "outDir": "./dist"
   },
+  "exclude": [ "./dist" ]
 }

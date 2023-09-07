@@ -11,8 +11,8 @@
   >
     <div class="fc-preview__container">
       <div :class="['fc-block', {
-             'fc-selected': blockIndex === currentLayerIndex,
-             'fc-hidden': block.hidden
+             'fc-selected': blockIndex === selected,
+             'fc-hidden': block.meta.hidden
            }]"
            v-for="(block, blockIndex) in blocks"
            :key="'block-' + blockIndex"
@@ -48,7 +48,7 @@
           return [];
         },
       },
-      currentLayerIndex: {
+      selected: {
         type: Number,
         default() {
           return -1
@@ -57,24 +57,17 @@
     },
     data() {
       return {
-        index: this.currentLayerIndex,
+        index: this.selected,
         cachedRenderFunctions: {}
       }
     },
     methods: {
       parserToHTML(block) {
-        const values = { $markdown: marked };
-        if (block.layout.params) {
-          for(const { name } of block.layout.params) {
-            const value = block.values[name];
-            values[name] = (value === undefined) ? block.layout.values[name] : values[name] = block.values[name];
-          }
-        }
-        return (this.cachedRenderFunctions[block.layout.id] ||= template(block.layout.template))(values);
+        return block.render()
       },
       select(index) {
         const newIndex = Math.min(Math.max(index, 0), this.blocks.length - 1);
-        this.$emit('update:currentLayerIndex', newIndex);
+        this.$emit('update:selected', newIndex);
       },
       focus() {
         this.$el.focus();
@@ -84,7 +77,7 @@
       }
     },
     updated() {
-      this.index = this.currentLayerIndex;
+      this.index = this.selected;
     }
   };
 </script>

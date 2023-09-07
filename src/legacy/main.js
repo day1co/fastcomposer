@@ -8,7 +8,7 @@ import layouts from '../../layouts';
 import sample from '../../layouts/sample.json';
 import '../../layouts/styles.scss';
 
-new Vue({
+window.rootvm = new Vue({
   render(createElement) {
     return createElement(Composer, {
       props: {

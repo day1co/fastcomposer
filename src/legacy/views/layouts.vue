@@ -13,7 +13,7 @@
   >
     <!-- TODO: favorite layouts here? reimpl as sidebar?-->
     <ul class="fc-layout__list">
-      <li v-for="(layout, index) in layouts" :key="index"
+      <li v-for="([name, layout], index) in layouts" :key="index"
           class="fc-layout__list__item">
         <button @click="selected(layout)" @focus="focus(index)"
                 class="fc-layout__list__button"
@@ -40,9 +40,9 @@
     },
     props: {
       layouts: {
-        type: Array,
+        type: Map,
         default() {
-          return []
+          return new Map()
         }
       },
       favoriteLayoutIds: {
@@ -64,7 +64,7 @@
         /**
          * composer에서 layers에 push가 일어나며, 추가된 layer가 선택된다.
          */
-        this.$emit('add-layer', layout);
+        this.$emit('add-layer', layout.id);
         this.flag = false;
       },
       toggle() {

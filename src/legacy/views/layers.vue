@@ -4,21 +4,21 @@
       <div
         class="__item"
         :class="{
-          '__item--active': index === currentLayerIndex,
+          '__item--active': index === selected,
           '__item--checked': layer.isChecked,
           '__item--hidden': layer.hidden,
           'has-syntax-error-tags': layer.hasSyntaxErrorTags
         }"
         tabindex="0"
         @keydown.exact.enter.prevent="focusEditor"
-        @keydown.exact.shift.up="updateCheckedState(currentLayerIndex - 1, $event)"
-        @keydown.exact.shift.down="updateCheckedState(currentLayerIndex + 1, $event)"
+        @keydown.exact.shift.up="updateCheckedState(selected - 1, $event)"
+        @keydown.exact.shift.down="updateCheckedState(selected + 1, $event)"
         @keydown.exact.shift.alt.up="onUpBlock"
         @keydown.exact.shift.alt.down="onDownBlock"
-        @keydown.exact.up.prevent="onSelect(currentLayerIndex - 1)"
-        @keydown.exact.down.prevent="onSelect(currentLayerIndex + 1)"
-        @keydown.exact.page-up.prevent="onSelect(currentLayerIndex - 5)"
-        @keydown.exact.page-down.prevent="onSelect(currentLayerIndex + 5)"
+        @keydown.exact.up.prevent="onSelect(selected - 1)"
+        @keydown.exact.down.prevent="onSelect(selected + 1)"
+        @keydown.exact.page-up.prevent="onSelect(selected - 5)"
+        @keydown.exact.page-down.prevent="onSelect(selected + 5)"
         @keydown.exact.home.prevent="onSelect(0)"
         @keydown.exact.end.prevent="onSelect(layers.length - 1)"
       >
@@ -32,7 +32,7 @@
         <div class="__utils">
           <button class="__utils__btn" @click="onToggle(index)">
             <i class="material-icons">
-              {{ getLayoutStateIconStyle(layer) }}
+              {{ layer.meta.hidden? 'visibility_off' : 'visibility' }}
             </i>
           </button>
           <button class="__utils__btn" @click="onCloneLayer(index)">
@@ -64,7 +64,7 @@
           return []
         }
       },
-      currentLayerIndex: {
+      selected: {
         type: Number,
         default() {
           return -1
@@ -124,19 +124,16 @@
       resetCheckedHistory() {
         this.checkedHistory = null;
       },
-      getLayoutStateIconStyle({ hidden }) {
-        return hidden ? 'visibility_off' : 'visibility';
-      },
       onSelect(index) {
         const newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
 
-        this.$emit('update:currentLayerIndex', newIndex);
+        this.$emit('update:selected', newIndex);
         this.resetCheckedHistory();
       },
       onDrop(dropResult) {
         this.dropResult = dropResult;
         this.layers = this.applyDrag;
-        this.$emit('update:currentLayerIndex', dropResult.addedIndex);
+        this.$emit('update:selected', dropResult.addedIndex);
       },
       getGhostParent(){
         return document.body;
