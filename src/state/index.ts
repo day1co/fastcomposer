@@ -1,5 +1,6 @@
 import type Action from './action'
-import type Act from './act'
+import type Path from '../page/path'
+import Act from './act'
 import Module from './module'
 
 export default class State {
@@ -74,6 +75,10 @@ export default class State {
         && !this._lastAct.sealed
   }
 
+  act(actionName: string, target?: Path, arg?: any) {
+    const act = new Act(actionName, target, arg)
+    return this.perform(act)
+  }
   perform(act: Act, isRedo?: boolean) {
     const [ module, action ] = this.resolveAction(act.action)
 
