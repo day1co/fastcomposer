@@ -18,6 +18,8 @@ export default class Page extends Module {
 
   _layouts: Map<string, LayoutBase>
 
+  _stateLookup: { [K: Layer['id']]: number } = {}
+
   constructor(
     layouts: Map<string, LayoutBase> | object,
     actions: Map<string, Action<Page>> = Actions
@@ -88,11 +90,22 @@ export default class Page extends Module {
 
   // state utils
 
+  _updateLookup() {
+    this._stateLookup = {}
+    for(const index in this.state) {
+      this._stateLookup[this.state[index].id] = +index // 아오 망할 ts
+    }
+  }
   getLayerByPath(path: Path): Layer | undefined {
-    return this.state.find((layer: Layer) => layer.id === path.layer)
+    return this.state[this._stateLookup[path.layer]] ?? this.state.find((layer: Layer) => layer.id === path.layer)
   }
   pathToIndex(path: Path): number | undefined {
-    const found = this.state.findIndex((layer: Layer) => layer.id === path.layer)
+    let found
+
+    found = this._stateLookup[path.layer]
+    if(found != null) return found
+
+    found = this.state.findIndex((layer: Layer) => layer.id === path.layer)
     return found >= 0? found : undefined; // INTENDED
   }
   indexToPath(index: number): Path | undefined {
@@ -122,6 +135,7 @@ export default class Page extends Module {
 
     this.state.splice(index, 0, layer)
 
+    this._updateLookup()
     return layer
   }
   restoreLayer(after: Path | undefined, oldLayer: Layer) {
@@ -131,6 +145,7 @@ export default class Page extends Module {
 
     this.state.splice(index, 0, oldLayer)
 
+    this._updateLookup()
     return oldLayer
   }
   duplicateLayer(after: Path, layerId?: string) {
@@ -142,6 +157,7 @@ export default class Page extends Module {
 
     this.state.splice(index + 1, 0, newLayer)
 
+    this._updateLookup()
     return newLayer
   }
   reorderLayer(at: Path | number, toWhere: Path | number) {
@@ -151,6 +167,7 @@ export default class Page extends Module {
 
     this.state.splice(to, 0, target)
 
+    this._updateLookup()
     // kindly tell back as indexes
     return [ from, to ]
   }
@@ -161,6 +178,7 @@ export default class Page extends Module {
 
     this.state.splice(index, 1)
 
+    this._updateLookup()
     return index
   }
 
