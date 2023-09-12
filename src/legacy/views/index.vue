@@ -1,10 +1,6 @@
 <template>
   <div
     tabindex="0"
-    @keydown.exact.alt.shift.49.prevent="focusEditor"
-    @keydown.exact.alt.shift.50.prevent="focusPreview"
-    @keydown.exact.alt.shift.51.prevent="focusLayers"
-    @keydown.exact.alt.shift.48.prevent="onShowLayouts"
   >
     <div class="fc-composer"
      :class="[
@@ -24,8 +20,10 @@
         :message="notification.message"
         :type="notification.type"/>
       <!--헤더-->
-      <composer-header
+      <!--
         @validate="onValidateLayer"
+      -->
+      <composer-header
         @show-layout-panel="onShowLayouts"
         @show-info-tags="onShowModal"
         @add="onAddLayer"
@@ -72,10 +70,10 @@
               <button class="btn" @click="showConfigWindow = true">
                 <span class="material-icons">settings</span>
               </button>
-              <button class="btn" @click="onValidateLayer">
+              <!-- <button class="btn" @click="onValidateLayer">
                 <span class="material-icons">check</span>
                 <label>검증</label>
-              </button>
+              </button> -->
               <button class="btn" @click="onSave">
                 <span class="material-icons">save</span>
                 <label>저장</label>
@@ -91,12 +89,12 @@
                  : 'check_box_outline_blank'
                 }}</span>
               </button>
-              <button class="btn narrow" @click="onUpBlock" :disabled="!checkedCount || layers.length < 2">
+              <!-- <button class="btn narrow" @click="onUpBlock" :disabled="!checkedCount || layers.length < 2">
                 <span class="material-icons">arrow_upward</span>
               </button>
               <button class="btn narrow" @click="onDownBlock" :disabled="!checkedCount || layers.length < 2">
                 <span class="material-icons">arrow_downward</span>
-              </button>
+              </button> -->
               <label class="fc-aside__header__label">
                 {{layers.length}} 레이어
                 <small v-if="warnCount || checkedCount">
@@ -113,9 +111,11 @@
               </button>
             </header>
             <div class="fc-aside__container">
-              <layers
+              <!--
                 @up="onUpBlock"
                 @down="onDownBlock"
+              -->
+              <layers
                 @hidden="onToggleLayerState"
                 @selected-layer="onUpdateCurrentLayerIndex"
                 @remove-layer="onRemoveLayer"
@@ -290,9 +290,10 @@
       },
     },
     data() {
+      const page = new Page({})
       return {
-        page: null,
-        state: null,
+        page,
+        state: new State(),
         selected: 0,
         favoriteLayoutIds: [],
         showModal: false,
@@ -323,6 +324,11 @@
         showConfigWindow: false,
       };
     },
+    provide() {
+      return {
+        state: this.state
+      }
+    },
     methods: {
       onAddFavoriteLayout(layoutId) {
         if (this.favoriteLayoutIds.includes(layoutId)) {
@@ -335,59 +341,30 @@
         const to = !(this.checkedCount === this.layers.length)
         this.layers.forEach(layer => this.$set(layer, 'isChecked', to))
       },
-      // FIXME this whole up/down logics totally does not work
-      onUpBlock() {
-        const checkedLayer = this.layers.filter(layer => layer.isChecked);
-        const { id } = checkedLayer[0];
-        const checkedFirstIndex = this.layers.findIndex(layer => layer.id === id);
+      // onValidateLayer() {
+      //   this.layers.forEach((layer) => {
+      //     const layerValues = layer.values;
+      //     const selfClosingTags = ['img', 'br', 'hr'];
 
-        if (checkedFirstIndex) {
-          const targetid = this.layers[checkedFirstIndex - 1].id;
-          this.layers = [...this.layers.filter(layer => !layer.isChecked)];
-          const targetIndex = this.layers.findIndex(layer => layer.id === targetid);
-          this.layers.splice(targetIndex, 0, ...checkedLayer);
-          this.onUpdateCurrentLayerIndex(targetIndex);
-          this.onMoveSelectedLayer();
-        }
-      },
-      onDownBlock() {
-        const checkedLayer = this.layers.filter(layer => layer.isChecked);
-        const { id } = checkedLayer[checkedLayer.length - 1];
-        const checkedLastIndex = this.layers.findIndex(layer => layer.id === id);
+      //     this.$set(layer, 'hasSyntaxErrorTags', false);
+      //     for (const prop in layerValues) {
+      //       let tags = typeof layerValues[prop] === 'string' ? layerValues[prop].match(/(<([^>]+)>)/igm) : '';
 
-        if (checkedLastIndex < this.layers.length - 1) {
-          const targetid = this.layers[checkedLastIndex + 1].id;
-          this.layers = [...this.layers.filter(layer => !layer.isChecked)];
-          const targetIndex = this.layers.findIndex(layer => layer.id === targetid);
-          this.layers.splice(targetIndex + 1, 0, ...checkedLayer);
-          this.onUpdateCurrentLayerIndex(checkedLastIndex + 1);
-          this.onMoveSelectedLayer();
-        }
-      },
-      onValidateLayer() {
-        this.layers.forEach((layer) => {
-          const layerValues = layer.values;
-          const selfClosingTags = ['img', 'br', 'hr'];
+      //       if (tags) {
+      //         tags = tags.map((tag) => tag.replace(/ .*?=('*.*'?|"*.*"?)/gim,'>'));
 
-          this.$set(layer, 'hasSyntaxErrorTags', false);
-          for (const prop in layerValues) {
-            let tags = typeof layerValues[prop] === 'string' ? layerValues[prop].match(/(<([^>]+)>)/igm) : '';
+      //         this.$set(layer, 'hasSyntaxErrorTags', !tags.every((tag, index, array) => {
+      //           const tagName = tag.match(/[A-Z0-9]/gim).join('');
+      //           const openingLen = array.filter((item) => `<${ tagName }>` === item).length;
+      //           const closingLen = array.filter((item) => `</${ tagName }>` === item).length;
+      //           const hasSelfClosingTagLen = selfClosingTags.filter((item) => item === tagName).length;
 
-            if (tags) {
-              tags = tags.map((tag) => tag.replace(/ .*?=('*.*'?|"*.*"?)/gim,'>'));
-
-              this.$set(layer, 'hasSyntaxErrorTags', !tags.every((tag, index, array) => {
-                const tagName = tag.match(/[A-Z0-9]/gim).join('');
-                const openingLen = array.filter((item) => `<${ tagName }>` === item).length;
-                const closingLen = array.filter((item) => `</${ tagName }>` === item).length;
-                const hasSelfClosingTagLen = selfClosingTags.filter((item) => item === tagName).length;
-
-                return openingLen === closingLen || hasSelfClosingTagLen;
-              }));
-            }
-          }
-        });
-      },
+      //           return openingLen === closingLen || hasSelfClosingTagLen;
+      //         }));
+      //       }
+      //     }
+      //   });
+      // },
       moveFocusByAct(path) {
         if(path?.destination)
           this.selected = this.page.pathToIndex(path.destination)
@@ -558,7 +535,7 @@
     },
     created() {
       this.page = Page.fromDump(this.layerModals, this.layoutModels)
-      this.state = new State({ modules: { page: this.page }})
+      this.state.registerModule('page', this.page)
 
       EventBus.$on('save', this.onSave);
       EventBus.$on('fc-upload', this.onUploadFile);

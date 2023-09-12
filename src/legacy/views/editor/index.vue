@@ -1,186 +1,20 @@
 <template>
   <div class="fc-editor">
     <layout-info :layout="layer.layout" />
-    <!-- TODO - rewrite with <edit> component -->
-    <form v-if="layer.layout" class="fc-editor__form" @submit.prevent="">
-      <fieldset v-for="param in layer.layout.params" :key="param.name" class="fc-editor__form__fieldset">
-        <label class="fc-editor__form__label" :for="toInputId(param)">
-          <strong class="fc-editor__form__name">{{ param.name }}</strong>
-          <small>{{ param.type }}</small>
-          <span class="spacer"></span>
-          <mark v-if="param.isRequired" class="required">* 필수</mark>
-          <tooltip v-if="param.description" :message="param.description"> </tooltip>
-        </label>
 
-        <template v-if="param.type === 'image' || param.type === 'video'">
-          <input
-            :id="toInputId(param)"
-            v-model="layer.values[param.name]"
-            class="fc-editor__form__text"
-            type="url"
-            :name="param.name"
-            :placeholder="param.description"
-          />
-          <file-upload :name="param.name" :layer="layer" :accept="accept[param.type]" @upload="onUpload"></file-upload>
-        </template>
-
-        <template v-else-if="param.type === 'datetime-local'">
-          <input
-            :id="toInputId(param)"
-            v-model="layer.values[param.name]"
-            class="fc-editor__form__text"
-            :type="param.type"
-            :name="param.name"
-            :placeholder="param.description"
-          />
-        </template>
-
-        <template v-else-if="param.type === 'textarea'">
-          <textarea
-            :id="toInputId(param)"
-            v-model="layer.values[param.name]"
-            class="fc-editor__form__textarea"
-            rows="20"></textarea>
-        </template>
-
-        <template v-else-if="param.type === 'select'">
-          <select
-            :id="toInputId(param)"
-            v-model="layer.values[param.name]"
-            class="fc-editor__form__select">
-            <option v-for="(option, index) in param.options" :key="index">{{ option }}</option>
-          </select>
-        </template>
-
-        <template v-else-if="param.type === 'text'">
-          <textarea
-            :id="toInputId(param)"
-            v-model="layer.values[param.name]"
-            class="fc-editor__form__textarea fc-editor__form__textarea--short"
-            @focus="resizeTextarea"
-            @input="resizeTextarea"
-          ></textarea>
-        </template>
-
-        <template v-else-if="param.type === 'list'">
-          <div class="fc-editor__list">
-            <div v-for="(item, index) in layer.values[param.name]" :key="index" class="fc-editor__list-item">
-              <div class="fc-editor__list-tools">
-                <span class="fc-editor__list-item-number">{{ index + 1 }} / {{ param.maxLength }}</span>
-                <button
-                  v-if="param.type === 'list'"
-                  type="button"
-                  class="fc-editor__remove-btn"
-                  @click="onRemove(layer, param, index)"
-                >
-                  <i class="material-icons">clear</i>
-                </button>
-              </div>
-
-              <div v-for="(childParams, key) of param.params" :key="key" class="fc-editor__form__fieldset">
-                <label class="fc-editor__form__label" :for="toInputId(param, childParams, index)">
-                  <strong class="fc-editor__form__name">{{ childParams.name }}</strong>
-                  <small>{{ childParams.type }}</small>
-                  <span class="spacer"></span>
-                  <mark v-if="childParams.isRequired" class="required">* 필수</mark>
-                  <tooltip v-if="childParams.description" :message="childParams.description"> </tooltip>
-                </label>
-                <template v-if="childParams.type === 'image' || childParams.type === 'video'">
-                  <input
-                    :id="toInputId(param, childParams, index)"
-                    v-model="item[childParams.name]"
-                    class="fc-editor__form__text"
-                    type="url"
-                  />
-                  <file-upload
-                    :name="param.name"
-                    :params="childParams"
-                    :layer="layer"
-                    :accept="accept[childParams.type]"
-                    :index="index"
-                    @upload="onUpload"
-                  ></file-upload>
-                </template>
-                <template v-else-if="childParams.type === 'textarea'">
-                  <textarea
-                    :id="toInputId(param, childParams, index)"
-                    v-model="item[childParams.name]"
-                    class="fc-editor__form__textarea"
-                    rows="20"
-                  ></textarea>
-                </template>
-
-                <template v-else-if="childParams.type === 'select'">
-                  <select
-                    :id="toInputId(param, childParams, index)"
-                    v-model="item[childParams.name]"
-                    class="fc-editor__form__select"
-                  >
-                    <option disabled value="">타입을 선택하세요</option>
-                    <option v-for="(option, index) in childParams.options" :key="index">{{ option }}</option>
-                  </select>
-                </template>
-                <template v-else-if="childParams.type === 'text'">
-                  <textarea
-                    :id="toInputId(param, childParams, index)"
-                    v-model="item[childParams.name]"
-                    class="fc-editor__form__textarea fc-editor__form__textarea--short"
-                    @focus="resizeTextarea"
-                    @input="resizeTextarea"
-                  ></textarea>
-                </template>
-
-                <template v-else>
-                  <input
-                    :id="toInputId(param, childParams, index)"
-                    v-model="item[childParams.name]"
-                    class="fc-editor__form__text"
-                    :type="childParams.type"
-                  />
-                </template>
-              </div>
-            </div>
-
-            <div class="fc-editor__add-btn">
-              <button
-                type="button"
-                :disabled="layer.values[param.name].length >= param.maxLength"
-                @click="onAdd(param, layer)"
-              >
-                <span>
-                  + 콘텐츠 추가
-                </span>
-              </button>
-            </div>
-          </div>
-        </template>
-
-        <template v-else>
-          <input
-            :id="layer.id + '--' + param.type"
-            v-model="layer.values[param.name]"
-            class="fc-editor__form__text"
-            :type="param.type"
-            :name="param.name"
-            :placeholder="param.description"
-          />
-        </template>
-      </fieldset>
-    </form>
+    <edit :layer="layer" />
   </div>
 </template>
 
 <script>
 import EventBus from '../../event-bus.vue';
 import LayoutInfo from '../../components/layout-info.vue';
-import FileUpload from './file-upload.vue';
-import Tooltip from '../../components/tooltip.vue';
+import Edit from '../../components/edit/index.vue'
 
 export default {
   components: {
     LayoutInfo,
-    FileUpload,
-    Tooltip,
+    Edit
   },
   props: {
     layer: {
@@ -202,23 +36,6 @@ export default {
     EventBus.$on('focus-editor', () => this.focus());
   },
   methods: {
-    onRemove(layer, param, index) {
-      layer.values[param.name].splice(index, 1);
-    },
-    onAdd(param, layer) {
-      const { params, name } = param;
-      const { values } = layer;
-      const newItem = params.reduce((attr, currentValue) => {
-        if (!attr[currentValue.name]) {
-          attr[currentValue.name] = currentValue.defaultValue || '';
-        }
-        return attr;
-      }, {});
-
-      if (values[name]) {
-        values[name] = [...values[name], newItem];
-      }
-    },
     onUpload(name, url) {
       this.layer.values[name] = url;
     },
@@ -238,22 +55,6 @@ export default {
         }
       });
     },
-    toInputId(param, child, index) {
-      let id = this.layer.id
-      id += '--' + param.name
-      if(child && index >= 0) {
-        id += '-item' + index
-        id += '-' + child.name
-      }
-      return id
-    },
-    resizeTextarea(event) {
-      const { target } = event
-      const { scrollHeight, clientHeight } = target
-      if(scrollHeight > clientHeight) {
-        target.style.height = (scrollHeight + 4) + 'px'
-      }
-    }
   },
 };
 </script>

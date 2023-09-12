@@ -12,7 +12,7 @@ export default class State {
 
   _actionMap: Map<string, string> = new Map()
 
-  constructor({ modules }) {
+  constructor({ modules = {} } = {}) {
     for(const key in modules) {
       const module = modules[key]
       this.registerModule(key, module)
