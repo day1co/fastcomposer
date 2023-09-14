@@ -83,7 +83,7 @@ export default class State {
   perform(act: Act, isRedo?: boolean) {
     const [ module, action ] = this.resolveAction(act.action)
 
-    if(action.compose && this._lastAct.isComposableWith(act)) {
+    if(action.compose && this._lastAct?.isComposableWith(act)) {
       action.compose(this, module, this._lastAct, act)
       action.perform(this, module, this._lastAct)
 
