@@ -5,7 +5,8 @@
       v-for="[name, param] in params"
       :key="name"
       :path="path.setChild(name)"
-      :param="param" />
+      :param="param"
+      :layer="layer" />
 
   </form>
 </template>

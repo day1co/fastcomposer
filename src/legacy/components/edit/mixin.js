@@ -1,12 +1,10 @@
+import Layer from '../../../page/layer'
 import Path from '../../../page/path'
 
 export default {
-  inject: ['state', 'layer'],
+  inject: ['state'],
   provide() {
-    return {
-      state: this.state,
-      layer: this.layer
-    }
+    return { state: this.state }
   },
   props: {
     path: Path,
@@ -14,7 +12,8 @@ export default {
       type: Object,
       required: true,
       default() { return {} }
-    }
+    },
+    layer: Layer
   },
   computed: {
     inputId() {
