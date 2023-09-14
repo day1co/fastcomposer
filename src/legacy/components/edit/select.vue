@@ -1,7 +1,7 @@
 <template>
   <div class="fc-edit-input fc-edit-input--select">
     <select
-      v-model="mappedValue">
+      v-model="value">
       <option
         v-for="(option, index) in param.options"
         :value="option">
@@ -22,7 +22,7 @@
         :value="option"
         :id="inputId + '-' + index"
         :placeholder="param.description"
-        v-model="mappedValue" />
+        v-model="value" />
         {{ option }}
     </label> -->
   </div>

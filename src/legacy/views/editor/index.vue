@@ -161,67 +161,6 @@ export default {
       padding: 0.8rem 0.4rem;
     }
 
-    input[type="file"] {
-      color: $input-foreground;
-      cursor: pointer;
-      outline: none;
-
-      &::file-selector-button {
-        background-color: $input-background;
-        color: inherit;
-        border: none;
-        padding: 0.2rem 0.6rem;
-
-        border: 0.1rem solid $input-foreground;
-
-        cursor: pointer;
-        transition: background-color 250ms ease, border-color 250ms ease;
-
-        &:hover {
-          background-color: #8884;
-        }
-        &:active {
-          background-color: #8885;
-        }
-        &:active, &:focus {
-          border-color: #eee;
-        }
-      }
-      &:focus::file-selector-button {
-        background-color: #8885;
-        border-color: #eee;
-      }
-    }
-
-    ::-webkit-inner-spin-button {
-      margin-right: 0.4rem;
-    }
-
-    .fc-file-upload {
-      display: flex;
-      flex-wrap: wrap;
-      color: inherit;
-      margin-top: 0.4rem;
-
-      button {
-        margin-left: auto;
-        color: inherit;
-      }
-
-      .progress {
-        width: 100%;
-        height: 0.4rem;
-        margin: 0.4rem 0 0 0;
-        background: $primary;
-        border-radius: 0;
-
-        &-bar {
-          height: 100%;
-          background: #fff;
-        }
-      }
-    }
-
     .required {
       color: #f44;
       background: none;

@@ -4,7 +4,7 @@
       type="text"
       :id="inputId"
       :placeholder="param.placeholder"
-      v-model="mappedValue" />
+      v-model="value" />
   </div>
 </template>
 
@@ -23,7 +23,7 @@ export default {
 @import '../../assets/scss/utils/utilities';
 
 .fc-edit-input > input[type="text"] {
-  
+
 }
 
 </style>

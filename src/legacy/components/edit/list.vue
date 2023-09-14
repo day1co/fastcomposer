@@ -8,16 +8,17 @@
       <i>{{ index + 1 }}/{{ value.length }} ({{ param.maxLength }})</i>
 
       <edit
-        :path="path.override({ index })"
-        :params="param.params"
-        :value="value[index]"
-        @input="value => update(index, value)" />
+        :layer="layer"
+        :child="path.override({ index })" />
 
     </div>
 
     <button
+      class="fc-edit-"
       @click="addItem"
-      :disabled="value.length >= param.maxLength">+</button>
+      :disabled="value.length >= param.maxLength">
+      새 항목 추가 ({{ value.length }}/{{ param.maxLength }})
+    </button>
 
   </div>
 </template>
@@ -32,24 +33,13 @@ export default {
   components: {
     Edit: () => import('./index.vue')
   },
-  props: {
-    value: {
-      type: Array,
-      default() { return [] }
-    }
-  },
   methods: {
     addItem() { /* eslint-disable */
-      const { params, name } = this.param
-      const newItem = Object.fromEntries(params.map(param => [ param.name, param.defaultValue ?? '' ]))
-      this.mappedValue.push(newItem)
+      this.state.act('layer.item.new', this.path)
     },
     removeItem(index) {
-
+      this.state.act('layer.item.remove', this.path)
     },
-    update(index, value) {
-      this.$set(this.mappedValue, index, value)
-    }
   }
 }
 
@@ -58,5 +48,51 @@ export default {
 <style lang="scss">
 
 @import '../../assets/scss/utils/utilities';
+
+.fc-edit-list {
+  &-item {
+    border-left: 0.4rem solid $primary;
+    padding-left: 1.2rem;
+    margin-bottom: 1.2rem;
+
+    &:nth-child(2n + 1) {
+      border-left-color: #8884;
+    }
+  }
+  &-tools {
+    display: flex;
+    margin-left: -0.6rem;
+    line-height: 2.6rem;
+
+    button {
+      line-height: 1;
+      color: inherit;
+      > i {
+        vertical-align: top;
+      }
+    }
+  }
+}
+// &__add-btn {
+//   display: flex;
+//   justify-content: center;
+//   button {
+//     width: 100%;
+//     height: 100%;
+//     padding: 1rem 0;
+//     background-color: $primary-active;
+//     color: inherit;
+//     font: inherit;
+//     &[disabled] {
+//       opacity: 0.6;
+//     }
+//   }
+//   span {
+//     font-weight: bold;
+//   }
+// }
+// &__remove-btn {
+//   margin-left: auto;
+// }
 
 </style>

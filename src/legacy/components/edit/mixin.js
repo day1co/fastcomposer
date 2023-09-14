@@ -1,24 +1,27 @@
 import Path from '../../../page/path'
 
 export default {
-  inject: ['state'],
+  inject: ['state', 'layer'],
+  provide() {
+    return {
+      state: this.state,
+      layer: this.layer
+    }
+  },
   props: {
     path: Path,
     param: {
       type: Object,
       required: true,
       default() { return {} }
-    },
-    value: {
-      type: undefined
     }
   },
   computed: {
     inputId() {
       return this.path.toString()
     },
-    mappedValue: {
-      get() { return this.value },
+    value: {
+      get() { return this.layer.get(this.path) },
       set(v) { this.state.act('layer.edit', this.path, v) }
     }
   }

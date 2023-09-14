@@ -2,13 +2,10 @@
   <form class="fc-edit" @submit.prevent>
 
     <edit-entry
-      v-for="[name, param] in layer.layout.params"
+      v-for="[name, param] in params"
       :key="name"
-      :path="layer.path.override({
-        [layer.path.index == null? 'child' : 'grandchild']: name
-      })"
-      :param="param"
-      :value="layer.values[param.name]" />
+      :path="path.setChild(name)"
+      :param="param" />
 
   </form>
 </template>
@@ -16,6 +13,7 @@
 <script>
 
 import Layer from '../../../page/layer'
+import Path from '../../../page/path'
 import EditEntry from './entry.vue'
 
 export default {
@@ -23,17 +21,25 @@ export default {
   components: {
     EditEntry
   },
-  props: {
-    layer: Layer
+  provide() {
+    return { layer: this.layer }
   },
-  methods: {
-    update(key, value) {
-      this.$set(this.mappedValue, key, value)
-    }
+  props: {
+    layer: {
+      type: Layer,
+      required: true
+    },
+    child: Path
   },
   computed: {
     params() {
-      return this.layer?.layouts?.params?.entries() ?? []
+      if(this.child)
+        return this.layer?.layout?.getListParams(this.path.child)
+      else
+        return this.layer?.layout?.params
+    },
+    path() {
+      return this.child ?? this.layer.path
     }
   }
 }

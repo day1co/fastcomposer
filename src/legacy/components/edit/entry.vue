@@ -13,7 +13,7 @@
       :is="currentComponent"
       :path="path"
       :param="param"
-      v-model="mappedValue" />
+      :layer="layer" />
 
   </div>
 </template>
@@ -22,7 +22,6 @@
 
 import Tooltip from '../tooltip.vue'
 import mixin from './mixin.js'
-
 import FileInput from './file.vue'
 import Textarea from './textarea.vue'
 import Select from './select.vue'
@@ -70,14 +69,15 @@ export default {
     @include readable-font-features;
 
     display: flex;
-    align-items: baseline;
+    align-items: bottom;
     font-size: 1.4rem;
+    line-height: 2.4rem;
 
     .name {
       font-size: 1.6rem;
     }
     .type {
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       margin-left: 0.4rem;
       margin-right: auto;
     }
@@ -85,7 +85,7 @@ export default {
     .fc-tooltip-icon {
       align-self: center;
       margin-right: 0.2rem;
-      color: #fff6;
+      opacity: 0.5;
     }
     .required {
       color: #f44;
@@ -100,29 +100,37 @@ export default {
 
   > input, > textarea, > select, &__selection {
     @include readable-font-features;
-    @include transition(background-color, 0.2s);
-
+    font-family: inherit;
     box-sizing: border-box;
-    display: inline-block;
     border: none;
-    padding-left: 0.8rem;
-    width: 100%;
+    padding: 0 0 0 0.8rem;
 
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+    line-height: 2.4rem;
 
-    background-color: #080808;
-    color: white;
+    background-color: $input-background;
+    color: $input-foreground;
     outline: 0 none;
+    border: 0.1rem solid #555;
 
+    transition: background-color 250ms ease, border-color 250ms ease;
 
-    &:hover, &:focus {
-      background-color: darken(#1a237e, 15%);
+    &:focus {
+      background-color: $input-background-active;
+      border-color: $input-foreground-active;
+      color: $input-foreground-active;
     }
 
+    &::placeholder {
+      color: #888;
+    }
     &::selection {
-      background: white;
-      color: black;
+      background: $primary-active;
     }
+  }
+
+  > input, > textarea, > select {
+    width: 100%;
   }
 
   > input, > select, &__selection {
@@ -132,7 +140,19 @@ export default {
 
   > select, &__selection {
     padding-right: 0.8rem;
-    padding-left: 0.8rem;
+    padding-left: 0.4rem;
+  }
+
+  > textarea {
+    resize: vertical;
+    padding-top: 0.4rem;
+
+    min-height: 3.4rem;
+    max-height: 32rem;
+
+    &.short {
+      height: 3.4rem;
+    }
   }
 }
 

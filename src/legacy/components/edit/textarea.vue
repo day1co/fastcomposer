@@ -4,7 +4,7 @@
       rows="5"
       :id="inputId"
       :placeholder="param.placeholder"
-      v-model="mappedValue"
+      v-model="value"
       @focus="resizeTextarea"
       @input="resizeTextarea"></textarea>
   </div>

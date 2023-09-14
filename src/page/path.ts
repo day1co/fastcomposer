@@ -58,4 +58,11 @@ export default class Path {
     grandchild = grandchild ?? this.grandchild
     return new Path(layer, child, index, grandchild)
   }
+
+  setChild(child: string) {
+    if(this.child != null)
+      return this.override({ grandchild: child })
+    else
+      return this.override({ child })
+  }
 }

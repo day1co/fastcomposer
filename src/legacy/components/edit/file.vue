@@ -4,7 +4,7 @@
       type="text"
       :id="inputId"
       :placeholder="param.placeholder"
-      v-model="mappedValue" />
+      v-model="value" />
     <div class="fc-edit-file">
       <template v-if="state === 'READY'">
         <form enctype="multipart/form-data">
@@ -69,7 +69,7 @@ export default {
           type: 'UPLOAD',
           files
         }, res => {
-          this.mappedValue = res.url
+          this.value = res.url
           this.state = 'UPLOADED'
           this.statePercent = 100
         })
