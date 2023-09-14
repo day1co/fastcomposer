@@ -64,6 +64,7 @@ export default {
 @import '../../assets/scss/utils/utilities';
 
 .fc-edit-row {
+  margin: 0.8rem 0;
 
   > .label {
     @include readable-font-features;
@@ -86,6 +87,10 @@ export default {
       align-self: center;
       margin-right: 0.2rem;
       opacity: 0.5;
+
+      > i {
+        vertical-align: top;
+      }
     }
     .required {
       color: #f44;
