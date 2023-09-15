@@ -1,7 +1,7 @@
 <template>
   <div class="fc-edit-input fc-edit-input--text">
     <input
-      type="text"
+      :type="type"
       :id="inputId"
       :placeholder="param.placeholder"
       v-model="value" />
@@ -13,7 +13,17 @@
 import mixin from './mixin.js'
 
 export default {
-  mixins: [ mixin ]
+  mixins: [ mixin ],
+  computed: {
+    type() {
+      if(this.param.type ==='checkbox')
+        return 'checkbox'
+      if(this.param.type ==='datetime-local')
+        return 'datetime-local'
+
+      return 'text'
+    }
+  }
 }
 
 </script>

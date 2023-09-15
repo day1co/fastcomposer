@@ -14,7 +14,7 @@
     </div>
 
     <button
-      class="fc-edit-"
+      class="fc-edit-list-new"
       @click="addItem"
       :disabled="value.length >= param.maxLength">
       새 항목 추가 ({{ value.length }}/{{ param.maxLength }})
@@ -38,7 +38,7 @@ export default {
       this.state.act('layer.item.new', this.path)
     },
     removeItem(index) {
-      this.state.act('layer.item.remove', this.path)
+      this.state.act('layer.item.remove', this.path.override({ index }))
     },
   }
 }
@@ -72,27 +72,21 @@ export default {
       }
     }
   }
+
+  &-new {
+    width: 100%;
+    height: 100%;
+    padding: 1rem 0;
+    background-color: $primary-active;
+    color: inherit;
+    font: inherit;
+    &[disabled] {
+      opacity: 0.6;
+    }
+  }
+  &__remove-btn {
+    margin-left: auto;
+  }
 }
-// &__add-btn {
-//   display: flex;
-//   justify-content: center;
-//   button {
-//     width: 100%;
-//     height: 100%;
-//     padding: 1rem 0;
-//     background-color: $primary-active;
-//     color: inherit;
-//     font: inherit;
-//     &[disabled] {
-//       opacity: 0.6;
-//     }
-//   }
-//   span {
-//     font-weight: bold;
-//   }
-// }
-// &__remove-btn {
-//   margin-left: auto;
-// }
 
 </style>

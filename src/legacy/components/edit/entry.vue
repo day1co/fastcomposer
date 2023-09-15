@@ -22,6 +22,7 @@
 
 import Tooltip from '../tooltip.vue'
 import mixin from './mixin.js'
+
 import FileInput from './file.vue'
 import Textarea from './textarea.vue'
 import Select from './select.vue'
