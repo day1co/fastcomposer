@@ -21,7 +21,7 @@ export default <Action<Page>>{
   rollback(root, self, rememberedAct) {
     rememberedAct.seal()
     console.log(rememberedAct.capturedState)
-    const layer = self.getLayerByPath(rememberedAct.target)
+    const layer = self.getLayerByPath(rememberedAct.target!)!
     layer.meta.hidden = rememberedAct.capturedState
   }
 }

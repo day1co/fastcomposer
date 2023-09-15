@@ -66,7 +66,7 @@ export default class Layer {
     return def
   }
   addItem({ child, index }: Path, state?: any) {
-    const def = <ListLayoutParameter>this._getDef(child)
+    const def = <ListLayoutParameter>this._getDef(child!)
     if(def.type !== 'list')
       throw new TypeError('trying to add item to non-list type item')
 
@@ -77,12 +77,12 @@ export default class Layer {
 
     list.splice(index ?? list.length, 0, state ?? this.layout.getDefaultValues(child))
   }
-  removeItem({ child, index }: Path, at: number | string = index) {
-    const def = <ListLayoutParameter>this._getDef(child)
+  removeItem({ child, index }: Path, at: number = index!) {
+    const def = <ListLayoutParameter>this._getDef(child!)
     if(def.type !== 'list')
       throw new TypeError('trying to remove item from non-list type item')
 
-    const list = this.values[child]
+    const list = this.values[child!]
     // TODO: not to throw?
     if(list.length - 1 < at)
       throw new TypeError(`value '${child}' has no element at index ${at}`)
@@ -91,12 +91,14 @@ export default class Layer {
   }
 
   get({ child, index, grandchild }: Path) {
-    if(grandchild != null && index != null)
-      return this.values[child][index][grandchild]
-    else if(index != null)
-      return this.values[child][index]
-    else if(child != null)
-      return this.values[child]
+    if(child != null)
+      if(index != null)
+        if(grandchild != null)
+          return this.values[child][index][grandchild]
+        else
+          return this.values[child][index]
+      else
+        return this.values[child]
     else
       throw new ReferenceError('attempted to get nowhere on layer')
   }

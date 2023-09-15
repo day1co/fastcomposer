@@ -46,9 +46,10 @@ export default class State {
 
     return [ module, action ]
   }
+
   // history helpers
 
-  get _lastAct() {
+  get lastAct() {
     return this.past[this.past.length - 1]
   }
 
@@ -69,25 +70,22 @@ export default class State {
     return present
   }
 
-  isComposable(action: Action<any>) {
-    return action.compose != null
-        && this._lastAct?.action === action.id
-        && !this._lastAct.sealed
-  }
-
   act(...params: ConstructorParameters<typeof Act>) {
     const act = new Act(...params)
-    return this.perform(act)
+    return this.perform(act, false)
   }
 
-  perform(act: Act, isRedo?: boolean) {
+  perform(act: Act, isRedo?: boolean, doNotCompose?: boolean) {
     const [ module, action ] = this.resolveAction(act.action)
 
-    if(action.compose && this._lastAct?.isComposableWith(act)) {
-      action.compose(this, module, this._lastAct, act)
-      action.perform(this, module, this._lastAct)
+    if(action.compose && !doNotCompose && this.lastAct?.isComposableWith(act)) {
+      const shouldDiscardCurrentAct = !action.compose(this, module, this.lastAct, act)
+      action.perform(this, module, this.lastAct)
 
-      return this._lastAct
+      if(shouldDiscardCurrentAct)
+        this._getPast()
+
+      return this.lastAct
     } else {
       action.perform(this, module, act)
 

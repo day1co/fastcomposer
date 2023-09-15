@@ -22,6 +22,11 @@ export default {
         return 'datetime-local'
 
       return 'text'
+    },
+    shouldNotCompose() {
+      if(this.type === 'checkbox') {
+        return true
+      }
     }
   }
 }

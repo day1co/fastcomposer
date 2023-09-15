@@ -6,24 +6,24 @@
       :placeholder="param.placeholder"
       v-model="value" />
     <div class="fc-edit-file">
-      <template v-if="state === 'READY'">
+      <template v-if="uploadState === 'READY'">
         <form enctype="multipart/form-data">
           <input type="file" :accept="accept" @change="upload($event.target.files)" />
         </form>
       </template>
-      <template v-if="state === 'UPLOADING'">
+      <template v-if="uploadState === 'UPLOADING'">
         <div> 업로드 중 </div>
         <button type="button" @click="cancel">취소</button>
       </template>
-      <template v-if="state === 'ERROR'">
+      <template v-if="uploadState === 'ERROR'">
         <div> 업로드 실패 </div>
         <button type="button" @click="cancel">취소</button>
       </template>
-      <template v-if="state === 'UPLOADED'">
+      <template v-if="uploadState === 'UPLOADED'">
         <div> 업로드 완료 </div>
         <button type="button" @click="cancel">취소</button>
       </template>
-      <div class="progress" v-if="state !== 'READY'">
+      <div class="progress" v-if="uploadState !== 'READY'">
         <div class="progress-bar" :style="`width: ${ statePercent }%`"></div>
       </div>
     </div>
@@ -43,13 +43,13 @@ export default {
       image: 'image/*',
       video: 'video/mp4'
     },
-    state: 'READY',
+    uploadState: 'READY',
     statePercent: 0,
     currentId: null
   }),
   methods: {
     upload(files) {
-      if(this.state !== 'READY')
+      if(this.uploadState !== 'READY')
         return
 
       this.currentId = 'fc-upload-' + uniqueId()
@@ -62,7 +62,7 @@ export default {
         alert(`${limit}MB 이하의 파일을 올려주세요`)
 
       if(files.length) {
-        this.state = 'UPLOADING'
+        this.uploadState = 'UPLOADING'
         this.statePercent = 20
         EventBus.$emit('fc-upload', {
           id: this.currentId,
@@ -70,14 +70,14 @@ export default {
           files
         }, res => {
           this.value = res.url
-          this.state = 'UPLOADED'
+          this.uploadState = 'UPLOADED'
           this.statePercent = 100
         })
       }
     },
     cancel() {
       this.$root.$emit('fc-upload', { id: this.currentId, type: 'CANCEL' })
-      this.state = 'READY'
+      this.uploadState = 'READY'
       this.statePercent = 0
     }
   },

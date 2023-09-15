@@ -1,5 +1,6 @@
 import Layer from '../../../page/layer'
 import Path from '../../../page/path'
+import Act from '../../../state/act'
 
 export default {
   inject: ['state'],
@@ -15,13 +16,19 @@ export default {
     },
     layer: Layer
   },
+  data: () => ({
+    // shouldNotCompose: false
+  }),
   computed: {
     inputId() {
       return this.path.toString()
     },
     value: {
       get() { return this.layer.get(this.path) },
-      set(v) { this.state.act('layer.edit', this.path, v) }
+      set(v) {
+        const act = new Act('layer.edit', this.path, v)
+        this.state.perform(act, null, this.shouldNotCompose)
+      }
     }
   }
 }

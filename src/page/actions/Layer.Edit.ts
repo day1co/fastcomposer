@@ -19,11 +19,14 @@ export default <Action<Page>>{
   },
   compose(root, self, previousAct, act) {
     previousAct.update(act.arg)
+    if(previousAct.arg === previousAct.capturedState)
+      return null
+
     return previousAct
   },
   rollback(root, self, rememberedAct) {
     rememberedAct.seal()
-    const path = rememberedAct.target
+    const path = rememberedAct.target!
     const value = rememberedAct.capturedState
 
     const layer = self.getLayerByPath(path)
