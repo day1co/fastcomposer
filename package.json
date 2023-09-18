@@ -30,6 +30,7 @@
     "marked": "^4.0.18",
     "normalize.css": "^8.0.1",
     "sass-mq": "^5.0.1",
+    "splitpanes": "^2.4.1",
     "vue": "^2.6.12",
     "vue-smooth-dnd": "^0.8.1"
   },

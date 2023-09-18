@@ -1,0 +1,42 @@
+$splitter-size: 8px;
+$splitter-visible: 2px;
+
+.splitpanes {
+  display: flex;
+  height: 100%;
+
+  .splitpanes__splitter {
+    background-image: linear-gradient(to right, #8888, #8888);
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .splitpanes__pane {
+    overflow-y: auto;
+  }
+}
+
+.splitpanes.splitpanes--horizontal {
+  flex-direction: column;
+
+  > .splitpanes__splitter {
+    background-size: 100% $splitter-visible;
+    height: $splitter-size;
+    cursor: ns-resize;
+  }
+  > .splitpanes__pane {
+    overflow-y: auto;
+    min-height: 0;
+  }
+}
+
+.splitpanes.splitpanes--vertical {
+
+  > .splitpanes__splitter {
+    background-size: $splitter-visible 100%;
+    width: $splitter-size;
+    cursor: ew-resize;
+  }
+  .splitpanes__pane {
+    height: 100%;
+  }
+}

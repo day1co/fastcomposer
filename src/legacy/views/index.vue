@@ -34,106 +34,106 @@
         :warnCount="layers.filter(layer => layer.hasSyntaxErrorTags).length"
         :notificationMessage="notification.message"
         :notificationType="notification.type"/>
-      <div class="fc-composer__content">
+
+      <splitpanes @resize="onHorizontalResize">
         <!--edit-->
-        <div class="fc-aside fc-aside--left">
-          <div class="fc-aside__content">
-            <div class="fc-aside__container">
-              <editor v-show="currentLayer" :layer="currentLayer" ref="editor" />
-            </div>
-          </div>
-          <button
-            type="button"
-            class="fc-aside__btn fc-aside__btn--left"
-            @click="onToggleAside('left')">
-            <i class="material-icons">{{ 'chevron_' + (isLeftVisible? 'right' : 'left') }}</i>
-          </button>
-        </div>
+        <pane min-size="20" :size="options.horizontalSizes?.[0]">
+          <editor v-show="currentLayer" :layer="currentLayer" ref="editor" />
+        </pane>
 
         <!--preview-->
-        <preview
-          :blocks="layers"
-          :selected.sync="selected"
-          ref="preview"
-        />
+        <pane min-size="20" :size="options.horizontalSizes?.[1]">
+          <preview
+            :blocks="layers"
+            :selected.sync="selected"
+            ref="preview"
+          />
+        </pane>
 
         <!--layers-->
-        <div class="fc-aside fc-aside--right">
-          <div class="fc-aside__content">
-            <header class="fc-aside__header">
-              <button class="btn" @click="onToggleDeviceMode">
-                <span class="material-icons">devices</span>
+        <pane min-size="20" :size="options.horizontalSizes?.[2]">
+          <splitpanes horizontal @resize="onVerticalResize">
+            <pane :size="options.verticalSizes?.[0]">
+              <header class="fc-aside__header">
+                <button class="btn" @click="onToggleDeviceMode">
+                  <span class="material-icons">devices</span>
+                  </button>
+                <button class="btn" @click="onShowModal">
+                  <span class="material-icons">help</span>
                 </button>
-              <button class="btn" @click="onShowModal">
-                <span class="material-icons">help</span>
-              </button>
-              <button class="btn" @click="showConfigWindow = true">
-                <span class="material-icons">settings</span>
-              </button>
-              <!-- <button class="btn" @click="onValidateLayer">
-                <span class="material-icons">check</span>
-                <label>검증</label>
-              </button> -->
-              <button class="btn" @click="onSave">
-                <span class="material-icons">save</span>
-                <label>저장</label>
-              </button>
-            </header>
-            <header class="fc-aside__header">
-              <button class="btn narrow" @click="onSelectToggleAll" :disabled="!layers.length">
-                <span class="material-icons">{{
-                  checkedCount?
-                    checkedCount === layers.length?
-                      'check_box'
-                    : 'indeterminate_check_box'
-                 : 'check_box_outline_blank'
-                }}</span>
-              </button>
-              <!-- <button class="btn narrow" @click="onUpBlock" :disabled="!checkedCount || layers.length < 2">
-                <span class="material-icons">arrow_upward</span>
-              </button>
-              <button class="btn narrow" @click="onDownBlock" :disabled="!checkedCount || layers.length < 2">
-                <span class="material-icons">arrow_downward</span>
-              </button> -->
-              <label class="fc-aside__header__label">
-                {{layers.length}} 레이어
-                <small v-if="warnCount || checkedCount">
-                  (<template v-if="warnCount">{{warnCount}} 점검 필요</template>
-                  <template v-if="warnCount && checkedCount"> ・ </template>
-                  <template v-if="checkedCount">{{checkedCount}} 선택</template>)
-                </small>
-              </label>
-              <button class="btn" @click="onToggleLayerVisibility" :disabled="!checkedCount">
-                <span class="material-icons">{{ checkedCount && isEverySelectedLayerVisible? 'visibility_off' : 'visibility' }}</span>
-              </button>
-              <button class="btn" @click="onShowLayouts">
-                <span class="material-icons">add</span>
-              </button>
-            </header>
-            <div class="fc-aside__container">
-              <!--
-                @up="onUpBlock"
-                @down="onDownBlock"
-              -->
-              <layers
-                @hidden="onToggleLayerState"
-                @selected-layer="onUpdateCurrentLayerIndex"
-                @remove-layer="onRemoveLayer"
-                @clone-layer="onCloneLayer"
-                :layers="layers"
-                :selected.sync="selected"
-                ref="layers"
-              />
-            </div>
-          </div>
-          <button
-            type="button"
-            class="fc-aside__btn fc-aside__btn--right"
-            @click="onToggleAside('right')">
-            <i class="material-icons">{{ 'chevron_' + (isRightVisible? 'right' : 'left') }}</i>
-          </button>
-        </div>
-      </div>
+                <button class="btn" @click="showConfigWindow = true">
+                  <span class="material-icons">settings</span>
+                </button>
+                <!-- <button class="btn" @click="onValidateLayer">
+                  <span class="material-icons">check</span>
+                  <label>검증</label>
+                </button> -->
+                <button class="btn" @click="onSave">
+                  <span class="material-icons">save</span>
+                  <label>저장</label>
+                </button>
+              </header>
+              <header class="fc-aside__header">
+                <button class="btn narrow" @click="onSelectToggleAll" :disabled="!layers.length">
+                  <span class="material-icons">{{
+                    checkedCount?
+                      checkedCount === layers.length?
+                        'check_box'
+                      : 'indeterminate_check_box'
+                  : 'check_box_outline_blank'
+                  }}</span>
+                </button>
+                <!-- <button class="btn narrow" @click="onUpBlock" :disabled="!checkedCount || layers.length < 2">
+                  <span class="material-icons">arrow_upward</span>
+                </button>
+                <button class="btn narrow" @click="onDownBlock" :disabled="!checkedCount || layers.length < 2">
+                  <span class="material-icons">arrow_downward</span>
+                </button> -->
+                <label class="fc-aside__header__label">
+                  {{layers.length}} 레이어
+                  <small v-if="warnCount || checkedCount">
+                    (<template v-if="warnCount">{{warnCount}} 점검 필요</template>
+                    <template v-if="warnCount && checkedCount"> ・ </template>
+                    <template v-if="checkedCount">{{checkedCount}} 선택</template>)
+                  </small>
+                </label>
+                <button class="btn" @click="onToggleLayerVisibility" :disabled="!checkedCount">
+                  <span class="material-icons">{{ checkedCount && isEverySelectedLayerVisible? 'visibility_off' : 'visibility' }}</span>
+                </button>
+                <button class="btn" @click="onShowLayouts">
+                  <span class="material-icons">add</span>
+                </button>
+              </header>
+              <div class="fc-aside__container">
+                <!--
+                  @up="onUpBlock"
+                  @down="onDownBlock"
+                -->
+                <layers
+                  @hidden="onToggleLayerState"
+                  @selected-layer="onUpdateCurrentLayerIndex"
+                  @remove-layer="onRemoveLayer"
+                  @clone-layer="onCloneLayer"
+                  :layers="layers"
+                  :selected.sync="selected"
+                  ref="layers"
+                />
+              </div>
+            </pane>
+            <pane :size="options.verticalSizes?.[1]">
+              <ul>
+                <li v-for="history in state.past">
+                  {{ history.action }} | {{ history.sealed? 's' : '' }} {{ history.remembered? 'r' : '' }}
+                  <br />
+                  {{ history.target }}
+                  <br />
+                  {{ history.capturedState }} → {{ history.arg }}
+                </li>
+              </ul>
+            </pane>
+          </splitpanes>
+        </pane>
+      </splitpanes>
       <layouts
         ref="layouts"
         @add-layer="onAddLayer"
@@ -141,115 +141,43 @@
         :favoriteLayoutIds="favoriteLayoutIds"
         :layouts="layouts"
       />
+      <Dialog :visible.sync="showModal">
+        <guide />
+      </Dialog>
+      <Dialog :visible.sync="showConfigWindow">
+        <div slot="header">
+          <h3> FastComposer 설정 </h3>
+        </div>
+        <div slot="main">
+          <p class="fc-option-row">
+            <label for="fc-options-colormode">
+              테마:
+            </label>
+            <select v-model="options.colorMode" id="fc-options-colormode">
+              <option value=""> 자동 </option>
+              <option value="light"> 밝게 </option>
+              <option value="dark"> 어둡게 </option>
+            </select>
+          </p>
+          <p class="fc-option-row">
+            <label for="fc-options-hidelayermode">
+              미리보기 영역에서 <i class="material-icons">visibility_off</i> 레이어를:
+            </label>
+            <select v-model="options.hideLayerMode" id="fc-options-hidelayermode">
+              <option value=""> 흐리게 보이기 </option>
+              <option value="hatched"> 흐리게 + 빗금 </option>
+              <option value="gutter-only"> 레이어 정보만 보이기 </option>
+              <option value="hide"> 완전히 숨기기 </option>
+            </select>
+          </p>
+        </div>
+      </Dialog>
     </div>
-    <Dialog :visible.sync="showModal">
-      <div slot="main" class="fc-guide">
-        <table>
-          <thead>
-          <tr>
-            <th>태그명</th>
-            <th>표시</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>i</td>
-            <td><i>FastComposer</i></td>
-          </tr>
-          <tr>
-            <td>b</td>
-            <td><b>FastComposer</b></td>
-          </tr>
-          <tr>
-            <td>s</td>
-            <td><s>FastComposer</s></td>
-          </tr>
-          <tr>
-            <td>u</td>
-            <td><u>FastComposer</u></td>
-          </tr>
-          <tr>
-            <td>em</td>
-            <td><em>FastComposer</em></td>
-          </tr>
-          </tbody>
-        </table>
-        <table>
-          <thead>
-          <tr>
-            <th>단축키</th>
-            <th>기능</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>Shift+Up/Down</td>
-            <td>레이어 선택</td>
-          </tr>
-          <tr>
-            <td>Alt+Shift+Up/Down</td>
-            <td>선택 레이어 이동</td>
-          </tr>
-          <tr>
-            <td>Alt+Shift+1</td>
-            <td>레이어 속성</td>
-          </tr>
-          <tr>
-            <td>Alt+Shift+2</td>
-            <td>미리보기</td>
-          </tr>
-          <tr>
-            <td>Alt+Shift+3</td>
-            <td>레이어 목록</td>
-          </tr>
-          <tr>
-            <td>Alt+Shift+0</td>
-            <td>레이아웃 목록</td>
-          </tr>
-          <tr>
-            <td>Up/Down/Home/End</td>
-            <td>이전/다음/처음/마지막 항목</td>
-          </tr>
-          <tr>
-            <td>Enter</td>
-            <td>선택 &amp; 편집</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </Dialog>
-    <Dialog :visible.sync="showConfigWindow">
-      <div slot="header">
-        <h3> FastComposer 설정 </h3>
-      </div>
-      <div slot="main">
-        <p class="fc-option-row">
-          <label for="fc-options-colormode">
-            테마:
-          </label>
-          <select v-model="options.colorMode" id="fc-options-colormode">
-            <option value=""> 자동 </option>
-            <option value="light"> 밝게 </option>
-            <option value="dark"> 어둡게 </option>
-          </select>
-        </p>
-        <p class="fc-option-row">
-          <label for="fc-options-hidelayermode">
-            미리보기 영역에서 <i class="material-icons">visibility_off</i> 레이어를:
-          </label>
-          <select v-model="options.hideLayerMode" id="fc-options-hidelayermode">
-            <option value=""> 흐리게 보이기 </option>
-            <option value="hatched"> 흐리게 + 빗금 </option>
-            <option value="gutter-only"> 레이어 정보만 보이기 </option>
-            <option value="hide"> 완전히 숨기기 </option>
-          </select>
-        </p>
-      </div>
-    </Dialog>
   </div>
 </template>
 
 <script>
+  import { Splitpanes, Pane } from 'splitpanes';
   import { cloneDeep } from 'lodash';
   import { uniqueId, restructureLayouts } from '../utils';
   import EventBus from '../event-bus.vue';
@@ -261,12 +189,15 @@
   import Preview from './preview.vue';
   import Layouts from './layouts.vue';
   import Layers from './layers.vue';
+  import Guide from './guide.vue'
 
   import Page from '../../page';
   import State from '../../state';
 
   export default {
     components: {
+      Splitpanes,
+      Pane,
       Toast,
       ComposerHeader,
       Preview,
@@ -274,6 +205,7 @@
       Layouts,
       Layers,
       Dialog,
+      Guide,
     },
     props: {
       layoutModels: {
@@ -302,6 +234,8 @@
         options: {
           colorMode: '',
           hideLayerMode: '',
+          horizontalSizes: [20, 60, 20],
+          verticalSizes: [80, 20]
         },
         notification: {
           message: '',
@@ -498,6 +432,12 @@
       onChangeDevice(deviceType) {
         this.deviceType = deviceType;
       },
+      onHorizontalResize(e) {
+        this.options.horizontalSizes = e.map(_ => _.size)
+      },
+      onVerticalResize(e) {
+        this.options.verticalSizes = e.map(_ => _.size)
+      }
     },
     computed: {
       layers() {
@@ -693,16 +633,6 @@
       padding-right: 0;
     }
 
-    &--aside-l {
-      .fc-composer__content__btn--left {
-        left: $sidebar-size + 10rem;
-      }
-    }
-    &--aside-r {
-      .fc-composer__content__btn--right {
-        right: $sidebar-size;
-      }
-    }
     &--no-favorites {
       padding-top: $header-size * 0.5;
 
@@ -719,10 +649,6 @@
     }
 
     &__content {
-      display: flex;
-      justify-content: space-between;
-      position: relative;
-      width: 100%;
 
       @include transition(null, 0.3s);
 
