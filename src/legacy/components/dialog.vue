@@ -89,6 +89,7 @@
   }
   .fc-dialog {
     background-color: #ffffff;
+    color: #111;
     font-size: 2rem;
     min-width: 45rem;
     &__header {
@@ -99,6 +100,7 @@
     }
     &__close-btn {
       margin-left: auto;
+      color: inherit;
     }
   }
 </style>

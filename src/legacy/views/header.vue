@@ -19,6 +19,8 @@
         </button>
       </li>
     </ul>
+    <slot>
+    </slot>
   </header>
 </template>
 
@@ -118,27 +120,22 @@
   @import '../assets/scss/style';
 
   .fc-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    /* z-index: 101; */
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     width: percentage(1);
-    height: $header-size;
     background-color: transparent;
     transform: none; // admin과 충돌 이슈
     transition: none;  // admin과 충돌 이슈
 
     /* TODO reconsider with other layout elms */
-    &--no-favorites {
-      height: $header-size * 0.5;
+    .fc-composer__simple-favorites &, &--no-favorites {
 
       .fc-header__h {
-        width: 100%;
         display: flex;
+        margin-right: auto;
+        padding: 0.6rem 1.2rem;
       }
       .fc-header__subtitle {
         margin-left: 1.2rem;
@@ -148,32 +145,75 @@
 
     &__favorite-layouts {
       display: flex;
+      gap: 0.4rem;
       flex-grow: 100;
       justify-items: flex-end;
       width: 100%;
-      height: 7.6rem;
-      padding: 0 1.6rem 0 0.8rem;
+      margin: 0 0.8rem;
+      padding: 0;
       overflow-x: auto;
       overflow-y: hidden;
+
+      .fc-composer__simple-favorites & {
+        gap: 0;
+      }
     }
     &__favorite-layout {
-      margin-right: 1rem;
+      display: flex;
+      flex-direction: column;
       text-align: center;
-      &:first-child {
-        margin-left: 0;
+      align-items: center;
+      justify-content: center;
+
+      .fc-composer__simple-favorites & {
+        flex-direction: row;
       }
     }
     &__favorite-btn {
-      display: flex;
+      @include readable-font-features;
+
       flex-direction: column;
-      align-items: center;
+      gap: 0 !important;
+      line-height: 1.25em;
+
+      .fc-composer__simple-favorites & {
+        flex-direction: row;
+        gap: 0.4rem !important;
+      }
+
       img {
+        width: 5rem;
+        height: 5rem;
         max-width: none;
+
+        .fc-composer__simple-favorites & {
+          width: 3rem;
+          height: 3rem;
+        }
       }
     }
 
     button {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
       color: $foreground;
+      height: 100%;
+      padding: 0.4em;
+      background-color: transparent;
+      transition: background-color 200ms ease;
+
+      .material-icons {
+        vertical-align: bottom;
+      }
+      label {
+        white-space: nowrap;
+        word-break: keep-all;
+      }
+
+      &:hover {
+        background-color: #8883;
+      }
     }
 
     &__content {
@@ -211,8 +251,8 @@
     }
 
     ::-webkit-scrollbar {
-      width: 0.5rem;
-      height: 0.5rem;
+      width: 0.3rem;
+      height: 0.3rem;
       background: #6668;
     }
     ::-webkit-scrollbar-thumb {

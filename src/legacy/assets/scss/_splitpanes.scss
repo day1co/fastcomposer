@@ -4,6 +4,7 @@ $splitter-visible: 2px;
 .splitpanes {
   display: flex;
   height: 100%;
+  min-height: 0;
 
   .splitpanes__splitter {
     background-image: linear-gradient(to right, #8888, #8888);

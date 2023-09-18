@@ -9,6 +9,8 @@
       !favoriteLayoutIds.length && 'fc-composer--no-favorites',
       'fc-composer__' + options.colorMode,
       'fc-composer__hide-layer-' + options.hideLayerMode,
+      options.simpleFavorites && 'fc-composer__simple-favorites',
+      options.simpleLayers && 'fc-composer__simple-layers'
     ]"
     >
       <div class="fc-tooltip">
@@ -33,7 +35,26 @@
         :layerCount="layers.length"
         :warnCount="layers.filter(layer => layer.hasSyntaxErrorTags).length"
         :notificationMessage="notification.message"
-        :notificationType="notification.type"/>
+        :notificationType="notification.type">
+
+        <!-- <button class="btn" @click="onToggleDeviceMode">
+          <span class="material-icons">devices</span>
+        </button> -->
+        <button class="btn" @click="onShowModal">
+          <span class="material-icons">help</span>
+        </button>
+        <button class="btn" @click="showConfigWindow = true">
+          <span class="material-icons">settings</span>
+        </button>
+        <!-- <button class="btn" @click="onValidateLayer">
+          <span class="material-icons">check</span>
+          <label>검증</label>
+        </button> -->
+        <button class="btn" @click="onSave">
+          <span class="material-icons">save</span>
+          <label>저장</label>
+        </button>
+      </composer-header>
 
       <splitpanes @resize="onHorizontalResize">
         <!--edit-->
@@ -53,26 +74,7 @@
         <!--layers-->
         <pane min-size="20" :size="options.horizontalSizes?.[2]">
           <splitpanes horizontal @resize="onVerticalResize">
-            <pane :size="options.verticalSizes?.[0]">
-              <header class="fc-aside__header">
-                <button class="btn" @click="onToggleDeviceMode">
-                  <span class="material-icons">devices</span>
-                  </button>
-                <button class="btn" @click="onShowModal">
-                  <span class="material-icons">help</span>
-                </button>
-                <button class="btn" @click="showConfigWindow = true">
-                  <span class="material-icons">settings</span>
-                </button>
-                <!-- <button class="btn" @click="onValidateLayer">
-                  <span class="material-icons">check</span>
-                  <label>검증</label>
-                </button> -->
-                <button class="btn" @click="onSave">
-                  <span class="material-icons">save</span>
-                  <label>저장</label>
-                </button>
-              </header>
+            <pane class="fc-pane-layers" :size="options.verticalSizes?.[0]">
               <header class="fc-aside__header">
                 <button class="btn narrow" @click="onSelectToggleAll" :disabled="!layers.length">
                   <span class="material-icons">{{
@@ -104,21 +106,19 @@
                   <span class="material-icons">add</span>
                 </button>
               </header>
-              <div class="fc-aside__container">
-                <!--
-                  @up="onUpBlock"
-                  @down="onDownBlock"
-                -->
-                <layers
-                  @hidden="onToggleLayerState"
-                  @selected-layer="onUpdateCurrentLayerIndex"
-                  @remove-layer="onRemoveLayer"
-                  @clone-layer="onCloneLayer"
-                  :layers="layers"
-                  :selected.sync="selected"
-                  ref="layers"
-                />
-              </div>
+              <!--
+                @up="onUpBlock"
+                @down="onDownBlock"
+              -->
+              <layers
+                @hidden="onToggleLayerState"
+                @selected-layer="onUpdateCurrentLayerIndex"
+                @remove-layer="onRemoveLayer"
+                @clone-layer="onCloneLayer"
+                :layers="layers"
+                :selected.sync="selected"
+                ref="layers"
+              />
             </pane>
             <pane :size="options.verticalSizes?.[1]">
               <ul>
@@ -169,6 +169,24 @@
               <option value="gutter-only"> 레이어 정보만 보이기 </option>
               <option value="hide"> 완전히 숨기기 </option>
             </select>
+          </p>
+          <p class="fc-option-row">
+            <label for="fc-options-simplefavorites">
+              레이아웃 즐겨찾기 얇게 표시:
+            </label>
+            <input
+              type="checkbox"
+              v-model="options.simpleFavorites"
+              id="fc-options-simplefavorites" />
+          </p>
+          <p class="fc-option-row">
+            <label for="fc-options-simplelayers">
+              레이어 한 줄로 표시:
+            </label>
+            <input
+              type="checkbox"
+              v-model="options.simpleLayers"
+              id="fc-options-simplelayers" />
           </p>
         </div>
       </Dialog>
@@ -458,7 +476,7 @@
       layerHtml() {
         return this.layers.filter(layer => !layer.hidden).map(layer => `
             <section class="fc-block fc-layout fc-layout-${layer.layout.id}">
-              ${layer.layout.templateFunc({$markdown: marked, ...layer.values})}
+              ${layer.render()}
             </section>`,
           ).join('\n');
       },
@@ -480,7 +498,7 @@
       EventBus.$on('save', this.onSave);
       EventBus.$on('fc-upload', this.onUploadFile);
       try {
-        this.favoriteLayoutIds = this.localStorage['favoriteLayouts'];
+        this.favoriteLayoutIds = JSON.parse(localStorage['favoriteLayouts']);
       } catch(e) {
         this.favoriteLayoutIds = []
       }
@@ -605,9 +623,9 @@
     position: relative;
     box-sizing: border-box;
     display: flex;
+    flex-direction: column;
     margin-left: auto;
     margin-right: auto;
-    padding-top: $header-size;
     width: percentage(1);
     height: 100vh;
     font-size: $font-size;
@@ -634,13 +652,12 @@
     }
 
     &--no-favorites {
-      padding-top: $header-size * 0.5;
 
       > .fc-layout {
         top: 0;
       }
       .fc-aside--right {
-        margin-top: $header-size * -0.5;
+        // margin-top: $header-size * -0.5;
 
         .fc-aside__header {
           justify-content: flex-end;

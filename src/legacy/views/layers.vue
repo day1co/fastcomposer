@@ -27,7 +27,7 @@
             <input :id="`layer-${index}`" type="checkbox" v-model="layer.isChecked" style="display: none" />
             <i class="material-icons">{{ layer.isChecked? 'check_box' : 'check_box_outline_blank' }}</i>
           </label>
-          <layout-info :layout="layer.layout" class="small"></layout-info>
+          <layout-info :layout="layer.layout" :index="index" class="small"></layout-info>
         </div>
         <div class="__utils">
           <button class="__utils__btn" @click="onToggle(index)">
