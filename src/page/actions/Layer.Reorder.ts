@@ -14,6 +14,6 @@ export default <Action<Page>>{
   },
   rollback(root, self, { capturedState }) {
     const { from, to } = capturedState
-    self.reorderLayer(from, to)
+    self.reorderLayer(to, from)
   }
 }
