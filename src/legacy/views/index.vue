@@ -58,12 +58,12 @@
 
       <splitpanes @resize="onHorizontalResize">
         <!--edit-->
-        <pane min-size="20" :size="options.horizontalSizes?.[0]">
+        <pane class="scrollable" min-size="20" :size="options.horizontalSizes?.[0]">
           <editor v-show="currentLayer" :layer="currentLayer" ref="editor" />
         </pane>
 
         <!--preview-->
-        <pane min-size="20" :size="options.horizontalSizes?.[1]">
+        <pane class="scrollable" min-size="20" :size="options.horizontalSizes?.[1]">
           <preview
             :blocks="layers"
             :selected.sync="selected"
@@ -74,54 +74,21 @@
         <!--layers-->
         <pane min-size="20" :size="options.horizontalSizes?.[2]">
           <splitpanes horizontal @resize="onVerticalResize">
-            <pane class="fc-pane-layers" :size="options.verticalSizes?.[0]">
-              <header class="fc-aside__header">
-                <button class="btn narrow" @click="onSelectToggleAll" :disabled="!layers.length">
-                  <span class="material-icons">{{
-                    checkedCount?
-                      checkedCount === layers.length?
-                        'check_box'
-                      : 'indeterminate_check_box'
-                  : 'check_box_outline_blank'
-                  }}</span>
-                </button>
-                <!-- <button class="btn narrow" @click="onUpBlock" :disabled="!checkedCount || layers.length < 2">
-                  <span class="material-icons">arrow_upward</span>
-                </button>
-                <button class="btn narrow" @click="onDownBlock" :disabled="!checkedCount || layers.length < 2">
-                  <span class="material-icons">arrow_downward</span>
-                </button> -->
-                <label class="fc-aside__header__label">
-                  {{layers.length}} 레이어
-                  <small v-if="warnCount || checkedCount">
-                    (<template v-if="warnCount">{{warnCount}} 점검 필요</template>
-                    <template v-if="warnCount && checkedCount"> ・ </template>
-                    <template v-if="checkedCount">{{checkedCount}} 선택</template>)
-                  </small>
-                </label>
-                <button class="btn" @click="onToggleLayerVisibility" :disabled="!checkedCount">
-                  <span class="material-icons">{{ checkedCount && isEverySelectedLayerVisible? 'visibility_off' : 'visibility' }}</span>
-                </button>
-                <button class="btn" @click="onShowLayouts">
-                  <span class="material-icons">add</span>
-                </button>
-              </header>
+            <pane :size="options.verticalSizes?.[0]">
               <!--
                 @up="onUpBlock"
                 @down="onDownBlock"
               -->
               <layers
-                @hidden="onToggleLayerState"
-                @selected-layer="onUpdateCurrentLayerIndex"
-                @remove-layer="onRemoveLayer"
-                @clone-layer="onCloneLayer"
-                :layers="layers"
+                :page="page"
+                :state="state"
                 :selected.sync="selected"
                 ref="layers"
               />
             </pane>
-            <pane :size="options.verticalSizes?.[1]">
-              <ul>
+            <pane
+              :size="options.verticalSizes?.[1]"
+              style="min-height: 3.2rem">
                 <li v-for="history in state.past">
                   {{ history.action }} | {{ history.sealed? 's' : '' }} {{ history.remembered? 'r' : '' }}
                   <br />
@@ -652,28 +619,11 @@
     }
 
     &--no-favorites {
-
       > .fc-layout {
         top: 0;
       }
-      .fc-aside--right {
-        // margin-top: $header-size * -0.5;
-
-        .fc-aside__header {
-          justify-content: flex-end;
-        }
-      }
     }
 
-    &__content {
-
-      @include transition(null, 0.3s);
-
-      .fc-preview {
-        width: 100%;
-        margin: 0 1.8rem;
-      }
-    }
   }
   .fc-guide {
     em {

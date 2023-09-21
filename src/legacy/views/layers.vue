@@ -1,52 +1,78 @@
 <template>
-  <Container @drop="onDrop" :get-ghost-parent="getGhostParent">
-    <Draggable class="fc-layer" v-for="(layer, index) in layers" :key="index">
-      <div
-        class="__item"
+  <div class="fc-pane fc-layers">
+    <header class="fc-pane-title">
+      <button
+        class="fc-pane-title-button"
+        style="margin-left: -0.2rem"
+        :disabled="!layers.length">
+        <span class="material-icons">{{
+          checked.length?
+            checked.length === layers.length?
+              'check_box'
+            : 'indeterminate_check_box'
+        : 'check_box_outline_blank'
+        }}</span>
+      </button>
+      <!-- <button class="btn narrow" @click="onUpBlock" :disabled="!checked.length || layers.length < 2">
+        <span class="material-icons">arrow_upward</span>
+      </button>
+      <button class="btn narrow" @click="onDownBlock" :disabled="!checked.length || layers.length < 2">
+        <span class="material-icons">arrow_downward</span>
+      </button> -->
+      <label class="fc-pane-title-label">
+        레이어
+        {{layers.length}}개
+        <small v-if="warnCount || checkedCount">
+          (<template v-if="warnCount">{{warnCount}} 점검 필요</template>
+          <template v-if="warnCount && checkedCount"> ・ </template>
+          <template v-if="checkedCount">{{checkedCount}} 선택</template>)
+        </small>
+      </label>
+      <button class="fc-pane-title-button" :disabled="!checkedCount">
+        <span class="material-icons">{{ checkedCount && isEverySelectedLayerVisible? 'visibility_off' : 'visibility' }}</span>
+      </button>
+      <button class="fc-pane-title-button"> <!-- @click="onShowLayouts" -->
+        <span class="material-icons">add</span>
+      </button>
+    </header>
+    <Container class="fc-pane-content" @drop="onDrop" :get-ghost-parent="getGhostParent">
+      <Draggable
         :class="{
-          '__item--active': index === selected,
-          '__item--checked': layer.isChecked,
-          '__item--hidden': layer.hidden,
+          'fc-layer': true,
+          'fc-layer--active': index === selected,
+          'fc-layer--checked': checked[layer.id],
+          'fc-layer--hidden': layer.meta.hidden,
           'has-syntax-error-tags': layer.hasSyntaxErrorTags
         }"
-        tabindex="0"
-        @keydown.exact.enter.prevent="focusEditor"
-        @keydown.exact.shift.up="updateCheckedState(selected - 1, $event)"
-        @keydown.exact.shift.down="updateCheckedState(selected + 1, $event)"
-        @keydown.exact.shift.alt.up="onUpBlock"
-        @keydown.exact.shift.alt.down="onDownBlock"
-        @keydown.exact.up.prevent="onSelect(selected - 1)"
-        @keydown.exact.down.prevent="onSelect(selected + 1)"
-        @keydown.exact.page-up.prevent="onSelect(selected - 5)"
-        @keydown.exact.page-down.prevent="onSelect(selected + 5)"
-        @keydown.exact.home.prevent="onSelect(0)"
-        @keydown.exact.end.prevent="onSelect(layers.length - 1)"
-      >
-        <div class="__item__group" v-if="layer.layout" @click="onSelect(index, $event, layer)">
+        v-for="(layer, index) in page.state"
+        :key="index">
+        <div class="fc-layer-info" v-if="layer.layout" @click="$emit('update:selected', index)">
           <label :for="`layer-${index}`" >
-            <input :id="`layer-${index}`" type="checkbox" v-model="layer.isChecked" style="display: none" />
-            <i class="material-icons">{{ layer.isChecked? 'check_box' : 'check_box_outline_blank' }}</i>
+            <input :id="`layer-${index}`" type="checkbox" v-model="checked[layer.id]" style="display: none" />
+            <i class="material-icons">{{ checked[layer.id]? 'check_box' : 'check_box_outline_blank' }}</i>
           </label>
           <layout-info :layout="layer.layout" :index="index" class="small"></layout-info>
         </div>
-        <div class="__utils">
-          <button class="__utils__btn" @click="onToggle(index)">
+        <div class="fc-layer-buttons">
+          <button class="fc-layer-action" @click="state.act('layer.hide', layer.path)">
             <i class="material-icons">
               {{ layer.meta.hidden? 'visibility_off' : 'visibility' }}
             </i>
           </button>
-          <button class="__utils__btn" @click="onCloneLayer(index)">
+          <button class="fc-layer-action" @click="onCloneLayer(index)">
             <i class="material-icons">file_copy</i>
           </button>
-          <button class="__utils__btn" @click="onRemoveLayer(index)">
+          <button class="fc-layer-action" @click="onRemoveLayer(index)">
             <i class="material-icons">delete</i>
           </button>
         </div>
-      </div>
-    </Draggable>
-  </Container>
+      </Draggable>
+    </Container>
+  </div>
 </template>
 <script>
+  import Page from '../../page'
+  import State from '../../state'
   import LayoutInfo from '../components/layout-info.vue';
   import { Container, Draggable } from "vue-smooth-dnd";
   import EventBus from '../event-bus.vue';
@@ -58,12 +84,8 @@
       Draggable,
     },
     props: {
-      layers: {
-        type: Array,
-        default() {
-          return []
-        }
-      },
+      page: Page,
+      state: State,
       selected: {
         type: Number,
         default() {
@@ -73,27 +95,18 @@
     },
     data() {
       return {
-        dropResult: null,
-        checkedHistory: null,
+        checked: {}
       }
     },
     computed: {
-      applyDrag() {
-        const { removedIndex, addedIndex, payload } = this.dropResult;
-        if (removedIndex === null && addedIndex === null) return this.layers;
-
-        const result = this.layers;
-        let itemToAdd = payload;
-
-        if (removedIndex !== null) {
-          itemToAdd = result.splice(removedIndex, 1)[0];
-        }
-
-        if (addedIndex !== null) {
-          result.splice(addedIndex, 0, itemToAdd);
-        }
-
-        return result;
+      layers() {
+        return this.page?.state ?? []
+      },
+      checkedCount() {
+        return 0
+      },
+      warnCount() {
+        return 0
       }
     },
     methods: {
@@ -102,24 +115,6 @@
       },
       onDownBlock() {
         this.$emit('down');
-      },
-      updateCheckedState(index, event) {
-        let newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
-
-        if (this.checkedHistory !== event.key) {
-          if (event.key === 'ArrowUp') {
-            newIndex += 1;
-          } else {
-            newIndex -= 1;
-          }
-        }
-
-        this.layers[newIndex].isChecked = !this.layers[newIndex].isChecked;
-
-        this.$emit('selected-layer', newIndex);
-        this.$emit('move-selected-layer');
-
-        this.checkedHistory = event.key;
       },
       resetCheckedHistory() {
         this.checkedHistory = null;
@@ -130,10 +125,16 @@
         this.$emit('update:selected', newIndex);
         this.resetCheckedHistory();
       },
-      onDrop(dropResult) {
-        this.dropResult = dropResult;
-        this.layers = this.applyDrag;
-        this.$emit('update:selected', dropResult.addedIndex);
+      onDrop({ removedIndex, addedIndex, payload }) {
+        if(removedIndex === null && addedIndex === null)
+          return
+
+        this.$emit('update:selected', addedIndex)
+
+        if(removedIndex === addedIndex)
+          return
+
+        this.state.act('layer.reorder', this.layers[removedIndex].path, this.layers[addedIndex].path)
       },
       getGhostParent(){
         return document.body;
@@ -156,21 +157,15 @@
         // XXX: focus to editor
         EventBus.$emit('focus-editor');
       },
-      onToggle(index) {
-        this.$emit('hidden', index, !this.layers[index].hidden);
-      }
     },
   }
 </script>
 <style lang="scss">
   @import '../assets/scss/utils/utilities';
+
   .fc-layer {
-    overflow: visible !important;
-    z-index: 10001 !important; /* overrided INLINE by vue plugin :facepalm: */
-  }
-  .fc-layer .__item {
     position: relative;
-    margin: 0.3rem 0 0 0.3rem;
+    margin: 0.2rem 0 0 0.2rem;
     padding: 0;
     cursor: pointer;
     background: $primary;
@@ -187,7 +182,7 @@
     }
     &--active {
       background: $primary-active;
-      box-shadow: 0 0 0 0.3rem #ffffff;
+      box-shadow: 0 0 0 0.2rem #ffffff;
     }
     &--hidden {
       .fc-layout-info {
@@ -196,7 +191,7 @@
           text-decoration: line-through;
         }
       }
-      .__utils {
+      .fc-layer-buttons {
         opacity: 0.2;
       }
     }
@@ -206,7 +201,7 @@
         opacity: 0.9;
       }
     }
-    &__group {
+    &-info {
       display: flex;
       align-items: stretch;
       flex-direction: row;
@@ -230,7 +225,7 @@
       }
     }
 
-    .__utils {
+    &-buttons {
       position: absolute;
       top: 0.4rem;
       right: 0.4rem;

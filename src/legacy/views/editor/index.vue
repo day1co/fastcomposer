@@ -63,6 +63,7 @@ export default {
 @import '../../assets/scss/utils/utilities';
 .fc-editor {
   position: relative;
+  padding: 0.8rem;
 
   > .fc-layout-info  {
     margin-bottom: 0.8rem;

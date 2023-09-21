@@ -1,0 +1,55 @@
+@import 'utils/variable';
+
+.fc-pane {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content 1fr;
+
+  background-color: $background;
+
+  height: 100%;
+  min-height: 0;
+
+  user-select: none;
+
+  > &-title {
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+
+    width: 100%;
+
+    line-height: 3.2rem;
+    background-color: $background;
+
+    z-index: 19999;
+
+    &-label {
+      flex-grow: 1;
+      padding: 0 0.4rem;
+    }
+
+    &-button {
+      padding: 0 0.4rem;
+      height: 100%;
+
+      &:hover {
+        background: #8884;
+      }
+      &[disabled] {
+        pointer-events: none;
+        opacity: 0.5;
+      }
+
+      .material-icons {
+        vertical-align: top;
+      }
+    }
+  }
+
+  > &-content {
+    min-height: 0;
+    overflow-y: scroll;
+  }
+}
