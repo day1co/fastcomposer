@@ -3,6 +3,7 @@ import type Page from '..'
 
 export default <Action<Page>>{
   id: 'layer.item.remove',
+  label: '레이어의 리스트 항목 제거',
   perform(root, self, act) {
     const path = act.target!
 

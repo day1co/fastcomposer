@@ -5,6 +5,7 @@ import Path from '../path'
 
 export default <Action<Page>>{
   id: 'layer.item.new',
+  label: '레이어의 리스트 항목 추가',
   perform(root, self, act) {
     const path = act.target!
 

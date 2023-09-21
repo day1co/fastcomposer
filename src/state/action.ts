@@ -5,6 +5,7 @@ import Module from './module'
 
 export default interface Action<T extends Module> {
   id: string
+  label?: string
   perform(self: State, root: T, act: Act): Act
   // return null to discard current act
   compose?(self: State, root: T, previousAct: Act, act: Act): Act | null

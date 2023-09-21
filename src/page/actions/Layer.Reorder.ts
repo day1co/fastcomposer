@@ -3,6 +3,7 @@ import type Page from '..'
 
 export default <Action<Page>>{
   id: 'layer.reorder',
+  label: '레이어 순서 변경',
   perform(root, self, act) {
     const [from, to] = self.reorderLayer(act.target!, act.arg)
     // store as indexes

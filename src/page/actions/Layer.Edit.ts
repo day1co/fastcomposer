@@ -3,6 +3,7 @@ import type Page from '..'
 
 export default <Action<Page>>{
   id: 'layer.edit',
+  label: '레이어 값 수정',
   perform(root, self, act) {
     const path = act.target!
     const value = act.arg!
