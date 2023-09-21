@@ -89,14 +89,9 @@
             <pane
               :size="options.verticalSizes?.[1]"
               style="min-height: 3.2rem">
-                <li v-for="history in state.past">
-                  {{ history.action }} | {{ history.sealed? 's' : '' }} {{ history.remembered? 'r' : '' }}
-                  <br />
-                  {{ history.target }}
-                  <br />
-                  {{ history.capturedState }} → {{ history.arg }}
-                </li>
-              </ul>
+              <history
+                :state="state"
+              />
             </pane>
           </splitpanes>
         </pane>
@@ -174,6 +169,7 @@
   import Preview from './preview.vue';
   import Layouts from './layouts.vue';
   import Layers from './layers.vue';
+  import History from './history/index.vue';
   import Guide from './guide.vue'
 
   import Page from '../../page';
@@ -189,6 +185,7 @@
       Editor,
       Layouts,
       Layers,
+      History,
       Dialog,
       Guide,
     },
