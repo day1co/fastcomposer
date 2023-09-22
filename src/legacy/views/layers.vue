@@ -31,7 +31,7 @@
       <button class="fc-pane-title-button" :disabled="!checkedCount">
         <span class="material-icons">{{ checkedCount && isEverySelectedLayerVisible? 'visibility_off' : 'visibility' }}</span>
       </button>
-      <button class="fc-pane-title-button"> <!-- @click="onShowLayouts" -->
+      <button class="fc-pane-title-button" @click="$emit('toggle-layouts')"> <!-- @click="onShowLayouts" -->
         <span class="material-icons">add</span>
       </button>
     </header>

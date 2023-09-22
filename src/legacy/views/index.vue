@@ -86,9 +86,10 @@
                 :page="page"
                 :state="state"
                 :selected.sync="selected"
-                ref="layers"
-              />
+                @toggle-layouts="layoutOpened = !layoutOpened"
+                ref="layers" />
             </pane>
+
             <pane
               :size="options.verticalSizes?.[1]"
               style="min-height: 3.2rem">
@@ -102,12 +103,13 @@
       </splitpanes>
 
       <layouts
-        ref="layouts"
+        v-show="layoutOpened"
         @add-layer="onAddLayer"
         @add-favorite-layout="onAddFavoriteLayout"
         :favoriteLayoutIds="favoriteLayoutIds"
         :layouts="layouts"
-      />
+        ref="layouts" />
+
       <Dialog :visible.sync="showModal">
         <guide />
       </Dialog>
@@ -217,8 +219,7 @@
         selected: 0,
         favoriteLayoutIds: [],
         showModal: false,
-        isLeftVisible: true,
-        isRightVisible: true,
+        layoutOpened: false,
         options: {
           colorMode: '',
           hideLayerMode: '',
@@ -304,8 +305,9 @@
       onAddLayer(layout) {
         this.moveFocusByAct(this.state.act('layer.new', this.currentLayer?.path, layout))
 
-        this.onUpdateCurrentLayerIndex(this.selected);
-        this.focusEditor();
+        this.onUpdateCurrentLayerIndex(this.selected)
+        this.focusEditor()
+        this.layoutOpened = false
       },
       onRemoveLayer(index) {
         this.moveFocusByAct(this.state.act('layer.remove', this.layers[index].path))
