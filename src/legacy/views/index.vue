@@ -4,8 +4,8 @@
   >
     <div class="fc-composer"
      :class="[
-      isLeftVisible && 'fc-composer--aside-l',
-      isRightVisible && 'fc-composer--aside-r',
+      'fc-composer--aside-l',
+      'fc-composer--aside-r',
       !favoriteLayoutIds.length && 'fc-composer--no-favorites',
       'fc-composer__' + options.colorMode,
       'fc-composer__hide-layer-' + options.hideLayerMode,
@@ -57,23 +57,26 @@
       </composer-header>
 
       <splitpanes @resize="onHorizontalResize">
-        <!--edit-->
+
         <pane class="scrollable" min-size="20" :size="options.horizontalSizes?.[0]">
-          <editor v-show="currentLayer" :layer="currentLayer" ref="editor" />
+          <editor
+            v-show="currentLayer"
+            :layer="currentLayer"
+            :state="state"
+            ref="editor" />
         </pane>
 
-        <!--preview-->
         <pane class="scrollable" min-size="20" :size="options.horizontalSizes?.[1]">
           <preview
             :blocks="layers"
             :selected.sync="selected"
-            ref="preview"
-          />
+            ref="preview" />
         </pane>
 
-        <!--layers-->
         <pane min-size="20" :size="options.horizontalSizes?.[2]">
+
           <splitpanes horizontal @resize="onVerticalResize">
+
             <pane :size="options.verticalSizes?.[0]">
               <!--
                 @up="onUpBlock"
@@ -89,13 +92,15 @@
             <pane
               :size="options.verticalSizes?.[1]"
               style="min-height: 3.2rem">
-              <history
-                :state="state"
-              />
+              <history :state="state" />
             </pane>
+
           </splitpanes>
+
         </pane>
+
       </splitpanes>
+
       <layouts
         ref="layouts"
         @add-layer="onAddLayer"
@@ -106,6 +111,7 @@
       <Dialog :visible.sync="showModal">
         <guide />
       </Dialog>
+
       <Dialog :visible.sync="showConfigWindow">
         <div slot="header">
           <h3> FastComposer 설정 </h3>
@@ -240,11 +246,6 @@
         showConfigWindow: false,
       };
     },
-    provide() {
-      return {
-        state: this.state
-      }
-    },
     methods: {
       onAddFavoriteLayout(layoutId) {
         if (this.favoriteLayoutIds.includes(layoutId)) {
@@ -320,13 +321,6 @@
           this.onUpdateCurrentLayerIndex(index + 1);
         }
       },
-      onToggleAside(state) {
-        if (state === 'left') {
-          this.isLeftVisible = !this.isLeftVisible;
-        } else {
-          this.isRightVisible = !this.isRightVisible;
-        }
-      },
       onMoveSelectedLayer() {
         const $targetBlock = this.$refs.preview.$el.getElementsByClassName('fc-block')[this.selected];
         const $targetLayer = this.$refs.layers.$el.getElementsByClassName('fc-layer')[this.selected];
@@ -367,13 +361,10 @@
       onShowLayouts() {
         this.$refs.layouts.toggle();
       },
-      // TODO what does focuses do?
       focusEditor() {
-        this.isLeftVisible = true;
         this.$refs.editor.focus();
       },
       focusLayers() {
-        this.isRightVisible = true;
         this.$refs.layers.focus();
       },
       focusPreview() {

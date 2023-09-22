@@ -10,6 +10,7 @@
 import EventBus from '../../event-bus.vue';
 import LayoutInfo from '../../components/layout-info.vue';
 import Edit from '../../components/edit/index.vue'
+import State from '../../../state'
 
 export default {
   components: {
@@ -23,6 +24,12 @@ export default {
         return {};
       },
     },
+    state: State
+  },
+  provide() {
+    return {
+      state: this.state
+    }
   },
   data() {
     return {

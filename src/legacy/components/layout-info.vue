@@ -53,7 +53,7 @@ export default {
     width: $layer-icon-size;
     height: $layer-icon-size;
 
-    margin-right: 0.8rem;
+    margin-right: 0.6rem;
 
     .fc-composer__simple-layers & {
       width: $layer-icon-size * 0.666;
