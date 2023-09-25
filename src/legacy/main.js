@@ -17,7 +17,7 @@ window.rootvm = new Vue({
       },
       on: {
         save(html, json) {
-          if(process.env !== 'production') {
+          if((import.meta.env ?? process.env) !== 'production') {
             console.log('**save: html=', html, 'json=', json);
           }
           alert('check console log');
