@@ -45,7 +45,8 @@ export default {
     },
     uploadState: 'READY',
     statePercent: 0,
-    currentId: null
+    currentId: null,
+    shouldNotCompose: false
   }),
   methods: {
     upload(files) {
