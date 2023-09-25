@@ -25,11 +25,13 @@
         }"
         v-for="(history, index) in past"
         :history="history"
+        :key="history.id"
         @click.native="undoUntil(history.id)" />
       <history-item
         class="future"
         v-for="history in future"
         :history="history"
+        :key="history.id"
         @click.native="redoUntil(history.id)" />
     </ul>
   </div>
