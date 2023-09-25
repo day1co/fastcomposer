@@ -327,8 +327,8 @@
         const $targetBlock = this.$refs.preview.$el.getElementsByClassName('fc-block')[this.selected];
         const $targetLayer = this.$refs.layers.$el.getElementsByClassName('fc-layer')[this.selected];
 
-        $targetBlock && $targetBlock.scrollIntoView({ block: 'center' });
-        $targetLayer && $targetLayer.scrollIntoView({ block: 'center' });
+        $targetBlock && $targetBlock.scrollIntoView({ block: 'nearest' });
+        $targetLayer && $targetLayer.scrollIntoView({ block: 'nearest' });
       },
       onUploadFile(fileInfo, callback) {
         // FIXME ???
