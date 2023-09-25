@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@types/lodash.template": "^4.5.1",
+    "@vue-a11y/focus-loop": "^0.2.0",
     "lodash": "^4.17.20",
     "lodash.template": "^4.5.0",
     "marked": "^4.0.18",

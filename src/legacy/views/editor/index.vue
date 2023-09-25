@@ -2,11 +2,15 @@
   <div class="fc-editor">
     <layout-info :layout="layer.layout" />
 
-    <edit :layer="layer" />
+    <focus-loop is-visible>
+      <edit :layer="layer" />
+    </focus-loop>
   </div>
 </template>
 
 <script>
+import { FocusLoop } from '@vue-a11y/focus-loop'
+
 import EventBus from '../../event-bus.vue';
 import LayoutInfo from '../../components/layout-info.vue';
 import Edit from '../../components/edit/index.vue'
@@ -14,6 +18,7 @@ import State from '../../../state'
 
 export default {
   components: {
+    FocusLoop,
     LayoutInfo,
     Edit
   },
