@@ -3,7 +3,7 @@ import type Page from '..'
 
 export default <Action<Page>>{
   id: 'layer.duplicate',
-  label: '레이어 중복',
+  title: '레이어 중복',
   perform(root, self, act) {
     const target = act.target!
     const newLayer = self.duplicateLayer(target, act.destination?.layer)

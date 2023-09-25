@@ -3,7 +3,7 @@ import type Page from '..'
 
 export default <Action<Page>>{
   id: 'layer.new',
-  label: '새 레이어',
+  title: '새 레이어',
   perform(root, self, act) {
     const { target, arg, destination } = act
     const newLayer = self.appendLayer(target, arg, destination?.layer)

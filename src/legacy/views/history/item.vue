@@ -4,24 +4,30 @@
       class="fc-history-icon"
       :src="icon" />
     <label class="fc-history-label">
-      {{ label }}
+      {{ label[0] }}
+      <small v-if="label[1]">{{ label[1] }}</small>
     </label>
   </li>
 </template>
 
 <script>
+import Act from '../../../state/act'
 
 export default {
   props: {
-    action: Object /* Action */
+    history: Act
   },
+  inject: ['state'],
   computed: {
+    action() {
+      return this.state.resolveAction(this.history.action)[1]
+    },
     icon() {
       const icon = this.action?.icon ?? '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="m1 1v22h22V1zm0 0l22 22" fill="none" stroke="#888" stroke-width="2" /></svg>'
       return 'data:image/svg+xml;utf8,' + encodeURIComponent(icon)
     },
     label() {
-      return this.action.label ?? this.action.id
+      return this.state.getLabelOf(this.history)
     }
   }
 }

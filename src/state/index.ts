@@ -46,6 +46,13 @@ export default class State {
     return [ module, action ]
   }
 
+  // UI helpers
+
+  getLabelOf(act: Act) {
+    const [ module, action ] = this.resolveAction(act.action)
+    return [ action.title, action.label?.(this, module, act) ]
+  }
+
   // history helpers
 
   get lastAct() {

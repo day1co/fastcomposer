@@ -3,7 +3,20 @@ import type Page from '..'
 
 export default <Action<Page>>{
   id: 'layer.edit',
-  label: '레이어 값 수정',
+  title: '레이어 값 수정',
+  label(root, self, act) {
+    const path = act.target
+    const layout = self.getLayerByPath(path).layout
+    if(!layout) return
+
+    const child = layout.params.get(path.child)
+    const grandchild = layout.getListParams(path.child)?.get(path.grandchild)
+
+    if(!grandchild)
+      return `${layout.id} ${child.label ?? child.name}`
+    else
+      return `${layout.id} ${child.label ?? child.name} #${path.index + 1} ${grandchild.label ?? grandchild.name}`
+  },
   perform(root, self, act) {
     const path = act.target!
     const value = act.arg!

@@ -5,7 +5,7 @@ import Path from '../path'
 
 export default <Action<Page>>{
   id: 'layer.remove',
-  label: '레이어 삭제',
+  title: '레이어 삭제',
   perform(root, self, act) {
     const target = act.target!
 

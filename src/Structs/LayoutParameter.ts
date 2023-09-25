@@ -3,6 +3,7 @@ type LayoutTypeExceptsList = Exclude<LayoutType, 'list'>
 
 export type SingularLayoutParameter = {
   name?: string
+  label?: string
   description: string
   type: LayoutTypeExceptsList
   defaultValue?: any

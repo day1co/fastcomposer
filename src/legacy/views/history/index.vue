@@ -24,12 +24,12 @@
           current: state.past.length === (index + 1)
         }"
         v-for="(history, index) in past"
-        :action="getAction(history)"
+        :history="history"
         @click.native="undoUntil(history.id)" />
       <history-item
         class="future"
         v-for="history in future"
-        :action="getAction(history)"
+        :history="history"
         @click.native="redoUntil(history.id)" />
     </ul>
   </div>
@@ -48,10 +48,12 @@ export default {
   props: {
     state: State
   },
+  provide() {
+    return {
+      state: this.state
+    }
+  },
   methods: {
-    getAction(history) {
-      return this.state.resolveAction(history.action)[1]
-    },
     // WARNING: undo/redo loop may run out of history stack if not found!!
     undoUntil(id) {
       while(this.past.length > 0 && this.past.at(-1).id !== id)
