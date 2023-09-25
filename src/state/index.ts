@@ -1,5 +1,4 @@
 import type Action from './action'
-import type Path from '../page/path'
 import Act from './act'
 import Module from './module'
 
@@ -59,6 +58,9 @@ export default class State {
     this.future.push(present)
     return present
   }
+  _discardPast(): void {
+    this.past.pop()
+  }
   _writePresent(act: Act) {
     this.past.push(act)
     this.future.length = 0
@@ -83,7 +85,7 @@ export default class State {
       action.perform(this, module, this.lastAct)
 
       if(shouldDiscardCurrentAct)
-        this._getPast()
+        this._discardPast()
 
       return this.lastAct
     } else {
