@@ -104,7 +104,7 @@ select {
 em,
 mark {
   //background-color: $primary;
-  //color: $white;
+  //color: white;
 }
 
 a,
@@ -114,21 +114,6 @@ a:active,
 a:visited {
   //color: #424242;
   text-decoration: none;
-}
-
-::selection {
-  background: $primary;
-  color: $foreground;
-  text-shadow: none;
-}
-::-webkit-input-placeholder {
-  color: $color-veiled;
-}
-::-ms-input-placeholder {
-  color: $color-veiled;
-}
-:-moz-placeholder {
-  color: $color-veiled;
 }
 
 /*

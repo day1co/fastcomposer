@@ -35,16 +35,8 @@
   outline: 1px dashed fuchsia;
 }
 
-.a11y {
-  @include a11y;
-}
-
 mark, code, .readable {
   @include readable-font-features;
-}
-
-.material-icons {
-  @include transition(null, 0.2s);
 }
 
 [v-cloak] {

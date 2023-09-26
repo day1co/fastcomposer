@@ -1,11 +1,9 @@
-@charset "UTF-8";
-
 // utils (alias - utils/_utilities.scss)
 @import 'utils/utilities';
 
 // vendors
 @import 'sass-mq';
-@import "normalize.css";
+@import 'normalize.css';
 @import 'splitpanes';
 @import 'pane';
 

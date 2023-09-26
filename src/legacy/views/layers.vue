@@ -110,21 +110,6 @@
       }
     },
     methods: {
-      onUpBlock() {
-        this.$emit('up');
-      },
-      onDownBlock() {
-        this.$emit('down');
-      },
-      resetCheckedHistory() {
-        this.checkedHistory = null;
-      },
-      onSelect(index) {
-        const newIndex = Math.min(Math.max(index, 0), this.layers.length - 1);
-
-        this.$emit('update:selected', newIndex);
-        this.resetCheckedHistory();
-      },
       onDrop({ removedIndex, addedIndex, payload }) {
         if(removedIndex === null && addedIndex === null)
           return

@@ -588,7 +588,7 @@
     font-size: $font-size;
     font-family: $font-base !important;
     background: $background;
-    @include transition(null, 0.3s);
+    color: $foreground;
 
     &--flush {
       padding: 0;
@@ -596,16 +596,6 @@
         margin-left: 0;
         margin-right: 0;
       }
-    }
-
-    &--landscape {
-      padding-right: 0;
-    }
-
-    &--portrait {
-      width: percentage(1);
-      max-width: $w-mobile;
-      padding-right: 0;
     }
 
     &--no-favorites {
@@ -648,120 +638,6 @@
 
     pre {
       background: #f00;
-    }
-  }
-
-  .fc-aside {
-    display: flex;
-    position: relative;
-    z-index: 10000;
-    box-sizing: border-box;
-    /* width: 0; */
-    width: 100%;
-    max-width: $sidebar-size;
-    color: $foreground;
-
-    /* TODO rewrite markup (dirty class names/selectors) */
-    &__header {
-      width: 100%;
-      display: flex;
-      justify-content: space-evenly;
-
-      margin-bottom: 0.4rem;
-      line-height: 3.2rem;
-
-      &__label {
-        flex-grow: 10000;
-        text-align: center;
-      }
-      small, .material-icons {
-        vertical-align: top;
-      }
-    }
-    &__content {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-    }
-
-    &__container {
-      overflow-x: hidden;
-      overflow-y: scroll;
-      box-sizing: border-box;
-      padding: 1.2rem 0.9rem 11rem;
-      height: percentage(1);
-      background-color: $secondary;
-
-      .fc-aside--right & {
-        padding: 0;
-      }
-    }
-
-    /* TODO rewrite markup (dirty class names/selectors) */
-    /* (yes, whole header buttons) */
-    &__btn {
-      position: absolute;
-      top: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.8rem 0 1.8rem 0.6rem;
-      background-color: $secondary;
-      border-top-left-radius: 0.5rem;
-      border-bottom-left-radius: 0.5rem;
-      color: $foreground;
-      transform: translateY(-50%);
-      outline: none;
-
-      > .material-icons {
-        margin: 0 -0.8rem;
-      }
-      &--left {
-        right: 0;
-        transform: translate(100%, -50%) rotate(180deg);
-      }
-
-      &--right {
-        left: 0;
-        transform: translate(-100%, -50%);
-      }
-    }
-
-    &--right {
-      margin-right: -$sidebar-size;
-
-      .fc-composer--aside-r & {
-        margin-right: 0;
-      }
-      .btn {
-        color: $foreground;
-        padding: 0.4rem;
-
-        &:disabled {
-          opacity: 0.3333;
-        }
-        &:hover {
-          background: #8886;
-        }
-
-        label {
-          padding: 0 0.4rem;
-          line-height: 2.4rem;
-        }
-        &.narrow {
-          padding-right: 0;
-          padding-left: 0;
-        }
-      }
-
-    }
-    &--left {
-      margin-left: -$sidebar-size - 8rem;
-      max-width: $sidebar-size + 8rem;
-
-      .fc-composer--aside-l & {
-        margin-left: 0;
-      }
     }
   }
 
