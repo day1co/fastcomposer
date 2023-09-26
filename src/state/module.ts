@@ -1,4 +1,5 @@
-import Action from "./action"
+import Path from '../page/path'
+import Action from './action'
 
 export default abstract class Module {
   id: string
@@ -9,4 +10,6 @@ export default abstract class Module {
   constructor(actions: Map<string, Action<Module>>) {
     this.actions = actions
   }
+
+  describePath?(path?: Path): string | null
 }

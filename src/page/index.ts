@@ -182,4 +182,24 @@ export default class Page extends Module {
     return index
   }
 
+  describePath(path?: Path): string | null {
+    if(!path)
+      null
+    const layout = this.getLayerByPath(path).layout
+    if(!layout) return
+    const index = this.pathToIndex(path)
+
+    const child = layout.params.get(path.child)
+
+    if(!child)
+      return `${layout.id} #${index}`
+
+    const grandchild = layout.getListParams(path.child)?.get(path.grandchild)
+
+    if(!grandchild)
+      return `${layout.id} #${index} ${child.label ?? child.name}`
+
+    return `${layout.id} #${index} ${child.label ?? child.name} #${path.index + 1} ${grandchild.label ?? grandchild.name}`
+  }
+
 }

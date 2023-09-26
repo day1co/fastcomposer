@@ -46,13 +46,6 @@ export default class State {
     return [ module, action ]
   }
 
-  // UI helpers
-
-  getLabelOf(act: Act) {
-    const [ module, action ] = this.resolveAction(act.action)
-    return [ action.title, action.label?.(this, module, act) ]
-  }
-
   // history helpers
 
   get lastAct() {
@@ -96,6 +89,7 @@ export default class State {
 
       return this.lastAct
     } else {
+      act.meta ||= module.describePath?.(act.target)
       action.perform(this, module, act)
 
       // TODO: move focus

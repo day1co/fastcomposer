@@ -6,6 +6,8 @@ export default class Act {
   destination?: Path
   remembered: boolean = false
 
+  meta: any = null
+
   constructor(
     public action: string,
     // a) that was active just right before this executed

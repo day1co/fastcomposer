@@ -4,8 +4,8 @@
       class="fc-history-icon"
       :src="icon" />
     <label class="fc-history-label">
-      {{ label[0] }}
-      <small v-if="label[1]">{{ label[1] }}</small>
+      {{ action.title }}
+      <small v-if="label">{{ label }}</small>
     </label>
   </li>
 </template>
@@ -27,7 +27,7 @@ export default {
       return 'data:image/svg+xml;utf8,' + encodeURIComponent(icon)
     },
     label() {
-      return this.state.getLabelOf(this.history)
+      return this.history?.meta
     }
   }
 }

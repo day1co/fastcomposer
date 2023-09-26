@@ -44,7 +44,7 @@ abstract class LayoutBase {
   }
 
   getListParams(key: string) {
-    return (<ListLayoutParameter>this.params.get(key)).params
+    return (<ListLayoutParameter>this.params.get(key))?.params
   }
 
   template: any
