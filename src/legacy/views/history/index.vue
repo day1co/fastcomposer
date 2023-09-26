@@ -73,6 +73,11 @@ export default {
     future() {
       return this.state.future.slice().reverse()
     }
+  },
+  watch: {
+    ['past.length']() {
+      this.$el.querySelector('.current')?.scrollIntoView?.({ block: 'center' })
+    }
   }
 }
 
