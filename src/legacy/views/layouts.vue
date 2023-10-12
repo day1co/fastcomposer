@@ -1,15 +1,15 @@
 <template>
-  <div class="fc-layout" v-if="flag"
+  <div class="fc-layout"
        tabindex="0"
-       @keydown.exact.enter.prevent="selected(layouts[layoutIndex])"
-       @keydown.exact.space.prevent="selected(layouts[layoutIndex])"
-       @keydown.exact.up.prevent="focus(layoutIndex - 1)"
-       @keydown.exact.down.prevent="focus(layoutIndex + 1)"
-       @keydown.exact.home.prevent="focus(0)"
-       @keydown.exact.end.prevent="focus(layouts.length - 1)"
-       @keydown.exact.page-up.prevent="focus(layoutIndex - 5)"
-       @keydown.exact.page-down.prevent="focus(layoutIndex + 5)"
-       @keydown.exact.esc.prevent="toggle"
+       @keydown.enter.prevent="selected(layouts[layoutIndex])"
+       @keydown.space.prevent="selected(layouts[layoutIndex])"
+       @keydown.up.prevent="focus(layoutIndex - 1)"
+       @keydown.down.prevent="focus(layoutIndex + 1)"
+       @keydown.home.prevent="focus(0)"
+       @keydown.end.prevent="focus(layouts.length - 1)"
+       @keydown.page-up.prevent="focus(layoutIndex - 5)"
+       @keydown.page-down.prevent="focus(layoutIndex + 5)"
+       @keydown.esc.prevent="toggle"
   >
     <!-- TODO: favorite layouts here? reimpl as sidebar?-->
     <ul class="fc-layout__list">
