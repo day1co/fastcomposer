@@ -10,8 +10,9 @@ export default <Action<Page>>{
     // better to have destination but...
     // in self case, target just moved without changes on Path itself
     // will editor focus it again? I hope so...
-    self.setFocus(act.arg)
 
+    act.meta += ' → #' + to
+    self.setFocus(act.target)
     return act.remember({ from, to })
   },
   rollback(root, self, { target, capturedState }) {
