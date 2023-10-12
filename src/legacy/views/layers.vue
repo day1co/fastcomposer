@@ -59,10 +59,10 @@
               {{ layer.meta.hidden? 'visibility_off' : 'visibility' }}
             </i>
           </button>
-          <button class="fc-layer-action" @click="onCloneLayer(index)">
+          <button class="fc-layer-action" @click="duplicate(layer.path, index)">
             <i class="material-icons">file_copy</i>
           </button>
-          <button class="fc-layer-action" @click="onRemoveLayer(index)">
+          <button class="fc-layer-action" @click="remove(layer.path, index)">
             <i class="material-icons">delete</i>
           </button>
         </div>
@@ -120,6 +120,15 @@
           return
 
         this.state.act('layer.reorder', this.layers[removedIndex].path, this.layers[addedIndex].path)
+      },
+      duplicate(path) {
+        const nextFocus = this.state.act('layer.duplicate', path).destination
+        console.log(nextFocus)
+        this.$emit('update:selected', this.page.pathToIndex(nextFocus))
+      },
+      remove(path, index) {
+        this.state.act('layer.remove', path)
+        // this.$emit('update:selected', this.page.pathToIndex(nextFocus))
       },
       getGhostParent(){
         return document.body;
