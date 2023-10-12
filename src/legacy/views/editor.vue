@@ -51,24 +51,24 @@ export default {
     onUpload(name, url) {
       this.layer.values[name] = url;
     },
-    focus() {
-      // XXX: focus the first input element and select all text if possible
+    focus(path = null) {
       this.$nextTick(() => {
-        // XXX: reset editor pane scroll position to top
-        this.$el.scrollTop = 0;
-        this.$el.parentElement.scrollTop = 0;
-        this.$el.focus();
-        const el = this.$el.querySelector('input,textarea,select,button');
-        if (el) {
-          el.focus();
-          if (typeof el.select === 'function') {
-            el.select();
-          }
+        const targetId = path?.toString()
+        if(targetId) {
+          this.$el.getElementById(targetId)?.scrollIntoView()
+          this.$el.getElementById(targetId)?.focus()
+          return
         }
-      });
-    },
-  },
-};
+
+        this.$el.scrollTop = 0
+        this.$el.parentElement.scrollTop = 0
+
+        this.$el.querySelector('input,textarea,select,button')?.focus()
+      })
+    }
+  }
+}
+
 </script>
 
 <style lang="scss">
