@@ -84,18 +84,6 @@
           return [];
         }
       },
-      layerCount: {
-        type: Number,
-        default() {
-          return 0;
-        }
-      },
-      warnCount: {
-        type: Number,
-        default() {
-          return 0;
-        }
-      }
     },
     watch: {
       notificationType (value) {

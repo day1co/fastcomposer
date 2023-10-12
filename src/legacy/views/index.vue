@@ -26,14 +26,10 @@
         @validate="onValidateLayer"
       -->
       <composer-header
-        @show-layout-panel="onShowLayouts"
         @show-info-tags="onShowModal"
         @add="onAddLayer"
-        @toggle-device-mode="onToggleDeviceMode"
         :favoriteLayoutIds="favoriteLayoutIds"
         :layouts="layoutModels"
-        :layerCount="layers.length"
-        :warnCount="layers.filter(layer => layer.hasSyntaxErrorTags).length"
         :notificationMessage="notification.message"
         :notificationType="notification.type">
 
@@ -93,7 +89,9 @@
             <pane
               :size="options.verticalSizes?.[1]"
               style="min-height: 3.2rem">
-              <history :state="state" />
+              <history
+                :state="state"
+                :selected.sync="selected" />
             </pane>
 
           </splitpanes>
@@ -360,9 +358,6 @@
         const isVisible = this.layers.filter(_ => _.isChecked).some(_ => _.hidden)
         this.layers.filter(_ => _.isChecked).forEach(_ => this.$set(_, 'hidden', !isVisible))
       },
-      onShowLayouts() {
-        this.$refs.layouts.toggle();
-      },
       focusEditor() {
         this.$refs.editor.focus();
       },
@@ -383,15 +378,6 @@
         // TODO: save html only!
         // AS-IS: save generated html with source json
         this.$emit('save', layerHtml, layerJson);
-      },
-      onToggleDeviceMode() {
-        this.isDevicePreviewMode = !this.isDevicePreviewMode;
-
-        if (this.isDevicePreviewMode) {
-          setTimeout(() => {
-            this.loadLayers();
-          }, 0);
-        }
       },
       loadLayers() {
         const usedStyles = document.querySelectorAll("style[type='text/css']");
@@ -521,29 +507,6 @@
   }
   .fc-dialog__content {
     height: 100%;
-    .fc-frame-wrapper {
-      text-align: center;
-      height: 100%;
-      margin: 0 auto;
-      &__device-btns {
-        display: flex;
-        justify-content: center;
-      }
-      &--desktop {
-        width: 100%;
-      }
-      &--tablet {
-        width: 95.9rem;
-      }
-      &--phone {
-        width: 59.9rem;
-      }
-      .fc-frame {
-        width: 100%;
-        height: calc(100vh - 10rem);
-        border-width: 0;
-      }
-    }
   }
   .fc-tooltip {
     display: none;
@@ -604,26 +567,6 @@
       }
     }
 
-  }
-  .fc-guide {
-    em {
-      font-style: normal;
-      text-decoration: none;
-      color: #424242;
-      background-color: transparent;
-      box-shadow: inset 0 -.8rem 0 #50e3c2;
-    }
-    table {
-      border: .2rem solid #808080;
-      td {
-        border: .1rem solid #808080;
-      }
-      thead {
-        td {
-          text-align: center;
-        }
-      }
-    }
   }
 
   .fc-layout-broken {
