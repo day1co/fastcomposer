@@ -10,10 +10,13 @@ export default <Action<Page>>{
     // better to have destination but...
     // in self case, target just moved without changes on Path itself
     // will editor focus it again? I hope so...
+    self.setFocus(act.arg)
+
     return act.remember({ from, to })
   },
-  rollback(root, self, { capturedState }) {
+  rollback(root, self, { target, capturedState }) {
     const { from, to } = capturedState
+    self.setFocus(target)
     self.reorderLayer(to, from)
   }
 }

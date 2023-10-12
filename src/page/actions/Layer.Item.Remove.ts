@@ -24,6 +24,7 @@ export default <Action<Page>>{
     if(!layer)
       throw new ReferenceError('layer or path to rollback couldn\'t be found')
 
+    self.setFocus(path)
     layer.addItem(path, rememberedAct.capturedState)
   }
 }

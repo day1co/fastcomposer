@@ -36,6 +36,7 @@ export default <Action<Page>>{
     if(!layer)
       throw new ReferenceError('layer or path to rollback couldn\'t be found…maybe time paradox?')
 
+    self.setFocus(path)
     layer.set(path, value)
   }
 }

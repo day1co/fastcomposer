@@ -22,8 +22,8 @@ export default <Action<Page>>{
     self.setFocus()
     return act.remember({ layer: oldLayer }, path) // , moveFocusTo)
   },
-  rollback(root, self, { destination, capturedState }) {
-    // XXX does it really work?
+  rollback(root, self, { target, destination, capturedState }) {
+    self.setFocus(target)
     self.restoreLayer(destination!, capturedState.layer)
   }
 }

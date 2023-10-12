@@ -11,7 +11,8 @@ export default <Action<Page>>{
     self.setFocus(newLayer.path)
     return act.remember(null, newLayer.path)
   },
-  rollback(root, self, { destination }) {
-    self.removeLayer(destination!)
+  rollback(root, self, rememberedAct) {
+    self.setFocus(rememberedAct.target)
+    self.removeLayer(rememberedAct.destination!)
   }
 }
