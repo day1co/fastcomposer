@@ -15,7 +15,11 @@ export default <Action<Page>>{
 
     layer.addItem(path)
 
-    return act.remember(null, new Path(path.layer, path.child, layer.get(path).length - 1))
+    const newPath = new Path(path.layer, path.child, layer.get(path).length - 1)
+    if(act.remembered)
+      self.setFocus(newPath)
+
+    return act.remember(null, newPath)
   },
   rollback(root, self, rememberedAct) {
     const path = rememberedAct.destination

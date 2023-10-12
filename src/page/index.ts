@@ -13,8 +13,12 @@ type LooseLayoutMap = LayoutMap | object
 
 export default class Page extends Module {
 
+  id: 'page'
+
   actions: Map<string, Action<Page>>
   state: Array<Layer> = []
+
+  focus: Path | null
 
   _layouts: Map<string, LayoutBase>
 
@@ -182,9 +186,19 @@ export default class Page extends Module {
     return index
   }
 
+  setFocus(path?: Path) {
+    // TODO: onfocuschange?
+    this.focus = path ?? null
+  }
+  setFocusByIndex(index: number) {
+    this.focus = this.indexToPath(index)
+  }
+  get focusedIndex() {
+    return this.pathToIndex(this.focus)
+  }
+
   describePath(path?: Path): string | null {
-    if(!path)
-      null
+    if(!path) return
     const layout = this.getLayerByPath(path).layout
     if(!layout) return
     const index = this.pathToIndex(path)

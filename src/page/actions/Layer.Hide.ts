@@ -12,8 +12,9 @@ export default <Action<Page>>{
     if(!layer)
       throw new ReferenceError('attempted to edit nonexistent layer')
 
-    if(!act.remembered)
-      act.remember(layer.meta.hidden)
+    act.remember(layer.meta.hidden)
+    if(act.remembered)
+      self.setFocus(path)
 
     layer.meta.hidden = !(act.capturedState ?? layer.meta.hidden)
 

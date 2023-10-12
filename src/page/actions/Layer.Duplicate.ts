@@ -7,6 +7,8 @@ export default <Action<Page>>{
   perform(root, self, act) {
     const target = act.target!
     const newLayer = self.duplicateLayer(target, act.destination?.layer)
+
+    self.setFocus(newLayer.path)
     return act.remember(null, newLayer.path)
   },
   rollback(root, self, { destination }) {

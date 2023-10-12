@@ -8,6 +8,7 @@ export default <Action<Page>>{
     const { target, arg, destination } = act
     const newLayer = self.appendLayer(target, arg, destination?.layer)
 
+    self.setFocus(newLayer.path)
     return act.remember(null, newLayer.path)
   },
   rollback(root, self, { destination }) {

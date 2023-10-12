@@ -7,18 +7,20 @@ export default <Action<Page>>{
   id: 'layer.remove',
   title: '레이어 삭제',
   perform(root, self, act) {
-    const target = act.target!
+    const path = act.target!
 
-    const oldLayer = self.getLayerByPath(target)
+    const oldLayer = self.getLayerByPath(path)
     if(!oldLayer)
-      throw new Error(`layer requested to removal couldn't be found (${target.toString()})`)
+      throw new Error(`layer requested to removal couldn't be found (${path.toString()})`)
 
-    const removedIndex = self.removeLayer(target) ?? 0
-    let moveFocusTo: Path | undefined
-    if(self.state.length > removedIndex)
-      moveFocusTo = self.state[removedIndex - 1]?.path
+    const removedIndex = self.removeLayer(path) ?? 0
+    // let moveFocusTo: Path | undefined
+    // if(self.state.length > removedIndex)
+    //   moveFocusTo = self.state[removedIndex - 1]?.path
 
-    return act.remember({ layer: oldLayer }, moveFocusTo)
+    // self.moveFocus(moveFocusTo)
+    self.setFocus()
+    return act.remember({ layer: oldLayer }, path) // , moveFocusTo)
   },
   rollback(root, self, { destination, capturedState }) {
     // XXX does it really work?

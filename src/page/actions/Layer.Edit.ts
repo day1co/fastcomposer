@@ -12,10 +12,12 @@ export default <Action<Page>>{
     if(!layer)
       throw new ReferenceError('attempted to edit nonexistent layer')
 
-    if(!act.remembered)
-      act.remember(layer.get(path))
+    act.remember(layer.get(path))
+    if(act.remembered)
+      self.setFocus(path)
 
     layer.set(path, value)
+
     return act
   },
   compose(root, self, previousAct, act) {

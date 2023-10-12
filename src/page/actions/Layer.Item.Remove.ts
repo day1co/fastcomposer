@@ -13,6 +13,7 @@ export default <Action<Page>>{
 
     const oldPayload = layer.get(path.partial('index'))
     layer.removeItem(path)
+    self.setFocus()
 
     return act.remember(oldPayload, path)
   },
