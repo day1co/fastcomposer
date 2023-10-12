@@ -131,12 +131,6 @@
       getGhostParent(){
         return document.body;
       },
-      onCloneLayer(index) {
-        this.$emit('clone-layer', index);
-      },
-      onRemoveLayer(index) {
-        this.$emit('remove-layer', index);
-      },
       focus() {
         // XXX: focus the selected layer
         this.$el.focus();

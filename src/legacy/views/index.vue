@@ -255,10 +255,6 @@
           this.favoriteLayoutIds.push(layoutId);
         }
       },
-      onSelectToggleAll() {
-        const to = !(this.checkedCount === this.layers.length)
-        this.layers.forEach(layer => this.$set(layer, 'isChecked', to))
-      },
       // onValidateLayer() {
       //   this.layers.forEach((layer) => {
       //     const layerValues = layer.values;
@@ -283,10 +279,6 @@
       //     }
       //   });
       // },
-      moveFocusByAct(path) {
-        if(path?.destination)
-          this.selected = this.page.pathToIndex(path.destination)
-      },
       onShowModal() {
         this.showModal = true;
       },
@@ -299,36 +291,18 @@
       onClearToast() {
         this.notification.message = '';
       },
-      onUpdateCurrentLayerIndex(index) {
-        this.selected = index;
-      },
       onAddLayer(layout) {
-        this.moveFocusByAct(this.state.act('layer.new', this.currentLayer?.path, layout))
+        this.state.act('layer.new', this.currentLayer?.path, layout)
 
-        this.onUpdateCurrentLayerIndex(this.selected)
         this.focusEditor()
         this.layoutOpened = false
       },
       onRemoveLayer(index) {
-        this.moveFocusByAct(this.state.act('layer.remove', this.layers[index].path))
-      },
-      onCloneLayer(index) {
-        if (index !== -1) {
-          this.layers.splice(index, 0, {
-            id: uniqueId(),
-            layout: this.layers[index].layout,
-            values: JSON.parse(JSON.stringify(this.layers[index].values)) || {}
-          });
-
-          this.onUpdateCurrentLayerIndex(index + 1);
-        }
+        this.state.act('layer.remove', this.layers[index].path)
       },
       onMoveSelectedLayer() {
-        const $targetBlock = this.$refs.preview.$el.getElementsByClassName('fc-block')[this.selected];
-        const $targetLayer = this.$refs.layers.$el.getElementsByClassName('fc-layer')[this.selected];
-
-        $targetBlock && $targetBlock.scrollIntoView({ block: 'nearest' });
-        $targetLayer && $targetLayer.scrollIntoView({ block: 'nearest' });
+        this.$refs.preview.scroll?.()
+        this.$refs.layers.scroll?.()
       },
       onUploadFile(fileInfo, callback) {
         // FIXME ???
@@ -336,29 +310,6 @@
       },
       setLayouts(layouts) {
         this.layouts = layouts;
-      },
-      syncParamsAll(){
-        this.layers.forEach( layer => {
-          layer.values = this.getSyncedParams(layer);
-        });
-      },
-      getSyncedParams(layer) {
-        const {params, values} = layer.layout;
-        let resultValues = cloneDeep( layer.values );
-        if (params) {
-          params.forEach( param => {
-            const {name} = param;
-            if( resultValues[name] === undefined) {
-              resultValues[name] = values[name];
-            }
-          })
-        }
-        return resultValues;
-      },
-      onToggleLayerVisibility() {
-        const selected = this.layers.filter(_ => _.isChecked)
-        const isVisible = this.layers.filter(_ => _.isChecked).some(_ => _.hidden)
-        this.layers.filter(_ => _.isChecked).forEach(_ => this.$set(_, 'hidden', !isVisible))
       },
       focusEditor() {
         this.$refs.editor.focus();
@@ -392,9 +343,6 @@
 
         doc.body.innerHTML = this.layerHtml;
       },
-      onChangeDevice(deviceType) {
-        this.deviceType = deviceType;
-      },
       onHorizontalResize(e) {
         this.options.horizontalSizes = e.map(_ => _.size)
       },
@@ -424,12 +372,6 @@
               ${layer.render()}
             </section>`,
           ).join('\n');
-      },
-      layoutMaps() {
-        return this.layouts.reduce((layoutMap, layout) => {
-          layoutMap[layout.id] = layout;
-          return layoutMap;
-        }, {});
       },
       // onToggleLayerVisibility
       isEverySelectedLayerVisible() {

@@ -1,14 +1,5 @@
 <template>
-  <div class="fc-preview"
-       tabindex="0"
-       @keydown.exact.enter.prevent="focusEditor"
-       @keydown.exact.up.prevent="select(index-1)"
-       @keydown.exact.down.prevent="select(index+1)"
-       @keydown.exact.home.prevent="select(0)"
-       @keydown.exact.end.prevent="select(blocks.length - 1)"
-       @keydown.exact.page-up.prevent="select(index - 5)"
-       @keydown.exact.page-down.prevent="select(index + 5)"
-  >
+  <div class="fc-preview" tabindex="-1">
     <div class="fc-preview__container">
       <div :class="['fc-block', {
              'fc-selected': blockIndex === selected,
@@ -57,8 +48,7 @@
     },
     data() {
       return {
-        index: this.selected,
-        cachedRenderFunctions: {}
+        index: this.selected
       }
     },
     methods: {
@@ -68,16 +58,7 @@
       select(index) {
         const newIndex = Math.min(Math.max(index, 0), this.blocks.length - 1);
         this.$emit('selected', newIndex);
-      },
-      focus() {
-        this.$el.focus();
-      },
-      focusEditor() {
-        EventBus.$emit('focus-editor');
       }
-    },
-    updated() {
-      this.index = this.selected;
     }
   };
 </script>
