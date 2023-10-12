@@ -114,7 +114,7 @@
         if(removedIndex === null && addedIndex === null)
           return
 
-        this.$emit('selected', addedIndex)
+        // this.$emit('selected', addedIndex)
 
         if(removedIndex === addedIndex)
           return
@@ -122,9 +122,7 @@
         this.state.act('layer.reorder', this.layers[removedIndex].path, this.layers[addedIndex].path)
       },
       duplicate(path) {
-        const nextFocus = this.state.act('layer.duplicate', path).destination
-        console.log(nextFocus)
-        this.$emit('selected', this.page.pathToIndex(nextFocus))
+        this.state.act('layer.duplicate', path)
       },
       remove(path, index) {
         this.state.act('layer.remove', path)
