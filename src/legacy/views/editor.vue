@@ -11,10 +11,10 @@
 <script>
 import { FocusLoop } from '@vue-a11y/focus-loop'
 
-import EventBus from '../../event-bus.vue';
-import LayoutInfo from '../../components/layout-info.vue';
-import Edit from '../../components/edit/index.vue'
-import State from '../../../state'
+import EventBus from '../event-bus.vue';
+import LayoutInfo from '../components/layout-info.vue';
+import Edit from '../components/edit/index.vue'
+import State from '../../state'
 
 export default {
   components: {
@@ -72,7 +72,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../assets/scss/utils/utilities';
+@import '../assets/scss/utils/utilities';
 .fc-editor {
   position: relative;
   padding: 0.8rem;

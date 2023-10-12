@@ -173,7 +173,7 @@
   import Toast from '../components/toast.vue';
   import Dialog from '../components/dialog.vue';
   import ComposerHeader from './header.vue';
-  import Editor from './editor/index.vue';
+  import Editor from './editor.vue';
   import Preview from './preview.vue';
   import Layouts from './layouts.vue';
   import Layers from './layers.vue';
