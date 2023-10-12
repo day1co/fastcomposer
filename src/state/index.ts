@@ -63,7 +63,7 @@ export default class State {
   }
   _writePresent(act: Act) {
     this.past.push(act)
-    this.future.length = 0
+    this.future.splice(0, this.future.length)
   }
   _getFuture(): Act | undefined {
     const present = this.future.pop()
