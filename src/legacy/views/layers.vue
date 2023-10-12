@@ -46,7 +46,7 @@
         }"
         v-for="(layer, index) in page.state"
         :key="index">
-        <div class="fc-layer-info" v-if="layer.layout" @click="$emit('update:selected', index)">
+        <div class="fc-layer-info" v-if="layer.layout" @click="$emit('selected', index)">
           <label :for="`layer-${index}`" >
             <input :id="`layer-${index}`" type="checkbox" v-model="checked[layer.id]" style="display: none" />
             <i class="material-icons">{{ checked[layer.id]? 'check_box' : 'check_box_outline_blank' }}</i>
@@ -114,7 +114,7 @@
         if(removedIndex === null && addedIndex === null)
           return
 
-        this.$emit('update:selected', addedIndex)
+        this.$emit('selected', addedIndex)
 
         if(removedIndex === addedIndex)
           return
@@ -124,11 +124,11 @@
       duplicate(path) {
         const nextFocus = this.state.act('layer.duplicate', path).destination
         console.log(nextFocus)
-        this.$emit('update:selected', this.page.pathToIndex(nextFocus))
+        this.$emit('selected', this.page.pathToIndex(nextFocus))
       },
       remove(path, index) {
         this.state.act('layer.remove', path)
-        // this.$emit('update:selected', this.page.pathToIndex(nextFocus))
+        // this.$emit('selected', this.page.pathToIndex(nextFocus))
       },
       getGhostParent(){
         return document.body;

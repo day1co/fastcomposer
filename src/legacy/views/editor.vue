@@ -14,6 +14,7 @@ import { FocusLoop } from '@vue-a11y/focus-loop'
 import EventBus from '../event-bus.vue';
 import LayoutInfo from '../components/layout-info.vue';
 import Edit from '../components/edit/index.vue'
+import Page from '../../page'
 import State from '../../state'
 
 export default {
@@ -29,6 +30,7 @@ export default {
         return {};
       },
     },
+    page: Page,
     state: State
   },
   provide() {
@@ -55,8 +57,8 @@ export default {
       this.$nextTick(() => {
         const targetId = path?.toString()
         if(targetId) {
-          this.$el.getElementById(targetId)?.scrollIntoView()
-          this.$el.getElementById(targetId)?.focus()
+          document.getElementById(targetId)?.scrollIntoView()
+          document.getElementById(targetId)?.focus()
           return
         }
 
@@ -65,6 +67,12 @@ export default {
 
         this.$el.querySelector('input,textarea,select,button')?.focus()
       })
+    }
+  },
+  watch: {
+    ['page.focus'](to) {
+      if(to?.child)
+        this.focus(to)
     }
   }
 }

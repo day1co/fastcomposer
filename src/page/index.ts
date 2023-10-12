@@ -18,7 +18,7 @@ export default class Page extends Module {
   actions: Map<string, Action<Page>>
   state: Array<Layer> = []
 
-  focus: Path | null
+  focus: Path | null = null
 
   _layouts: Map<string, LayoutBase>
 
@@ -194,7 +194,10 @@ export default class Page extends Module {
     this.focus = this.indexToPath(index)
   }
   get focusedIndex() {
-    return this.pathToIndex(this.focus)
+    return this.focus? this.pathToIndex(this.focus) : -1
+  }
+  get currentLayer() {
+    return this.focus? this.getLayerByPath(this.focus) : null
   }
 
   describePath(path?: Path): string | null {

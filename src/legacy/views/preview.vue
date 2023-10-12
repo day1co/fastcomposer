@@ -67,7 +67,7 @@
       },
       select(index) {
         const newIndex = Math.min(Math.max(index, 0), this.blocks.length - 1);
-        this.$emit('update:selected', newIndex);
+        this.$emit('selected', newIndex);
       },
       focus() {
         this.$el.focus();

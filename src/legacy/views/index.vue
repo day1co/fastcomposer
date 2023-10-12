@@ -56,8 +56,9 @@
 
         <pane class="scrollable" min-size="20" :size="options.horizontalSizes?.[0]">
           <editor
-            v-show="currentLayer"
+            v-if="currentLayer"
             :layer="currentLayer"
+            :page="page"
             :state="state"
             ref="editor" />
         </pane>
@@ -65,7 +66,8 @@
         <pane class="scrollable" min-size="20" :size="options.horizontalSizes?.[1]">
           <preview
             :blocks="layers"
-            :selected.sync="selected"
+            :selected="page.focusedIndex"
+            @selected="index => page.setFocusByIndex(index)"
             ref="preview" />
         </pane>
 
@@ -81,7 +83,8 @@
               <layers
                 :page="page"
                 :state="state"
-                :selected.sync="selected"
+                :selected="page.focusedIndex"
+                @selected="index => page.setFocusByIndex(index)"
                 @toggle-layouts="layoutOpened = !layoutOpened"
                 ref="layers" />
             </pane>
@@ -210,9 +213,8 @@
       },
     },
     data() {
-      const page = new Page({})
       return {
-        page,
+        page: new Page({}),
         state: new State(),
         selected: 0,
         favoriteLayoutIds: [],
@@ -414,7 +416,7 @@
         return this.layers.filter(layer => layer.hasSyntaxErrorTags).length;
       },
       currentLayer() {
-        return this.layers[this.selected];
+        return this.page.currentLayer;
       },
       layerHtml() {
         return this.layers.filter(layer => !layer.hidden).map(layer => `
