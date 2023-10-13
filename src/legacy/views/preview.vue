@@ -1,13 +1,14 @@
 <template>
   <div class="fc-preview" tabindex="-1">
     <div class="fc-preview__container">
-      <div :class="['fc-block', {
-             'fc-selected': blockIndex === selected,
-             'fc-hidden': block.meta.hidden
-           }]"
-           v-for="(block, blockIndex) in blocks"
-           :key="'block-' + blockIndex"
-           @click="select(blockIndex)">
+      <div
+        v-for="(block, blockIndex) in blocks"
+        :class="['fc-block', {
+          'fc-selected': blockIndex === selected,
+          'fc-hidden': block.meta.hidden
+        }]"
+        :key="'block-' + blockIndex"
+        @click="select(blockIndex)">
         <div class="fc-block__info">
           <div>
             <b>{{ block.layout.id }}</b>
