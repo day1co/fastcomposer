@@ -18,19 +18,21 @@ export default class Layer {
   constructor(
     public id: string,
     public layout: LayoutBase,
-    values?: any
+    values?: any,
+    meta?: LayerMeta
   ) {
     this.values = values ?? layout.getDefaultValues()
+    this.meta = meta
   }
 
   static fromDump(dump: any, layout?: LegacyLayout) { // FIXME: will not work with non-legacy layout
-    const { id, uniqueId, layout: layoutFromDump, values } = dump
+    const { id, uniqueId, layout: layoutFromDump, values, hidden } = dump
     if(!layout)
       layout = LegacyLayout.fromDefinition(layoutFromDump)
     else if(typeof layoutFromDump === 'string')
       void 0 // TODO: assert given layout is same…? shud I?
 
-    return new Layer(id ?? uniqueId, layout, values)
+    return new Layer(id ?? uniqueId, layout, values, { hidden })
   }
 
   dump() {
