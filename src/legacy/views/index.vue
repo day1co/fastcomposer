@@ -92,9 +92,7 @@
             <pane
               :size="options.verticalSizes?.[1]"
               style="min-height: 3.2rem">
-              <history
-                :state="state"
-                :selected.sync="selected" />
+              <history :state="state" />
             </pane>
 
           </splitpanes>
@@ -242,8 +240,6 @@
             this.type = 'default';
           }
         },
-        isDevicePreviewMode: false,
-        deviceType: 'desktop',
         showConfigWindow: false,
       };
     },
