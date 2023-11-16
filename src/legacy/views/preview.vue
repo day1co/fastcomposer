@@ -75,7 +75,7 @@
   $gutter-width: 3.2rem;
 
   .fc-preview {
-    overflow: auto;
+    // overflow: auto;
     background: #fff;
 
     box-shadow: $gutter-width 0 0 $gutter-default inset, -0.4rem 0 0 $gutter-default inset;
@@ -124,19 +124,20 @@
     }
     &__info {
       @include readable-font-features;
-      position: relative;
       background: $gutter-default;
       color: white;
       font-size: 1.3rem;
       line-height: 1.8rem;
-      overflow: hidden;
+      // overflow: hidden;
       border-bottom: 0.1rem solid white;
 
       user-select: none;
       cursor: pointer;
 
       > div {
-        position: absolute;
+        position: sticky;
+        top: 0;
+        height: 0;
       }
     }
 
