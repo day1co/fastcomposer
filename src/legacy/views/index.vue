@@ -296,9 +296,9 @@
       onRemoveLayer(index) {
         this.state.act('layer.remove', this.layers[index].path)
       },
-      onMoveSelectedLayer() {
-        this.$refs.preview.scroll?.()
-        this.$refs.layers.scroll?.()
+      onMoveSelectedLayer(index) {
+        this.$refs.preview.scroll(index)
+        this.$refs.layers.scroll(index)
       },
       onUploadFile(fileInfo, callback) {
         // FIXME ???
@@ -401,8 +401,8 @@
     mounted() {
     },
     watch: {
-      selected() {
-        this.onMoveSelectedLayer();
+      ['page.focusedIndex'](to) {
+        this.$nextTick(() => this.onMoveSelectedLayer(to))
       },
       favoriteLayoutIds: {
         handler(to) {

@@ -59,6 +59,9 @@
       select(index) {
         const newIndex = Math.min(Math.max(index, 0), this.blocks.length - 1);
         this.$emit('selected', newIndex);
+      },
+      scroll(index) {
+        this.$refs.layers?.[index]?.scrollIntoView({ block: 'start' })
       }
     }
   };

@@ -131,17 +131,8 @@
       getGhostParent(){
         return document.body;
       },
-      focus() {
-        // XXX: focus the selected layer
-        this.$el.focus();
-        const el = this.$el.querySelector('.__item--active');
-        if (el) {
-          el.focus();
-        }
-      },
-      focusEditor() {
-        // XXX: focus to editor
-        EventBus.$emit('focus-editor');
+      scroll(index) {
+        this.$refs.layers[index]?.$el?.scrollIntoView?.({ block: 'start' })
       },
     },
   }
