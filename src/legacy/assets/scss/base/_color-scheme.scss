@@ -7,6 +7,9 @@
   --composer-color-secondary: hsl(0deg 0% 8%);
   --composer-color-background: hsl(0deg 0% 12%);
 
+  --composer-color-invalid: hsl(20deg 70% 30%);
+  --composer-color-invalid-active: hsl(20deg 100% 50%);
+
   --composer-color-input-background: hsl(0deg 0% 14%);
   --composer-color-input-foreground: hsl(0deg 0% 80%);
   --composer-color-input-background-active: hsl(0deg 0% 25%);
@@ -20,9 +23,12 @@
 
   --composer-color-foreground: hsl(0deg 0% 4%);
   --composer-color-primary: hsl(0deg 0% 85%);
-  --composer-color-primary-active: hsl(var(--composer-tint-degree) 80% 70%);
+  --composer-color-primary-active: hsl(var(--composer-tint-degree) 90% 80%);
   --composer-color-secondary: hsl(0deg 0% 90%);
   --composer-color-background: hsl(var(--composer-tint-degree) 50% 90%);
+
+  --composer-color-invalid: hsl(20deg 100% 80%);
+  --composer-color-invalid-active: hsl(20deg 100% 66%);
 
   --composer-color-input-background: hsl(var(--composer-tint-degree) 30% 100%);
   --composer-color-input-foreground: hsl(0deg 0% 25%);

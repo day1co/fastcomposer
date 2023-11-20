@@ -22,11 +22,9 @@
       <label class="fc-pane-title-label">
         레이어
         {{layers.length}}개
-        <small v-if="warnCount || checkedCount">
-          (<template v-if="warnCount">{{warnCount}} 점검 필요</template>
-          <template v-if="warnCount && checkedCount"> ・ </template>
-          <template v-if="checkedCount">{{checkedCount}} 선택</template>)
-        </small>
+        <template v-if="warnCount">
+          <i class="material-icons">warning</i> {{ warnCount }}
+        </template>
       </label>
       <button class="fc-pane-title-button" :disabled="!checkedCount">
         <span class="material-icons">{{ checkedCount && isEverySelectedLayerVisible? 'visibility_off' : 'visibility' }}</span>
@@ -42,6 +40,7 @@
           'fc-layer--active': index === selected,
           'fc-layer--checked': checked[layer.id],
           'fc-layer--hidden': layer.meta.hidden,
+          'fc-layer--invalid': layer.meta.invalid.length,
           'has-syntax-error-tags': layer.hasSyntaxErrorTags
         }"
         v-for="(layer, index) in page.state"
@@ -106,7 +105,7 @@
         return 0
       },
       warnCount() {
-        return 0
+        return this.page.state.reduce((p, c) => p + (c.meta.invalid.length > 0), 0)
       }
     },
     methods: {
@@ -171,6 +170,9 @@
       .fc-layer-buttons {
         opacity: 0.2;
       }
+    }
+    &--invalid {
+      background: $invalid;
     }
     /* TODO cleanup */
     &--checked {

@@ -42,10 +42,10 @@
         <button class="btn" @click="showConfigWindow = true">
           <span class="material-icons">settings</span>
         </button>
-        <!-- <button class="btn" @click="onValidateLayer">
+        <button class="btn" @click="page.validateAll()">
           <span class="material-icons">check</span>
           <label>검증</label>
-        </button> -->
+        </button>
         <button class="btn" @click="onSave">
           <span class="material-icons">save</span>
           <label>저장</label>

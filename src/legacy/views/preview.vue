@@ -5,7 +5,8 @@
         v-for="(block, blockIndex) in blocks"
         :class="['fc-block', {
           'fc-selected': blockIndex === selected,
-          'fc-hidden': block.meta.hidden
+          'fc-hidden': block.meta.hidden,
+          'fc-invalid': block.meta.invalid.length
         }]"
         :key="'block-' + blockIndex"
         @click="select(blockIndex)">
@@ -121,6 +122,15 @@
           text-decoration: line-through;
         }
       }
+    }
+    &.fc-invalid .fc-block__info {
+      background: $gutter-invalid-default;
+    }
+    &.fc-invalid.fc-selected .fc-block__info {
+      background: $gutter-invalid-active;
+    }
+    &.fc-invalid.fc-selected::after {
+      border-color: $invalid-active;
     }
     &__info {
       @include readable-font-features;

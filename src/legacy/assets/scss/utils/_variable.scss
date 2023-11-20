@@ -21,6 +21,9 @@ $primary-active: var(--composer-color-primary-active, hsl(0deg 0% 30%));
 $secondary: var(--composer-color-secondary, hsl(0deg 0% 8%));
 $background: var(--composer-color-background, hsl(0deg 0% 12%));
 
+$invalid: var(--composer-color-invalid, hsl(20deg 100% 75%));
+$invalid-active: var(--composer-color-invalid-active, hsl(20deg 100% 50%));
+
 $input-background: var(--composer-color-input-background, hsl(0deg 0% 14%));
 $input-foreground: var(--composer-color-input-foreground, hsl(0deg 0% 80%));
 $input-background-active: var(--composer-color-input-background-active, hsl(0deg 0% 25%));
@@ -29,3 +32,6 @@ $input-foreground-active: var(--composer-color-input-foreground-active, hsl(0deg
 $gutter-default: var(--composer-color-gutter-default, hsl(0deg 0% 12%));
 $gutter-active: var(--composer-color-gutter-active, hsl(0deg 100% 50%));
 $gutter-disabled: var(--composer-color-gutter-disabled, hsl(0deg 0% 50%));
+$gutter-invalid-default: $invalid;
+$gutter-invalid-active: $invalid-active;
+$gutter-invalid-disabled: var(--composer-color-gutter-invalid-disabled, hsla(20deg 25% 25%));

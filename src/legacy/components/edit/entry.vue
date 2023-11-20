@@ -1,5 +1,8 @@
 <template>
-  <div class="fc-edit-row">
+  <div :class="{
+    'fc-edit-row': true,
+    'fc-edit-row--invalid': invalid
+  }">
 
     <label class="label" :for="inputId">
       <strong class="name">{{ param.label ?? param.name }}</strong>
@@ -54,6 +57,9 @@ export default {
         default:
           return Text
       }
+    },
+    invalid() {
+      return this.layer.meta.invalid.some?.(_ => _.isEqual(this.path))
     }
   }
 }
@@ -66,6 +72,11 @@ export default {
 
 .fc-edit-row {
   margin: 0.8rem 0;
+
+  &--invalid {
+    background: $invalid-active;
+    box-shadow: -.4rem 0 0 0.4rem $invalid-active, .4rem 0 0 0.4rem $invalid-active;
+  }
 
   > .label {
     @include readable-font-features;
