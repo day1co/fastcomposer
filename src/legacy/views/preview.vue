@@ -9,6 +9,7 @@
           'fc-invalid': block.meta.invalid.length
         }]"
         :key="'block-' + blockIndex"
+        ref="layers"
         @click="select(blockIndex)">
         <div class="fc-block__info">
           <div>
@@ -62,7 +63,7 @@
         this.$emit('selected', newIndex);
       },
       scroll(index) {
-        this.$refs.layers?.[index]?.scrollIntoView({ block: 'start' })
+        this.$refs.layers?.[index]?.scrollIntoViewIfNeeded({ block: 'nearest' })
       }
     }
   };

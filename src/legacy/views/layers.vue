@@ -131,7 +131,7 @@
         return document.body;
       },
       scroll(index) {
-        this.$refs.layers[index]?.$el?.scrollIntoView?.({ block: 'start' })
+        this.$refs.layers[index]?.$el?.scrollIntoViewIfNeeded?.({ block: 'nearest' })
       },
     },
   }
