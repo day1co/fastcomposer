@@ -16,6 +16,9 @@ import mixin from './mixin.js'
 
 export default {
   mixins: [ mixin ],
+  data: () => ({
+    shouldNotCompose: false
+  }),
   methods: {
     resizeTextarea(event) {
       const { target } = event
