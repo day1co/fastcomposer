@@ -173,6 +173,9 @@
     }
     &--invalid {
       background: $invalid;
+      &.fc-layer--active {
+        background: $invalid-active;
+      }
     }
     /* TODO cleanup */
     &--checked {
