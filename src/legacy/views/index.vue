@@ -251,30 +251,6 @@
           this.favoriteLayoutIds.push(layoutId);
         }
       },
-      // onValidateLayer() {
-      //   this.layers.forEach((layer) => {
-      //     const layerValues = layer.values;
-      //     const selfClosingTags = ['img', 'br', 'hr'];
-
-      //     this.$set(layer, 'hasSyntaxErrorTags', false);
-      //     for (const prop in layerValues) {
-      //       let tags = typeof layerValues[prop] === 'string' ? layerValues[prop].match(/(<([^>]+)>)/igm) : '';
-
-      //       if (tags) {
-      //         tags = tags.map((tag) => tag.replace(/ .*?=('*.*'?|"*.*"?)/gim,'>'));
-
-      //         this.$set(layer, 'hasSyntaxErrorTags', !tags.every((tag, index, array) => {
-      //           const tagName = tag.match(/[A-Z0-9]/gim).join('');
-      //           const openingLen = array.filter((item) => `<${ tagName }>` === item).length;
-      //           const closingLen = array.filter((item) => `</${ tagName }>` === item).length;
-      //           const hasSelfClosingTagLen = selfClosingTags.filter((item) => item === tagName).length;
-
-      //           return openingLen === closingLen || hasSelfClosingTagLen;
-      //         }));
-      //       }
-      //     }
-      //   });
-      // },
       onShowModal() {
         this.showModal = true;
       },

@@ -1,9 +1,11 @@
+import type LayoutParameter from '../structs/LayoutParameter'
 import type { ListLayoutParameter } from '../structs/LayoutParameter'
 import LayoutBase, { DynamicLayoutBase } from '../layout'
 import LegacyLayout from '../layout/legacy'
 
 import Path from './path'
 import { clone, uniqueId } from '../util'
+import * as html from '../util/html'
 
 export type LayerMeta = {
   hidden: Boolean
@@ -50,6 +52,18 @@ export default class Layer {
   }
   hydrate(el: any) {
     return (<DynamicLayoutBase>this.layout)?.hydrate(el, this.values)
+  }
+
+  validate() {
+    return Object.entries(this.values).flatMap(([ child, value ]) =>
+      Array.isArray(value)?
+        value.flatMap((item, index) =>
+          Object.entries(item).map(([ grandchild, value ]) =>
+            html.validateLegacy(value) || this.path.override({ child, index, grandchild })
+          )
+        )
+      : html.validateLegacy(value) || [ this.path.override({ child }) ]
+    ).filter(v => v instanceof Path)
   }
 
   get path() {

@@ -91,6 +91,9 @@ export default class Page extends Module {
       `</section>`
     ]).join('\n')
   }
+  validate() {
+    return this.state.flatMap(layer => layer.validate())
+  }
 
   // state utils
 
