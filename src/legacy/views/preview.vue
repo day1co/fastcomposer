@@ -147,8 +147,21 @@
 
       > div {
         position: sticky;
-        top: 0;
+        top: 0.4rem;
         height: 0;
+
+        &::before {
+          content: '';
+          display: block;
+
+          position: absolute;
+          top: -.8rem;
+          right: 0;
+          width: .8rem;
+          height: .8rem;
+          background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" fill="white"><path d="M0 8L4 4l4 4z"/></svg>');
+          background-size: .8rem;
+        }
       }
     }
 
