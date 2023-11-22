@@ -4,10 +4,11 @@
       <button
         class="fc-pane-title-button"
         style="margin-left: -0.2rem"
-        :disabled="!layers.length">
+        :disabled="!layers.length"
+        @click="checkAll">
         <span class="material-icons">{{
-          checked.length?
-            checked.length === layers.length?
+          checkedCount?
+            checkedCount === layers.length?
               'check_box'
             : 'indeterminate_check_box'
         : 'check_box_outline_blank'
@@ -25,9 +26,18 @@
         <template v-if="warnCount">
           <i class="material-icons">warning</i> {{ warnCount }}
         </template>
+        <template v-if="checkedCount">
+          <i class="material-icons">check_box</i> {{ checkedCount }}
+        </template>
       </label>
+      <button class="fc-pane-title-button" :disabled="!checkedCount || checkedCount === layers.length || isEveryCheckedLayersAreAtTop">
+        <span class="material-icons">arrow_upward</span>
+      </button>
+      <button class="fc-pane-title-button" :disabled="!checkedCount || checkedCount === layers.length || isEveryCheckedLayersAreAtBottom">
+        <span class="material-icons">arrow_downward</span>
+      </button>
       <button class="fc-pane-title-button" :disabled="!checkedCount">
-        <span class="material-icons">{{ checkedCount && isEverySelectedLayerVisible? 'visibility_off' : 'visibility' }}</span>
+        <span class="material-icons">{{ checkedCount && isEveryCheckedLayerVisible? 'visibility_off' : 'visibility' }}</span>
       </button>
       <button class="fc-pane-title-button" @click="$emit('toggle-layouts')"> <!-- @click="onShowLayouts" -->
         <span class="material-icons">add</span>
@@ -38,16 +48,17 @@
         :class="{
           'fc-layer': true,
           'fc-layer--active': index === selected,
-          'fc-layer--checked': checked[layer.id],
+          'fc-layer--checked': checked[index],
           'fc-layer--hidden': layer.meta.hidden,
           'fc-layer--invalid': layer.meta.invalid.length,
           'has-syntax-error-tags': layer.hasSyntaxErrorTags
         }"
         v-for="(layer, index) in page.state"
+        ref="layers"
         :key="index">
         <div class="fc-layer-info" v-if="layer.layout" @click="$emit('selected', index)">
-          <label :for="`layer-${index}`" >
-            <input :id="`layer-${index}`" type="checkbox" v-model="checked[layer.id]" style="display: none" />
+          <label :for="`layer-${layer.id}`" >
+            <input :id="`layer-${layer.id}`" type="checkbox" v-model="checked[layer.id]" style="display: none" />
             <i class="material-icons">{{ checked[layer.id]? 'check_box' : 'check_box_outline_blank' }}</i>
           </label>
           <layout-info :layout="layer.layout" :index="index" class="small"></layout-info>
@@ -101,8 +112,31 @@
       layers() {
         return this.page?.state ?? []
       },
+      checkedLayers() {
+        return Object.entries(this.checked)
+          .map(([ id, v ]) => {
+            if(!v) return
+            const index = this.page.state.findIndex(l => l.id === id)
+            if(index == null) return
+            const layer = this.page.state[index]
+            return { index, layer }
+          })
+          .sort((a, b) => a.index - b.index)
+          .filter(l => l)
+      },
       checkedCount() {
-        return 0
+        return this.checkedLayers.length
+      },
+      isEveryCheckedLayerVisible() {
+        return this.checkedLayers.every(l => !l.layer.meta.hidden)
+      },
+      isEveryCheckedLayersAreAtTop() {
+        const last = this.checkedLayers[this.checkedLayers.length - 1]?.index
+        return this.checkedLayers.length === (last + 1)
+      },
+      isEveryCheckedLayersAreAtBottom() {
+        const first = this.checkedLayers[0]?.index
+        return this.checkedLayers.length === (this.page.state.length - first)
       },
       warnCount() {
         return this.page.state.reduce((p, c) => p + (c.meta.invalid.length > 0), 0)
@@ -133,6 +167,13 @@
       scroll(index) {
         this.$refs.layers[index]?.$el?.scrollIntoViewIfNeeded?.({ block: 'nearest' })
       },
+      checkAll() {
+        if(this.checkedCount === this.layers.length) {
+          this.$set(this, 'checked', {})
+        } else {
+          this.$set(this, 'checked', Object.fromEntries(this.layers.map(_ => [_.id, true])))
+        }
+      }
     },
   }
 </script>
