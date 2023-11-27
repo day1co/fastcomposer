@@ -135,33 +135,26 @@
     }
     &__info {
       @include readable-font-features;
-      background: $gutter-default;
+      position: relative;
+      background-color: $gutter-default;
       color: white;
       font-size: 1.3rem;
       line-height: 1.8rem;
       // overflow: hidden;
       border-bottom: 0.1rem solid white;
 
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" fill="white"><path d="M0 0H6V6z"/></svg>');
+      background-size: .6rem;
+      background-position: right top;
+      background-repeat: no-repeat;
+
       user-select: none;
       cursor: pointer;
 
       > div {
         position: sticky;
-        top: 0.4rem;
+        top: 0;
         height: 0;
-
-        &::before {
-          content: '';
-          display: block;
-
-          position: absolute;
-          top: -.8rem;
-          right: 0;
-          width: .8rem;
-          height: .8rem;
-          background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" fill="white"><path d="M0 8L4 4l4 4z"/></svg>');
-          background-size: .8rem;
-        }
       }
     }
 
