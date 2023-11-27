@@ -68,4 +68,3 @@ export abstract class DynamicLayoutBase extends LayoutBase {
   // hydrate above
   hydrate?(el: HTMLElement, opt: any): void
 }
-
