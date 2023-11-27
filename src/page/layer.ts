@@ -8,23 +8,23 @@ import { clone, uniqueId } from '../util'
 import * as html from '../util/html'
 
 export type LayerMeta = {
-  hidden: Boolean
+  hidden: Boolean,
+  invalid: Array<Path>
 }
 
 export default class Layer {
   public values: any
-  public meta: LayerMeta = {
-    hidden: false
-  }
 
   constructor(
     public id: string,
     public layout: LayoutBase,
     values?: any,
-    meta?: LayerMeta
+    public meta: LayerMeta = {
+      hidden: false,
+      invalid: []
+    }
   ) {
     this.values = values ?? layout.getDefaultValues()
-    this.meta = meta
   }
 
   static fromDump(dump: any, layout?: LegacyLayout) { // FIXME: will not work with non-legacy layout
@@ -34,7 +34,7 @@ export default class Layer {
     else if(typeof layoutFromDump === 'string')
       void 0 // TODO: assert given layout is same…? shud I?
 
-    return new Layer(id ?? uniqueId, layout, values, { hidden })
+    return new Layer(id ?? uniqueId, layout, values, { hidden, invalid: [] })
   }
 
   dump() {
@@ -55,7 +55,7 @@ export default class Layer {
   }
 
   validate() {
-    return Object.entries(this.values).flatMap(([ child, value ]) =>
+    return <Array<Path>>Object.entries(this.values).flatMap(([ child, value ]) =>
       Array.isArray(value)?
         value.flatMap((item, index) =>
           Object.entries(item).map(([ grandchild, value ]) =>
@@ -64,6 +64,12 @@ export default class Layer {
         )
       : html.validateLegacy(value) || [ this.path.override({ child }) ]
     ).filter(v => v instanceof Path)
+  }
+  updateValidity() {
+    return this.meta.invalid = this.validate()
+  }
+  clear() {
+    this.meta.invalid = []
   }
 
   get path() {

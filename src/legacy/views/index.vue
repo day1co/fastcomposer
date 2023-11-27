@@ -284,7 +284,7 @@
         this.layouts = layouts;
       },
       focusEditor() {
-        this.$refs.editor.focus();
+        // this.$refs.editor.focus();
       },
       focusLayers() {
         this.$refs.layers.focus();

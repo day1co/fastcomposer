@@ -1,8 +1,9 @@
 import type Action from '../state/action'
+import type ActTarget from '../state/acttarget'
 
 import Module from '../state/module'
 import Actions from './actions'
-import Path from './path'
+import Path, { Paths } from './path'
 import Layer from './layer'
 import LayoutBase from '../layout'
 import LegacyLayout from '../layout/legacy'
@@ -15,7 +16,7 @@ export default class Page extends Module {
 
   id: 'page'
 
-  actions: Map<string, Action<Page>>
+  actions: Map<string, Action<Page, ActTarget>>
   state: Array<Layer> = []
 
   focus: Path | null = null
@@ -26,7 +27,7 @@ export default class Page extends Module {
 
   constructor(
     layouts: Map<string, LayoutBase> | object,
-    actions: Map<string, Action<Page>> = Actions
+    actions: Map<string, Action<Page, ActTarget>> = Actions
   ) {
     super(actions)
 
@@ -91,8 +92,8 @@ export default class Page extends Module {
       `</section>`
     ]).join('\n')
   }
-  validate() {
-    return this.state.flatMap(layer => layer.validate())
+  validateAll() {
+    return this.state.flatMap(layer => layer.updateValidity())
   }
 
   // state utils
@@ -189,9 +190,12 @@ export default class Page extends Module {
     return index
   }
 
-  setFocus(path?: Path) {
+  setFocus(path?: Path | Paths) {
     // TODO: onfocuschange?
-    this.focus = path ?? null
+    if(path.type === 'paths')
+      this.focus = path.paths[0]
+    else
+      this.focus = path ?? null
   }
   setFocusByIndex(index: number) {
     this.focus = this.indexToPath(index)
@@ -203,7 +207,14 @@ export default class Page extends Module {
     return this.focus? this.getLayerByPath(this.focus) : null
   }
 
-  describePath(path?: Path): string | null {
+  describe(path?: Path | Paths): string | null {
+    if(!path) return ''
+
+    let suffix = ''
+    if(path.type === 'paths') {
+      suffix = `…+${path.paths.length - 1}`
+      path = path.paths[0]
+    }
     if(!path) return
     const layout = this.getLayerByPath(path).layout
     if(!layout) return
@@ -212,14 +223,14 @@ export default class Page extends Module {
     const child = layout.params.get(path.child)
 
     if(!child)
-      return `${layout.id} #${index}`
+      return `${layout.id} #${index}${suffix}`
 
     const grandchild = layout.getListParams(path.child)?.get(path.grandchild)
 
     if(!grandchild)
-      return `${layout.id} #${index} ${child.label ?? child.name}`
+      return `${layout.id} #${index} ${child.label ?? child.name}${suffix}`
 
-    return `${layout.id} #${index} ${child.label ?? child.name} #${path.index + 1} ${grandchild.label ?? grandchild.name}`
+    return `${layout.id} #${index} ${child.label ?? child.name} #${path.index + 1} ${grandchild.label ?? grandchild.name}${suffix}`
   }
 
 }

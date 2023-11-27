@@ -1,11 +1,12 @@
 import type Action from '../../state/action'
 import type Page from '..'
+import type Path from '../path'
 
-export default <Action<Page>>{
+export default <Action<Page, Path>>{
   id: 'layer.edit',
   title: '레이어 값 수정',
   perform(root, self, act) {
-    const path = act.target!
+    const path = act.target
     const value = act.arg!
 
     const layer = self.getLayerByPath(path)

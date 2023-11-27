@@ -59,7 +59,7 @@ export default {
       }
     },
     invalid() {
-      return this.layer.meta.invalid.some?.(_ => _.isEqual(this.path))
+      return this.layer?.meta?.invalid?.some?.(_ => _.isEqual(this.path))
     }
   }
 }

@@ -1,7 +1,8 @@
 import type Action from '../../state/action'
 import type Page from '..'
+import type Path from '../path'
 
-export default <Action<Page>>{
+export default <Action<Page, Path>>{
   id: 'layer.hide',
   title: '레이어 숨기기',
   perform(root, self, act) {

@@ -3,11 +3,11 @@ import type Page from '..'
 
 import Path from '../path'
 
-export default <Action<Page>>{
+export default <Action<Page, Path>>{
   id: 'layer.remove',
   title: '레이어 삭제',
   perform(root, self, act) {
-    const path = act.target!
+    const path = act.target
 
     const oldLayer = self.getLayerByPath(path)
     if(!oldLayer)

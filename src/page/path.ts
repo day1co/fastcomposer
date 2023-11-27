@@ -1,4 +1,9 @@
-export default class Path {
+import ActTarget from '../state/acttarget'
+
+export default class Path implements ActTarget {
+
+  type: 'path' = 'path'
+
   constructor(
     public layer: string,
     public child?: string, // key
@@ -66,3 +71,40 @@ export default class Path {
       return this.override({ child })
   }
 }
+
+export class Paths implements ActTarget {
+
+  type: 'paths' = 'paths'
+
+  constructor(public paths: Array<Path>) {}
+
+  toString() {
+    return this.paths.map(path => path.toString()).join(', ')
+  }
+  isEqual(paths: Paths) {
+    return this.paths.length === paths.paths.length && this.paths.every(path => paths.paths.includes(path))
+  }
+  includes(paths: Paths) {
+    return paths.paths.length === this.paths.length && paths.paths.every(path => this.paths.includes(path))
+  }
+  isSubsetOf(paths: Paths) {
+    return paths.includes(this)
+  }
+
+  partial(until: string) {
+    return new Paths(this.paths.map(path => path.partial(until)))
+  }
+
+  override({ layer, child, index, grandchild }:
+    { layer?: string, child?: string, index?: number, grandchild?: string }) {
+
+    return new Paths(this.paths.map(path => path.override({ layer, child, index, grandchild })))
+  }
+
+  setChild(child: string) {
+    return new Paths(this.paths.map(path => path.setChild(child)))
+  }
+
+}
+
+globalThis.Paths = Paths
