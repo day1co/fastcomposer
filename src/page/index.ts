@@ -56,23 +56,26 @@ export default class Page extends Module {
       const { id, layout } = layerdef
       const layoutId = typeof layout === 'string'? layout : layout.id
       const foundLayout = <LegacyLayout>layouts.get(layoutId) // FIXME: will not work with non-legacy layout
+      const recoveredLayout = LegacyLayout.fromDefinition(layout)
 
       // TODO: reconsider recover level; now using lv1
       // lv0: throw
       // lv1: use layout from layer, or throw
       // lv2: use 'broken' layout even for worst case
 
-      if(providedLayouts && !foundLayout)
+      if(!recoveredLayout && !(providedLayouts && !foundLayout)) {
+        console.log
         throw new ReferenceError(`layout '${layoutId}' of layer '${id}' `
           + `couldn't be found from layout list which was provided`)
+      }
 
       // foundLayout will automatically fill missing layout definitions
       // AND prevent re-initialize Layouts, this is bit tricky
       // so TODO: should we consider inconsistent layout defs between layers?
-      const layer = Layer.fromDump(layerdef, foundLayout)
+      const layer = Layer.fromDump(layerdef, foundLayout || recoveredLayout)
 
-      if(!providedLayouts && !foundLayout)
-        layouts.set(layer.layout.id, layer.layout)
+      if(!foundLayout && recoveredLayout)
+        layouts.set(layer.layout.id, recoveredLayout)
 
       return layer
     })
