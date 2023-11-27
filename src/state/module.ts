@@ -1,15 +1,16 @@
 import Path from '../page/path'
 import Action from './action'
+import type ActTarget from './acttarget'
 
 export default abstract class Module {
   id: string
 
-  actions: Map<string, Action<Module>>
+  actions: Map<string, Action<Module, ActTarget>>
   state: any
 
-  constructor(actions: Map<string, Action<Module>>) {
+  constructor(actions: Map<string, Action<Module, ActTarget>>) {
     this.actions = actions
   }
 
-  describePath?(path?: Path): string | null
+  describe?(path?: ActTarget): string | null
 }

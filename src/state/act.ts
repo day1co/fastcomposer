@@ -1,9 +1,10 @@
 import type Path from '../page/path'
 import { uniqueId } from '../util'
+import ActTarget from './acttarget'
 
-export default class Act {
+export default class Act<Target extends ActTarget = Path> {
   capturedState?: any
-  destination?: Path
+  destination?: Target
   remembered: boolean = false
 
   meta: any = null
@@ -12,20 +13,20 @@ export default class Act {
     public action: string,
     // a) that was active just right before this executed
     // b) subject of this action
-    public target?: Path,
+    public target: Target,
     public arg?: any,
     public sealed: boolean = false,
     public id: string = action + '#' + uniqueId()
   ) {}
 
-  isComposableWith(act: Act) {
+  isComposableWith(act: Act<Target>) {
     return this.action === act.action &&
           !this.sealed &&
           (this.target === act.target || this.target?.isEqual(act.target!))
   }
 
   // this stores state BEFORE action performed
-  remember(capturedState?: any, destination?: Path, force: boolean = false) {
+  remember(capturedState?: any, destination?: Target, force: boolean = false) {
     if(this.remembered && !force)
       return
     this.remembered = true

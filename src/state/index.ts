@@ -1,13 +1,16 @@
 import type Action from './action'
 import Act from './act'
 import Module from './module'
+import ActTarget from './acttarget'
+
+type AnyAct = Act<ActTarget>
 
 export default class State {
 
   modules: { [key: string]: Module } = {}
 
-  past: Array<Act> = []
-  future: Array<Act> = []
+  past: Array<AnyAct> = []
+  future: Array<AnyAct> = []
 
   _actionMap: Map<string, string> = new Map()
 
@@ -32,7 +35,7 @@ export default class State {
       this._actionMap.set(id, key)
     }
   }
-  resolveAction(key: string): [ Module, Action<any> ] {
+  resolveAction(key: string): [ Module, Action<any, ActTarget> ] {
     // TODO: WTF
     const moduleMappedTo = this._actionMap.get(key)
     if(!moduleMappedTo)
@@ -52,7 +55,7 @@ export default class State {
     return this.past[this.past.length - 1]
   }
 
-  _getPast(): Act | undefined {
+  _getPast(): AnyAct | undefined {
     const present = this.past.pop()
     if(!present) return
     this.future.push(present)
@@ -61,11 +64,11 @@ export default class State {
   _discardPast(): void {
     this.past.pop()
   }
-  _writePresent(act: Act) {
+  _writePresent(act: AnyAct) {
     this.past.push(act)
     this.future.splice(0, this.future.length)
   }
-  _getFuture(): Act | undefined {
+  _getFuture(): AnyAct | undefined {
     const present = this.future.pop()
     if(!present) return
     this.past.push(present)
@@ -77,7 +80,7 @@ export default class State {
     return this.perform(act, false)
   }
 
-  perform(act: Act, isRedo?: boolean, doNotCompose?: boolean) {
+  perform(act: AnyAct, isRedo?: boolean, doNotCompose?: boolean) {
     const [ module, action ] = this.resolveAction(act.action)
 
     if(action.compose && !doNotCompose && this.lastAct?.isComposableWith(act)) {
@@ -89,7 +92,7 @@ export default class State {
 
       return this.lastAct
     } else {
-      act.meta ||= module.describePath?.(act.target)
+      act.meta ||= module.describe?.(act.target)
       action.perform(this, module, act)
 
       // TODO: move focus
@@ -104,7 +107,7 @@ export default class State {
     }
   }
 
-  rollback(history: Act) {
+  rollback(history: AnyAct) {
     const [ module, action ] = this.resolveAction(history.action)
 
     history.seal()
