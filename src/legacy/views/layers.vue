@@ -152,7 +152,7 @@
         if(removedIndex === addedIndex)
           return
 
-        this.state.act('layer.reorder', this.layers[removedIndex].path, this.layers[addedIndex].path)
+        this.state.act('layer.reorder', this.page.state[removedIndex].path, this.page.state[addedIndex].path)
       },
       duplicate(path) {
         this.state.act('layer.duplicate', path)
