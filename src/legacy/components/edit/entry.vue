@@ -4,7 +4,10 @@
     'fc-edit-row--invalid': invalid
   }">
 
-    <label class="label" :for="inputId">
+    <label :class="[
+      'label',
+      'fc-edit-row-label--' + param.type
+    ]" :for="inputId">
       <strong class="name">{{ param.label ?? param.name }}</strong>
       <small class="type">{{ param.type }}</small>
 
@@ -75,7 +78,9 @@ export default {
 
   &--invalid {
     background: $invalid-active;
-    box-shadow: -.4rem 0 0 0.4rem $invalid-active, .4rem 0 0 0.4rem $invalid-active;
+    box-shadow:
+      calc(-1 * var(--__invalid_background_padding_x, 0.4rem)) 0 0 0.4rem $invalid-active,
+      var(--__invalid_background_padding_x, 0.4rem) 0 0 0.4rem $invalid-active;
   }
 
   > .label {

@@ -1,17 +1,22 @@
 <template>
   <div class="fc-edit-list-wrap">
 
-    <div
+    <fieldset
       class="fc-edit-list-entry"
       v-for="(entry, index) in value"
       :key="index">
-      <i>{{ index + 1 }}/{{ value.length }} ({{ param.maxLength }})</i>
+      <legend>
+        <button class="fc-edit-list-remove" @click="removeItem(index)">
+          <i class="material-icons"> close </i>
+        </button>
+        <b>{{ index + 1 }}</b>/{{ value.length }}
+      </legend>
 
       <edit
         :layer="layer"
         :child="path.override({ index })" />
 
-    </div>
+    </fieldset>
 
     <button
       class="fc-edit-list-new"
@@ -49,6 +54,13 @@ export default {
 
 @import '../../assets/scss/utils/utilities';
 
+.fc-edit-row-label--list {
+  position: sticky;
+  top: 0.4rem;
+  z-index: 10;
+  background-color: $background;
+  box-shadow: -0.4rem 0 0 0.4rem $background, 0.4rem 0 0 0.4rem $background;
+}
 .fc-edit-list {
   &-item {
     border-left: 0.4rem solid $primary;
@@ -59,6 +71,49 @@ export default {
       border-left-color: #8884;
     }
   }
+
+  &-entry {
+    border: 0.1rem solid $input-foreground-active;
+    margin-top: 0.6rem;
+
+    > legend {
+      display: inline-block;
+      font-style: inherit;
+
+      line-height: 2rem;
+
+      margin-left: -.8rem;
+      padding: 0.2em 0.5em;
+
+      background: #8884;
+      font-variant-numeric: tabular-nums;
+    }
+    > .fc-edit {
+      --__invalid_background_padding_x: 0.2rem;
+      margin-top: -0.6rem;
+      margin-bottom: 0.6rem;
+      padding: 0 0.8rem;
+    }
+  }
+
+  &-remove {
+    margin: -.25rem 0 -.25rem -.7rem;
+    padding: .2rem .4rem;
+    vertical-align: top;
+    background-color: transparent;
+    transition: background-color 200ms ease;
+    cursor: pointer;
+
+    > i {
+      font-size: 2rem;
+      vertical-align: top;
+    }
+
+    &:hover {
+      background-color: #8883;
+    }
+  }
+
   &-tools {
     display: flex;
     margin-left: -0.6rem;
@@ -74,9 +129,12 @@ export default {
   }
 
   &-new {
+    position: sticky;
+    bottom: 0;
     width: 100%;
     height: 100%;
-    padding: 1rem 0;
+    margin-top: 1rem;
+    padding: .5rem 0;
     background-color: $primary-active;
     color: inherit;
     font: inherit;
