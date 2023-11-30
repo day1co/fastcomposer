@@ -10,10 +10,13 @@ import { uniqueId } from '../../../util'
 import Act from '../../../state/act'
 import Actions from '../../actions'
 import State from '../../../state'
+import type ActTarget from '../../../state/acttarget'
 
 import * as setup from '../setup'
 import Layout from '../../../layout/legacy'
 import Page from '../..'
+
+type AnyAct = Act<ActTarget>
 
 function describeAction(
   actionName: string,
@@ -57,28 +60,46 @@ function describeAction(
       const state = new State({ modules: { page }})
       return [ page, state ]
     },
-    createAct(...args: ConstructorParameters<typeof Act> |
-                  Omit<ConstructorParameters<typeof Act>, 0>): Act {
+    createAct(...args: ConstructorParameters<typeof Act<ActTarget>> |
+                  Omit<ConstructorParameters<typeof Act<ActTarget>>, 0>): Act<ActTarget> {
       // ¯\_(ツ)_/¯
-      if(typeof args[0] === 'string' && actionsMap.has(args[0])) // FIXME
-        return new Act(...<ConstructorParameters<typeof Act>>args)
-      else
-        return new Act(actionName, ...args)
+      if(!(typeof args[0] === 'string' && actionsMap.has(args[0]))) // FIXME
+        args.unshift(actionName)
+
+      return new Act(...<ConstructorParameters<typeof Act<ActTarget>>>args)
     },
-    checkTimeParadox(state: State, { before, act, after }) {
-      before()
+    checkTimeParadox(state: State, assertions: Array<Function | Act>) {
+      const runAct = act => {
+        if(act instanceof Function)
+          act = act()
+        if(act instanceof Act)
+          state.perform(act)
+      }
 
-      if(act instanceof Function)
-        act = act()
-      if(act instanceof Act)
-        state.perform(act)
+      const iterate = (item, phase) => {
+        const direction = phase % 2
 
-      after(act)
+        if(item instanceof Function && item.name === 'act' || item instanceof Act)
+          if(phase === 0)
+            runAct(item)
+          else if(direction === 0)
+            state.redo()
+          else
+            state.undo()
 
-      state.undo()
-      before()
-      state.redo()
-      after(act)
+        else if(item instanceof Function)
+          item()
+      }
+
+      // run tests forward & back & forward
+      // set more phases to extend loops
+      const len = assertions.length
+      for(
+        let i = 0, phase = 0;
+        0 <= i && i < len && phase <= 2;
+        phase % 2? i++ : i--, phase += +(i < 0 || len <= i)
+      )
+        iterate(assertions[i], phase)
     }
   }
 

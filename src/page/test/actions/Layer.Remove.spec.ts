@@ -13,16 +13,16 @@ describeAction('layer.remove', ['layer.new'], helpers => {
     actNew = state.perform(actNew)
     expect(actNew.destination.layer).toBe('a')
 
-    helpers.checkTimeParadox(state, {
-      before() {
+    helpers.checkTimeParadox(state, [
+      function before() {
         expect(page.state.length).toEqual(1)
         expect(page.state[0].id).toBe('a')
       },
-      act: helpers.createAct(actNew.destination),
-      after() {
+      helpers.createAct(actNew.destination),
+      function after() {
         expect(page.state.length).toEqual(0)
       }
-    })
+    ])
   })
 
   it('should throw on nonexistent layer', () => {

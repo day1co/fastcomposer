@@ -32,7 +32,7 @@ describe('Main State Manager', () => {
     const perform = jest.spyOn(setup.NoopAction, 'perform')
     const rollback = jest.spyOn(setup.NoopAction, 'rollback')
 
-    const act = new Act('noop')
+    const act = new Act('noop', null)
     const rememberedAct = state.perform(act)!;
 
     expect(perform).toBeCalledWith(state, noop, act)
@@ -51,7 +51,7 @@ describe('Main State Manager', () => {
     const rollback = jest.spyOn(setup.NoopAction, 'rollback')
     const outerPerform = jest.spyOn(state, 'perform')
 
-    const act1 = new Act('noop')
+    const act1 = new Act('noop', null)
     const rememberedAct1 = state.perform(act1)!;
 
     expect(perform).toBeCalledWith(state, noop, act1)
@@ -59,10 +59,10 @@ describe('Main State Manager', () => {
     expect(state.past.length).toEqual(1)
     expect(state.future.length).toEqual(0)
 
-    const act2 = new Act('noop')
+    const act2 = new Act('noop', null)
     const rememberedAct2 = state.perform(act2)!;
 
-    const act3 = new Act('noop')
+    const act3 = new Act('noop', null)
     const rememberedAct3 = state.perform(act3)!;
 
 

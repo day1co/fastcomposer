@@ -19,16 +19,16 @@ describeAction('layer.item.new', ['layer.new'], helpers => {
     actNew = actNew.remember(null, path)
     state.perform(actNew)
 
-    helpers.checkTimeParadox(state, {
-      before() {
+    helpers.checkTimeParadox(state, [
+      function before() {
         expect(page.state[0].get(path).length).toBe(0)
       },
-      act: helpers.createAct(path),
-      after() {
+      helpers.createAct(path),
+      function after() {
         expect(page.state[0].get(path).length).toBe(1)
         expect(page.state[0].get(fullpath)).toBe(defaultValue)
       }
-    })
+    ])
   })
 
   it('should throw on nonexistent layer', () => {

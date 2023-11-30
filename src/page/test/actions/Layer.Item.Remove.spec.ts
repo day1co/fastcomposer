@@ -22,18 +22,18 @@ describeAction('layer.item.remove', ['layer.new', 'layer.item.new', 'layer.edit'
     state.perform(helpers.createAct('layer.edit', childpath0, 'item value 1'))
     state.perform(helpers.createAct('layer.edit', childpath1, 'item value 2'))
 
-    helpers.checkTimeParadox(state, {
-      before() {
+    helpers.checkTimeParadox(state, [
+      function before() {
         expect(page.state[0].get(path).length).toBe(2)
         expect(page.state[0].get(childpath0)).toBe('item value 1')
         expect(page.state[0].get(childpath1)).toBe('item value 2')
       },
-      act: helpers.createAct(childpath0),
-      after() {
+      helpers.createAct(childpath0),
+      function after() {
         expect(page.state[0].get(path).length).toBe(1)
         expect(page.state[0].get(childpath0)).toBe('item value 2')
       }
-    })
+    ])
   })
 
   it('should throw on nonexistent layer', () => {

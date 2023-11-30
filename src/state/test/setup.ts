@@ -3,7 +3,7 @@ import Module from '../module'
 
 ///
 
-export const NoopAction = <Action<NoopModule>>{
+export const NoopAction = <Action<NoopModule, null>>{
   id: 'noop',
   perform(root, self, act) {
     return act.remember()
@@ -12,7 +12,7 @@ export const NoopAction = <Action<NoopModule>>{
 }
 
 export class NoopModule extends Module {
-  actions: Map<string, Action<NoopModule>> = new Map([
+  actions: Map<string, Action<NoopModule, null>> = new Map([
     [ 'noop', NoopAction ]
   ])
 

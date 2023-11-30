@@ -17,15 +17,15 @@ describeAction('layer.edit', ['layer.new', 'layer.item.new'], helpers => {
     actNew = actNew.remember(null, path)
     state.perform(actNew)
 
-    helpers.checkTimeParadox(state, {
-      before() {
+    helpers.checkTimeParadox(state, [
+      function before() {
         expect(page.state[0].get(path)).toEqual(defaultValue)
       },
-      act: helpers.createAct(path, newValue),
-      after() {
+      helpers.createAct(path, newValue),
+      function after() {
         expect(page.state[0].get(path)).toEqual(newValue)
       }
-    })
+    ])
   })
 
   it('should throw on nonexistent layer', () => {

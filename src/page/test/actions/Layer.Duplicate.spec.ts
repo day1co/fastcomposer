@@ -13,22 +13,22 @@ describeAction('layer.duplicate', ['layer.new'], helpers => {
 
     expect(actNew.destination.layer).toBe('a')
 
-    helpers.checkTimeParadox(state, {
-      before() {
+    helpers.checkTimeParadox(state, [
+      function before() {
         expect(page.state.length).toEqual(1)
         expect(page.state[0].id).toBe('a')
       },
-      act() {
+      function act() {
         const act = helpers.createAct(actNew.destination)
         helpers.mocked.uniqueId.mockReturnValueOnce('b')
         return act
       },
-      after() {
+      function after() {
         expect(page.state.length).toEqual(2)
         expect(page.state[0].id).toBe('a')
         expect(page.state[1].id).toBe('b')
       }
-    })
+    ])
   })
 
   it('should throw on nonexistent layer', () => {

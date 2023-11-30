@@ -8,21 +8,21 @@ describeAction('layer.new', helpers => {
   it('should work: do, undo, redo', () => {
     const [ page, state ] = helpers.createState()
 
-    helpers.checkTimeParadox(state, {
-      before() {
+    helpers.checkTimeParadox(state, [
+      function before() {
         expect(page.state.length).toBe(0)
       },
-      act() {
+      function act() {
         const act = helpers.createAct(null, setup.MinimalLayout.id)
         helpers.mocked.uniqueId.mockReturnValueOnce('a')
         return act
       },
-      after() {
+      function after() {
         expect(page.state.length).toBe(1)
         expect(page.state[0].id).toBe('a')
         expect(page.state[0].values).toEqual(setup.MinimalLayout.defaultValues)
       }
-    })
+    ])
   })
 
   it('should not fill default value of list (which isn\'t specified)', () => {
