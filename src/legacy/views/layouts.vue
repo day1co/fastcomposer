@@ -1,159 +1,245 @@
 <template>
-  <div class="fc-layout"
-       tabindex="0"
-       @keydown.enter.prevent="selected(layouts[layoutIndex])"
-       @keydown.space.prevent="selected(layouts[layoutIndex])"
-       @keydown.up.prevent="focus(layoutIndex - 1)"
-       @keydown.down.prevent="focus(layoutIndex + 1)"
-       @keydown.home.prevent="focus(0)"
-       @keydown.end.prevent="focus(layouts.length - 1)"
-       @keydown.page-up.prevent="focus(layoutIndex - 5)"
-       @keydown.page-down.prevent="focus(layoutIndex + 5)"
-       @keydown.esc.prevent="toggle"
-  >
+  <div class="fc-layout">
     <!-- TODO: favorite layouts here? reimpl as sidebar?-->
-    <ul class="fc-layout__list">
-      <li v-for="([name, layout], index) in layouts" :key="index"
+    <div class="fc-layout--wrapper">
+      <input
+        type="search"
+        ref="search"
+        v-model="query"
+        class="fc-layout__search"
+        @keydown="keydown" />
+
+      <ul class="fc-layout__list">
+        <li
+          v-for="([name, layout], index) in searchResult"
+          :key="index"
+          ref="layouts"
           class="fc-layout__list__item">
-        <button @click="selected(layout)" @focus="focus(index)"
-                class="fc-layout__list__button"
-                :class="{ active: index === layoutIndex }">
-          <layout-info :layout="layout" />
-        </button>
-        <button @click="onAddFavoriteLayout(layout.id)"
-                class="fc-layout__list__favorite"
-                tabindex="-1">
-          <i class="material-icons">
-            {{ favoriteLayoutIds.includes(layout.id)? 'favorite' : 'favorite_border' }}
-          </i>
-        </button>
-      </li>
-    </ul>
+
+            <button
+              @click="selected(layout)"
+              @focus="focus(index)"
+              class="fc-layout__list__button"
+              :class="{ active: index === focus }">
+            <layout-info :layout="layout" />
+          </button>
+
+          <button
+            @click="onAddFavoriteLayout(layout.id)"
+            class="fc-layout__list__favorite"
+            tabindex="-1">
+            <i class="material-icons">
+              {{ favoriteLayoutIds.includes(layout.id)? 'favorite' : 'favorite_border' }}
+            </i>
+          </button>
+        </li>
+        <li
+          v-if="!searchResult.length"
+          class="fc-layout__list__item--notfound">
+          검색 결과가 없습니다.
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
-  import LayoutInfo from '../components/layout-info.vue';
 
-  export default {
-    components: {
-      LayoutInfo
-    },
-    props: {
-      layouts: {
-        type: Map,
-        default() {
-          return new Map()
-        }
-      },
-      favoriteLayoutIds: {
-        type: Array,
-        default() {
-          return []
-        }
-      },
-    },
-    data() {
-      return {
-        layoutIndex: 0,
-        savedFocus: null,
-        flag: false
+import LayoutInfo from '../components/layout-info.vue';
+
+export default {
+  components: {
+    LayoutInfo
+  },
+  props: {
+    layouts: {
+      type: Map,
+      default() {
+        return new Map()
       }
     },
-    methods: {
-      selected(layout) {
-        /**
-         * composer에서 layers에 push가 일어나며, 추가된 layer가 선택된다.
-         */
-        this.$emit('add-layer', layout.id);
-        this.flag = false;
-      },
-      toggle() {
-        this.flag = !this.flag;
-        this.$nextTick(() => {
-          if(this.flag) {
-            // XXX: save current focus to restore focus for cancel
-            this.savedFocus = document.activeElement;
-            this.$el.focus();
-          } else {
-            // XXX: restore focus if possible
-            if (this.savedFocus) {
-              this.savedFocus.focus();
-              this.savedFocus = null;
-            }
-          }
-        });
-      },
-      focus(index) {
-        this.layoutIndex = Math.min(Math.max(index, 0), this.layouts.length - 1);
-      },
-      onAddFavoriteLayout(layoutId) {
-        this.$emit('add-favorite-layout', layoutId);
-      },
+    favoriteLayoutIds: {
+      type: Array,
+      default() {
+        return []
+      }
     },
+  },
+  data() {
+    return {
+      query: '',
+      focus: null
+    }
+  },
+  methods: {
+    clear() {
+      this.query = ''
+      this.$refs.search.focus()
+    },
+    selected(layout) {
+      this.$emit('add-layer', layout.id);
+    },
+    keydown(event) {
+      let direction = 0
+      switch(event.key) {
+        case 'ArrowUp':
+          direction ||= -1
+        case 'ArrowDown':
+          direction ||= +1
+
+          const length = this.searchResult.length
+
+          if(length <= 0) { // pressing ↑↓ without search results
+            this.focus = null
+            break
+          }
+
+          if(this.focus === null)
+            if(direction > 0) // pressing ↓ without anything focused
+              this.focus = 0
+            else
+              break
+          else
+            this.focus = Math.min(this.focus + direction, length - 1)
+
+          if(this.focus < 0) // pressing ↑ when topmost selected
+            this.focus = null
+
+          if(direction < 0) {
+            // pressing ↑ should not move cursor while navigating
+            event.preventDefault()
+            if(this.focus === null)
+              this.$refs.search.select()
+          }
+
+          this.$nextTick(() => this.scrollIntoFocused())
+          break
+
+        case 'Enter':
+          if(this.focus == null)
+            if(this.searchResult.length !== 1)
+              break
+          this.selected(this.searchResult[this.focus ?? 0][1])
+          break
+
+        default:
+          this.scrollIntoFocused(0)
+          this.focus = null
+      }
+    },
+    scrollIntoFocused(index = this.focus) {
+      this.$refs.layouts?.[index]?.scrollIntoViewIfNeeded?.({ block: 'nearest' })
+    },
+    onAddFavoriteLayout(layoutId) {
+      this.$emit('add-favorite-layout', layoutId);
+    },
+  },
+  computed: {
+    searchResult() {
+      if(!this.query)
+        return [...this.layouts.entries()]
+      else
+        return [...this.layouts.entries()].filter(([k, v]) =>
+          k.includes(this.query) || v?.meta?.description?.includes?.(this.query)
+        ).map(([k, v]) => {
+          let weight = 0
+          weight |= k.startsWith(this.query) * 8
+          if(!weight) {
+            weight |= v?.meta?.description?.startsWith?.(this.query) * 4
+            weight |= v?.meta?.description?.includes?.(this.query) * 2
+          }
+          return [k, v, weight]
+        }).sort((a, b) => b[2] - a[2])
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '../assets/scss/utils/utilities';
-  .fc-layout:before {
+
+@import '../assets/scss/utils/utilities';
+
+
+.fc-layout {
+  position: absolute;
+  top: 3.6rem;
+  bottom: 0;
+  right: 0;
+
+  width: 100%;
+  max-width: 40rem;
+  z-index: 19999;
+  color: $foreground;
+
+  box-sizing: border-box;
+  background-color: $secondary;
+
+  border: 0.1rem solid #ffffff;
+
+  &::before {
+    display: block;
+    content: '';
+
     position: absolute;
-    left: 100%;
-    top: 4.2rem;
-    height: 0;
-    width: 0;
-    margin-top: 0;
-    border-top: solid transparent;
-    border-left: solid #fff;
-    border-right: solid transparent;
-    border-bottom: solid transparent;
-    border-width: 1rem;
+    right: 0.3rem;
+    bottom: 100%;
+
+    border: 1rem solid;
+    border-color: #fff0 #fff0 #fff #fff0;
+
     pointer-events: none;
-    content: " ";
   }
 
-  .fc-layout {
-    display: flex;
-    position: fixed;
-    top: 8rem;
-    bottom:0;
-    right: 4rem;
-    width: 40rem;
-    padding-bottom:2rem;
-    z-index: 19999;
-    color: $foreground;
+  &--wrapper {
+    display: grid;
+    grid-template-rows: 3rem minmax(0, 1fr);
+    height: 100%;
+  }
 
-    &__list {
-      overflow: scroll;
-      box-sizing: border-box;
-      border: 0.1rem solid #ffffff;
-      padding: 1.2rem 0.9rem;
-      width: 100%;
-      height: percentage(1);
-      background-color: $secondary;
+  &__search {
+    position: sticky;
+    top: 0;
 
-      &__item {
-        display: flex;
-        flex-direction: row;
-      }
+    padding: 0.4rem 0.8rem;
+    border: none;
 
-      &__button {
-        display: flex;
-        flex-grow: 100;
-        margin-right: 0.8rem;
-        color: inherit;
-      }
-      &__favorite {
-        color: $foreground;
-      }
+    font: inherit;
 
-      .active {
-        box-shadow: 0 0 0 0.2rem red;
-      }
-    }
-    li {
-      & + li {
-        margin-top: 1rem;
-      }
+    &:focus {
+      outline: none;
     }
   }
+
+  &__list {
+    min-height: 0;
+    overflow-y: auto;
+    padding: 0.4rem 0;
+
+    &__item{
+      display: flex;
+      flex-direction: row;
+      padding: 0.4rem 0.8rem;
+
+      &--notfound {
+        padding: 3.2rem 0;
+        text-align: center;
+        opacity: 0.5;
+      }
+    }
+
+    &__button {
+      display: flex;
+      flex-grow: 100;
+      margin-right: 0.8rem;
+      color: inherit;
+    }
+    &__favorite {
+      color: $foreground;
+    }
+
+    .active {
+      box-shadow: 0 0 0 0.2rem red;
+    }
+  }
+}
+
 </style>
