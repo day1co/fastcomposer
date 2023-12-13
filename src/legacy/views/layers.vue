@@ -30,13 +30,19 @@
           <i class="material-icons">check_box</i> {{ checkedCount }}
         </template>
       </label>
-      <button class="fc-pane-title-button" :disabled="!checkedCount || checkedCount === layers.length || isEveryCheckedLayersAreAtTop">
+      <button
+        class="fc-pane-title-button"
+        @click="moveCheckedUp"
+        :disabled="!checkedCount || checkedCount === layers.length || isEveryCheckedLayersAreAtTop">
         <span class="material-icons">arrow_upward</span>
       </button>
-      <button class="fc-pane-title-button" :disabled="!checkedCount || checkedCount === layers.length || isEveryCheckedLayersAreAtBottom">
+      <button
+        class="fc-pane-title-button"
+        @click="moveCheckedDown"
+        :disabled="!checkedCount || checkedCount === layers.length || isEveryCheckedLayersAreAtBottom">
         <span class="material-icons">arrow_downward</span>
       </button>
-      <button class="fc-pane-title-button" :disabled="!checkedCount">
+      <button class="fc-pane-title-button" :disabled="!checkedCount" @click="hideChecked">
         <span class="material-icons">{{ checkedCount && isEveryCheckedLayerVisible? 'visibility_off' : 'visibility' }}</span>
       </button>
       <button class="fc-pane-title-button" @click="$emit('toggle-layouts')"> <!-- @click="onShowLayouts" -->
@@ -86,6 +92,7 @@
   import LayoutInfo from '../components/layout-info.vue';
   import { Container, Draggable } from "vue-smooth-dnd";
   import EventBus from '../event-bus.vue';
+  import { Paths } from '../../page/path'
 
   export default {
     components: {
@@ -173,6 +180,16 @@
         } else {
           this.$set(this, 'checked', Object.fromEntries(this.layers.map(_ => [_.id, true])))
         }
+      },
+      hideChecked() {
+        const paths = new Paths(this.checkedLayers.map(_ => _.layer.path))
+        this.state.act('layer.hide', paths)
+      },
+      moveCheckedUp() {
+        const paths = this.checkedLayers.map(_ => _.layer)
+      },
+      moveCheckedDown() {
+        const paths = this.checkedLayers.map(_ => _.layer)
       }
     },
   }

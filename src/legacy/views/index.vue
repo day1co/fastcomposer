@@ -75,7 +75,7 @@
 
           <splitpanes horizontal @resize="onVerticalResize">
 
-            <pane :size="options.verticalSizes?.[0]">
+            <pane :size="options.verticalSizes?.[0]" style="position: relative;">
               <!--
                 @up="onUpBlock"
                 @down="onDownBlock"
@@ -85,8 +85,17 @@
                 :state="state"
                 :selected="page.focusedIndex"
                 @selected="index => page.setFocusByIndex(index)"
-                @toggle-layouts="layoutOpened = !layoutOpened"
+                @toggle-layouts="toggleLayouts()"
                 ref="layers" />
+
+              <layouts
+                v-if="layoutOpened"
+                @add-layer="onAddLayer"
+                @add-favorite-layout="onAddFavoriteLayout"
+                :favoriteLayoutIds="favoriteLayoutIds"
+                :layouts="layouts"
+                ref="layouts" />
+
             </pane>
 
             <pane
@@ -100,14 +109,6 @@
         </pane>
 
       </splitpanes>
-
-      <layouts
-        v-show="layoutOpened"
-        @add-layer="onAddLayer"
-        @add-favorite-layout="onAddFavoriteLayout"
-        :favoriteLayoutIds="favoriteLayoutIds"
-        :layouts="layouts"
-        ref="layouts" />
 
       <Dialog :visible.sync="showModal">
         <guide />
@@ -268,6 +269,11 @@
 
         this.focusEditor()
         this.layoutOpened = false
+      },
+      toggleLayouts() {
+        this.layoutOpened = !this.layoutOpened
+        if(this.layoutOpened)
+          this.$nextTick(() => this.$refs.layouts.clear())
       },
       onRemoveLayer(index) {
         this.state.act('layer.remove', this.layers[index].path)
@@ -435,8 +441,9 @@
       top: 0;
       left: 3rem;
       padding: 0.5rem;
-      min-width: 22rem;
+      min-inline-size: max-content;
       background-color: #eaeaea;
+      color: #111;
       z-index: 1;
       font-size: 1.5rem;
       border-radius: 0.3rem;
