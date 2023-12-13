@@ -1,6 +1,7 @@
 import describeAction from './describe-action'
 import * as setup from '../setup'
 import Path from '../../path'
+import Act from '../../../state/act'
 
 describeAction('layer.duplicate', ['layer.new'], helpers => {
 
@@ -9,7 +10,7 @@ describeAction('layer.duplicate', ['layer.new'], helpers => {
 
     let actNew = helpers.createAct('layer.new', null, setup.MinimalLayout.id)
     actNew.remember(null, new Path('a'))
-    actNew = state.perform(actNew)
+    actNew = <Act>state.perform(actNew)
 
     expect(actNew.destination.layer).toBe('a')
 
@@ -32,7 +33,7 @@ describeAction('layer.duplicate', ['layer.new'], helpers => {
   })
 
   it('should throw on nonexistent layer', () => {
-    const [ page, state ] = helpers.createState(setup.ListLayout)
+    const [ page, state ] = helpers.createState(setup.ListLayouts)
 
     expect(() => state.perform(helpers.createAct(new Path('?')))).toThrowError()
   })

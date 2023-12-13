@@ -3,14 +3,12 @@ import Act from './act'
 import Module from './module'
 import ActTarget from './acttarget'
 
-type AnyAct = Act<ActTarget>
-
 export default class State {
 
   modules: { [key: string]: Module } = {}
 
-  past: Array<AnyAct> = []
-  future: Array<AnyAct> = []
+  past: Array<Act<ActTarget>> = []
+  future: Array<Act<ActTarget>> = []
 
   _actionMap: Map<string, string> = new Map()
 
@@ -55,7 +53,7 @@ export default class State {
     return this.past[this.past.length - 1]
   }
 
-  _getPast(): AnyAct | undefined {
+  _getPast(): Act<ActTarget> | undefined {
     const present = this.past.pop()
     if(!present) return
     this.future.push(present)
@@ -64,11 +62,11 @@ export default class State {
   _discardPast(): void {
     this.past.pop()
   }
-  _writePresent(act: AnyAct) {
+  _writePresent(act: Act<ActTarget>) {
     this.past.push(act)
     this.future.splice(0, this.future.length)
   }
-  _getFuture(): AnyAct | undefined {
+  _getFuture(): Act<ActTarget> | undefined {
     const present = this.future.pop()
     if(!present) return
     this.past.push(present)
@@ -80,13 +78,13 @@ export default class State {
     return this.perform(act, false)
   }
 
-  perform(act: AnyAct, isRedo?: boolean, doNotCompose?: boolean) {
+  perform(act: Act<ActTarget>, isRedo?: boolean, doNotCompose?: boolean) {
     const [ module, action ] = this.resolveAction(act.action)
 
     if(action.compose && !doNotCompose && this.lastAct?.isComposableWith(act)) {
-      const shouldDiscardCurrentAct = !action.compose(this, module, this.lastAct, act)
-      action.perform(this, module, this.lastAct)
+      action.perform(this, module, act)
 
+      const shouldDiscardCurrentAct = !action.compose(this, module, this.lastAct, act)
       if(shouldDiscardCurrentAct)
         this._discardPast()
 
@@ -107,7 +105,7 @@ export default class State {
     }
   }
 
-  rollback(history: AnyAct) {
+  rollback(history: Act<ActTarget>) {
     const [ module, action ] = this.resolveAction(history.action)
 
     history.seal()

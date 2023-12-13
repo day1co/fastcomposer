@@ -97,15 +97,15 @@ describeAction('layer.edit', ['layer.new', 'layer.item.new'], helpers => {
 
     expect(page.state[0].get(path).length).toBe(1)
 
-    helpers.checkTimeParadox(state, {
-      before() {
+    helpers.checkTimeParadox(state, [
+      function before() {
         expect(page.state[0].get(fullpath)).toBe(defaultValue)
       },
-      act: helpers.createAct(fullpath, newValue),
-      after() {
+      helpers.createAct(fullpath, newValue),
+      function after() {
         expect(page.state[0].get(fullpath)).toBe(newValue)
       }
-    })
+    ])
   })
 
 })

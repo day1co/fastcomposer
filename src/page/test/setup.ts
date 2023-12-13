@@ -69,3 +69,7 @@ export const ListLayoutDefinition = {
 }
 
 export const ListLayout = LegacyLayout.fromDefinition(ListLayoutDefinition)
+
+export const ListLayouts = new Map([
+  [ ListLayout.id, ListLayout ]
+])

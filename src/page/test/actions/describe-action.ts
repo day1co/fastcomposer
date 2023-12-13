@@ -11,27 +11,88 @@ import Act from '../../../state/act'
 import Actions from '../../actions'
 import State from '../../../state'
 import type ActTarget from '../../../state/acttarget'
+import type Path from '../../path'
 
 import * as setup from '../setup'
 import Layout from '../../../layout/legacy'
 import Page from '../..'
 
-type AnyAct = Act<ActTarget>
+const createHelper = ({ actionsMap, actionName }) => ({
+  mocked: {
+    uniqueId: <jest.Mocked<typeof uniqueId>>jest.mocked(uniqueId)
+  },
+  createState(layouts: Layout | Map<string, Layout> = setup.MinimalLayouts): [ Page, State ] {
+    if(layouts instanceof Layout)
+      layouts = new Map([ [ layouts.id, layouts ] ])
+
+    const page = new Page(layouts, new Map(actionsMap))
+    const state = new State({ modules: { page }})
+    return [ page, state ]
+  },
+  createAct( // <<<FIXME
+    ...args: typeof Act<Path> extends new (arg0: infer Arg0, ...rest: infer R) => any ? [Arg0, ...R] | R : never
+  ): Act<Path> {
+    // ¯\_(ツ)_/¯
+    if(!(typeof args[0] === 'string' && actionsMap.has(args[0])))
+      args.unshift(actionName)
+
+    return new Act<Path>(...<ConstructorParameters<typeof Act<Path>>>args)
+  },
+  checkTimeParadox(state: State, assertions: Array<Function | Act>) {
+    const runAct = act => {
+      if(act instanceof Function)
+        act = act()
+      if(act instanceof Act)
+        state.perform(act)
+    }
+
+    const iterate = (item, phase) => {
+      if(item instanceof Function && item.name === 'act' || item instanceof Act)
+        if(phase === 0) {
+          console.log(`phase ${phase}, executing act`)
+          runAct(item)
+        } else if(phase % 2) {
+          console.log(`phase ${phase}, undo`)
+          state.undo()
+        } else {
+          console.log(`phase ${phase}, redo`)
+          state.redo()
+        }
+      else if(item instanceof Function){
+        console.log(`phase ${phase}, executed function '${item.name}'`)
+        item()
+      }
+    }
+
+    // run tests forward & back & forward
+    // set more phases to extend loops
+    const len = assertions.length
+    for(
+      let i = 0, phase = 0;
+      0 <= i && i < len && phase <= 2;
+      phase % 2? i-- : i++, phase += +(i < 0 || len <= i)
+    ) {
+      iterate(assertions[i], phase)
+    }
+  }
+})
+
+type Helper = ReturnType<typeof createHelper>
 
 function describeAction(
   actionName: string,
-  cb: (helpers: any, ...rest: any) => any
+  cb: (helpers: Helper, ...rest: any) => any
 ): void
 function describeAction(
   actionName: string,
   dependentActions: Array<string>,
-  cb: (helpers: any, ...rest: any) => any
+  cb: (helpers: Helper, ...rest: any) => any
 ): void
 
 function describeAction(
   actionName: string,
-  dependentActions: Array<string> | ((helpers: any, ...rest: any) => any),
-  cb?: (helpers: any, ...rest: any) => any
+  dependentActions: Array<string> | ((helpers: Helper, ...rest: any) => any),
+  cb?: (helpers: Helper, ...rest: any) => any
 ) {
   if(!Array.isArray(dependentActions)) {
     cb = dependentActions
@@ -48,62 +109,9 @@ function describeAction(
 
   const actionsMap = new Map(actions)
 
-  const helpers: any = {
-    mocked: {
-      uniqueId: <jest.Mocked<typeof uniqueId>>jest.mocked(uniqueId)
-    },
-    createState(layouts = setup.MinimalLayouts): [ Page, State ] {
-      if(layouts instanceof Layout)
-        layouts = new Map([ [ layouts.id, layouts ] ])
+  const _helpers = createHelper({ actionsMap, actionName })
 
-      const page = new Page(layouts, new Map(actionsMap))
-      const state = new State({ modules: { page }})
-      return [ page, state ]
-    },
-    createAct(...args: ConstructorParameters<typeof Act<ActTarget>> |
-                  Omit<ConstructorParameters<typeof Act<ActTarget>>, 0>): Act<ActTarget> {
-      // ¯\_(ツ)_/¯
-      if(!(typeof args[0] === 'string' && actionsMap.has(args[0]))) // FIXME
-        args.unshift(actionName)
-
-      return new Act(...<ConstructorParameters<typeof Act<ActTarget>>>args)
-    },
-    checkTimeParadox(state: State, assertions: Array<Function | Act>) {
-      const runAct = act => {
-        if(act instanceof Function)
-          act = act()
-        if(act instanceof Act)
-          state.perform(act)
-      }
-
-      const iterate = (item, phase) => {
-        const direction = phase % 2
-
-        if(item instanceof Function && item.name === 'act' || item instanceof Act)
-          if(phase === 0)
-            runAct(item)
-          else if(direction === 0)
-            state.redo()
-          else
-            state.undo()
-
-        else if(item instanceof Function)
-          item()
-      }
-
-      // run tests forward & back & forward
-      // set more phases to extend loops
-      const len = assertions.length
-      for(
-        let i = 0, phase = 0;
-        0 <= i && i < len && phase <= 2;
-        phase % 2? i++ : i--, phase += +(i < 0 || len <= i)
-      )
-        iterate(assertions[i], phase)
-    }
-  }
-
-  return describe('Action: ' + actionName, (...args) => cb(helpers, ...args))
+  return describe('Action: ' + actionName, (...args) => cb(_helpers, ...args))
 }
 
 export default describeAction

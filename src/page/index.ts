@@ -64,7 +64,6 @@ export default class Page extends Module {
       // lv2: use 'broken' layout even for worst case
 
       if(!recoveredLayout && !(providedLayouts && !foundLayout)) {
-        console.log
         throw new ReferenceError(`layout '${layoutId}' of layer '${id}' `
           + `couldn't be found from layout list which was provided`)
       }
@@ -108,13 +107,13 @@ export default class Page extends Module {
     }
   }
   getLayerByPath(path: Path): Layer | undefined {
-    return this.state[this._stateLookup[path.layer]] ?? this.state.find((layer: Layer) => layer.id === path.layer)
+    return /*this.state[this._stateLookup[path.layer]] ??*/ this.state.find((layer: Layer) => layer.id === path.layer)
   }
   pathToIndex(path: Path): number | undefined {
     let found
 
-    found = this._stateLookup[path.layer]
-    if(found != null) return found
+    // found = this._stateLookup[path.layer]
+    // if(found != null) return found
 
     found = this.state.findIndex((layer: Layer) => layer.id === path.layer)
     return found >= 0? found : undefined; // INTENDED
@@ -174,13 +173,35 @@ export default class Page extends Module {
   reorderLayer(at: Path | number, toWhere: Path | number) {
     const from = typeof at === 'number'? at : this.pathToIndex(at)!
     const to = typeof toWhere === 'number'? toWhere : this.pathToIndex(toWhere)!
+    // console.log(`moving layer #${from} (path ${at.toString()} id ${this.state[from].id}) to #${to} (path ${toWhere.toString()} id ${this.state[to].id})`)
     const [ target ] = this.state.splice(from, 1)
-
     this.state.splice(to, 0, target)
 
     this._updateLookup()
     // kindly tell back as indexes
     return [ from, to ]
+  }
+  reorderMultipleLayers(layers: Array<Path>, toWhere: Path | number): [[number, number][], number] {
+    const originalTo = typeof toWhere === 'number'? toWhere : this.pathToIndex(toWhere)!
+    let to = originalTo
+    let fromDelta = 0
+    const indexes = layers.map(path => this.pathToIndex(path)!).sort()
+
+    const history: Array<[number, number]> = indexes.map((preFrom, index) => {
+      let [ from ] = this.reorderLayer(preFrom - (preFrom < to? index : 0), to)
+      if(from >= to)
+        to++
+      return [ from, to ]
+    })
+
+    console.log(history)
+    return [ history, originalTo ]
+  }
+  restoreMultipleLayers(history: Array<[number, number]>) {
+    for(let i = history.length - 1; i >= 0; i--) {
+      let [from, to] = history[i]
+      this.reorderLayer(to, from)
+    }
   }
   removeLayer(path: Path): number | undefined {
     const index = this.pathToIndex(path) ?? -1
@@ -195,6 +216,8 @@ export default class Page extends Module {
 
   setFocus(path?: Path | Paths) {
     // TODO: onfocuschange?
+    if(!path)
+      return
     if(path.type === 'paths')
       this.focus = path.paths[0]
     else
@@ -218,9 +241,9 @@ export default class Page extends Module {
       suffix = `…+${path.paths.length - 1}`
       path = path.paths[0]
     }
-    if(!path) return
-    const layout = this.getLayerByPath(path).layout
-    if(!layout) return
+    if(!path) return;
+    const layout = this.getLayerByPath(path)?.layout
+    if(!layout) return;
     const index = this.pathToIndex(path)
 
     const child = layout.params.get(path.child)

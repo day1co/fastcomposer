@@ -16,8 +16,8 @@ module.exports = {
   },
   testEnvironment: 'node',
   testMatch: [
-    '<rootDir>/**/*.spec.js',  '<rootDir>/**/*.spec.ts',
-    '<rootDir>/**/*.spec.jsx', '<rootDir>/**/*.spec.tsx',
+    '<rootDir>/src/**/*.spec.js',  '<rootDir>/src/**/*.spec.ts',
+    '<rootDir>/src/**/*.spec.jsx', '<rootDir>/src/**/*.spec.tsx',
   ],
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
 

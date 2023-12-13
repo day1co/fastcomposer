@@ -1,4 +1,5 @@
 import type Action from '../../state/action'
+import type ActTarget from '../../state/acttarget'
 import type Page from '..'
 
 // FIXME: ?????
@@ -13,7 +14,9 @@ import Layer_Item_Remove from './Layer.Item.Remove'
 import Layer_Hide from './Layer.Hide'
 // './Layer.Clear'
 
-export default new Map<string, Action<Page>>([
+// type ExtractGenerics<P> = P extends Action<infer T, infer U> ? [T, U] : never;
+
+export default new Map([
   // Document_Clear
   Layer_New,
   Layer_Remove,
@@ -24,5 +27,4 @@ export default new Map<string, Action<Page>>([
   Layer_Item_Remove,
   Layer_Hide
   // Layer_Clear
-].map(module => [ module.id, module ])
-)
+].map(module => [ module.id, module ]))

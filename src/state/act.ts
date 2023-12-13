@@ -21,7 +21,8 @@ export default class Act<Target extends ActTarget = Path> {
 
   isComposableWith(act: Act<Target>) {
     return this.action === act.action &&
-          !this.sealed &&
+          !this.sealed && !act.sealed &&
+          this.target.type === act.target.type &&
           (this.target === act.target || this.target?.isEqual(act.target!))
   }
 

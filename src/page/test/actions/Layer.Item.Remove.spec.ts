@@ -1,6 +1,8 @@
 import describeAction from './describe-action'
 import * as setup from '../setup'
 
+import type Act from '../../../state/act'
+
 import Path from '../../path'
 
 describeAction('layer.item.remove', ['layer.new', 'layer.item.new', 'layer.edit'], helpers => {
@@ -12,9 +14,11 @@ describeAction('layer.item.remove', ['layer.new', 'layer.item.new', 'layer.edit'
   it('should work: do, undo, redo', () => {
     const [ page, state ] = helpers.createState(setup.ListLayout)
 
-    let actNew = helpers.createAct('layer.new', null, setup.ListLayout.id)
-    actNew = actNew.remember(null, path)
-    state.perform(actNew)
+    const actNew = <Act>state.perform(
+      helpers
+        .createAct('layer.new', null, setup.ListLayout.id)
+        .remember(null, path)
+    )
 
     state.perform(helpers.createAct('layer.item.new', path))
     state.perform(helpers.createAct('layer.item.new', path))
