@@ -290,7 +290,7 @@
     }
     /* TODO cleanup */
     &--checked {
-      .__item__group label .material-icons {
+      > .fc-layer-info label .material-icons {
         opacity: 0.9;
       }
     }
