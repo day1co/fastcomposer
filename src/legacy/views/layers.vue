@@ -200,15 +200,15 @@
       },
       moveCheckedUp() {
         const paths = new Paths(this.checkedLayers.map(_ => _.layer.path))
-        const firstIndex = this.checkedLayers[0].index
-        const target = this.page.indexToPath(firstIndex - 1)
+        const firstIndex = Math.max(0, this.checkedLayers[0].index - 1)
+        const target = this.page.indexToPath(firstIndex)
 
         this.state.act('layer.reorder', paths, target)
       },
       moveCheckedDown() {
         const paths = new Paths(this.checkedLayers.map(_ => _.layer.path))
-        const lastIndex = this.checkedLayers[this.checkedLayers.length - 1].index
-        const target = this.page.indexToPath(lastIndex + 1)
+        const lastIndex = Math.min(this.page.state.length - 1, this.checkedLayers[this.checkedLayers.length - 1].index + 1)
+        const target = this.page.indexToPath(lastIndex)
 
         this.state.act('layer.reorder', paths, target)
       },

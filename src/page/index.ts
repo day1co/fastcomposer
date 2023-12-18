@@ -185,16 +185,45 @@ export default class Page extends Module {
     const originalTo = typeof toWhere === 'number'? toWhere : this.pathToIndex(toWhere)!
     let to = originalTo
     let fromDelta = 0
-    const indexes = layers.map(path => this.pathToIndex(path)!).sort()
+    const indexes = layers.map(path => this.pathToIndex(path)!).sort((a, b) => a - b)
 
-    const history: Array<[number, number]> = indexes.map((preFrom, index) => {
-      let [ from ] = this.reorderLayer(preFrom - (preFrom < to? index : 0), to)
-      if(from >= to)
-        to++
-      return [ from, to ]
-    })
+    let left, right
 
-    console.log(history)
+    if(indexes.includes(to)) {
+      const chunks = indexes.reduce((p, c) => {
+        if(p.at(-1)?.at(-1) - c !== -1)
+          p.push([c])
+        else
+          p.at(-1).push(c)
+        return p
+      }, [])
+      const center = chunks.findIndex(_ => _.includes(to))
+
+      left = chunks.slice(0, center).flat()
+      right = chunks.slice(center + 1).flat()
+    } else {
+      let center = indexes.findIndex(i => to <= i)
+
+      if(center === -1)
+        if(indexes[indexes.length - 1] < to)
+          center = indexes.length
+        else
+          center = 0
+
+      left = indexes.slice(0, center)
+      right = indexes.slice(indexes[center] === to? center + 1 : center)
+    }
+
+
+    const history = [
+      ...left.map(_ => [_, _ + 1]).reverse(),
+      ...right.map(_ => [_, _ - 1])
+    ]
+
+    for(const [from, to] of history) {
+      this.reorderLayer(from, to)
+    }
+
     return [ history, originalTo ]
   }
   restoreMultipleLayers(history: Array<[number, number]>) {
