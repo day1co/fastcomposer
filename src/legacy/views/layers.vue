@@ -33,17 +33,17 @@
       <button
         class="fc-pane-title-button"
         @click="moveCheckedUp"
-        :disabled="!checkedCount || checkedCount === layers.length || isEveryCheckedLayersAreAtTop">
+        :disabled="!checkedCount || checkedCount === layers.length || areEveryCheckedLayersAtTop">
         <span class="material-icons">arrow_upward</span>
       </button>
       <button
         class="fc-pane-title-button"
         @click="moveCheckedDown"
-        :disabled="!checkedCount || checkedCount === layers.length || isEveryCheckedLayersAreAtBottom">
+        :disabled="!checkedCount || checkedCount === layers.length || areEveryCheckedLayersAtBottom">
         <span class="material-icons">arrow_downward</span>
       </button>
       <button class="fc-pane-title-button" :disabled="!checkedCount" @click="hideChecked">
-        <span class="material-icons">{{ checkedCount && isEveryCheckedLayerVisible? 'visibility_off' : 'visibility' }}</span>
+        <span class="material-icons">{{ checkedCount && areEveryCheckedLayerVisible? 'visibility_off' : 'visibility' }}</span>
       </button>
       <button class="fc-pane-title-button" @click="$emit('toggle-layouts')"> <!-- @click="onShowLayouts" -->
         <span class="material-icons">add</span>
@@ -54,7 +54,7 @@
         :class="{
           'fc-layer': true,
           'fc-layer--active': index === selected,
-          'fc-layer--checked': checked[index],
+          'fc-layer--checked': checked[layer.id],
           'fc-layer--hidden': layer.meta.hidden,
           'fc-layer--invalid': layer.meta.invalid.length,
           'has-syntax-error-tags': layer.hasSyntaxErrorTags
@@ -63,8 +63,13 @@
         ref="layers"
         :key="index">
         <div class="fc-layer-info" v-if="layer.layout" @click="$emit('selected', index)">
-          <label :for="`layer-${layer.id}`" >
-            <input :id="`layer-${layer.id}`" type="checkbox" v-model="checked[layer.id]" style="display: none" />
+          <label :for="`layer-${layer.id}`">
+            <input
+              :id="`layer-${layer.id}`"
+              type="checkbox"
+              v-model="checked[layer.id]"
+              style="display: none"
+              @click="e => $nextTick(() => onCheck(layer, e))" />
             <i class="material-icons">{{ checked[layer.id]? 'check_box' : 'check_box_outline_blank' }}</i>
           </label>
           <layout-info :layout="layer.layout" :index="index" class="small"></layout-info>
@@ -110,11 +115,10 @@
         }
       }
     },
-    data() {
-      return {
-        checked: {}
-      }
-    },
+    data: () => ({
+      checked: {},
+      lastClickedId: null
+    }),
     computed: {
       layers() {
         return this.page?.state ?? []
@@ -126,22 +130,31 @@
             const index = this.page.state.findIndex(l => l.id === id)
             if(index == null) return
             const layer = this.page.state[index]
+            if(layer == null) return
             return { index, layer }
           })
           .sort((a, b) => a.index - b.index)
           .filter(l => l)
       },
+      areCheckedLayersContinuous() {
+        return this.checkedLayers.reduce((p, { index: c }, i, l) => {
+          if(!p) return c
+          else if(p < 0) return p
+          else if((c - p) === 1) return c
+          else return -1
+        }, null) > 0
+      },
       checkedCount() {
         return this.checkedLayers.length
       },
-      isEveryCheckedLayerVisible() {
+      areEveryCheckedLayerVisible() {
         return this.checkedLayers.every(l => !l.layer.meta.hidden)
       },
-      isEveryCheckedLayersAreAtTop() {
+      areEveryCheckedLayersAtTop() {
         const last = this.checkedLayers[this.checkedLayers.length - 1]?.index
         return this.checkedLayers.length === (last + 1)
       },
-      isEveryCheckedLayersAreAtBottom() {
+      areEveryCheckedLayersAtBottom() {
         const first = this.checkedLayers[0]?.index
         return this.checkedLayers.length === (this.page.state.length - first)
       },
@@ -186,12 +199,46 @@
         this.state.act('layer.hide', paths)
       },
       moveCheckedUp() {
-        const paths = this.checkedLayers.map(_ => _.layer)
+        const paths = new Paths(this.checkedLayers.map(_ => _.layer.path))
+        // this.state.act('layer.reorder', paths)
       },
       moveCheckedDown() {
-        const paths = this.checkedLayers.map(_ => _.layer)
+        const paths = new Paths(this.checkedLayers.map(_ => _.layer.path))
+        // this.state.act('layer.reorder', paths)
+      },
+      onCheck(layer, e) {
+        const findIndex = id => this.page.state.findIndex(layer => layer.id === id)
+
+        const shift = e.shiftKey
+
+        const id = layer.id
+        const checked = !this.checked[id]
+
+        const from = findIndex(this.lastClickedId)
+        console.log(id, from, this.lastClickedId, checked, shift)
+        // if(from < 0) {
+        //   this.lastClickedId = null
+        //   return
+        // }
+        //
+        if(shift && this.lastClickedId) {
+          if(this.checkedCount) {
+            const to = findIndex(id)
+            const layers = this.page.state.slice(Math.min(from, to), Math.max(from, to) + 1)
+            const checked = Object.fromEntries(layers.map(layer => [ layer.id, true ]))
+
+            e.preventDefault()
+            this.$nextTick(() => this.$set(this, 'checked', checked))
+          } else {
+            this.lastClickedId = id
+          }
+        } else if(checked) {
+          this.lastClickedId = id
+        } else {
+          this.lastClickedId = null
+        }
       }
-    },
+    }
   }
 </script>
 <style lang="scss">
