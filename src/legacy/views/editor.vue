@@ -84,6 +84,9 @@ export default {
 .fc-editor {
   position: relative;
   padding: 0.8rem;
+  min-height: 100%;
+
+  background: $secondary;
 
   > .fc-layout-info  {
     margin-bottom: 0.8rem;
