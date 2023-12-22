@@ -1,7 +1,7 @@
 <template>
   <li class="fc-history-item">
     <img
-      class="fc-history-icon"
+      class="fc-history-icon fc--invert-on-dark"
       :src="icon" />
     <label class="fc-history-label">
       {{ action.title }}
@@ -43,6 +43,10 @@ export default {
   line-height: 2.4rem;
   padding: 0.2rem;
 
+  .fc-history-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
   &.current {
     box-shadow: 0 0 0 0.2rem $foreground;
   }

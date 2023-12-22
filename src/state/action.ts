@@ -7,6 +7,7 @@ import Module from './module'
 export default interface Action<T extends Module, Target extends ActTarget> {
   id: string
   title: string
+  icon?: string
   perform(root: State, self: T, act: Act<Target>): Act<Target>
   // return null to discard current act
   compose?(root: State, self: T, previousAct: Act<Target>, act: Act<Target>): Act<Target> | null

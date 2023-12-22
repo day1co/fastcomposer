@@ -4,9 +4,12 @@ import type Path from '../path'
 
 import { Paths } from '../path'
 
+import icon from './icons/Layer.Reorder.svg?raw'
+
 export default <Action<Page, Path | Paths>>{
   id: 'layer.reorder',
   title: '레이어 순서 변경',
+  icon,
   perform(root, self, act) {
     const targetLabel = self.describe(act.target)
 

@@ -3,9 +3,12 @@ import type Page from '..'
 import type Path from '../path'
 import type { Paths } from '../path'
 
+import icon from './icons/Layer.Hide.svg?raw'
+
 export default <Action<Page, Path | Paths>>{
   id: 'layer.hide',
   title: '레이어 숨기기',
+  icon,
   perform(root, self, act) {
     const path = act.target
     const paths = path.type === 'path'? [path] : path.paths

@@ -2,9 +2,12 @@ import type Action from '../../state/action'
 import type Page from '..'
 import type Path from '../path'
 
+import icon from './icons/Layer.Item.Remove.svg?raw'
+
 export default <Action<Page, Path>>{
   id: 'layer.item.remove',
   title: '레이어의 리스트 항목 제거',
+  icon,
   perform(root, self, act) {
     const path = act.target!
 

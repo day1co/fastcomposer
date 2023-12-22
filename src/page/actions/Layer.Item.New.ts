@@ -3,9 +3,12 @@ import type Page from '..'
 
 import Path from '../path'
 
+import icon from './icons/Layer.Item.New.svg?raw'
+
 export default <Action<Page, Path>>{
   id: 'layer.item.new',
   title: '레이어의 리스트 항목 추가',
+  icon,
   perform(root, self, act) {
     const path = act.target!
 

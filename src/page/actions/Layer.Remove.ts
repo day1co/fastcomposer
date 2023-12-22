@@ -3,9 +3,12 @@ import type Page from '..'
 
 import Path from '../path'
 
+import icon from './icons/Layer.Remove.svg?raw'
+
 export default <Action<Page, Path>>{
   id: 'layer.remove',
   title: '레이어 삭제',
+  icon,
   perform(root, self, act) {
     const path = act.target
 

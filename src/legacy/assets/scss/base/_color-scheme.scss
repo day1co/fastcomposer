@@ -38,6 +38,9 @@
 
 .fc-composer, .fc-composer__dark {
   @include color-scheme-dark;
+  .fc--invert-on-dark {
+    filter: invert(1);
+  }
 }
 .fc-composer__light {
   @include color-scheme-light;
@@ -45,5 +48,8 @@
 @media (prefers-color-scheme: light) {
   .fc-composer.fc-composer {
     @include color-scheme-light;
+    .fc--invert-on-dark {
+      filter: none;
+    }
   }
 }
