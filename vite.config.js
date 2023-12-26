@@ -16,9 +16,11 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src')
     }
   },
-  lib: {
-    entry: path.join(__dirname, './src/index.js'),
-    formats: ['es', 'cjs']
+  build: {
+    lib: {
+      entry: path.join(__dirname, './src/legacy/index.js'),
+      formats: ['es', 'cjs']
+    },
   },
   server: {
     port: 18080,
