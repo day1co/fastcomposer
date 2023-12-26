@@ -326,6 +326,10 @@
       },
       onVerticalResize(e) {
         this.options.verticalSizes = e.map(_ => _.size)
+      },
+      // legacy api
+      setLayerBlockData(state) {
+        this.page.replaceState(state)
       }
     },
     computed: {
@@ -354,10 +358,6 @@
       // onToggleLayerVisibility
       isEverySelectedLayerVisible() {
         return !this.layers.filter(layer => layer.isChecked).some(layer => layer.hidden)
-      },
-      // legacy api
-      setLayerBlockData(state) {
-        this.page.replaceState(state)
       }
     },
     created() {
