@@ -8,7 +8,7 @@
     <div class="fcc-edit-file">
       <template v-if="uploadState === 'READY'">
         <form enctype="multipart/form-data">
-          <input type="file" :accept="accept" @change="upload($event.target.files)" />
+          <input type="file" :accept="accept[param.type] ?? '*'" @change="upload($event.target.files)" />
         </form>
       </template>
       <template v-if="uploadState === 'UPLOADING'">
