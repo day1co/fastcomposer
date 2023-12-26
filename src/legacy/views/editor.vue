@@ -1,5 +1,5 @@
 <template>
-  <div class="fc-editor">
+  <div class="fcc-editor">
     <layout-info :layout="layer.layout" />
 
     <focus-loop is-visible>
@@ -81,14 +81,14 @@ export default {
 
 <style lang="scss">
 @import '../assets/scss/utils/utilities';
-.fc-editor {
+.fcc-editor {
   position: relative;
   padding: 0.8rem;
   min-height: 100%;
 
   background: $secondary;
 
-  > .fc-layout-info  {
+  > .fcc-layout-info  {
     margin-bottom: 0.8rem;
   }
   &__edit {
@@ -118,7 +118,7 @@ export default {
       > .spacer {
         flex-grow: 10000;
       }
-      .fc-tooltip-icon {
+      .fcc-tooltip-icon {
         align-self: center;
         margin-right: 0.2rem;
         opacity: 0.5;

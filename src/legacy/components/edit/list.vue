@@ -1,12 +1,12 @@
 <template>
-  <div class="fc-edit-list-wrap">
+  <div class="fcc-edit-list-wrap">
 
     <fieldset
-      class="fc-edit-list-entry"
+      class="fcc-edit-list-entry"
       v-for="(entry, index) in value"
       :key="index">
       <legend>
-        <button class="fc-edit-list-remove" @click="removeItem(index)">
+        <button class="fcc-edit-list-remove" @click="removeItem(index)">
           <i class="material-icons"> close </i>
         </button>
         <b>{{ index + 1 }}</b>/{{ value.length }}
@@ -19,7 +19,7 @@
     </fieldset>
 
     <button
-      class="fc-edit-list-new"
+      class="fcc-edit-list-new"
       @click="addItem"
       :disabled="value.length >= param.maxLength">
       새 항목 추가 ({{ value.length }}/{{ param.maxLength }})
@@ -54,14 +54,14 @@ export default {
 
 @import '../../assets/scss/utils/utilities';
 
-.fc-edit-row-label--list {
+.fcc-edit-row-label--list {
   position: sticky;
   top: 0.4rem;
   z-index: 10;
   background-color: $background;
   box-shadow: -0.4rem 0 0 0.4rem $background, 0.4rem 0 0 0.4rem $background;
 }
-.fc-edit-list {
+.fcc-edit-list {
   &-item {
     border-left: 0.4rem solid $primary;
     padding-left: 1.2rem;
@@ -88,7 +88,7 @@ export default {
       background: #8884;
       font-variant-numeric: tabular-nums;
     }
-    > .fc-edit {
+    > .fcc-edit {
       --__invalid_background_padding_x: 0.2rem;
       margin-top: -0.6rem;
       margin-bottom: 0.6rem;

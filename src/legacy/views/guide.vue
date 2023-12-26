@@ -1,5 +1,5 @@
 <template>
-  <div slot="main" class="fc-guide">
+  <div slot="main" class="fcc-guide">
     <table>
       <thead>
       <tr>

@@ -1,5 +1,5 @@
 <template>
-  <div class="fc-edit-input fc-edit-input--textarea">
+  <div class="fcc-edit-input fcc-edit-input--textarea">
     <textarea
       rows="5"
       :id="inputId"
@@ -36,7 +36,7 @@ export default {
 
 @import '../../assets/scss/utils/utilities';
 
-.fc-edit-input > textarea {
+.fcc-edit-input > textarea {
    resize: vertical;
    padding-top: 0.8rem;
 }

@@ -1,9 +1,9 @@
 <template>
-  <li class="fc-history-item">
+  <li class="fcc-history-item">
     <img
-      class="fc-history-icon fc--invert-on-dark"
+      class="fcc-history-icon fcc--invert-on-dark"
       :src="icon" />
-    <label class="fc-history-label">
+    <label class="fcc-history-label">
       {{ action.title }}
       <small v-if="label">{{ label }}</small>
     </label>
@@ -38,12 +38,12 @@ export default {
 
 @import '../../assets/scss/utils/utilities';
 
-.fc-history-item {
+.fcc-history-item {
   background: $primary;
   line-height: 2.4rem;
   padding: 0.2rem;
 
-  .fc-history-icon {
+  .fcc-history-icon {
     width: 2.4rem;
     height: 2.4rem;
   }

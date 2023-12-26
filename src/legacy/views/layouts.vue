@@ -1,32 +1,32 @@
 <template>
-  <div class="fc-layout">
+  <div class="fcc-layout">
     <!-- TODO: favorite layouts here? reimpl as sidebar?-->
-    <div class="fc-layout--wrapper">
+    <div class="fcc-layout--wrapper">
       <input
         type="search"
         ref="search"
         v-model="query"
-        class="fc-layout__search"
+        class="fcc-layout__search"
         @keydown="keydown" />
 
-      <ul class="fc-layout__list">
+      <ul class="fcc-layout__list">
         <li
           v-for="([name, layout], index) in searchResult"
           :key="index"
           ref="layouts"
-          class="fc-layout__list__item">
+          class="fcc-layout__list__item">
 
             <button
               @click="selected(layout)"
               @focus="focus(index)"
-              class="fc-layout__list__button"
+              class="fcc-layout__list__button"
               :class="{ active: index === focus }">
             <layout-info :layout="layout" />
           </button>
 
           <button
             @click="onAddFavoriteLayout(layout.id)"
-            class="fc-layout__list__favorite"
+            class="fcc-layout__list__favorite"
             tabindex="-1">
             <i class="material-icons">
               {{ favoriteLayoutIds.includes(layout.id)? 'favorite' : 'favorite_border' }}
@@ -35,7 +35,7 @@
         </li>
         <li
           v-if="!searchResult.length"
-          class="fc-layout__list__item--notfound">
+          class="fcc-layout__list__item--notfound">
           검색 결과가 없습니다.
         </li>
       </ul>
@@ -159,7 +159,7 @@ export default {
 @import '../assets/scss/utils/utilities';
 
 
-.fc-layout {
+.fcc-layout {
   position: absolute;
   top: 3.6rem;
   bottom: 0;

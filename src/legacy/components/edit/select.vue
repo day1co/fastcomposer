@@ -1,5 +1,5 @@
 <template>
-  <div class="fc-edit-input fc-edit-input--select">
+  <div class="fcc-edit-input fcc-edit-input--select">
     <select
       v-model="value">
       <option
@@ -13,8 +13,8 @@
       :key="index"
       :for="inputId + '-' + index"
       :class="[
-        'fc-edit-input__selection',
-        { 'fc-edit-input__selected': value === option }
+        'fcc-edit-input__selection',
+        { 'fcc-edit-input__selected': value === option }
       ]">
       <input
         type="radio"
@@ -45,7 +45,7 @@ export default {
 
 @import '../../assets/scss/utils/utilities';
 
-.fc-edit-input {
+.fcc-edit-input {
   &--select {
     display: flex;
     flex-wrap: wrap;

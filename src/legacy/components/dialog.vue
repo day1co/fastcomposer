@@ -1,17 +1,17 @@
 <template>
   <div ref="mask" :class="maskClass" v-if="maskVisible">
     <transition @after-leave="onAfterLeave">
-      <div class="fc-dialog" v-if="visible" :style="dialogStyles">
-        <div class="fc-dialog__container">
-          <div class="fc-dialog__header">
+      <div class="fcc-dialog" v-if="visible" :style="dialogStyles">
+        <div class="fcc-dialog__container">
+          <div class="fcc-dialog__header">
             <slot name="header"></slot>
-            <button class="fc-dialog__close-btn" @click="close">
+            <button class="fcc-dialog__close-btn" @click="close">
               <span class="material-icons">
                 close
               </span>
             </button>
           </div>
-          <div class="fc-dialog__content">
+          <div class="fcc-dialog__content">
             <slot name="main"></slot>
           </div>
         </div>
@@ -38,7 +38,7 @@
     },
     computed: {
       maskClass() {
-        return ['fc-dialog-mask', this.getPositionClass()];
+        return ['fcc-dialog-mask', this.getPositionClass()];
       },
     },
     methods: {
@@ -51,7 +51,7 @@
       getPositionClass() {
         const positions = ['left', 'right', 'top', 'bottom'];
         const pos = positions.find(item => item === this.position);
-        return pos ? `fc-dialog-mask--${pos}` : '';
+        return pos ? `fcc-dialog-mask--${pos}` : '';
       },
     },
     updated() {
@@ -62,7 +62,7 @@
   }
 </script>
 <style lang="scss" scoped>
-  .fc-dialog-mask {
+  .fcc-dialog-mask {
     position: absolute;
     top: 0;
     left: 0;
@@ -87,7 +87,7 @@
       justify-content: flex-start;
     }
   }
-  .fc-dialog {
+  .fcc-dialog {
     background-color: #ffffff;
     color: #111;
     font-size: 2rem;

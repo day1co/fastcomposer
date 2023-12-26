@@ -1,5 +1,5 @@
 <template>
-  <form class="fc-edit" @submit.prevent>
+  <form class="fcc-edit" @submit.prevent>
 
     <edit-entry
       v-for="[name, param] in params"

@@ -1,8 +1,8 @@
 <template>
-  <div class="fc-pane fc-layers">
-    <header class="fc-pane-title">
+  <div class="fcc-pane fcc-layers">
+    <header class="fcc-pane-title">
       <button
-        class="fc-pane-title-button"
+        class="fcc-pane-title-button"
         style="margin-left: -0.2rem"
         :disabled="!layers.length"
         @click="checkAll">
@@ -20,7 +20,7 @@
       <button class="btn narrow" @click="onDownBlock" :disabled="!checked.length || layers.length < 2">
         <span class="material-icons">arrow_downward</span>
       </button> -->
-      <label class="fc-pane-title-label">
+      <label class="fcc-pane-title-label">
         레이어
         {{layers.length}}개
         <template v-if="warnCount">
@@ -31,38 +31,38 @@
         </template>
       </label>
       <button
-        class="fc-pane-title-button"
+        class="fcc-pane-title-button"
         @click="moveCheckedUp"
         :disabled="!checkedCount || checkedCount === layers.length || areEveryCheckedLayersAtTop">
         <span class="material-icons">arrow_upward</span>
       </button>
       <button
-        class="fc-pane-title-button"
+        class="fcc-pane-title-button"
         @click="moveCheckedDown"
         :disabled="!checkedCount || checkedCount === layers.length || areEveryCheckedLayersAtBottom">
         <span class="material-icons">arrow_downward</span>
       </button>
-      <button class="fc-pane-title-button" :disabled="!checkedCount" @click="hideChecked">
+      <button class="fcc-pane-title-button" :disabled="!checkedCount" @click="hideChecked">
         <span class="material-icons">{{ checkedCount && areEveryCheckedLayerVisible? 'visibility_off' : 'visibility' }}</span>
       </button>
-      <button class="fc-pane-title-button" @click="$emit('toggle-layouts')"> <!-- @click="onShowLayouts" -->
+      <button class="fcc-pane-title-button" @click="$emit('toggle-layouts')"> <!-- @click="onShowLayouts" -->
         <span class="material-icons">add</span>
       </button>
     </header>
-    <Container class="fc-pane-content" @drop="onDrop" :get-ghost-parent="getGhostParent">
+    <Container class="fcc-pane-content" @drop="onDrop" :get-ghost-parent="getGhostParent">
       <Draggable
         :class="{
-          'fc-layer': true,
-          'fc-layer--active': index === selected,
-          'fc-layer--checked': checked[layer.id],
-          'fc-layer--hidden': layer.meta.hidden,
-          'fc-layer--invalid': layer.meta.invalid.length,
+          'fcc-layer': true,
+          'fcc-layer--active': index === selected,
+          'fcc-layer--checked': checked[layer.id],
+          'fcc-layer--hidden': layer.meta.hidden,
+          'fcc-layer--invalid': layer.meta.invalid.length,
           'has-syntax-error-tags': layer.hasSyntaxErrorTags
         }"
         v-for="(layer, index) in page.state"
         ref="layers"
         :key="index">
-        <div class="fc-layer-info" v-if="layer.layout" @click="$emit('selected', index)">
+        <div class="fcc-layer-info" v-if="layer.layout" @click="$emit('selected', index)">
           <label :for="`layer-${layer.id}`">
             <input
               :id="`layer-${layer.id}`"
@@ -74,16 +74,16 @@
           </label>
           <layout-info :layout="layer.layout" :index="index" class="small"></layout-info>
         </div>
-        <div class="fc-layer-buttons">
-          <button class="fc-layer-action" @click="state.act('layer.hide', layer.path)">
+        <div class="fcc-layer-buttons">
+          <button class="fcc-layer-action" @click="state.act('layer.hide', layer.path)">
             <i class="material-icons">
               {{ layer.meta.hidden? 'visibility_off' : 'visibility' }}
             </i>
           </button>
-          <button class="fc-layer-action" @click="duplicate(layer.path, index)">
+          <button class="fcc-layer-action" @click="duplicate(layer.path, index)">
             <i class="material-icons">file_copy</i>
           </button>
-          <button class="fc-layer-action" @click="remove(layer.path, index)">
+          <button class="fcc-layer-action" @click="remove(layer.path, index)">
             <i class="material-icons">delete</i>
           </button>
         </div>
@@ -250,7 +250,7 @@
 <style lang="scss">
   @import '../assets/scss/utils/utilities';
 
-  .fc-layer {
+  .fcc-layer {
     position: relative;
     margin: 0.2rem 0 0 0.2rem;
     padding: 0;
@@ -272,25 +272,25 @@
       box-shadow: 0 0 0 0.2rem #ffffff;
     }
     &--hidden {
-      .fc-layout-info {
+      .fcc-layout-info {
         opacity: 0.5;
         strong {
           text-decoration: line-through;
         }
       }
-      .fc-layer-buttons {
+      .fcc-layer-buttons {
         opacity: 0.2;
       }
     }
     &--invalid {
       background: $invalid;
-      &.fc-layer--active {
+      &.fcc-layer--active {
         background: $invalid-active;
       }
     }
     /* TODO cleanup */
     &--checked {
-      > .fc-layer-info label .material-icons {
+      > .fcc-layer-info label .material-icons {
         opacity: 0.9;
       }
     }
@@ -313,7 +313,7 @@
           opacity: 0.4;
         }
       }
-      .fc-layout-info {
+      .fcc-layout-info {
         padding: 0.4rem 0;
       }
     }

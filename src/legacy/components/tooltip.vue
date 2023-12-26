@@ -1,6 +1,6 @@
 <template>
-  <div class="fc-tooltip-icon" @mouseover="onOpen($event)" @mouseout="onClose($event)">
-    <i class="material-icons fc-tooltip-icon__content">info</i>
+  <div class="fcc-tooltip-icon" @mouseover="onOpen($event)" @mouseout="onClose($event)">
+    <i class="material-icons fcc-tooltip-icon__content">info</i>
   </div>
 </template>
 
@@ -21,8 +21,8 @@
     methods: {
       onOpen({ target }) {
         const { x, y } = target.getBoundingClientRect();
-        const el = document.querySelector('.fc-tooltip__content');
-        const { style } = document.querySelector('.fc-tooltip');
+        const el = document.querySelector('.fcc-tooltip__content');
+        const { style } = document.querySelector('.fcc-tooltip');
 
         el.innerHTML = this.message;
         style.display = 'block';
@@ -30,8 +30,8 @@
         style.left = `${x / 10}rem`;
       },
       onClose() {
-        const el = document.querySelector('.fc-tooltip__content');
-        const { style } = document.querySelector('.fc-tooltip');
+        const el = document.querySelector('.fcc-tooltip__content');
+        const { style } = document.querySelector('.fcc-tooltip');
 
         el.innerHTML = '';
         style.display = 'none';
@@ -41,7 +41,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .fc-tooltip-icon {
+  .fcc-tooltip-icon {
     position: relative;
     display: inline-block;
     font-size: 0;

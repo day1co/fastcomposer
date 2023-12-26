@@ -1,23 +1,23 @@
 <template>
-  <div class="fc-pane fc-history">
-    <header class="fc-pane-title">
-      <label class="fc-pane-title-label">
+  <div class="fcc-pane fcc-history">
+    <header class="fcc-pane-title">
+      <label class="fcc-pane-title-label">
         작업 내역 ← {{ past.length }} / {{ future.length }} →
       </label>
       <button
-        class="fc-pane-title-button"
+        class="fcc-pane-title-button"
         :disabled="!past.length"
         @click="state.undo()">
         <span class="material-icons">undo</span>
       </button>
       <button
-        class="fc-pane-title-button"
+        class="fcc-pane-title-button"
         :disabled="!future.length"
         @click="state.redo()">
         <span class="material-icons">redo</span>
       </button>
     </header>
-    <ul class="fc-pane-content fc-history-list">
+    <ul class="fcc-pane-content fcc-history-list">
       <history-item
         :class="{
           past: true,
@@ -87,8 +87,8 @@ export default {
 
 @import '../../assets/scss/utils/utilities';
 
-.fc-history-list {
-  > .fc-history-item {
+.fcc-history-list {
+  > .fcc-history-item {
     margin: 0.4rem 0 0.4rem 0.4rem;
   }
 }

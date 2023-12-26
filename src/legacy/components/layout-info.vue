@@ -1,7 +1,7 @@
 <template>
-  <figure class="fc-layout-info">
-    <img class="fc-layout-info__icon" :src="icon" :alt="layout.id" />
-    <figcaption class="fc-layout-info__label">
+  <figure class="fcc-layout-info">
+    <img class="fcc-layout-info__icon" :src="icon" :alt="layout.id" />
+    <figcaption class="fcc-layout-info__label">
       <strong class="__item__group__name"> {{ layout.id }} </strong>
       <span v-if="index != null"> #{{ index }} </span>
       <br />
@@ -43,7 +43,7 @@ export default {
 
 @import '../assets/scss/utils/utilities';
 
-.fc-layout-info {
+.fcc-layout-info {
   display: flex;
   align-items: center;
 
@@ -55,7 +55,7 @@ export default {
 
     margin-right: 0.6rem;
 
-    .fc-composer__simple-layers & {
+    .fcc-composer__simple-layers & {
       width: $layer-icon-size * 0.666;
       height: $layer-icon-size * 0.666;
     }
@@ -64,7 +64,7 @@ export default {
     width: $layer-icon-size * 0.8;
     height: $layer-icon-size * 0.8;
 
-    .fc-composer__simple-layers & {
+    .fcc-composer__simple-layers & {
       width: $layer-icon-size * 0.5;
       height: $layer-icon-size * 0.5;
     }
@@ -86,7 +86,7 @@ export default {
     > span {
       opacity: 0.5;
     }
-    .fc-composer__simple-layers & {
+    .fcc-composer__simple-layers & {
       display: flex;
       gap: 0.3em;
 

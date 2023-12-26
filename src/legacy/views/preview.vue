@@ -1,17 +1,17 @@
 <template>
-  <div class="fc-preview" tabindex="-1">
-    <div class="fc-preview__container">
+  <div class="fcc-preview" tabindex="-1">
+    <div class="fcc-preview__container">
       <div
         v-for="(block, blockIndex) in blocks"
-        :class="['fc-block', {
-          'fc-selected': blockIndex === selected,
-          'fc-hidden': block.meta.hidden,
-          'fc-invalid': block.meta.invalid.length
+        :class="['fcc-block', {
+          'fcc-selected': blockIndex === selected,
+          'fcc-hidden': block.meta.hidden,
+          'fcc-invalid': block.meta.invalid.length
         }]"
         :key="'block-' + blockIndex"
         ref="layers"
         @click="select(blockIndex)">
-        <div class="fc-block__info">
+        <div class="fcc-block__info">
           <div>
             <b>{{ block.layout.id }}</b>
             <br />
@@ -19,9 +19,9 @@
           </div>
         </div>
         <div
-          class="fc-block__container"
+          class="fcc-block__container"
           :id="block.id"
-          :class="'fc-layout-' + block.layout.id"
+          :class="'fcc-layout-' + block.layout.id"
           v-html="parserToHTML(block)"
         ></div>
       </div>
@@ -76,21 +76,21 @@
   $accent: #f00;
   $gutter-width: 3.2rem;
 
-  .fc-preview {
+  .fcc-preview {
     // overflow: auto;
     background: #fff;
 
     box-shadow: $gutter-width 0 0 $gutter-default inset, -0.4rem 0 0 $gutter-default inset;
   }
 
-  .fc-block {
+  .fcc-block {
     position: relative;
     display: grid;
     grid-template-columns: $gutter-width auto;
     border-right: 0.4rem solid $gutter-default;
 
-    &.fc-selected {
-      .fc-block__info {
+    &.fcc-selected {
+      .fcc-block__info {
         background: $gutter-active;
         &::after {
           display: none;
@@ -116,21 +116,21 @@
         pointer-events: none;
       }
     }
-    &.fc-hidden {
-      .fc-block__info {
+    &.fcc-hidden {
+      .fcc-block__info {
         background: $gutter-disabled;
         b {
           text-decoration: line-through;
         }
       }
     }
-    &.fc-invalid .fc-block__info {
+    &.fcc-invalid .fcc-block__info {
       background: $gutter-invalid-default;
     }
-    &.fc-invalid.fc-selected .fc-block__info {
+    &.fcc-invalid.fcc-selected .fcc-block__info {
       background: $gutter-invalid-active;
     }
-    &.fc-invalid.fc-selected::after {
+    &.fcc-invalid.fcc-selected::after {
       border-color: $invalid-active;
     }
     &__info {
@@ -158,7 +158,7 @@
       }
     }
 
-    .fc-block__preview {
+    .fcc-block__preview {
       flex: 0 0 0;
       width: 100%;
       outline: 1px dashed lightgray;
@@ -169,18 +169,18 @@
     }
   }
 
-  .fc-block.fc-hidden {
+  .fcc-block.fcc-hidden {
 
-    .fc-composer__hide-layer- & {
-      .fc-block__container {
+    .fcc-composer__hide-layer- & {
+      .fcc-block__container {
         opacity: 0.5;
       }
 
       background-color: #fff;
     }
-    .fc-composer__hide-layer-hatched &,
-    .fc-composer__hide-layer-gutter-only & {
-      .fc-block__container {
+    .fcc-composer__hide-layer-hatched &,
+    .fcc-composer__hide-layer-gutter-only & {
+      .fcc-block__container {
         opacity: 0.5;
       }
 
@@ -199,14 +199,14 @@
       background-size: 1rem 1rem;
       background-repeat: repeat;
     }
-    .fc-composer__hide-layer-gutter-only &,
-    .fc-composer__hide-layer-hide & {
-      .fc-block__container {
+    .fcc-composer__hide-layer-gutter-only &,
+    .fcc-composer__hide-layer-hide & {
+      .fcc-block__container {
         display: none;
       }
     }
-    .fc-composer__hide-layer-gutter-only & {
-      .fc-block__info {
+    .fcc-composer__hide-layer-gutter-only & {
+      .fcc-block__info {
         min-height: 1.5em;
       }
     }

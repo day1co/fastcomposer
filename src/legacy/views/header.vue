@@ -1,19 +1,19 @@
 <template>
   <header :class="[
-    'fc-header',
-    !favoriteLayouts.length && 'fc-header--no-favorites'
+    'fcc-header',
+    !favoriteLayouts.length && 'fcc-header--no-favorites'
   ]">
-    <div class="fc-header__h">
+    <div class="fcc-header__h">
       <h1>FastComposer</h1>
-      <span class="fc-header__subtitle">
+      <span class="fcc-header__subtitle">
         버전 {{ version }}
         <span v-show="saveTime">・ 최종 저장: {{ saveTime }}</span>
       </span>
     </div>
     <!-- TODO: move/reimpl elsewhere -->
-    <ul class="fc-header__favorite-layouts" v-if="favoriteLayouts.length">
-      <li class="fc-header__favorite-layout" v-for="(layout, index) in favoriteLayouts" :key="index">
-        <button class="fc-header__favorite-btn" @click="addLayer(layout)">
+    <ul class="fcc-header__favorite-layouts" v-if="favoriteLayouts.length">
+      <li class="fcc-header__favorite-layout" v-for="(layout, index) in favoriteLayouts" :key="index">
+        <button class="fcc-header__favorite-btn" @click="addLayer(layout)">
           <img :src="toIcon(layout.icon)" alt="" />
           {{ layout.id }}
         </button>
@@ -107,7 +107,7 @@
 <style lang="scss" scoped>
   @import '../assets/scss/style';
 
-  .fc-header {
+  .fcc-header {
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -118,14 +118,14 @@
     transition: none;  // admin과 충돌 이슈
 
     /* TODO reconsider with other layout elms */
-    .fc-composer__simple-favorites &, &--no-favorites {
+    .fcc-composer__simple-favorites &, &--no-favorites {
 
-      .fc-header__h {
+      .fcc-header__h {
         display: flex;
         margin-right: auto;
         padding: 0.6rem 1.2rem;
       }
-      .fc-header__subtitle {
+      .fcc-header__subtitle {
         margin-left: 1.2rem;
         line-height: 2.8rem;
       }
@@ -142,7 +142,7 @@
       overflow-x: auto;
       overflow-y: hidden;
 
-      .fc-composer__simple-favorites & {
+      .fcc-composer__simple-favorites & {
         gap: 0;
       }
     }
@@ -153,7 +153,7 @@
       align-items: center;
       justify-content: center;
 
-      .fc-composer__simple-favorites & {
+      .fcc-composer__simple-favorites & {
         flex-direction: row;
       }
     }
@@ -164,7 +164,7 @@
       gap: 0 !important;
       line-height: 1.25em;
 
-      .fc-composer__simple-favorites & {
+      .fcc-composer__simple-favorites & {
         flex-direction: row;
         gap: 0.4rem !important;
       }
@@ -174,7 +174,7 @@
         height: 5rem;
         max-width: none;
 
-        .fc-composer__simple-favorites & {
+        .fcc-composer__simple-favorites & {
           width: 3rem;
           height: 3rem;
         }

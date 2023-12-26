@@ -1,5 +1,5 @@
 <template>
-  <div class="fc-edit-input fc-edit-input--text">
+  <div class="fcc-edit-input fcc-edit-input--text">
     <input
       :type="type"
       :id="inputId"
@@ -37,7 +37,7 @@ export default {
 
 @import '../../assets/scss/utils/utilities';
 
-.fc-edit-input > input[type="text"] {
+.fcc-edit-input > input[type="text"] {
 
 }
 

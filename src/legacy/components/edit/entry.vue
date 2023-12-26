@@ -1,12 +1,12 @@
 <template>
   <div :class="{
-    'fc-edit-row': true,
-    'fc-edit-row--invalid': invalid
+    'fcc-edit-row': true,
+    'fcc-edit-row--invalid': invalid
   }">
 
     <label :class="[
       'label',
-      'fc-edit-row-label--' + param.type
+      'fcc-edit-row-label--' + param.type
     ]" :for="inputId">
       <strong class="name">{{ param.label ?? param.name }}</strong>
       <small class="type">{{ param.type }}</small>
@@ -73,7 +73,7 @@ export default {
 
 @import '../../assets/scss/utils/utilities';
 
-.fc-edit-row {
+.fcc-edit-row {
   margin: 0.8rem 0;
 
   &--invalid {
@@ -100,7 +100,7 @@ export default {
       margin-right: auto;
     }
 
-    .fc-tooltip-icon {
+    .fcc-tooltip-icon {
       align-self: center;
       margin-right: 0.2rem;
       opacity: 0.5;
@@ -118,7 +118,7 @@ export default {
   }
 }
 
-.fc-edit-input {
+.fcc-edit-input {
 
   > input, > textarea, > select, &__selection {
     @include readable-font-features;

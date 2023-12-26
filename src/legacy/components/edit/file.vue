@@ -1,11 +1,11 @@
 <template>
-  <div class="fc-edit-input fc-edit-input--file">
+  <div class="fcc-edit-input fcc-edit-input--file">
     <input
       type="text"
       :id="inputId"
       :placeholder="param.placeholder"
       v-model="value" />
-    <div class="fc-edit-file">
+    <div class="fcc-edit-file">
       <template v-if="uploadState === 'READY'">
         <form enctype="multipart/form-data">
           <input type="file" :accept="accept" @change="upload($event.target.files)" />
@@ -95,7 +95,7 @@ export default {
 
 @import '../../assets/scss/utils/utilities';
 
-.fc-edit-input {
+.fcc-edit-input {
 
   input[type="file"] {
     color: $input-foreground;
@@ -133,7 +133,7 @@ export default {
     margin-right: 0.4rem;
   }
 
-  .fc-edit-file {
+  .fcc-edit-file {
     display: flex;
     flex-wrap: wrap;
     color: inherit;

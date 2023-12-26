@@ -1,7 +1,7 @@
 <template>
   <transition name="toast">
-    <div class="fc-toast" v-show="isActive" :class="'fc-' + type">
-      <p class="fc-toast__content">
+    <div class="fcc-toast" v-show="isActive" :class="'fcc-' + type">
+      <p class="fcc-toast__content">
         {{ message }}
       </p>
     </div>
@@ -44,13 +44,13 @@
 </script>
 
 <style lang="scss" scoped>
-  .fc-success {
+  .fcc-success {
     background: #2D9E2E;
   }
-  .fc-error {
+  .fcc-error {
     background: #FFB100;
   }
-  .fc-toast {
+  .fcc-toast {
     position: absolute;
     top: 0;
     left: 0;

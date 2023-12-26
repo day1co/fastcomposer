@@ -2,19 +2,19 @@
   <div
     tabindex="0"
   >
-    <div class="fc-composer"
+    <div class="fcc-composer"
      :class="[
-      'fc-composer--aside-l',
-      'fc-composer--aside-r',
-      !favoriteLayoutIds.length && 'fc-composer--no-favorites',
-      'fc-composer__' + options.colorMode,
-      'fc-composer__hide-layer-' + options.hideLayerMode,
-      options.simpleFavorites && 'fc-composer__simple-favorites',
-      options.simpleLayers && 'fc-composer__simple-layers'
+      'fcc-composer--aside-l',
+      'fcc-composer--aside-r',
+      !favoriteLayoutIds.length && 'fcc-composer--no-favorites',
+      'fcc-composer__' + options.colorMode,
+      'fcc-composer__hide-layer-' + options.hideLayerMode,
+      options.simpleFavorites && 'fcc-composer__simple-favorites',
+      options.simpleLayers && 'fcc-composer__simple-layers'
     ]"
     >
-      <div class="fc-tooltip">
-        <div class="fc-tooltip__content"></div>
+      <div class="fcc-tooltip">
+        <div class="fcc-tooltip__content"></div>
       </div>
       <!--알림-->
       <toast
@@ -119,44 +119,44 @@
           <h3> FastComposer 설정 </h3>
         </div>
         <div slot="main">
-          <p class="fc-option-row">
-            <label for="fc-options-colormode">
+          <p class="fcc-option-row">
+            <label for="fcc-options-colormode">
               테마:
             </label>
-            <select v-model="options.colorMode" id="fc-options-colormode">
+            <select v-model="options.colorMode" id="fcc-options-colormode">
               <option value=""> 자동 </option>
               <option value="light"> 밝게 </option>
               <option value="dark"> 어둡게 </option>
             </select>
           </p>
-          <p class="fc-option-row">
-            <label for="fc-options-hidelayermode">
+          <p class="fcc-option-row">
+            <label for="fcc-options-hidelayermode">
               미리보기 영역에서 <i class="material-icons">visibility_off</i> 레이어를:
             </label>
-            <select v-model="options.hideLayerMode" id="fc-options-hidelayermode">
+            <select v-model="options.hideLayerMode" id="fcc-options-hidelayermode">
               <option value=""> 흐리게 보이기 </option>
               <option value="hatched"> 흐리게 + 빗금 </option>
               <option value="gutter-only"> 레이어 정보만 보이기 </option>
               <option value="hide"> 완전히 숨기기 </option>
             </select>
           </p>
-          <p class="fc-option-row">
-            <label for="fc-options-simplefavorites">
+          <p class="fcc-option-row">
+            <label for="fcc-options-simplefavorites">
               레이아웃 즐겨찾기 얇게 표시:
             </label>
             <input
               type="checkbox"
               v-model="options.simpleFavorites"
-              id="fc-options-simplefavorites" />
+              id="fcc-options-simplefavorites" />
           </p>
-          <p class="fc-option-row">
-            <label for="fc-options-simplelayers">
+          <p class="fcc-option-row">
+            <label for="fcc-options-simplelayers">
               레이어 한 줄로 표시:
             </label>
             <input
               type="checkbox"
               v-model="options.simpleLayers"
-              id="fc-options-simplelayers" />
+              id="fcc-options-simplelayers" />
           </p>
         </div>
       </Dialog>
@@ -314,7 +314,7 @@
         const usedStyles = document.querySelectorAll("style[type='text/css']");
         const usedLinks = document.querySelectorAll("link[rel='stylesheet']");
 
-        const doc = this.$el.getElementsByClassName('fc-frame')[0].contentWindow.document;
+        const doc = this.$el.getElementsByClassName('fcc-frame')[0].contentWindow.document;
 
         [...usedStyles, ...usedLinks].forEach(el => doc.head.appendChild(el.cloneNode(true)));
         doc.head.innerHTML += '<style>body{background:#fff;color:#000}</style>'
@@ -416,21 +416,21 @@
 <style lang="scss">
   @import './../assets/scss/style.scss';
 
-  .fc-dialog__container {
+  .fcc-dialog__container {
     main {
       width: 100%;
       height: 100vh;
     }
-    .fc-frame-wrapper {
+    .fcc-frame-wrapper {
       &__selected {
         color: #FF0000;
       }
     }
   }
-  .fc-dialog__content {
+  .fcc-dialog__content {
     height: 100%;
   }
-  .fc-tooltip {
+  .fcc-tooltip {
     display: none;
     position: absolute;
     top: 0;
@@ -461,7 +461,7 @@
     }
   }
 
-  .fc-composer {
+  .fcc-composer {
     overflow-x: hidden;
     position: relative;
     box-sizing: border-box;
@@ -478,21 +478,21 @@
 
     &--flush {
       padding: 0;
-      .fc-composer__content {
+      .fcc-composer__content {
         margin-left: 0;
         margin-right: 0;
       }
     }
 
     &--no-favorites {
-      > .fc-layout {
+      > .fcc-layout {
         top: 0;
       }
     }
 
   }
 
-  .fc-layout-broken {
+  .fcc-layout-broken {
     padding: 10px;
     background: repeating-linear-gradient(
         45deg,
@@ -507,7 +507,7 @@
     }
   }
 
-  .fc-option-row {
+  .fcc-option-row {
     display: grid;
     grid-template-columns: auto 16rem;
     gap: 1rem;
