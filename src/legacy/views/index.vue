@@ -354,6 +354,10 @@
       // onToggleLayerVisibility
       isEverySelectedLayerVisible() {
         return !this.layers.filter(layer => layer.isChecked).some(layer => layer.hidden)
+      },
+      // legacy api
+      setLayerBlockData(state) {
+        this.page.replaceState(state)
       }
     },
     created() {

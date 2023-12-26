@@ -52,10 +52,15 @@ export default class Page extends Module {
       ? Page.tightenLooseLayouts(providedLayouts)
       : <LayoutMap>new Map()
 
+    const page = new Page(layouts)
+    page.replaceState(state)
+    return page
+  }
+  replaceState(state: Array<any>, providedLayouts?: LooseLayoutMap) {
     const result = state.map(layerdef => {
       const { id, layout } = layerdef
       const layoutId = typeof layout === 'string'? layout : layout.id
-      const foundLayout = <LegacyLayout>layouts.get(layoutId) // FIXME: will not work with non-legacy layout
+      const foundLayout = <LegacyLayout>this.getLayout(layoutId) // FIXME: will not work with non-legacy layout
       const recoveredLayout = LegacyLayout.fromDefinition(layout)
 
       // TODO: reconsider recover level; now using lv1
@@ -74,14 +79,12 @@ export default class Page extends Module {
       const layer = Layer.fromDump(layerdef, foundLayout || recoveredLayout)
 
       if(!foundLayout && recoveredLayout)
-        layouts.set(layer.layout.id, recoveredLayout)
+        this._layouts.set(layer.layout.id, recoveredLayout)
 
       return layer
     })
 
-    const page = new Page(layouts)
-    page.state = result
-    return page
+    this.state = result
   }
   dump() {
     return this.state.map(layer => layer.dump())

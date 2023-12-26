@@ -117,6 +117,9 @@
     transform: none; // admin과 충돌 이슈
     transition: none;  // admin과 충돌 이슈
 
+    white-space: nowrap;
+    word-break: keep-all;
+
     /* TODO reconsider with other layout elms */
     .fcc-composer__simple-favorites &, &--no-favorites {
 
