@@ -37,7 +37,7 @@
           <span class="material-icons">devices</span>
         </button> -->
         <button class="btn" @click="onShowModal">
-          <span class="material-icons">help</span>
+          <span class="material-icons">update</span>
         </button>
         <button class="btn" @click="showConfigWindow = true">
           <span class="material-icons">settings</span>
@@ -111,7 +111,10 @@
       </splitpanes>
 
       <Dialog :visible.sync="showModal">
-        <guide />
+        <div slot="header">
+          <h3> 패치노트 </h3>
+        </div>
+        <changelog slot="main" />
       </Dialog>
 
       <Dialog :visible.sync="showConfigWindow">
@@ -178,7 +181,7 @@
   import Layouts from './layouts.vue';
   import Layers from './layers.vue';
   import History from './history/index.vue';
-  import Guide from './guide.vue'
+  import Changelog from './changelog.vue'
 
   import Page from '../../page';
   import State from '../../state';
@@ -195,7 +198,7 @@
       Layers,
       History,
       Dialog,
-      Guide,
+      Changelog,
     },
     props: {
       layoutModels: {
