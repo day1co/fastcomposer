@@ -13,7 +13,7 @@
     <!-- TODO: move/reimpl elsewhere -->
     <ul class="fcc-header__favorite-layouts" v-if="favoriteLayouts.length">
       <li class="fcc-header__favorite-layout" v-for="(layout, index) in favoriteLayouts" :key="index">
-        <button class="fcc-header__favorite-btn" @click="addLayer(layout)">
+        <button class="fcc-header__favorite-btn" @click="addLayer(layout.id)">
           <img :src="toIcon(layout.icon)" alt="" />
           {{ layout.id }}
         </button>
