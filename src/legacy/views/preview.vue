@@ -21,7 +21,7 @@
         <div
           class="fcc-block__container"
           :id="block.id"
-          :class="'fcc-layout-' + block.layout.id"
+          :class="'fc-layout-' + block.layout.id"
           v-html="parserToHTML(block)"
         ></div>
       </div>
