@@ -98,6 +98,7 @@
   import { Container, Draggable } from "vue-smooth-dnd";
   import EventBus from '../event-bus.vue';
   import { Paths } from '../../page/path'
+  import Act from '../../state/act'
 
   export default {
     components: {
@@ -172,7 +173,8 @@
         if(removedIndex === addedIndex)
           return
 
-        this.state.act('layer.reorder', this.page.state[removedIndex].path, this.page.state[addedIndex].path)
+        const act = new Act('layer.reorder', this.page.state[removedIndex].path, this.page.state[addedIndex].path)
+        this.state.perform(act, false, true)
       },
       duplicate(path) {
         this.state.act('layer.duplicate', path)
