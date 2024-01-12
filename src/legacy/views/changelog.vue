@@ -1,15 +1,16 @@
 <template>
   <div class="fcc-changelog">
     <section>
+      <h4> 2.0.0-rc2 <date>2024/01/12</date> </h4>
+      <ul>
+        <li> 단일 레이어 순서변경을 실행 취소할 때 문제를 방지 </li>
+        <li> '최근 저장'이 레이어 즐겨찾기에 겹쳐 잘리는 문제 해결 </li>
+        <li> 스타일시트가 적용되지 않는 문제 해결 </li>
+      </ul>
+    </section>
+    <section>
       <h4> 2.0.0-rc1 <date>2023/12/28</date> </h4>
       <ul>
-        <li>
-          <b style="font-size:1.25em">
-            순서변경을 실행 취소하면 버그에 걸릴 수 있습니다!
-            <br />
-            금방 수정하겠습니다!!
-          </b>
-        </li>
         <li>
           설정 추가
           <ul>
