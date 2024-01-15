@@ -86,8 +86,20 @@ export default class Page extends Module {
 
     this.state = result
   }
-  dump() {
-    return this.state.map(layer => layer.dump())
+  dump(includeLayout = false, always = false) {
+    const includedLayouts = new Set()
+
+    return this.state.map(layer => {
+      if(includeLayout && always) {
+        return layer.dump(true)
+      } else if(!includeLayout) {
+        return layer.dump()
+      } else {
+        const dump = layer.dump(includeLayout && !includedLayouts.has(layer.layout.id))
+        includedLayouts.add(layer.layout.id)
+        return dump
+      }
+    })
   }
   render() {
     // TODO isolate?

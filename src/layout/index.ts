@@ -43,6 +43,23 @@ abstract class LayoutBase {
     ]))
   }
 
+  dump() {
+    return {
+      id: this.id,
+      meta: this.meta,
+      params: Object.fromEntries([...this.params.entries()].map(([key, item]) => {
+        if(item.type === 'list') {
+          const params = Object.fromEntries(item.params.entries())
+          return [ key, { ...item, params } ]
+        } else {
+          return [ key, item ]
+        }
+      })),
+      defaultValues: this.defaultValues,
+      template: this.template
+    }
+  }
+
   getListParams(key: string) {
     return (<ListLayoutParameter>this.params.get(key))?.params
   }

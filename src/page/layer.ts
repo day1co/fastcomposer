@@ -37,11 +37,12 @@ export default class Layer {
     return new Layer(id ?? uniqueId, layout, values, { hidden, invalid: [] })
   }
 
-  dump() {
+  dump(includeLayout = false) {
     return {
       id: this.id,
-      layout: this.layout.id,
-      values: this.values
+      layout: includeLayout? this.layout.dump() : this.layout.id,
+      values: this.values,
+      hidden: this.meta.hidden
     }
   }
   render(el: any) {

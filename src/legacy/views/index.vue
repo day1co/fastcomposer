@@ -307,7 +307,7 @@
         //const layers = this.layers.map(layer => Object.assign({}, layer, {layout: layer.layout.id}));
 
         // new format: embed layout itself
-        const layerJson = JSON.stringify(this.layers, null, 2);
+        const layerJson = JSON.stringify(this.page.dump(true), null, 2)
 
         // TODO: save html only!
         // AS-IS: save generated html with source json
