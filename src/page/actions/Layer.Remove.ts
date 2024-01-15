@@ -21,9 +21,11 @@ export default <Action<Page, Path>>{
     // if(self.state.length > removedIndex)
     //   moveFocusTo = self.state[removedIndex - 1]?.path
 
+    const pathBeforeRemoved = self.indexToPath(removedIndex)
+
     // self.moveFocus(moveFocusTo)
     self.setFocus()
-    return act.remember({ layer: oldLayer }, path) // , moveFocusTo)
+    return act.remember({ layer: oldLayer }, pathBeforeRemoved) // , moveFocusTo)
   },
   rollback(root, self, { target, destination, capturedState }) {
     self.setFocus(target)

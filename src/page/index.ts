@@ -153,8 +153,7 @@ export default class Page extends Module {
   }
   restoreLayer(after: Path | undefined, oldLayer: Layer) {
     // FIXME gonna throw them as-is?
-    const length = this.state.length
-    const index = after? this.pathToIndex(after) ?? length : length
+    const index = after? this.pathToIndex(after) ?? 0 : 0
 
     this.state.splice(index, 0, oldLayer)
 
