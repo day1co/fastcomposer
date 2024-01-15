@@ -1,6 +1,14 @@
 <template>
   <div class="fcc-changelog">
     <section>
+      <h4> 2.0.0-rc3 <date>2024/01/16</date> </h4>
+      <ul>
+        <li> 레이어 숨김 여부가 저장되지 않는 문제 수정 </li>
+        <li> 0번 레이어를 삭제하고 실행취소하면 1번이나 마지막으로 가는 문제 수정 </li>
+        <li> 저장 방식 개선 </li>
+      </ul>
+    </section>
+    <section>
       <h4> 2.0.0-rc2 <date>2024/01/12</date> </h4>
       <ul>
         <li> 단일 레이어 순서변경을 실행 취소할 때 문제를 방지 </li>
