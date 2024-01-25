@@ -92,11 +92,23 @@
     color: #111;
     font-size: 2rem;
     min-width: 45rem;
+    max-height: min(60rem, calc(100% - 4rem));
+
     &__header {
       display: flex;
     }
     &__container {
-      margin: 3rem;
+      display: flex;
+      flex-direction: column;
+
+      height: 100%;
+      padding: 2rem 3rem;
+      overflow: hidden;
+      min-height: 0;
+    }
+    &__content {
+      min-height: 0;
+      overflow-y: auto;
     }
     &__close-btn {
       margin-left: auto;
