@@ -147,6 +147,7 @@
       padding: 0;
       overflow-x: auto;
       overflow-y: hidden;
+      overscroll-behavior: contain;
 
       .fcc-composer__simple-favorites & {
         gap: 0;

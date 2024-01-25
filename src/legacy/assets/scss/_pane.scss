@@ -56,5 +56,6 @@
   > &-content {
     min-height: 0;
     overflow-y: scroll;
+    overscroll-behavior: contain;
   }
 }

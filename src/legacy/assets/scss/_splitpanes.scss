@@ -32,6 +32,7 @@ $splitter-visible: 2px;
   }
   > .splitpanes__pane.scrollable {
     overflow-y: auto;
+    overscroll-behavior: contain;
     min-height: 0;
   }
 }
