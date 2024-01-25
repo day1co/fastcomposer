@@ -26,7 +26,6 @@
         @validate="onValidateLayer"
       -->
       <composer-header
-        @show-info-tags="onShowModal"
         @add="onAddLayer"
         :favoriteLayoutIds="favoriteLayoutIds"
         :layouts="layoutModels"
@@ -36,10 +35,10 @@
         <!-- <button class="btn" @click="onToggleDeviceMode">
           <span class="material-icons">devices</span>
         </button> -->
-        <button class="btn" @click="onShowModal">
+        <button class="btn" @click="currentModal = 'changelog'">
           <span class="material-icons">update</span>
         </button>
-        <button class="btn" @click="showConfigWindow = true">
+        <button class="btn" @click="currentModal = 'config'">
           <span class="material-icons">settings</span>
         </button>
         <button class="btn" @click="page.validateAll()">
@@ -110,14 +109,14 @@
 
       </splitpanes>
 
-      <Dialog :visible.sync="showModal">
+      <Dialog :visible="currentModal === 'changelog'" @close="currentModal = null">
         <div slot="header">
           <h3> 패치노트 </h3>
         </div>
         <changelog slot="main" />
       </Dialog>
 
-      <Dialog :visible.sync="showConfigWindow">
+      <Dialog :visible="currentModal === 'config'" @close="currentModal = null">
         <div slot="header">
           <h3> FastComposer 설정 </h3>
         </div>
@@ -220,7 +219,7 @@
         state: new State(),
         selected: 0,
         favoriteLayoutIds: [],
-        showModal: false,
+        currentModal: null,
         layoutOpened: false,
         options: {
           colorMode: '',
@@ -244,7 +243,6 @@
             this.type = 'default';
           }
         },
-        showConfigWindow: false,
       };
     },
     methods: {
@@ -254,12 +252,6 @@
         } else {
           this.favoriteLayoutIds.push(layoutId);
         }
-      },
-      onShowModal() {
-        this.showModal = true;
-      },
-      onHideModal() {
-        this.showModal = false;
       },
       onToggleLayerState(index) {
         this.state.act('layer.hide', this.layers[index].path)

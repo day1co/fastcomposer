@@ -43,7 +43,7 @@
     },
     methods: {
       close() {
-        this.$emit('update:visible', false);
+        this.$emit('close');
       },
       onAfterLeave() {
         this.maskVisible = false;
