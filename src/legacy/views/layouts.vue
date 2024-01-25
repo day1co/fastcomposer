@@ -18,7 +18,6 @@
 
             <button
               @click="selected(layout)"
-              @focus="focus(index)"
               class="fcc-layout__list__button"
               :class="{ active: index === focus }">
             <layout-info :layout="layout" />
