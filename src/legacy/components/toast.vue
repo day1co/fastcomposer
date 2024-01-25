@@ -44,22 +44,31 @@
 </script>
 
 <style lang="scss" scoped>
+
+@import '../assets/scss/utils/utilities';
+
   .fcc-success {
-    background: #2D9E2E;
+    border-top: 0.2rem solid #2D9E2E;
   }
   .fcc-error {
-    background: #FFB100;
+    border-top: 0.2rem solid #FFB100;
   }
   .fcc-toast {
     position: absolute;
-    top: 0;
+    right: 0;
     left: 0;
+    top: 2rem;
+    margin: auto;
     display: flex;
-    width: 100%;
-    height: 8rem;
+    width: 32rem;
+    max-width: calc(100% - 2rem);
+    padding: 1rem;
+    font-size: 1.2em;
+    background: $secondary;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    box-shadow: 0 0 0.5rem #222;
     &__content {
       color: #ffffff;
       text-align: center;

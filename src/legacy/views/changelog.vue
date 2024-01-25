@@ -1,7 +1,7 @@
 <template>
   <div class="fcc-changelog">
     <section>
-      <h4> 2.0.0-rc3 <date>2024/01/16</date> </h4>
+      <h4> 2.0.0-rc3 <time>2024/01/16</time> </h4>
       <ul>
         <li> 레이어 숨김 여부가 저장되지 않는 문제 수정 </li>
         <li> 0번 레이어를 삭제하고 실행취소하면 1번이나 마지막으로 가는 문제 수정 </li>
@@ -9,7 +9,7 @@
       </ul>
     </section>
     <section>
-      <h4> 2.0.0-rc2 <date>2024/01/12</date> </h4>
+      <h4> 2.0.0-rc2 <time>2024/01/12</time> </h4>
       <ul>
         <li> 단일 레이어 순서변경을 실행 취소할 때 문제를 방지 </li>
         <li> '최근 저장'이 레이어 즐겨찾기에 겹쳐 잘리는 문제 해결 </li>
@@ -17,7 +17,7 @@
       </ul>
     </section>
     <section>
-      <h4> 2.0.0-rc1 <date>2023/12/28</date> </h4>
+      <h4> 2.0.0-rc1 <time>2023/12/28</time> </h4>
       <ul>
         <li>
           설정 추가
@@ -54,6 +54,11 @@ export default {}
 
   h4 {
     margin: 0.5em 0;
+    > time {
+      margin-left: .5em;
+      font-weight: 400;
+      opacity: 0.5;
+    }
   }
   date {
     font-weight: 300;

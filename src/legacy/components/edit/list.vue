@@ -82,6 +82,8 @@ export default {
 
       line-height: 2rem;
 
+      width: unset;
+
       margin-left: -.8rem;
       padding: 0.2em 0.5em;
 
