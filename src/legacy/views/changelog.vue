@@ -1,6 +1,13 @@
 <template>
   <div class="fcc-changelog">
     <section>
+      <h4> 2.0.0 <time>2024/01/25</time> </h4>
+      <ul>
+        <li> 토스트 알림 스타일 수정 </li>
+        <li> 그룹 값 수정 관련 디자인 문제 수정 </li>
+      </ul>
+    </section>
+    <section>
       <h4> 2.0.0-rc3 <time>2024/01/16</time> </h4>
       <ul>
         <li> 레이어 숨김 여부가 저장되지 않는 문제 수정 </li>
