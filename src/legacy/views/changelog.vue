@@ -57,7 +57,7 @@ export default {}
 
 .fcc-changelog {
   font-size: 0.8em;
-  padding-top: 1em;
+  padding-top: .5em;
 
   h4 {
     margin: 0.5em 0;

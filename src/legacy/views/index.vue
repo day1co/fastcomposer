@@ -415,20 +415,6 @@
 <style lang="scss">
   @import './../assets/scss/style.scss';
 
-  .fcc-dialog__container {
-    main {
-      width: 100%;
-      height: 100vh;
-    }
-    .fcc-frame-wrapper {
-      &__selected {
-        color: #FF0000;
-      }
-    }
-  }
-  .fcc-dialog__content {
-    height: 100%;
-  }
   .fcc-tooltip {
     display: none;
     position: absolute;
