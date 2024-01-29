@@ -67,7 +67,7 @@ export default {}
       opacity: 0.5;
     }
   }
-  date {
+  time {
     font-weight: 300;
     font-size: 0.8em;
   }
