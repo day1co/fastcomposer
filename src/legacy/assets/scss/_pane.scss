@@ -13,17 +13,32 @@
   user-select: none;
 
   > &-title {
-    display: flex;
-    align-items: center;
     position: sticky;
     top: 0;
 
+    z-index: 999;
+  }
+  > &-toolbar {
+    display: flex;
+    align-items: center;
+
     width: 100%;
+    padding: 0 0.2rem;
 
     line-height: 3.2rem;
     background-color: $background;
 
-    z-index: 999;
+    &--small {
+      line-height: 2.8rem;
+
+      .fcc-pane-toolbar-button {
+        padding: 0 0.4rem;
+      }
+
+      .material-icons {
+        font-size: 2rem;
+      }
+    }
 
     &-label {
       flex-grow: 1;
@@ -38,6 +53,7 @@
     &-button {
       padding: 0 0.2rem;
       height: 100%;
+      line-height: inherit;
 
       &:hover {
         background: #8884;
@@ -47,8 +63,13 @@
         opacity: 0.5;
       }
 
+      label {
+        line-height: inherit;
+        cursor: inherit;
+      }
       .material-icons {
         vertical-align: top;
+        line-height: inherit;
       }
     }
   }

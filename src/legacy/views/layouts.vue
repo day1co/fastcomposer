@@ -16,10 +16,10 @@
           ref="layouts"
           class="fcc-layout__list__item">
 
-            <button
-              @click="selected(layout)"
-              class="fcc-layout__list__button"
-              :class="{ active: index === focus }">
+          <button
+            @click="selected(layout)"
+            class="fcc-layout__list__button"
+            :class="{ active: index === focus }">
             <layout-info :layout="layout" />
           </button>
 
