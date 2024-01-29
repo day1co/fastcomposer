@@ -1,17 +1,17 @@
 <template>
   <div class="fcc-pane fcc-history">
-    <header class="fcc-pane-title">
-      <label class="fcc-pane-title-label">
+    <header class="fcc-pane-title fcc-pane-toolbar">
+      <label class="fcc-pane-toolbar-label">
         작업 내역 ← {{ past.length }} / {{ future.length }} →
       </label>
       <button
-        class="fcc-pane-title-button"
+        class="fcc-pane-toolbar-button"
         :disabled="!past.length"
         @click="state.undo()">
         <span class="material-icons">undo</span>
       </button>
       <button
-        class="fcc-pane-title-button"
+        class="fcc-pane-toolbar-button"
         :disabled="!future.length"
         @click="state.redo()">
         <span class="material-icons">redo</span>

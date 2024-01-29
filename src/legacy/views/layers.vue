@@ -1,8 +1,8 @@
 <template>
   <div class="fcc-pane fcc-layers">
-    <header class="fcc-pane-title">
+    <header class="fcc-pane-title fcc-pane-toolbar">
       <button
-        class="fcc-pane-title-button"
+        class="fcc-pane-toolbar-button"
         style="margin-left: -0.2rem"
         :disabled="!layers.length"
         @click="checkAll">
@@ -14,41 +14,41 @@
         : 'check_box_outline_blank'
         }}</span>
       </button>
-      <!-- <button class="btn narrow" @click="onUpBlock" :disabled="!checked.length || layers.length < 2">
-        <span class="material-icons">arrow_upward</span>
-      </button>
-      <button class="btn narrow" @click="onDownBlock" :disabled="!checked.length || layers.length < 2">
-        <span class="material-icons">arrow_downward</span>
-      </button> -->
-      <label class="fcc-pane-title-label">
-        레이어
-        {{layers.length}}개
-        <template v-if="warnCount">
-          <i class="material-icons">warning</i> {{ warnCount }}
-        </template>
-        <template v-if="checkedCount">
-          <i class="material-icons">check_box</i> {{ checkedCount }}
-        </template>
+      <label class="fcc-pane-toolbar-label">
+        레이어 {{layers.length}}개
       </label>
       <button
-        class="fcc-pane-title-button"
+        class="fcc-pane-toolbar-button"
         @click="moveCheckedUp"
         :disabled="!checkedCount || checkedCount === layers.length || areEveryCheckedLayersAtTop">
         <span class="material-icons">arrow_upward</span>
       </button>
       <button
-        class="fcc-pane-title-button"
+        class="fcc-pane-toolbar-button"
         @click="moveCheckedDown"
         :disabled="!checkedCount || checkedCount === layers.length || areEveryCheckedLayersAtBottom">
         <span class="material-icons">arrow_downward</span>
       </button>
-      <button class="fcc-pane-title-button" :disabled="!checkedCount" @click="hideChecked">
+      <button
+        class="fcc-pane-toolbar-button"
+        @click="hideChecked"
+        :disabled="!checkedCount">
         <span class="material-icons">{{ checkedCount && areEveryCheckedLayerVisible? 'visibility_off' : 'visibility' }}</span>
       </button>
-      <button class="fcc-pane-title-button" @click="$emit('toggle-layouts')"> <!-- @click="onShowLayouts" -->
+      <button class="fcc-pane-toolbar-button" @click="$emit('toggle-layouts')"> <!-- @click="onShowLayouts" -->
         <span class="material-icons">add</span>
       </button>
     </header>
+    <div class="fcc-pane-toolbar fcc-pane-toolbar--small">
+      <label class="fcc-pane-toolbar-label">
+        <template v-if="checkedCount">
+          <i class="material-icons">check_box</i> {{ checkedCount }}
+        </template>
+        <template v-if="warnCount">
+          <i class="material-icons">warning</i> {{ warnCount }}
+        </template>
+      </label>
+    </div>
     <Container class="fcc-pane-content" @drop="onDrop" :get-ghost-parent="getGhostParent">
       <Draggable
         :class="{
