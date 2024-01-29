@@ -1,9 +1,8 @@
 @import 'utils/variable';
 
 .fcc-pane {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: min-content 1fr;
+  display: flex;
+  flex-direction: column;
 
   background-color: $background;
 
@@ -78,5 +77,6 @@
     min-height: 0;
     overflow-y: scroll;
     overscroll-behavior: contain;
+    flex-grow: 100;
   }
 }
