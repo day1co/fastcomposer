@@ -34,6 +34,7 @@
 
 import { uniqueId } from '../../../util'
 
+import EventBus from '../../event-bus.vue'
 import mixin from './mixin.js'
 
 export default {
@@ -77,7 +78,7 @@ export default {
       }
     },
     cancel() {
-      this.$root.$emit('fc-upload', { id: this.currentId, type: 'CANCEL' })
+      EventBus.$emit('fc-upload', { id: this.currentId, type: 'CANCEL' })
       this.uploadState = 'READY'
       this.statePercent = 0
     }
