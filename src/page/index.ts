@@ -146,15 +146,15 @@ export default class Page extends Module {
 
     return layout
   }
-  createLayer(layoutId: string, layerId: string = uniqueId()) {
+  createLayer(layoutId: string, layerId: string = uniqueId(), values?: any) {
     const layout = this.getLayout(layoutId)
-    return new Layer(layerId, layout)
+    return new Layer(layerId, layout, values)
   }
 
   // editor actions
 
-  appendLayer(after: Path | undefined, layoutId: string, layerId?: string) {
-    const layer = this.createLayer(layoutId, layerId)
+  appendLayer(after: Path | undefined, layoutId: string, layerId?: string, values?: any) {
+    const layer = this.createLayer(layoutId, layerId, values)
     const length = this.state.length
     const index = (after? this.pathToIndex(after) ?? length : length) + 1
 

@@ -48,6 +48,19 @@
           <i class="material-icons">warning</i> {{ warnCount }}
         </template>
       </label>
+      <button
+        class="fcc-pane-toolbar-button"
+        @click="$emit('save-snippets', checkedLayers)"
+        :disabled="!checkedCount">
+        <span class="material-icons">attach_file</span>
+        <label> 스니펫 </label>
+      </button>
+      <button
+        class="fcc-pane-toolbar-button"
+        @click="$emit('toggle-snippets')">
+        <span class="material-icons">content_paste</span>
+        <label> 가져오기 </label>
+      </button>
     </div>
     <Container class="fcc-pane-content" @drop="onDrop" :get-ghost-parent="getGhostParent">
       <Draggable
