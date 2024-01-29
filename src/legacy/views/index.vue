@@ -85,10 +85,17 @@
                 :selected="page.focusedIndex"
                 @selected="index => page.setFocusByIndex(index)"
                 @toggle-layouts="toggleLayouts()"
+                @toggle-snippets="toggleSnippets()"
+                @save-snippets="onSaveSnippet"
                 ref="layers" />
 
+              <snippets
+                v-if="currentTab === 'snippets'"
+                :snippets="snippets"
+                @add-layers="onAddLayers" />
+
               <layouts
-                v-if="layoutOpened"
+                v-if="currentTab === 'layouts'"
                 @add-layer="onAddLayer"
                 @add-favorite-layout="onAddFavoriteLayout"
                 :favoriteLayoutIds="favoriteLayoutIds"
@@ -178,6 +185,7 @@
   import Editor from './editor.vue';
   import Preview from './preview.vue';
   import Layouts from './layouts.vue';
+  import Snippets from './snippets.vue';
   import Layers from './layers.vue';
   import History from './history/index.vue';
   import Changelog from './changelog.vue'
@@ -194,6 +202,7 @@
       Preview,
       Editor,
       Layouts,
+      Snippets,
       Layers,
       History,
       Dialog,
@@ -219,8 +228,9 @@
         state: new State(),
         selected: 0,
         favoriteLayoutIds: [],
+        snippets: [],
         currentModal: null,
-        layoutOpened: false,
+        currentTab: false,
         options: {
           colorMode: '',
           hideLayerMode: '',
@@ -263,11 +273,29 @@
         this.state.act('layer.new', this.currentLayer?.path, layout)
 
         this.focusEditor()
-        this.layoutOpened = false
+        this.currentTab = false
+      },
+      onAddLayers(snippet) {
+        this.state.act('layer.restore', this.currentLayer?.path, snippet)
+
+        this.focusEditor()
+        this.currentTab = false
+      },
+      onSaveSnippet(layers) {
+        const title = prompt('스니펫 제목을 입력하세요')
+        if(!title) return
+
+        this.snippets.push({
+          title,
+          layers: layers.map(_ => ({ layout: _.layer.layout.id, values: _.layer.values }))
+        })
+      },
+      toggleSnippets() {
+        this.currentTab = this.currentTab? null : 'snippets'
       },
       toggleLayouts() {
-        this.layoutOpened = !this.layoutOpened
-        if(this.layoutOpened)
+        this.currentTab = this.currentTab? null : 'layouts'
+        if(this.currentTab)
           this.$nextTick(() => this.$refs.layouts.clear())
       },
       onRemoveLayer(index) {
@@ -366,6 +394,11 @@
       } catch(e) {
         this.favoriteLayoutIds = []
       }
+      try {
+        this.snippets = JSON.parse(localStorage['fastcomposer-snippets']);
+      } catch(e) {
+        this.snippets = []
+      }
 
       this.options = {
         ...this.options,
@@ -389,6 +422,16 @@
         handler(to) {
           try {
             localStorage['favoriteLayouts'] = JSON.stringify(to) ?? []
+          } catch(e) {
+            console.error(e);
+          }
+        },
+        deep: true,
+      },
+      snippets: {
+        handler(to) {
+          try {
+            localStorage['fastcomposer-snippets'] = JSON.stringify(to) ?? []
           } catch(e) {
             console.error(e);
           }
