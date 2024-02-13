@@ -258,6 +258,10 @@
         } else {
           this.lastClickedId = null
         }
+      },
+      setChecked(ids) {
+        this.$set(this, 'checked', {})
+        this.$set(this, 'checked', Object.fromEntries(ids.map(_ => [ _, true ])))
       }
     }
   }

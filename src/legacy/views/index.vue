@@ -276,10 +276,13 @@
         this.currentTab = false
       },
       onAddLayers(snippet) {
-        this.state.act('layer.restore', this.currentLayer?.path, snippet)
+        const remembered = this.state.act('layer.restore', this.currentLayer?.path, snippet)
 
         this.focusEditor()
         this.currentTab = false
+
+        const ids = remembered.destination.paths.map(_ => _.layer)
+        this.$refs.layers.setChecked(ids)
       },
       onSaveSnippet(layers) {
         const title = prompt('스니펫 제목을 입력하세요')
