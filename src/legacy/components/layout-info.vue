@@ -12,6 +12,8 @@
 
 <script>
 
+import { iconToUri } from '../../util/index.ts'
+
 export default {
   props: {
     layout: {
@@ -23,16 +25,7 @@ export default {
   },
   computed: {
     icon() {
-      const icon = this.layout.meta.icon
-      if(!icon) {
-        return
-      } else if(/^<(?:\?xml |svg )/.test(icon)) {
-        return 'data:image/svg+xml;utf8,' + encodeURIComponent(icon)
-      } else if(/^data:image\//.test(icon)) {
-        return icon
-      } else {
-        return null
-      }
+      return iconToUri(this.layout.meta.icon)
     }
   }
 }
