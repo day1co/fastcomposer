@@ -26,6 +26,7 @@
 
 <script>
   import packageinfo from '../../../package.json';
+  import { iconToUri } from '../../util/index.ts'
 
   export default {
     methods: {
@@ -36,15 +37,7 @@
         this.$emit('add', layout);
       },
       toIcon(icon) {
-        if(!icon) {
-          return
-        } else if(/^<(?:\?xml |svg )/.test(icon)) {
-          return 'data:image/svg+xml;utf8,' + encodeURIComponent(icon)
-        } else if(/^data:image\//.test(icon)) {
-          return icon
-        } else {
-          return null
-        }
+        return iconToUri(icon)
       }
     },
     data() {
