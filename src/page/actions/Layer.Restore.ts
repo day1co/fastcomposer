@@ -2,8 +2,10 @@ import type Action from '../../state/action'
 import type Act from '../../state/act'
 import type Page from '..'
 import type Path from '../path'
+import type Snippets from '../../structs/Snippet'
 
 import { Paths } from '../path'
+
 import icon from './icons/Layer.New.svg?raw'
 
 export default <Action<Page, Path | Paths>>{
@@ -11,14 +13,21 @@ export default <Action<Page, Path | Paths>>{
   title: '레이어 가져오기',
   icon,
   perform(root, self, act) {
-    const { target, arg: snippet, destination } = <Act<Path>>act
-    const { title, layers } = snippet
-    const newPaths: Array<Path> = []
-    for(const layer of layers) {
+    const target = <Path>act.target
+    const destination = <Paths>act.destination
+
+    const { title, layers } = <Snippets>act.arg
+
+    const newPaths: Array<Path> = destination?.paths ?? []
+
+    for(let i = 0; i < layers.length; i++) {
+      const layer = layers[i]
       try {
-        const lastPath = newPaths.at(-1) || target
-        const { path } = self.appendLayer(lastPath, layer.layout, destination?.layer, layer.values)
-        newPaths.push(path)
+        const lastPath = i === 0? target : newPaths.at(i - 1)
+        const rememberedPath = newPaths.at(i) ?? null
+        const { path } = self.appendLayer(lastPath, layer.layout, rememberedPath?.layer, layer.values)
+        if(!rememberedPath)
+          newPaths.push(path)
       } catch(e) {
         console.error(e)
       }
@@ -36,5 +45,6 @@ export default <Action<Page, Path | Paths>>{
     for(const path of destination.paths) {
       self.removeLayer(path)
     }
+    self.setFocus(rememberedAct.target)
   }
 }
