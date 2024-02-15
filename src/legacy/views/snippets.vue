@@ -1,22 +1,35 @@
 <template>
   <div class="fcc-snippets">
-    <div class="fcc-snippets--wrapper">
-
-      <ul class="fcc-snippets__list">
-        <li class="fcc-snippets__list__item" v-for="snippet of snippets" @click="addSnippet(snippet)">
-          <svg width="24" height="24">
-            <path d="m1 1v16h16V1zm4 4v16h16V4z" fill="black" stroke="red" stroke-width="2" />
-          </svg>
-          <h3> {{ snippet.title }} </h3>
-          <p> {{ describeSnippet(snippet.layers) }} </p>
-        </li>
-      </ul>
-    </div>
+    <ul class="fcc-snippets-list">
+      <li class="fcc-snippet" v-for="snippet of snippets" @click="addSnippet(snippet)">
+        <div class="fcc-snippet-icon" :data-layers="snippet.layers.length">
+          <img
+            class="fcc-snippet-icon-inner"
+            v-for="layer of snippet.layers.slice(0, 3).reverse()"
+            :src="getLayoutIcon(layer.layout)" />
+        </div>
+        <div class="fcc-snippet-label">
+          <h3 class="fcc-snippet-title" :title="snippet.title"> {{ snippet.title }} </h3>
+          <p class="fcc-snippet-description"> {{ describeSnippet(snippet.layers) }} </p>
+        </div>
+        <button class="fcc-snippet-action">
+          <i class="material-icons">delete</i>
+        </button>
+      </li>
+      <li class="fcc-snippet--empty" v-if="!snippets?.length">
+        <h4>스니펫이 없습니다</h4>
+        <p>레이어를 선택하고 '스니펫'을 눌러서 저장하세요</p>
+      </li>
+    </ul>
   </div>
 </template>
+
 <script>
 
+import Page from '../../page'
+
 import LayoutInfo from '../components/layout-info.vue';
+import { iconToUri } from '../../util/index.ts'
 
 export default {
   components: {
@@ -26,23 +39,32 @@ export default {
     snippets: {
       type: Array,
       default: () => []
+    },
+    page: {
+      type: Page
     }
   },
-  data() {
-    return {
-    }
-  },
+  data: () => ({
+  }),
   methods: {
     addSnippet(snippet) {
       this.$emit('add-layers', snippet)
     },
     describeSnippet(layers) {
-      let label = layers.slice(0, 3).map(_ => _.layout).join(', ')
-      if(layers.length > 3) {
+      let label = layers.slice(0, 2).map(_ => _.layout).join(', ')
+      if(layers.length > 2) {
         label += '…'
       }
       label += ` (x${layers.length})`
       return label
+    },
+    getLayoutIcon(layoutId) {
+      try {
+        const layout = this.page.getLayout(layoutId)
+        return iconToUri(layout.meta.icon)
+      } catch(e) {
+        return ''
+      }
     }
   }
 }
@@ -61,7 +83,7 @@ export default {
 
   width: 100%;
   max-width: 40rem;
-  z-index: 19999;
+  z-index: 9999;
   color: $foreground;
 
   box-sizing: border-box;
@@ -83,48 +105,113 @@ export default {
     pointer-events: none;
   }
 
-  &--wrapper {
-    display: grid;
-    grid-template-rows: 3rem minmax(0, 1fr);
+  &-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0.8rem;
+    gap: 0.8rem;
+
     height: 100%;
-  }
-
-  &__list {
     min-height: 0;
-    // overflow-y: auto;
-    padding: 0.4rem 0;
+    overflow-y: auto;
+  }
+}
 
-    &__item{
-      display: flex;
-      flex-direction: row;
-      gap: 0.4em;
-      padding: 0.4rem 0.8rem;
+.fcc-snippet {
+  display: flex;
 
-      word-break: nowrap;
-      white-space: keep-all;
+  user-select: none;
+  cursor: pointer;
 
-      &--notfound {
-        padding: 3.2rem 0;
-        text-align: center;
-        opacity: 0.5;
+  &-icon {
+    flex-shrink: 0;
+
+    position: relative;
+
+    width: 5rem;
+    height: 5rem;
+
+    .fcc-snippet-icon-inner {
+      position: absolute;
+      left: 0;
+      top: 0;
+
+      width: 70%;
+      height: 70%;
+      + .fcc-snippet-icon-inner {
+        left: 15%;
+        top: 15%;
+        + .fcc-snippet-icon-inner {
+          left: 30%;
+          top: 30%;
+        }
       }
-
     }
 
-    &__button {
-      display: flex;
-      flex-grow: 100;
-      margin-right: 0.8rem;
-      color: inherit;
-    }
-    &__favorite {
-      color: $foreground;
+    &[data-layers="1"] .fcc-snippet-icon-inner {
+      width: 90%;
+      height: 90%;
     }
 
-    .active {
-      box-shadow: 0 0 0 0.2rem red;
+    &[data-layers="2"] .fcc-snippet-icon-inner {
+      width: 80%;
+      height: 80%;
+      + .fcc-snippet-icon-inner {
+        left: 20%;
+        top: 20%;
+      }
     }
   }
+
+  &-label {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.8rem;
+    margin-left: 0.8rem;
+    padding: 0.7rem 0;
+
+    flex-grow: 1;
+    min-width: 0;
+
+    white-space: nowrap;
+    word-break: keep-all;
+  }
+  &-title {
+    font-size: 1.2em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+  &-description {
+    font-size: 1em;
+    white-space: nowrap;
+    word-break: keep-all;
+    flex-shrink: 0;
+  }
+  &-action {
+    padding: 0.4rem;
+
+    &:hover {
+      background: #8883;
+    }
+  }
+
+  .fcc-composer__simple-layers & {
+    // grid-template-columns: 3.2rem auto auto;
+    // grid-template-rows: auto auto;
+
+    &-icon {
+      width: 3.2rem;
+      height: 3.2rem;
+    }
+
+    &-label {
+      flex-direction: row;
+      gap: 0.4rem;
+    }
+  }
+
 }
 
 </style>

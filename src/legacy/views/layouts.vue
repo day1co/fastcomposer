@@ -166,7 +166,7 @@ export default {
 
   width: 100%;
   max-width: 40rem;
-  z-index: 19999;
+  z-index: 9999;
   color: $foreground;
 
   box-sizing: border-box;
