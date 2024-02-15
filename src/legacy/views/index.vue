@@ -90,6 +90,7 @@
                 ref="layers" />
 
               <snippets
+                :page="page"
                 v-if="currentTab === 'snippets'"
                 :snippets="snippets"
                 @add-layers="onAddLayers" />
