@@ -2,12 +2,23 @@
   <div class="fcc-layout">
     <!-- TODO: favorite layouts here? reimpl as sidebar?-->
     <div class="fcc-layout--wrapper">
-      <input
-        type="search"
-        ref="search"
-        v-model="query"
-        class="fcc-layout__search"
-        @keydown="keydown" />
+      <div class="fcc-layout--search">
+        <svg
+          class="fcc-layout--search__icon"
+          viewBox="0 0 30 30"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2">
+          <circle cx="12" cy="12" r="6" />
+          <path d="M16 16l7 7" />
+        </svg>
+        <input
+          type="search"
+          ref="search"
+          v-model="query"
+          class="fcc-layout--search__input"
+          @keydown="keydown" />
+      </div>
 
       <ul class="fcc-layout__list">
         <li
@@ -20,7 +31,7 @@
             @click="selected(layout)"
             class="fcc-layout__list__button"
             :class="{ active: index === focus }">
-            <layout-info :layout="layout" />
+            <layout-info :layout="layout" class="small" />
           </button>
 
           <button
@@ -172,18 +183,18 @@ export default {
   box-sizing: border-box;
   background-color: $secondary;
 
-  border: 0.1rem solid #ffffff;
+  border: 0.1rem solid $foreground;
 
   &::before {
     display: block;
     content: '';
 
     position: absolute;
-    right: 0.3rem;
+    right: 0.5rem;
     bottom: 100%;
 
     border: 1rem solid;
-    border-color: #fff0 #fff0 #fff #fff0;
+    border-color: #fff0 #fff0 $foreground #fff0;
 
     pointer-events: none;
   }
@@ -194,17 +205,30 @@ export default {
     height: 100%;
   }
 
-  &__search {
+  &--search {
+    display: flex;
+
     position: sticky;
     top: 0;
 
-    padding: 0.4rem 0.8rem;
-    border: none;
+    &__icon {
+      position: absolute;
+      height: 100%;
+    }
 
-    font: inherit;
+    &__input {
+      width: 100%;
+      padding: 0.4rem 0.8rem;
+      text-indent: 2rem;
+      border: none;
+      border-bottom: 0.1rem solid $foreground;
 
-    &:focus {
-      outline: none;
+      font: inherit;
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.2rem $primary-active inset;
+      }
     }
   }
 
@@ -213,7 +237,7 @@ export default {
     overflow-y: auto;
     padding: 0.4rem 0;
 
-    &__item{
+    &__item {
       display: flex;
       flex-direction: row;
       padding: 0.4rem 0.8rem;
@@ -230,6 +254,8 @@ export default {
       flex-grow: 100;
       margin-right: 0.8rem;
       color: inherit;
+      min-width: 0;
+      overflow: hidden;
     }
     &__favorite {
       color: $foreground;

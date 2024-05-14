@@ -102,6 +102,7 @@ export default {
     color: $input-foreground;
     cursor: pointer;
     outline: none;
+    width: 100%;
 
     &::file-selector-button {
       background-color: $input-background;
