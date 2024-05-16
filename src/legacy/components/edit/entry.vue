@@ -1,8 +1,11 @@
 <template>
-  <div :class="{
-    'fcc-edit-row': true,
-    'fcc-edit-row--invalid': invalid
-  }">
+  <div :class="[
+    'fcc-edit-row',
+    'fcc-edit-row--' + param.type,
+    {
+      'fcc-edit-row--invalid': invalid
+    }
+  ]">
 
     <label :class="[
       'label',
@@ -176,6 +179,33 @@ export default {
       height: 3.4rem;
     }
   }
+}
+
+div > form.fcc-edit {
+  container-type: inline-size;
+}
+
+@container (min-width: 36rem) {
+  form.fcc-edit .fcc-edit-row:not(.fcc-edit-row--list) {
+    display: grid;
+    grid-template-columns: minmax(max-content, max(13rem, 25%)) auto;
+
+    > .label {
+      position: relative;
+      flex-direction: column;
+
+      .type {
+        line-height: 1em;
+        margin: 0;
+      }
+      .fcc-tooltip-icon {
+        position: absolute;
+        right: 0;
+        bottom: -0.4rem;
+      }
+    }
+  }
+
 }
 
 </style>
