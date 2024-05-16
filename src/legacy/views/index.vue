@@ -93,7 +93,8 @@
                 :page="page"
                 v-if="currentTab === 'snippets'"
                 :snippets="snippets"
-                @add-layers="onAddLayers" />
+                @add-layers="onAddLayers"
+                @remove-snippet="removeSnippet" />
 
               <layouts
                 v-if="currentTab === 'layouts'"
@@ -293,6 +294,9 @@
           title,
           layers: layers.map(_ => ({ layout: _.layer.layout.id, values: _.layer.values }))
         })
+      },
+      removeSnippet(index) {
+        this.snippets.splice(index, 1)
       },
       toggleSnippets() {
         this.currentTab = this.currentTab? null : 'snippets'
