@@ -1,7 +1,7 @@
 <template>
   <div class="fcc-snippets">
     <ul class="fcc-snippets-list">
-      <li class="fcc-snippet" v-for="snippet of snippets" @click="addSnippet(snippet)">
+      <li class="fcc-snippet" v-for="(snippet, index) of snippets" @click="addSnippet(snippet)">
         <div class="fcc-snippet-icon" :data-layers="snippet.layers.length">
           <img
             class="fcc-snippet-icon-inner"
@@ -12,13 +12,13 @@
           <h3 class="fcc-snippet-title" :title="snippet.title"> {{ snippet.title }} </h3>
           <p class="fcc-snippet-description"> {{ describeSnippet(snippet.layers) }} </p>
         </div>
-        <button class="fcc-snippet-action">
+        <button class="fcc-snippet-action" @click.stop="remove(index)">
           <i class="material-icons">delete</i>
         </button>
       </li>
       <li class="fcc-snippet--empty" v-if="!snippets?.length">
         <h4>스니펫이 없습니다</h4>
-        <p>레이어를 선택하고 '스니펫'을 눌러서 저장하세요</p>
+        <p>레이어를 선택하고 '스니펫'을 눌러 저장하세요.</p>
       </li>
     </ul>
   </div>
@@ -64,6 +64,11 @@ export default {
         return iconToUri(layout.meta.icon)
       } catch(e) {
         return ''
+      }
+    },
+    remove(index) {
+      if(confirm('스니펫을 삭제하시겠습니까?')) {
+        this.$emit('remove-snippet', index)
       }
     }
   }
@@ -122,6 +127,13 @@ export default {
 
   user-select: none;
   cursor: pointer;
+
+  &--empty {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 1.1em;
+    opacity: 0.75;
+  }
 
   &-icon {
     flex-shrink: 0;
