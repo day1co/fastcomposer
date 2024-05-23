@@ -46,7 +46,7 @@
   @include color-scheme-light;
 }
 @media (prefers-color-scheme: light) {
-  .fcc-composer.fcc-composer {
+  .fcc-composer {
     @include color-scheme-light;
     .fcc--invert-on-dark {
       filter: none;
