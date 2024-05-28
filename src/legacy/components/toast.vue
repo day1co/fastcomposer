@@ -70,7 +70,7 @@
     z-index: 1000;
     box-shadow: 0 0 0.5rem #222;
     &__content {
-      color: #ffffff;
+      color: $foreground;
       text-align: center;
     }
   }
