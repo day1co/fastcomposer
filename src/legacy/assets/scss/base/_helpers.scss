@@ -1,44 +1,9 @@
-#back-to-top {
-  position: fixed;
-  //display: block;
-  z-index: 200;
-  width: 45px;
-  height: 45px;
-  right: 15px;
-  bottom: 15px;
-  color: #ffffff;
-  font-size: 16px;
-  line-height: 45px;
-  text-align: center;
-  vertical-align: middle;
-}
+.fcc-composer {
+  mark, code, .readable {
+    @include readable-font-features;
+  }
 
-.sr-only {
-  position: absolute;
-  top: -9999px;
-  left: -9999px;
-}
-
-.keep-all {
-  word-break: keep-all;
-}
-
-.hide {
-  display: none!important;
-}
-
-.touchable {
-  cursor: pointer;
-}
-
-.debug {
-  outline: 1px dashed fuchsia;
-}
-
-mark, code, .readable {
-  @include readable-font-features;
-}
-
-[v-cloak] {
-  display: none;
+  [v-cloak] {
+    display: none;
+  }
 }
