@@ -6,7 +6,7 @@
         :class="['fcc-block', {
           'fcc-selected': blockIndex === selected,
           'fcc-hidden': block.meta.hidden,
-          'fcc-invalid': block.meta.invalid.length
+          'fcc-invalid': block.status.invalid.length
         }]"
         :key="'block-' + blockIndex"
         ref="layers"

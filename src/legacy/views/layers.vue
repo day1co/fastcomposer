@@ -69,7 +69,7 @@
           'fcc-layer--active': index === selected,
           'fcc-layer--checked': checked[layer.id],
           'fcc-layer--hidden': layer.meta.hidden,
-          'fcc-layer--invalid': layer.meta.invalid.length,
+          'fcc-layer--invalid': layer.status.invalid.length,
           'has-syntax-error-tags': layer.hasSyntaxErrorTags
         }"
         v-for="(layer, index) in page.state"
@@ -173,7 +173,7 @@
         return this.checkedLayers.length === (this.page.state.length - first)
       },
       warnCount() {
-        return this.page.state.reduce((p, c) => p + (c.meta.invalid.length > 0), 0)
+        return this.page.state.reduce((p, c) => p + (c.status.invalid.length > 0), 0)
       }
     },
     methods: {
