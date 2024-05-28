@@ -1,11 +1,11 @@
 export type LayoutType = 'text' | 'string' | 'list'
-type LayoutTypeExceptsList = Exclude<LayoutType, 'list'>
+type LayoutTypeExpectList = Exclude<LayoutType, 'list'>
 
 export type SingularLayoutParameter = {
   name?: string
   label?: string
   description: string
-  type: LayoutTypeExceptsList
+  type: LayoutTypeExpectList
   defaultValue?: any
   isRequired?: boolean
 }
