@@ -4,7 +4,7 @@ import type ActTarget from '../state/acttarget'
 import Module from '../state/module'
 import Actions from './actions'
 import Path, { Paths } from './path'
-import Layer from './layer'
+import Layer, { LayerMeta } from './layer'
 import LayoutBase from '../layout'
 import LegacyLayout from '../layout/legacy'
 import { uniqueId } from '../util'
@@ -153,7 +153,7 @@ export default class Page extends Module {
 
   // editor actions
 
-  appendLayer(after: Path | undefined, layoutId: string, layerId?: string, values?: any) {
+  appendLayer(after: Path | undefined, layoutId: string, layerId?: string, values?: any, meta?: LayerMeta) {
     const layer = this.createLayer(layoutId, layerId, values)
     const length = this.state.length
     const index = (after? this.pathToIndex(after) ?? length : length) + 1

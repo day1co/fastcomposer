@@ -7,21 +7,31 @@ import Path from './path'
 import { clone, uniqueId } from '../util'
 import * as html from '../util/html'
 
+/**
+ * Stores miscellaneous attributes of layer. This will be preserved.
+ */
 export type LayerMeta = {
-  hidden: Boolean,
+  hidden: Boolean
+}
+/**
+ * Stores temporal states of layer. This won't be saved.
+ */
+export type LayerStatus = {
   invalid: Array<Path>
 }
 
 export default class Layer {
   public values: any
+  public status: LayerStatus = {
+    invalid: []
+  }
 
   constructor(
     public id: string,
     public layout: LayoutBase,
     values?: any,
     public meta: LayerMeta = {
-      hidden: false,
-      invalid: []
+      hidden: false
     }
   ) {
     this.values = values ?? layout.getDefaultValues()
@@ -34,7 +44,7 @@ export default class Layer {
     else if(typeof layoutFromDump === 'string')
       void 0 // TODO: assert given layout is same…? shud I?
 
-    return new Layer(id ?? uniqueId, layout, values, { hidden, invalid: [] })
+    return new Layer(id ?? uniqueId, layout, values, { hidden })
   }
 
   dump(includeLayout = false) {
@@ -67,10 +77,10 @@ export default class Layer {
     ).filter(v => v instanceof Path)
   }
   updateValidity() {
-    return this.meta.invalid = this.validate()
+    return this.status.invalid = this.validate()
   }
-  clear() {
-    this.meta.invalid = []
+  clearState() {
+    this.status.invalid = []
   }
 
   get path() {
