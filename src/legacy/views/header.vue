@@ -117,6 +117,9 @@
         display: flex;
         margin-right: auto;
         padding: 0.6rem 1.2rem;
+        h1 {
+          margin: 0;
+        }
       }
       .fcc-header__subtitle {
         margin-left: 1.2rem;

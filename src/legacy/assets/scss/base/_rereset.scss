@@ -1,9 +1,11 @@
-label {
-  margin-bottom: unset;
-}
-.btn {
-  border-radius: 0;
-}
-.btn ~ .btn {
-  margin: unset;
+.fcc-composer {
+  label {
+    margin-bottom: unset;
+  }
+  .btn {
+    border-radius: 0;
+  }
+  .btn ~ .btn {
+    margin: unset;
+  }
 }
