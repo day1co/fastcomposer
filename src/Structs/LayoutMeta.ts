@@ -1,6 +1,7 @@
 type LayoutMeta = {
-  description: string,
-  icon?: string
+  description?: string,
+  icon?: string,
+  placeholder?: string
   // category?
 }
 
