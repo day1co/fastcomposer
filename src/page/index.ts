@@ -1,10 +1,11 @@
 import type Action from '../state/action'
 import type ActTarget from '../state/acttarget'
+import type { LayerMeta } from './layer'
 
 import Module from '../state/module'
 import Actions from './actions'
 import Path, { Paths } from './path'
-import Layer, { LayerMeta } from './layer'
+import Layer from './layer'
 import LayoutBase from '../layout'
 import LegacyLayout from '../layout/legacy'
 import { uniqueId } from '../util'
@@ -146,15 +147,15 @@ export default class Page extends Module {
 
     return layout
   }
-  createLayer(layoutId: string, layerId: string = uniqueId(), values?: any) {
+  createLayer(layoutId: string, layerId: string = uniqueId(), values?: any, meta?: LayerMeta) {
     const layout = this.getLayout(layoutId)
-    return new Layer(layerId, layout, values)
+    return new Layer(layerId, layout, values, meta)
   }
 
   // editor actions
 
   appendLayer(after: Path | undefined, layoutId: string, layerId?: string, values?: any, meta?: LayerMeta) {
-    const layer = this.createLayer(layoutId, layerId, values)
+    const layer = this.createLayer(layoutId, layerId, values, meta)
     const length = this.state.length
     const index = (after? this.pathToIndex(after) ?? length : length) + 1
 

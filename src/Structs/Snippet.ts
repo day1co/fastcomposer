@@ -1,6 +1,9 @@
+import type { LayerMeta } from '../page/layer'
+
 export type SnippetItem = {
   layout: string,
-  values: any
+  values: any,
+  meta: LayerMeta
 }
 export type Snippets = {
   title: String,
