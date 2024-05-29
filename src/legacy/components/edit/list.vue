@@ -58,8 +58,8 @@ export default {
   position: sticky;
   top: 0.4rem;
   z-index: 10;
-  background-color: $background;
-  box-shadow: -0.4rem 0 0 0.4rem $background, 0.4rem 0 0 0.4rem $background;
+  background-color: $secondary;
+  box-shadow: -0.4rem 0 0 0.4rem $secondary, 0.4rem 0 0 0.4rem $secondary;
 }
 .fcc-edit-list {
   &-item {
