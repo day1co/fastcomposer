@@ -94,7 +94,7 @@ export default {
   box-sizing: border-box;
   background-color: $secondary;
 
-  border: 0.1rem solid #ffffff;
+  border: 0.1rem solid $foreground;
 
   &::before {
     display: block;
@@ -105,7 +105,7 @@ export default {
     bottom: 100%;
 
     border: 1rem solid;
-    border-color: #fff0 #fff0 #fff #fff0;
+    border-color: #fff0 #fff0 $foreground #fff0;
 
     pointer-events: none;
   }
