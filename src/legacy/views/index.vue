@@ -292,7 +292,11 @@
 
         this.snippets.push({
           title,
-          layers: layers.map(_ => ({ layout: _.layer.layout.id, values: _.layer.values }))
+          layers: layers.map(_ => ({
+            layout: _.layer.layout.id,
+            values: _.layer.values,
+            meta: _.layer.meta
+          }))
         })
       },
       removeSnippet(index) {

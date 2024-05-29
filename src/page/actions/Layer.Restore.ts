@@ -25,7 +25,7 @@ export default <Action<Page, Path | Paths>>{
       try {
         const lastPath = i === 0? target : newPaths.at(i - 1)
         const rememberedPath = newPaths.at(i) ?? null
-        const { path } = self.appendLayer(lastPath, layer.layout, rememberedPath?.layer, layer.values)
+        const { path } = self.appendLayer(lastPath, layer.layout, rememberedPath?.layer, layer.values, layer.meta)
         if(!rememberedPath)
           newPaths.push(path)
       } catch(e) {
