@@ -190,7 +190,7 @@ export default {
     content: '';
 
     position: absolute;
-    right: 0.5rem;
+    right: 0.15rem;
     bottom: 100%;
 
     border: 1rem solid;
