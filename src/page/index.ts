@@ -95,12 +95,14 @@ export default class Page extends Module {
         return layer.dump(true)
       } else if(!includeLayout) {
         return layer.dump()
+      } else if(layer.meta.hidden) {
+        return
       } else {
         const dump = layer.dump(includeLayout && !includedLayouts.has(layer.layout.id))
         includedLayouts.add(layer.layout.id)
         return dump
       }
-    })
+    }).filter(_ => _)
   }
   render() {
     // TODO isolate?
