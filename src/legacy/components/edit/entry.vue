@@ -186,7 +186,7 @@ div > form.fcc-edit {
 }
 
 @container (min-width: 36rem) {
-  form.fcc-edit .fcc-edit-row:not(.fcc-edit-row--list) {
+  .fcc-composer__horizontal-editor form.fcc-edit .fcc-edit-row:not(.fcc-edit-row--list) {
     display: grid;
     grid-template-columns: minmax(max-content, max(13rem, 25%)) auto;
 
