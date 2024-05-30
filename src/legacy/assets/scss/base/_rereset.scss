@@ -1,4 +1,7 @@
 .fcc-composer {
+  * {
+    box-sizing: border-box;
+  }
   label {
     margin-bottom: unset;
   }
