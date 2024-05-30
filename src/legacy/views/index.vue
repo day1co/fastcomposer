@@ -10,7 +10,8 @@
       'fcc-composer__' + options.colorMode,
       'fcc-composer__hide-layer-' + options.hideLayerMode,
       options.simpleFavorites && 'fcc-composer__simple-favorites',
-      options.simpleLayers && 'fcc-composer__simple-layers'
+      options.simpleLayers && 'fcc-composer__simple-layers',
+      options.horizontalEditor && 'fcc-composer__horizontal-editor'
     ]"
     >
       <div class="fcc-tooltip">
@@ -150,6 +151,15 @@
               <option value="gutter-only"> 레이어 정보만 보이기 </option>
               <option value="hide"> 완전히 숨기기 </option>
             </select>
+          </p>
+          <p class="fcc-option-row">
+            <label for="fcc-options-horizontaleditor">
+              에디터 넓혔을 때 가로로 보기:
+            </label>
+            <input
+              type="checkbox"
+              v-model="options.horizontalEditor"
+              id="fcc-options-horizontaleditor" />
           </p>
           <p class="fcc-option-row">
             <label for="fcc-options-simplefavorites">
