@@ -11,7 +11,7 @@
       'label',
       'fcc-edit-row-label--' + param.type
     ]" :for="inputId">
-      <strong class="name">{{ param.label ?? param.name }}</strong>
+      <strong class="name" :title="param.name">{{ param.label ?? param.name }}</strong>
       <small class="type">{{ param.type }}</small>
 
       <mark v-if="param.isRequired" class="required">*필수</mark>
