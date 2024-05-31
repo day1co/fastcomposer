@@ -1,7 +1,20 @@
 <template>
   <div class="fcc-changelog">
     <section>
-      <h4> 2.0.0 <time>2024/01/25</time> </h4>
+      <h4> 2.1.0-pre3 <time>2024/05/31</time> </h4>
+      <h5> 문제 수정 </h5>
+      <ul>
+        <li> 숨긴 레이어가 저장되는 문제 수정 </li>
+        <li> 레이어 추가 검색 창 디자인 개선 </li>
+        <li> 색상 모드 설정이 적용되지 않는 문제 수정 </li>
+        <li> 저장 시 레이어 숨김이 반영되지 않는 문제 수정 </li>
+      </ul>
+      <h5> 신규 기능 </h5>
+      <ul>
+        <li> 스니펫 기능 추가 </li>
+        <li> 에디터 가로 모드 추가 </li>
+      </ul>
+      <h4> 2.0.1 <time>2024/01/25</time> </h4>
       <ul>
         <li> 토스트 알림 스타일 수정 </li>
         <li> 그룹 값 수정 관련 디자인 문제 수정 </li>
@@ -59,13 +72,20 @@ export default {}
   font-size: 0.8em;
   padding-top: .5em;
 
-  h4 {
+  h4, h5 {
     margin: 0.5em 0;
     > time {
       margin-left: .5em;
       font-weight: 400;
       opacity: 0.5;
     }
+  }
+  h4 {
+    font-size: 1.1em;
+  }
+  h5 {
+    font-size: 1em;
+    margin-left: 1.25em;
   }
   time {
     font-weight: 300;
