@@ -253,7 +253,7 @@ export default {
       display: flex;
       flex-grow: 100;
       margin-right: 0.8rem;
-      color: inherit;
+      color: inherit !important;
       min-width: 0;
       overflow: hidden;
     }
