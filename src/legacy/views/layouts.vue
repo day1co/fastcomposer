@@ -190,7 +190,7 @@ export default {
     content: '';
 
     position: absolute;
-    right: 0.15rem;
+    right: 0.5rem;
     bottom: 100%;
 
     border: 1rem solid;
@@ -235,6 +235,7 @@ export default {
   &__list {
     min-height: 0;
     overflow-y: auto;
+    margin: 0;
     padding: 0.4rem 0;
 
     &__item {

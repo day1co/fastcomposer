@@ -1,9 +1,7 @@
-.fcc-composer {
-  mark, code, .readable {
-    @include readable-font-features;
-  }
+mark, code, .readable {
+  @include readable-font-features;
+}
 
-  [v-cloak] {
-    display: none;
-  }
+[v-cloak] {
+  display: none;
 }
