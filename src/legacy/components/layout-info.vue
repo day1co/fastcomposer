@@ -40,6 +40,8 @@ export default {
   display: flex;
   align-items: center;
 
+  margin: 0;
+
   text-align: left;
 
   &__icon {

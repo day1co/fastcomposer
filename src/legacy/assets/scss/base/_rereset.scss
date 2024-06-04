@@ -5,8 +5,14 @@
   label {
     margin-bottom: unset;
   }
-  .btn {
+  button {
+    appearance: none;
+    border: none;
     border-radius: 0;
+    margin: 0;
+    padding: 0;
+
+    background: unset;
   }
   .btn ~ .btn {
     margin: unset;
