@@ -13,8 +13,12 @@
     padding: 0;
 
     background: unset;
+    color: inherit;
   }
   .btn ~ .btn {
     margin: unset;
+  }
+  .btn > .material-icons {
+    vertical-align: top;
   }
 }

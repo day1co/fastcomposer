@@ -74,6 +74,7 @@ export default {}
 
   h4, h5 {
     margin: 0.5em 0;
+    font-weight: 500;
     > time {
       margin-left: .5em;
       font-weight: 400;
