@@ -394,7 +394,7 @@
         return this.page.currentLayer;
       },
       layerHtml() {
-        return this.layers.filter(layer => !layer.hidden).map(layer => `
+        return this.layers.filter(layer => !layer.meta.hidden).map(layer => `
             <section class="fc-block fc-layout fc-layout-${layer.layout.id}">
               ${layer.render()}
             </section>`,
@@ -402,7 +402,7 @@
       },
       // onToggleLayerVisibility
       isEverySelectedLayerVisible() {
-        return !this.layers.filter(layer => layer.isChecked).some(layer => layer.hidden)
+        return !this.layers.filter(layer => layer.isChecked).some(layer => layer.meta.hidden)
       }
     },
     created() {
