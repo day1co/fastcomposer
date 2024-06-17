@@ -62,16 +62,16 @@ export default class Page extends Module {
       const { id, layout } = layerdef
       const layoutId = typeof layout === 'string'? layout : layout.id
       const foundLayout = <LegacyLayout>this.getLayout(layoutId) // FIXME: will not work with non-legacy layout
-      const recoveredLayout = LegacyLayout.fromDefinition(layout)
+      const recoveredLayout = layout.id? LegacyLayout.fromDefinition(layout) : null
 
       // TODO: reconsider recover level; now using lv1
       // lv0: throw
       // lv1: use layout from layer, or throw
       // lv2: use 'broken' layout even for worst case
 
-      if(!recoveredLayout && !(providedLayouts && !foundLayout)) {
+      if(!recoveredLayout && (providedLayouts && !foundLayout)) {
         throw new ReferenceError(`layout '${layoutId}' of layer '${id}' `
-          + `couldn't be found from layout list which was provided`)
+          + `couldn't be found from provided layout list`)
       }
 
       // foundLayout will automatically fill missing layout definitions
