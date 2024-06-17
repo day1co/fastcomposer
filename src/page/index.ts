@@ -87,16 +87,12 @@ export default class Page extends Module {
 
     this.state = result
   }
-  dump(includeLayout = false, always = false) {
+  dump(includeLayout = false) {
     const includedLayouts = new Set()
 
     return this.state.map(layer => {
-      if(includeLayout && always) {
-        return layer.dump(true)
-      } else if(!includeLayout) {
+      if(!includeLayout) {
         return layer.dump()
-      } else if(layer.meta.hidden) {
-        return
       } else {
         const dump = layer.dump(includeLayout && !includedLayouts.has(layer.layout.id))
         includedLayouts.add(layer.layout.id)
