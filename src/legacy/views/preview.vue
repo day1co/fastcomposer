@@ -56,7 +56,7 @@
     },
     methods: {
       parserToHTML(block) {
-        return block.render()
+        return block.render(null, true)
       },
       select(index) {
         const newIndex = Math.min(Math.max(index, 0), this.blocks.length - 1);

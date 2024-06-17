@@ -55,8 +55,17 @@ export default class Layer {
       hidden: this.meta.hidden
     }
   }
-  render(el: any) {
-    return this.layout.render(el, this.values)
+  render(el: any, reportError: boolean = false) {
+    try {
+      return this.layout.render(el, this.values)
+    } catch(e) {
+      if(!this.status.invalid.length)
+        this.status.invalid.push(new Path(null))
+      if(reportError)
+        return `<div>${e.message}</div>`
+      else
+        return ''
+    }
   }
   renderToString() {
     return this.layout.renderToString(this.values)
