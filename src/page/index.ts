@@ -100,11 +100,11 @@ export default class Page extends Module {
       }
     }).filter(_ => _)
   }
-  render() {
+  render(reportError: boolean = false) {
     // TODO isolate?
     return this.state.flatMap(layer => [
       `<section class="fc-block fc-layout fc-layout-${layer.layout.id}">`,
-      layer.render(null),
+      layer.render(null, reportError),
       `</section>`
     ]).join('\n')
   }
