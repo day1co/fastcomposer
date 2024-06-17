@@ -97,20 +97,34 @@
   flex-direction: column;
   gap: .5rem;
 
-  padding: 2rem 3rem;
+  padding: 2rem;
   overflow: hidden;
   min-height: 0;
 
   &__header {
     display: flex;
+    align-items: center;
+    line-height: 1.25rem;
+
+    > div {
+      flex-grow: 100;
+    }
+    h3 {
+      font-size: 1em;
+    }
   }
   &__content {
     min-height: 0;
     overflow-y: auto;
+    padding: 0 1em;
   }
   &__close-btn {
     margin-left: auto;
     color: inherit;
+  }
+  input, select {
+    color: fieldtext;
+    background-color: field;
   }
 }
 </style>
