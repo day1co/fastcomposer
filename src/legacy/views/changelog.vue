@@ -1,7 +1,7 @@
 <template>
   <div class="fcc-changelog">
     <section>
-      <h4> 2.1.0-pre3 <time>2024/05/31</time> </h4>
+      <h4> 2.1.0 <time>2024/06/18</time> </h4>
       <h5> 문제 수정 </h5>
       <ul>
         <li> 숨긴 레이어가 저장되는 문제 수정 </li>
@@ -74,7 +74,7 @@ export default {}
 
   h4, h5 {
     margin: 0.5em 0;
-    font-weight: 500;
+    font-weight: 600;
     > time {
       margin-left: .5em;
       font-weight: 400;
