@@ -130,25 +130,31 @@ const vm = new Vue({
 ```
 
 ### Properties
-| Name | Type | Default | Optional | Description |
-|---|---|---|---|---|
-| layoutModels | Array | [] | No | @fastcampus/layouts list를 넣어준다 |
-| layerModals | Array | [] | Yes |서버로부터 저장된 layer data 가 존재한다면 이곳에 넣어준다. |
 
+| Name         | Type  | Default | Optional | Description                                                 |
+| ------------ | ----- | ------- | -------- | ----------------------------------------------------------- |
+| layoutModels | Array | []      | No       | @fastcampus/layouts list를 넣어준다                         |
+| layerModals  | Array | []      | Yes      | 서버로부터 저장된 layer data 가 존재한다면 이곳에 넣어준다. |
 
 ### Events
+
 #### @save
 
 컴포저 저장시 동작한다.
+
 ##### Parameters
-* html: `string` composer로 제작된 html
-* json: `object` layer 설정 값
+
+- html: `string` composer로 제작된 html
+- json: `object` layer 설정 값
 
 #### @uploadFile
+
 템플릿에서 파일 업로드 속성이 존재하는 경우 동작한다.
+
 ```html
-<composer @uploadFile="onUpload">
+<composer @uploadFile="onUpload"></composer>
 ```
+
 ```javascript
 methods: {
   async onUpload(fileInfo, callback) {
@@ -158,23 +164,29 @@ methods: {
   }
 }
 ```
-##### Parameters
-* fileInfo: `File`
-* callback: `function` 업로드된 이미지를 컴포저에 반영을 위해 실행
 
+##### Parameters
+
+- fileInfo: `File`
+- callback: `function` 업로드된 이미지를 컴포저에 반영을 위해 실행
 
 ### methods
 
 #### 레이어 데이터 설정
+
 ```js
 // 서버에 저장된 mainJson을 object형태로 넣어준다.(layouts.json포맷과 일치해야함)
 this.$refs.setLayerBlockData({...})
 ```
+
 #### 노티 알림 표시
+
 ```js
 this.$refs.fastComposer.notification.success('success message');
 ```
+
 #### 노티 알림 가리기
+
 ```js
 this.$refs.fastComposer.notification.error('error message');
 ```
@@ -199,7 +211,7 @@ this.$refs.fastComposer.notification.error('error message');
         }
       ]
     }
-  ],
+  ]
 }
 ```
 
@@ -212,7 +224,7 @@ this.$refs.fastComposer.notification.error('error message');
   "params": [
     {
       "name": "cards",
-      "type": "list", 
+      "type": "list",
       "description": "추가/삭제를 이용하여 원하는 만큼 카드 리스트를 구현 할 수 있습니다.",
       "maxLength": 3,
       "params": [
@@ -297,3 +309,5 @@ this.$refs.fastComposer.notification.error('error message');
 ---
 
 may the **SOURCE** be with you...
+
+- [컴포저 레이아웃 로컬 테스트 가이드](https://fastcampus.atlassian.net/wiki/x/ZAA6pQ)
