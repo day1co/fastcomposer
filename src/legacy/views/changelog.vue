@@ -1,6 +1,12 @@
 <template>
   <div class="fcc-changelog">
     <section>
+      <h4> 2.1.1 <time>2024/07/02</time> </h4>
+      <ul>
+        <li> 존재하지 않는 레이아웃 (ex: broken) 불러오지 못하는 문제 수정 </li>
+      </ul>
+    </section>
+    <section>
       <h4> 2.1.0 <time>2024/06/18</time> </h4>
       <h5> 문제 수정 </h5>
       <ul>
