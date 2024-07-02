@@ -138,12 +138,8 @@ export default class Page extends Module {
 
   // layout
 
-  getLayout(id: string): LayoutBase {
-    const layout: LayoutBase | undefined = this._layouts.get(id)
-    if(!layout)
-      throw new Error(`specified layout '${id}' not found`)
-
-    return layout
+  getLayout(id: string): LayoutBase | undefined {
+    return this._layouts.get(id)
   }
   createLayer(layoutId: string, layerId: string = uniqueId(), values?: any, meta?: LayerMeta) {
     const layout = this.getLayout(layoutId)
