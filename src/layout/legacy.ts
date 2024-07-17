@@ -44,23 +44,24 @@ export default class LegacyLayout extends LayoutBase {
   }
 
   static fromDefinition({
-    id, description, icon, params, template, values = null
+    id, description, icon, params, template, values = null, meta = null
   }: {
     id: string,
     description: string,
     icon?: string,
     params: Array<LegacyLayoutParameter> | Map<string, LayoutParameter>,
     template: string,
-    values: any
+    values: any,
+    meta: any
   }) {
-    const meta = { description, icon }
+    const createdMeta = meta || { description, icon }
 
     if(Array.isArray(params)) // means JSON definition were used
       params = paramArrayToMap(params)
 
     return new LegacyLayout({
       id,
-      meta,
+      meta: createdMeta,
       params,
       template,
       defaultValues: values
