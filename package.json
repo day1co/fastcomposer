@@ -19,12 +19,8 @@
   "scripts": {
     "serve": "vite",
     "build": "vite build",
-    "lint": "vue-cli-service lint",
     "build-layouts": "node layouts/build.js",
-    "test": "jest",
-    "test:e2e": "cypress run --browser chrome --headless",
-    "test:e2e-visible": "cypress open",
-    "ci:test": "./ci_test.sh"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
