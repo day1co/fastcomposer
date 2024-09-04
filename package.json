@@ -3,6 +3,12 @@
   "version": "2.1.7",
   "author": "fastcampus",
   "main": "./dist/fastcomposer.js",
+  "workspaces": [
+    "./src/layout",
+    "./src/page",
+    "./src/state"
+  ],
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/fastcomposer.mjs",
@@ -19,32 +25,19 @@
   "scripts": {
     "serve": "vite",
     "build": "vite build",
-    "lint": "vue-cli-service lint",
+    "build-all": "npm run build --workspaces && vite build",
     "build-layouts": "node layouts/build.js",
-    "test": "jest",
-    "test:e2e": "cypress run --browser chrome --headless",
-    "test:e2e-visible": "cypress open",
-    "ci:test": "./ci_test.sh"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/day1co/fastcomposer.git"
   },
   "dependencies": {
-    "@types/lodash.template": "^4.5.1",
     "@vue-a11y/focus-loop": "^0.2.0",
-    "lodash": "^4.17.20",
-    "lodash.template": "^4.5.0",
-    "marked": "^4.0.18",
-    "normalize.css": "^8.0.1",
-    "sass-mq": "^5.0.1",
     "splitpanes": "^2.4.1",
     "vue": "^2.6.12",
     "vue-smooth-dnd": "^0.8.1"
-  },
-  "peerDependencies": {
-    "preact": "^10.11.2",
-    "preact-render-to-string": "^5.2.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
@@ -66,10 +59,11 @@
     "jest": "^29.0.2",
     "jsdom": "^20.0.2",
     "prettier": "2.0.5",
-    "sass": "^1.32.8",
+    "sass": "1.32.x",
     "ts-jest": "^29.0.3",
-    "typescript": "^4.8.3",
-    "vite": "^4.4.9",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.3",
+    "vite-plugin-dts": "^4.1.0",
     "vite-plugin-raw": "^1.0.3",
     "vue-eslint-parser": "^7.1.0",
     "vue-template-compiler": "^2.6.12"

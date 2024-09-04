@@ -3,7 +3,7 @@ import { jest } from '@jest/globals'
 import * as setup from './setup'
 
 import Act from '../act'
-import State from '..'
+import State from '../state'
 
 describe('Main State Manager', () => {
 

@@ -1,4 +1,4 @@
-import Path from "../path"
+import Path from '../path'
 
 describe('Composer.Page: Path descriptor', () => {
 

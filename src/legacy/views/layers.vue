@@ -116,13 +116,12 @@
   </div>
 </template>
 <script>
-  import Page from '../../page'
-  import State from '../../state'
+  import Page, { Paths } from '@day1co/fastcomposer-page'
+  import State, { Act } from '@day1co/fastcomposer-state'
+
   import LayoutInfo from '../components/layout-info.vue';
   import { Container, Draggable } from "vue-smooth-dnd";
   import EventBus from '../event-bus.vue';
-  import { Paths } from '../../page/path'
-  import Act from '../../state/act'
 
   export default {
     components: {

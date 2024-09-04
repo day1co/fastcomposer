@@ -1,6 +1,4 @@
-import type LayoutMeta from '../structs/LayoutMeta'
-import type LayoutParameter from '../structs/LayoutParameter'
-import type { ListLayoutParameter } from '../structs/LayoutParameter'
+import type { LayoutMeta, LayoutParameter, ListLayoutParameter } from './structs'
 
 import { clone } from '../util'
 

@@ -1,6 +1,5 @@
-import Layer from '../../../page/layer'
-import Path from '../../../page/path'
-import Act from '../../../state/act'
+import { Layer, Path } from '@day1co/fastcomposer-page'
+import { Act } from '@day1co/fastcomposer-state'
 
 export default {
   inject: ['state'],

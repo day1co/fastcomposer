@@ -1,7 +1,7 @@
 import describeAction from './describe-action'
 import * as setup from '../setup'
 
-import type Act from '../../../state/act'
+import type Act from '@day1co/fastcomposer-state/act'
 
 import Path from '../../path'
 
@@ -14,7 +14,7 @@ describeAction('layer.item.remove', ['layer.new', 'layer.item.new', 'layer.edit'
   it('should work: do, undo, redo', () => {
     const [ page, state ] = helpers.createState(setup.ListLayout)
 
-    const actNew = <Act>state.perform(
+    const actNew = <Act<Path>>state.perform(
       helpers
         .createAct('layer.new', null, setup.ListLayout.id)
         .remember(null, path)

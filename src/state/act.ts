@@ -1,8 +1,7 @@
-import type Path from '../page/path'
 import { uniqueId } from '../util'
 import ActTarget from './acttarget'
 
-export default class Act<Target extends ActTarget = Path> {
+export default class Act<Target extends ActTarget> {
   capturedState?: any
   destination?: Target
   remembered: boolean = false
