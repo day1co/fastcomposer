@@ -1,4 +1,4 @@
-import Page from '..';
+import Page from '../page';
 
 const layouts = [
   {

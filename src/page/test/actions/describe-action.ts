@@ -7,17 +7,17 @@ jest.mock('../../../util', () => ({
 
 import { uniqueId } from '../../../util'
 
-import Act from '../../../state/act'
+import Act from '@day1co/fastcomposer-state/act'
 import Actions from '../../actions'
-import State from '../../../state'
-import type Action from '../../../state/action'
-import type ActTarget from '../../../state/acttarget'
+import State from '@day1co/fastcomposer-state'
+import type Action from '@day1co/fastcomposer-state/action'
+import type ActTarget from '@day1co/fastcomposer-state/acttarget'
 import type Path from '../../path'
 import type { Paths } from '../../path'
 
 import * as setup from '../setup'
-import Layout from '../../../layout/legacy'
-import Page from '../..'
+import { LegacyLayout as Layout } from '@day1co/fastcomposer-layout/layouts'
+import Page from '../../page'
 
 type GetActionT<C extends Action<any, any>> = C extends Action<any, infer T> ? T : never
 type KeyOfMap<M extends Map<unknown, unknown>> = M extends Map<infer K, unknown> ? K : never
