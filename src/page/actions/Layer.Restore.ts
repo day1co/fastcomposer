@@ -1,8 +1,8 @@
 import type Action from '../../state/action'
 import type Act from '../../state/act'
-import type Page from '..'
+import type Page from '../page'
 import type Path from '../path'
-import type Snippets from '../../structs/Snippet'
+import type Snippets from '../../layout/structs/Snippet'
 
 import { Paths } from '../path'
 

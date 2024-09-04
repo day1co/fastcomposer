@@ -1,6 +1,6 @@
 import type LayoutMeta from '../structs/LayoutMeta'
 import type LayoutParameter from '../structs/LayoutParameter'
-import type { LayoutOptions } from '.'
+import type { LayoutOptions } from '..'
 import type {
   SingularLayoutParameter,
   ListLayoutParameter,
@@ -11,7 +11,7 @@ import type {
 import lotemplate from 'lodash.template'
 import { marked } from 'marked'
 
-import LayoutBase from '.'
+import LayoutBase from '..'
 
 const paramArrayToMap = (params: Array<LegacyLayoutParameter>):
   Map<string, LayoutParameter> =>

@@ -1,7 +1,7 @@
 import describeAction from './describe-action'
 import * as setup from '../setup'
 import Path from '../../path'
-import Act from '../../../state/act'
+import Act from '@day1co/fastcomposer-state/act'
 
 describeAction('layer.duplicate', ['layer.new'], helpers => {
 
@@ -10,7 +10,7 @@ describeAction('layer.duplicate', ['layer.new'], helpers => {
 
     let actNew = helpers.createAct('layer.new', null, setup.MinimalLayout.id)
     actNew.remember(null, new Path('a'))
-    actNew = <Act>state.perform(actNew)
+    actNew = <Act<Path>>state.perform(actNew)
 
     expect(actNew.destination.layer).toBe('a')
 

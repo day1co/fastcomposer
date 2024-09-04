@@ -1,5 +1,5 @@
-import type Action from '../../state/action'
-import type Page from '..'
+import type Action from '@day1co/fastcomposer-state/action'
+import type Page from '../page'
 import type Path from '../path'
 
 import icon from './icons/Layer.Duplicate.svg?raw'

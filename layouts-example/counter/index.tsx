@@ -1,7 +1,7 @@
 import { h, Fragment } from 'preact'
 import * as preactHooks from 'preact/hooks'
 
-import PreactLayout from '../../src/layout/preact'
+import { PreactLayout } from '@day1co/fastcomposer-layout/layouts'
 
 export default new PreactLayout({
   id: 'counter',

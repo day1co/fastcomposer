@@ -11,11 +11,12 @@
 <script>
 import { FocusLoop } from '@vue-a11y/focus-loop'
 
+import Page from '@day1co/fastcomposer-page'
+import State from '@day1co/fastcomposer-state'
+
 import EventBus from '../event-bus.vue';
 import LayoutInfo from '../components/layout-info.vue';
 import Edit from '../components/edit/index.vue'
-import Page from '../../page'
-import State from '../../state'
 
 export default {
   components: {

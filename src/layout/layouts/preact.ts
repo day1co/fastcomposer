@@ -1,10 +1,10 @@
-import type { LayoutOptions } from '.'
+import type { LayoutOptions } from '..'
 
 import renderToString from 'preact-render-to-string'
-import preact from 'preact'
+import * as preact from 'preact'
 import { h, Fragment } from 'preact'
 
-import { DynamicLayoutBase } from '.'
+import { DynamicLayoutBase } from '..'
 
 export default class PreactLayout extends DynamicLayoutBase {
 

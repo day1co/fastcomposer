@@ -1,0 +1,32 @@
+{
+  "name": "@day1co/fastcomposer-layout",
+  "version": "2.2.0",
+  "type": "module",
+  "files": [
+    "dist",
+    "layouts",
+    "structs",
+    "*.ts"
+  ],
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./layouts": "./dist/layouts.js",
+    "./structs": "./dist/structs.js"
+  },
+  "scripts": {
+    "build": "vite build",
+    "prepack": "vite build",
+    "clean": "rm -rf ./dist ./node_modules"
+  },
+  "dependencies": {
+    "@types/lodash.template": "^4.5.1",
+    "lodash": "^4.17.20",
+    "lodash.template": "^4.5.0",
+    "marked": "^4.0.18"
+  },
+  "peerDependencies": {
+    "preact": "^10.11.2",
+    "preact-render-to-string": "^5.2.6"
+  }
+}

@@ -1,11 +1,11 @@
-export * from '../../state/test/setup'
+export * from '@day1co/fastcomposer-state/test/setup'
 
-import {
+import type {
   SingularLayoutParameter,
   ListLayoutParameter,
   LegacyListLayoutParameter
-} from '../../structs/LayoutParameter'
-import LegacyLayout from '../../layout/legacy'
+} from '@day1co/fastcomposer-layout/structs/LayoutParameter'
+import { LegacyLayout } from '@day1co/fastcomposer-layout/layouts'
 
 export const DEFAULT_VALUE = 'default value'
 
