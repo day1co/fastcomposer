@@ -26,7 +26,7 @@
 
 <script>
 
-import Page from '../../page'
+import Page from '@day1co/fastcomposer-page'
 
 import LayoutInfo from '../components/layout-info.vue';
 import { iconToUri } from '../../util/index.ts'

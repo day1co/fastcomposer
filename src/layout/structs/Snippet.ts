@@ -1,4 +1,4 @@
-import type { LayerMeta } from '../page/layer'
+import type { LayerMeta } from '../../page/layer'
 
 export type SnippetItem = {
   layout: string,

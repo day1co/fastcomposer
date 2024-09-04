@@ -1,0 +1,24 @@
+{
+  "name": "@day1co/fastcomposer-page",
+  "version": "2.2.0",
+  "type": "module",
+  "files": [
+    "dist",
+    "actions",
+    "*.ts"
+  ],
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./actions": "./dist/actions.js"
+  },
+  "scripts": {
+    "build": "vite build",
+    "prepack": "vite build",
+    "clean": "rm -rf ./dist ./node_modules"
+  },
+  "dependencies": {
+    "@day1co/fastcomposer-layout": "@day1co/fastcomposer-layout@latest",
+    "@day1co/fastcomposer-state": "@day1co/fastcomposer-state@latest"
+  }
+}

@@ -1,7 +1,7 @@
 import describeAction from './describe-action'
 import * as setup from '../setup'
 
-import type { ListLayoutParameter } from '../../../structs/LayoutParameter'
+import type { ListLayoutParameter } from '@day1co/fastcomposer-layout/structs'
 
 import Path from '../../path'
 

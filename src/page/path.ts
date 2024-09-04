@@ -1,4 +1,4 @@
-import ActTarget from '../state/acttarget'
+import ActTarget from '@day1co/fastcomposer-state/acttarget'
 
 export default class Path implements ActTarget {
 
