@@ -1,7 +1,3 @@
-import type Action from '../../state/action'
-import type ActTarget from '../../state/acttarget'
-import type Page from '..'
-
 // FIXME: ?????
 // './Document.Clear',
 import Layer_New from './Layer.New'

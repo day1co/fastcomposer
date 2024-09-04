@@ -1,7 +1,7 @@
-import type LayoutParameter from '../structs/LayoutParameter'
-import type { ListLayoutParameter } from '../structs/LayoutParameter'
-import LayoutBase, { DynamicLayoutBase } from '../layout'
-import LegacyLayout from '../layout/legacy'
+import type { ListLayoutParameter } from '@day1co/fastcomposer-layout/structs'
+import LayoutBase, { DynamicLayoutBase } from '@day1co/fastcomposer-layout'
+import { LegacyLayout } from '@day1co/fastcomposer-layout/layouts'
+
 
 import Path from './path'
 import { clone, uniqueId } from '../util'

@@ -17,6 +17,7 @@ describe('Composer.Page: Layer', () => {
 
     expect(dump).toEqual({
       id: 'test1',
+      hidden: false,
       layout: setup.ListLayoutDefinition.id,
       values: {
         list: [

@@ -7,15 +7,15 @@ jest.mock('../../../util', () => ({
 
 import { uniqueId } from '../../../util'
 
-import Act from '../../../state/act'
+import Act from '@day1co/fastcomposer-state/act'
 import Actions from '../../actions'
-import State from '../../../state'
-import type ActTarget from '../../../state/acttarget'
+import State from '@day1co/fastcomposer-state'
+import type ActTarget from '@day1co/fastcomposer-state/acttarget'
 import type Path from '../../path'
 
 import * as setup from '../setup'
-import Layout from '../../../layout/legacy'
-import Page from '../..'
+import { LegacyLayout as Layout } from '@day1co/fastcomposer-layout/layouts'
+import Page from '../../page'
 
 const createHelper = ({ actionsMap, actionName }) => ({
   mocked: {
@@ -38,7 +38,7 @@ const createHelper = ({ actionsMap, actionName }) => ({
 
     return new Act<Path>(...<ConstructorParameters<typeof Act<Path>>>args)
   },
-  checkTimeParadox(state: State, assertions: Array<Function | Act>) {
+  checkTimeParadox(state: State, assertions: Array<Function | Act<Path>>) {
     const runAct = act => {
       if(act instanceof Function)
         act = act()

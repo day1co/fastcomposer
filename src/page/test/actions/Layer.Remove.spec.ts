@@ -1,7 +1,7 @@
 import describeAction from './describe-action'
 import * as setup from '../setup'
 
-import type Act from '../../../state/act'
+import type Act from '@day1co/fastcomposer-state/act'
 
 import Path from '../../path'
 
@@ -12,7 +12,7 @@ describeAction('layer.remove', ['layer.new'], helpers => {
 
     let actNew = helpers.createAct('layer.new', null, setup.MinimalLayout.id)
     helpers.mocked.uniqueId.mockReturnValueOnce('a')
-    actNew = <Act>state.perform(actNew)
+    actNew = <Act<Path>>state.perform(actNew)
 
     console.log(page.state)
 

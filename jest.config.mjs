@@ -1,4 +1,8 @@
-module.exports = {
+import module from 'node:module'
+
+module.register('./.test-esm-loader.mjs', import.meta.url)
+
+export default {
   preset: 'ts-jest/presets/default',
   moduleFileExtensions: ['js', 'ts', 'jsx', 'tsx'],
   // ↓ DO NOT try to make test work w/ node16 esmodule support
@@ -22,4 +26,4 @@ module.exports = {
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
 
   resetMocks: true
-};
+}

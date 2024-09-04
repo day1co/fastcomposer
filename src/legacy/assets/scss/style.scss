@@ -2,12 +2,11 @@
 @import 'utils/utilities';
 
 // vendors
-@import 'sass-mq';
-@import 'normalize.css';
 @import 'splitpanes';
-@import 'pane';
 
 // base
+@import 'pane';
+
 @import 'base/color-scheme';
 @import 'base/fonts';
 @import 'base/helpers';

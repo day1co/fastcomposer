@@ -30,9 +30,10 @@
 </template>
 
 <script>
-  import EventBus from '../event-bus.vue';
   import { parse as marked } from 'marked';
   import { template } from 'lodash';
+
+  import EventBus from '../event-bus.vue';
 
   export default {
     props: {

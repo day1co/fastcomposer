@@ -188,9 +188,13 @@
 <script>
   import { Splitpanes, Pane } from 'splitpanes';
   import { cloneDeep } from 'lodash';
+  import { parse as marked } from 'marked';
+
+  import Page from '@day1co/fastcomposer-page';
+  import State from '@day1co/fastcomposer-state';
+
   import { uniqueId, restructureLayouts } from '../utils';
   import EventBus from '../event-bus.vue';
-  import { parse as marked } from 'marked';
   import Toast from '../components/toast.vue';
   import Dialog from '../components/dialog.vue';
   import ComposerHeader from './header.vue';
@@ -202,8 +206,6 @@
   import History from './history/index.vue';
   import Changelog from './changelog.vue'
 
-  import Page from '../../page';
-  import State from '../../state';
 
   export default {
     components: {

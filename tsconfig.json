@@ -3,15 +3,16 @@
     "allowJs": true,
     "module": "ES2022",
     "moduleResolution": "node",
-    "target": "ES2018",
+    "target": "ES2022",
     "esModuleInterop": true,
     "jsx": "react",
     "jsxFragmentFactory": "Fragment",
     "jsxFactory": "h",
-    "outDir": "./dist"
+    "outDir": "./dist",
+
+    "useDefineForClassFields": false,
+    "declaration": true,
+    "skipLibCheck": true
   },
-  "include": [
-    "src/**/*.ts"
-  ],
   "exclude": [ "./dist" ]
 }
