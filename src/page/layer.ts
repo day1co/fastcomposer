@@ -79,10 +79,10 @@ export default class Layer {
       Array.isArray(value)?
         value.flatMap((item, index) =>
           Object.entries(item).map(([ grandchild, value ]) =>
-            html.validateLegacy(value) || this.path.override({ child, index, grandchild })
+            html.validate(value) || this.path.override({ child, index, grandchild })
           )
         )
-      : html.validateLegacy(value) || [ this.path.override({ child }) ]
+      : html.validate(value) || [ this.path.override({ child }) ]
     ).filter(v => v instanceof Path)
   }
   updateValidity() {
