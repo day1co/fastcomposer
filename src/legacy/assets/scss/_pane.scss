@@ -11,13 +11,14 @@
 
   user-select: none;
 
-  > &-title {
+  > .fcc-pane-title {
+    display: flex;
     position: sticky;
     top: 0;
 
     z-index: 999;
   }
-  > &-toolbar {
+  > .fcc-pane-toolbar {
     display: flex;
     align-items: center;
 
@@ -73,7 +74,7 @@
     }
   }
 
-  > &-content {
+  > .fcc-pane-content {
     min-height: 0;
     overflow-y: scroll;
     overscroll-behavior: contain;
