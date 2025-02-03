@@ -287,7 +287,8 @@
         this.focusEditor()
         this.currentTab = false
       },
-      onAddLayers(snippet) {
+      onAddLayers(_snippet) {
+        const snippet = structuredClone(_snippet)
         const remembered = this.state.act('layer.restore', this.currentLayer?.path, snippet)
 
         this.focusEditor()
