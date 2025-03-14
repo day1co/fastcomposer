@@ -88,6 +88,9 @@ export default {
 @import '../../assets/scss/utils/utilities';
 
 .fcc-history-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
   > .fcc-history-item {
     margin: 0.4rem 0 0.4rem 0.4rem;
   }
