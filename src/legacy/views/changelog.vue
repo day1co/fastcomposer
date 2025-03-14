@@ -1,6 +1,19 @@
 <template>
   <div class="fcc-changelog">
     <section>
+      <h4> 2.1.6 <time>2025/03/14</time> </h4>
+      <ul>
+        <li> 레이어 여러 개를 한 번에 삭제하는 기능 추가 </li>
+        <li> 레이어 목록 버튼 스타일 깨짐 수정 </li>
+      </ul>
+    </section>
+    <section>
+      <h4> 2.1.5 <time>2025/02/03</time> </h4>
+      <ul>
+        <li> 스니펫을 저장하고 같은 에디터에서 불러오면 값이 같이 바뀌는 문제 수정 </li>
+      </ul>
+    </section>
+    <section>
       <h4> 2.1.1 <time>2024/07/02</time> </h4>
       <ul>
         <li> 존재하지 않는 레이아웃 (ex: broken) 불러오지 못하는 문제 수정 </li>
