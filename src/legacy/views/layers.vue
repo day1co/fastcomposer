@@ -35,6 +35,12 @@
         :disabled="!checkedCount">
         <span class="material-icons">{{ checkedCount && areEveryCheckedLayerVisible? 'visibility_off' : 'visibility' }}</span>
       </button>
+      <button
+        class="fcc-pane-toolbar-button"
+        @click="trashChecked"
+        :disabled="!checkedCount">
+        <span class="material-icons">delete</span>
+      </button>
       <button class="fcc-pane-toolbar-button" @click="$emit('toggle-layouts')"> <!-- @click="onShowLayouts" -->
         <span class="material-icons">add</span>
       </button>
@@ -208,6 +214,10 @@
         } else {
           this.$set(this, 'checked', Object.fromEntries(this.layers.map(_ => [_.id, true])))
         }
+      },
+      trashChecked() {
+        const paths = new Paths(this.checkedLayers.map(_ => _.layer.path))
+        this.state.act('layer.remove', paths)
       },
       hideChecked() {
         const paths = new Paths(this.checkedLayers.map(_ => _.layer.path))
