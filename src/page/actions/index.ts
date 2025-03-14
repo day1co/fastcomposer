@@ -29,4 +29,4 @@ export default new Map([
   Layer_Item_Remove,
   Layer_Hide
   // Layer_Clear
-].map(module => [ module.id, module ]))
+].map(module => <const>[ module.id, module ]))

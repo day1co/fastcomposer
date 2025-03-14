@@ -20,6 +20,9 @@ module.exports = {
     '<rootDir>/src/**/*.spec.jsx', '<rootDir>/src/**/*.spec.tsx',
   ],
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
+  moduleNameMapper: {
+    '\\.svg(\\?raw)?$': '<rootDir>/src/__svg_mock.ts'
+  },
 
   resetMocks: true
 };

@@ -52,7 +52,7 @@ export default class LegacyLayout extends LayoutBase {
     params: Array<LegacyLayoutParameter> | Map<string, LayoutParameter>,
     template: string,
     values: any,
-    meta: any
+    meta?: any
   }) {
     const createdMeta = meta || { description, icon }
 
