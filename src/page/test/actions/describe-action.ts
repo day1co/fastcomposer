@@ -10,17 +10,24 @@ import { uniqueId } from '../../../util'
 import Act from '../../../state/act'
 import Actions from '../../actions'
 import State from '../../../state'
+import type Action from '../../../state/action'
 import type ActTarget from '../../../state/acttarget'
 import type Path from '../../path'
+import type { Paths } from '../../path'
 
 import * as setup from '../setup'
 import Layout from '../../../layout/legacy'
 import Page from '../..'
 
-const createHelper = ({ actionsMap, actionName }) => ({
+type GetActionT<C extends Action<any, any>> = C extends Action<any, infer T> ? T : never
+type KeyOfMap<M extends Map<unknown, unknown>> = M extends Map<infer K, unknown> ? K : never
+type ValueInMapRecord<M extends Map<unknown, unknown>, K> = M extends Map<K, infer V> ? V : never
+
+const createHelper = ({ actionsMap, actionName }: { actionsMap: typeof Actions, actionName: string }) => ({
   mocked: {
     uniqueId: <jest.Mocked<typeof uniqueId>>jest.mocked(uniqueId)
   },
+
   createState(layouts: Layout | Map<string, Layout> = setup.MinimalLayouts): [ Page, State ] {
     if(layouts instanceof Layout)
       layouts = new Map([ [ layouts.id, layouts ] ])
@@ -29,16 +36,20 @@ const createHelper = ({ actionsMap, actionName }) => ({
     const state = new State({ modules: { page }})
     return [ page, state ]
   },
-  createAct( // <<<FIXME
-    ...args: typeof Act<Path> extends new (arg0: infer Arg0, ...rest: infer R) => any ? [Arg0, ...R] | R : never
-  ): Act<Path> {
+
+  createAct<T extends Path | Paths>( // <<<FIXME
+    ...args: typeof Act<T> extends new (arg0: infer Arg0, ...rest: infer R) => any? [Arg0, ...R] | R : never
+  ): Act<any> {
     // ¯\_(ツ)_/¯
     if(!(typeof args[0] === 'string' && actionsMap.has(args[0])))
       args.unshift(actionName)
 
-    return new Act<Path>(...<ConstructorParameters<typeof Act<Path>>>args)
+    const action = actionsMap.get(actionName)
+    type ActionT = GetActionT<ValueInMapRecord<typeof Actions, typeof actionName>>
+    return new Act<ActionT>(...<ConstructorParameters<typeof Act<ActionT>>>args)
   },
-  checkTimeParadox(state: State, assertions: Array<Function | Act>) {
+
+  checkTimeParadox(state: State, assertions: Array<Function | Act<Path | Paths>>) {
     const runAct = act => {
       if(act instanceof Function)
         act = act()
@@ -100,8 +111,8 @@ function describeAction(
   }
 
   const actions = [ actionName, ...dependentActions ].map(action =>
-    <const>[ action, Actions.get(action)
-  ])
+    <const>[ action, Actions.get(action) ]
+  )
   const notfound = actions.filter(l => l[1] == null).map(l => l[0]).join(', ')
   if(notfound)
     throw new ReferenceError(`following actions requested, \
