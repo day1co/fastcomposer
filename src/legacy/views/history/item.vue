@@ -46,6 +46,7 @@ export default {
   .fcc-history-icon {
     width: 2.4rem;
     height: 2.4rem;
+    vertical-align: top;
   }
   &.current {
     box-shadow: 0 0 0 0.2rem $foreground;
