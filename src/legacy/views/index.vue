@@ -265,9 +265,30 @@
             this.type = 'default';
           }
         },
+        lastInteractionHandler: null,
       };
     },
     methods: {
+      attachInteractionEvents() {
+        this.detachInteractionEvents();
+        this.lastInteractionHandler = () => {
+          localStorage.setItem('backoffice_last_interaction', Date.now().toString());
+        };
+        document.body.addEventListener('click', this.lastInteractionHandler);
+        document.body.addEventListener('keydown', this.lastInteractionHandler);
+        document.body.addEventListener('scroll', this.lastInteractionHandler);
+        document.body.addEventListener('touch', this.lastInteractionHandler);
+        document.body.addEventListener('mousemove', this.lastInteractionHandler);
+      },
+      detachInteractionEvents() {
+        if (this.lastInteractionHandler) {
+          document.body.removeEventListener('click', this.lastInteractionHandler);
+          document.body.removeEventListener('keydown', this.lastInteractionHandler);
+          document.body.removeEventListener('scroll', this.lastInteractionHandler);
+          document.body.removeEventListener('touch', this.lastInteractionHandler);
+          document.body.removeEventListener('mousemove', this.lastInteractionHandler);
+        }
+      },
       onAddFavoriteLayout(layoutId) {
         if (this.favoriteLayoutIds.includes(layoutId)) {
           this.favoriteLayoutIds.splice(this.favoriteLayoutIds.indexOf(layoutId), 1);
@@ -436,6 +457,7 @@
       }
     },
     mounted() {
+      this.attachInteractionEvents();
     },
     watch: {
       ['page.focusedIndex'](to) {
@@ -474,6 +496,7 @@
     },
     beforeDestroy() {
       EventBus.$off();
+      this.detachInteractionEvents();
     }
   };
 </script>
