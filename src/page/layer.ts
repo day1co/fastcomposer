@@ -11,7 +11,8 @@ import * as html from '../util/html'
  * Stores miscellaneous attributes of layer. This will be preserved.
  */
 export type LayerMeta = {
-  hidden: Boolean
+  hidden: boolean,
+  label: string
 }
 /**
  * Stores temporal states of layer. This won't be saved.
@@ -31,20 +32,24 @@ export default class Layer {
     public layout: LayoutBase,
     values?: any,
     public meta: LayerMeta = {
-      hidden: false
+      hidden: false,
+      label: ''
     }
   ) {
     this.values = values ?? layout.getDefaultValues()
   }
 
   static fromDump(dump: any, layout?: LegacyLayout) { // FIXME: will not work with non-legacy layout
-    const { id, uniqueId, layout: layoutFromDump, values, hidden } = dump
+    const { id, uniqueId, layout: layoutFromDump, values, hidden, meta } = dump
     if(!layout)
       layout = LegacyLayout.fromDefinition(layoutFromDump)
     else if(typeof layoutFromDump === 'string')
       void 0 // TODO: assert given layout is same…? shud I?
 
-    return new Layer(id ?? uniqueId, layout, values, { hidden })
+    return new Layer(id ?? uniqueId, layout, values, {
+      hidden: meta?.hidden ?? hidden,
+      label: meta?.label ?? ''
+    })
   }
 
   dump(includeLayout = false) {
@@ -52,6 +57,7 @@ export default class Layer {
       id: this.id,
       layout: includeLayout? this.layout.dump() : this.layout.id,
       values: this.values,
+      meta: this.meta,
       hidden: this.meta.hidden
     }
   }
@@ -153,5 +159,8 @@ export default class Layer {
       this.values[child] = value
     else
       throw new ReferenceError('attempted to set nowhere on layer')
+  }
+  setMeta<K extends keyof LayerMeta>(key: K, value: LayerMeta[K]) {
+    this.meta[key] = value;
   }
 }

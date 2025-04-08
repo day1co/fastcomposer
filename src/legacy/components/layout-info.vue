@@ -2,10 +2,24 @@
   <figure class="fcc-layout-info">
     <img class="fcc-layout-info__icon" :src="icon" :alt="layout.id" />
     <figcaption class="fcc-layout-info__label">
-      <strong class="__item__group__name"> {{ layout.id }} </strong>
-      <span v-if="index != null"> #{{ index }} </span>
+      <strong class="fcc-layout-info__id"> {{ layout.id }} </strong>
+      <span class="fcc-layout-info__index" v-if="index != null"> #{{ index }} </span>
       <br />
-      {{ layout.meta.description }}
+      <span
+        v-if="!isEditing"
+        @dblclick.stop="startEditing"
+        :class="{
+          'fcc-layout-info__label-text': true,
+          'fcc-is-label': label
+        }">{{ label || layout.meta.description }}</span>
+      <input
+        v-else
+        :placeholder="layout.meta.description"
+        v-model="editableText"
+        @blur="save"
+        @keyup.enter="save"
+        ref="editInput"
+        class="fcc-layout-info__label-input" />
     </figcaption>
   </figure>
 </template>
@@ -21,11 +35,36 @@ export default {
       default() { return {} },
       required: true
     },
-    index: Number
+    index: Number,
+    label: String
+  },
+  data() {
+    return {
+      isEditing: false,
+      editableText: ''
+    }
   },
   computed: {
     icon() {
       return iconToUri(this.layout.meta.icon)
+    },
+    canEdit() {
+      return this.label !== null && this.label !== undefined
+    }
+  },
+  methods: {
+    startEditing() {
+      if(!this.canEdit)
+        return
+      this.editableText = this.label
+      this.isEditing = true
+      this.$nextTick(() => this.$refs.editInput.focus())
+    },
+    save() {
+      if(this.isEditing) {
+        this.isEditing = false
+        this.$emit('update:label', this.editableText.trim())
+      }
     }
   }
 }
@@ -39,6 +78,8 @@ export default {
 .fcc-layout-info {
   display: flex;
   align-items: center;
+
+  flex-grow: 1;
 
   margin: 0;
 
@@ -65,9 +106,14 @@ export default {
     }
   }
 
+  &__index {
+    opacity: 0.5;
+  }
   &__label {
     line-height: 2.2rem;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
+
+    flex-grow: 1;
 
     white-space: nowrap;
     text-overflow: clip;
@@ -76,10 +122,6 @@ export default {
     > strong, > span {
       @include readable-font-features;
       font-variant-numeric: tabular-nums;
-      font-size: 1.8rem;
-    }
-    > span {
-      opacity: 0.5;
     }
     .fcc-composer__simple-layers & {
       display: flex;
@@ -89,13 +131,33 @@ export default {
         display: none;
       }
     }
+
+    &-input {
+      @include readable-font-features;
+      font: inherit;
+      line-height: inherit;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      border: none;
+      outline: none;
+    }
+
+    &-text {
+      display: inline;
+      font-size: 1.4rem;
+
+      &.fcc-is-label {
+        font-style: italic;
+      }
+    }
   }
   &.small &__label {
     line-height: 1.8rem;
     font-size: 1.4rem;
 
-    > strong, > span {
-      font-size: 1.6rem;
+    .fcc-layout-info__id, .fcc-layout-info__index {
+      font-size: 1.5rem;
     }
   }
 }

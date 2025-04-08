@@ -57,15 +57,15 @@
       <button
         class="fcc-pane-toolbar-button"
         @click="$emit('save-snippets', checkedLayers)"
-        :disabled="!checkedCount">
+        :disabled="!checkedCount"
+        title="스니펫으로 저장하기">
         <span class="material-icons">attach_file</span>
-        <label> 스니펫 </label>
       </button>
       <button
         class="fcc-pane-toolbar-button"
         @click="$emit('toggle-snippets')">
-        <span class="material-icons">content_paste</span>
-        <label> 가져오기 </label>
+        <span class="material-icons"
+        title="스니펫 가져오기">content_paste</span>
       </button>
     </div>
     <Container class="fcc-pane-content" @drop="onDrop" :get-ghost-parent="getGhostParent">
@@ -91,7 +91,12 @@
               @click="e => $nextTick(() => onCheck(layer, e))" />
             <i class="material-icons">{{ checked[layer.id]? 'check_box' : 'check_box_outline_blank' }}</i>
           </label>
-          <layout-info :layout="layer.layout" :index="index" class="small"></layout-info>
+          <layout-info
+            :layout="layer.layout"
+            :index="index"
+            class="small"
+            :label="layer.meta.label"
+            @update:label="v => state.act('layer.edit.meta', layer.path, ['label', v])"></layout-info>
         </div>
         <div class="fcc-layer-buttons">
           <button class="fcc-layer-action" @click="state.act('layer.hide', layer.path)">
@@ -325,9 +330,8 @@
     }
     &-info {
       display: flex;
-      align-items: stretch;
       flex-direction: row;
-      width: percentage(1);
+      width: 100%;
       color: $foreground;
       line-height: 2rem;
 
