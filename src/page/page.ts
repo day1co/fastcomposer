@@ -51,7 +51,7 @@ export default class Page extends Module {
   // save/load
 
   static fromDump(state: Array<any>, providedLayouts?: LooseLayoutMap) {
-    const layouts = providedLayouts !== null
+    const layouts = providedLayouts != null
       ? Page.tightenLooseLayouts(providedLayouts)
       : <LayoutMap>new Map()
 
