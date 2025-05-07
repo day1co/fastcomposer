@@ -1,6 +1,13 @@
 <template>
   <div class="fcc-changelog">
     <section>
+      <h4> 2.1.7 <time>2025/05/07</time> </h4>
+      <ul>
+        <li> 레이어에 메모 적는 기능 추가 (더블클릭해보세요) </li>
+        <li> 옛날에 저장한 레이어에 특정 정보가 부족하여 저장이 제대로 안 되는 문제 수정 </li>
+      </ul>
+    </section>
+    <section>
       <h4> 2.1.6 <time>2025/03/14</time> </h4>
       <ul>
         <li> 레이어 여러 개를 한 번에 삭제하는 기능 추가 </li>
