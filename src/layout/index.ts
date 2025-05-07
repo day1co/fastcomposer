@@ -1,7 +1,5 @@
 import type { LayoutMeta, LayoutParameter, ListLayoutParameter } from './structs'
 
-import { clone } from '../util'
-
 export interface LayoutOptions {
   id: string
   meta?: LayoutMeta
@@ -30,7 +28,7 @@ abstract class LayoutBase {
     } else if(!this.defaultValues) {
       params = this.params
     } else {
-      return clone(this.defaultValues)
+      return structuredClone(this.defaultValues)
     }
 
     const entries = [ ...params.entries() ]
