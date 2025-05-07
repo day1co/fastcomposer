@@ -36,7 +36,7 @@ export default class Layer {
       label: ''
     }
   ) {
-    this.values = values ?? layout.getDefaultValues()
+    this.values = Object.assign(layout.getDefaultValues(), values ?? {})
   }
 
   static fromDump(dump: any, layout?: LegacyLayout) { // FIXME: will not work with non-legacy layout
