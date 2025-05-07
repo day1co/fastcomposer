@@ -1,4 +1,4 @@
-import LegacyLayout from '../../legacy'
+import LegacyLayout from '../../layouts/legacy'
 
 export default LegacyLayout.fromDefinition({
   id: 'list',

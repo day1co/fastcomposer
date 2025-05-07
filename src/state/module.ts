@@ -1,4 +1,3 @@
-import Path from '../page/path'
 import Action from './action'
 import type ActTarget from './acttarget'
 

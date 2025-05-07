@@ -13,8 +13,7 @@
 
 <script>
 
-import Layer from '../../../page/layer'
-import Path from '../../../page/path'
+import { Layer, Path } from '@day1co/fastcomposer-page'
 import EditEntry from './entry.vue'
 
 export default {

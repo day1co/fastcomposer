@@ -1,7 +1,7 @@
 import { h, Fragment } from 'preact'
 import preactHooks from 'preact/hooks'
 
-import PreactLayoutBase from '../../preact'
+import PreactLayoutBase from '../../layouts/preact'
 
 export default new PreactLayoutBase({
   id: 'preact-example',

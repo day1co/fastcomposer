@@ -1,8 +1,4 @@
-import type LayoutMeta from '../structs/LayoutMeta'
-import type LayoutParameter from '../structs/LayoutParameter'
-import type { ListLayoutParameter } from '../structs/LayoutParameter'
-
-import { clone } from '../util'
+import type { LayoutMeta, LayoutParameter, ListLayoutParameter } from './structs'
 
 export interface LayoutOptions {
   id: string
@@ -32,7 +28,7 @@ abstract class LayoutBase {
     } else if(!this.defaultValues) {
       params = this.params
     } else {
-      return clone(this.defaultValues)
+      return structuredClone(this.defaultValues)
     }
 
     const entries = [ ...params.entries() ]

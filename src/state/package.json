@@ -1,0 +1,15 @@
+{
+  "name": "@day1co/fastcomposer-state",
+  "version": "2.2.0",
+  "type": "module",
+  "files": [
+    "dist",
+    "*.ts"
+  ],
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "vite build",
+    "prepack": "vite build",
+    "clean": "rm -rf ./dist ./node_modules"
+  }
+}
