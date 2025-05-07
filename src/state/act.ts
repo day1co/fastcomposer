@@ -1,5 +1,13 @@
-import { uniqueId } from '../util'
 import ActTarget from './acttarget'
+
+const generateId = () => {
+  // 24 bits timestamp
+  const upper = ((performance.now() * 10) & 0xffffff) << 16
+  // 16 bits entropy
+  const lower = (Math.random() * 0xffff & 0xffff)
+  // 40 bits = 8 letters in base32
+  return (upper + lower).toString(32)
+}
 
 export default class Act<Target extends ActTarget> {
   capturedState?: any
@@ -15,7 +23,7 @@ export default class Act<Target extends ActTarget> {
     public target: Target,
     public arg?: any,
     public sealed: boolean = false,
-    public id: string = action + '#' + uniqueId()
+    public id: string = action + '#' + generateId()
   ) {}
 
   isComposableWith(act: Act<Target>) {

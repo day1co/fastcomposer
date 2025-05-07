@@ -4,8 +4,7 @@ import { LegacyLayout } from '@day1co/fastcomposer-layout/layouts'
 
 
 import Path from './path'
-import { clone, uniqueId } from '../util'
-import * as html from '../util/html'
+import * as util from './util'
 
 /**
  * Stores miscellaneous attributes of layer. This will be preserved.
@@ -85,10 +84,10 @@ export default class Layer {
       Array.isArray(value)?
         value.flatMap((item, index) =>
           Object.entries(item).map(([ grandchild, value ]) =>
-            html.validate(value) || this.path.override({ child, index, grandchild })
+            util.html.validate(value) || this.path.override({ child, index, grandchild })
           )
         )
-      : html.validate(value) || [ this.path.override({ child }) ]
+      : util.html.validate(value) || [ this.path.override({ child }) ]
     ).filter(v => v instanceof Path)
   }
   updateValidity() {
@@ -102,8 +101,8 @@ export default class Layer {
     return new Path(this.id)
   }
 
-  clone(id = uniqueId()) {
-    return new Layer(id, this.layout, clone(this.values))
+  clone(id = util.uniqueId()) {
+    return new Layer(id, this.layout, structuredClone(this.values))
   }
 
   _getDef(key: string) {

@@ -10,7 +10,7 @@ import Actions from './actions'
 import Path, { Paths } from './path'
 import Layer from './layer'
 
-import { uniqueId } from '../util'
+import { uniqueId } from './util'
 
 type LayoutMap = Map<string, LayoutBase>
 type LooseLayoutMap = LayoutMap | object
