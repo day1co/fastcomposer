@@ -12,8 +12,8 @@ export default <Action<Page, Path>>{
   perform(root, self, act) {
     const path = act.target
     const [key, value] = act.arg as [keyof LayerMeta, string]
-    if(key == null || value == null)
-      throw new TypeError('invalid arg on Layer.Edit.Meta')
+    if(key == null)
+      throw new TypeError('empty arg on Layer.Edit.Meta')
 
     const layer = self.getLayerByPath(path)
     if(!layer)
