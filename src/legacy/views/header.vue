@@ -26,7 +26,7 @@
 
 <script>
   import packageinfo from '../../../package.json';
-  import { iconToUri } from '../../util/index.ts'
+  import { iconToUri } from '../utils'
 
   export default {
     methods: {

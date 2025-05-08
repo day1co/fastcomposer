@@ -187,13 +187,10 @@
 
 <script>
   import { Splitpanes, Pane } from 'splitpanes';
-  import { cloneDeep } from 'lodash';
-  import { parse as marked } from 'marked';
 
   import Page from '@day1co/fastcomposer-page';
   import State from '@day1co/fastcomposer-state';
 
-  import { uniqueId, restructureLayouts } from '../utils';
   import EventBus from '../event-bus.vue';
   import Toast from '../components/toast.vue';
   import Dialog from '../components/dialog.vue';

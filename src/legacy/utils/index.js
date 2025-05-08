@@ -16,3 +16,14 @@ export const uniqueId = (prefix = 'fc-block') => {
     .substr(2, 9);
   return `${prefix}-${seq}-${nonce}`;
 };
+
+export function iconToUri(icon) {
+  if(!icon)
+    return
+  else if(/^<(?:\?xml |svg )/.test(icon))
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent(icon)
+  else if(/^data:image\//.test(icon))
+    return icon
+  else
+    return null
+}

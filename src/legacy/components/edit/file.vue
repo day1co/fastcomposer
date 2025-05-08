@@ -32,7 +32,7 @@
 
 <script>
 
-import { uniqueId } from '../../../util'
+import { uniqueId } from '../../utils'
 
 import EventBus from '../../event-bus.vue'
 import mixin from './mixin.js'
