@@ -29,7 +29,7 @@
 import Page from '@day1co/fastcomposer-page'
 
 import LayoutInfo from '../components/layout-info.vue';
-import { iconToUri } from '../../util/index.ts'
+import { iconToUri } from '../utils'
 
 export default {
   components: {

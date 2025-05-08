@@ -26,7 +26,7 @@
 
 <script>
 
-import { iconToUri } from '../../util/index.ts'
+import { iconToUri } from '../utils'
 
 export default {
   props: {
