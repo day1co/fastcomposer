@@ -160,6 +160,9 @@ export default class Layer {
       throw new ReferenceError('attempted to set nowhere on layer')
   }
   setMeta<K extends keyof LayerMeta>(key: K, value: LayerMeta[K]) {
-    this.meta[key] = value;
+    if(value == null)
+      delete this.meta[key]
+    else
+      this.meta[key] = value
   }
 }
