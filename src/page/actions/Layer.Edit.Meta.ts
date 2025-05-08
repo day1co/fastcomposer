@@ -19,7 +19,7 @@ export default <Action<Page, Path>>{
     if(!layer)
       throw new ReferenceError('attempted to edit meta of nonexistent layer')
 
-    act.remember(layer.meta[key])
+    act.remember([key, layer.meta[key]])
     if(act.remembered)
       self.setFocus(path)
 
@@ -29,7 +29,8 @@ export default <Action<Page, Path>>{
   },
   compose(root, self, previousAct, act) {
     previousAct.update(act.arg)
-    if(previousAct.arg === previousAct.capturedState)
+    if(previousAct.arg[0] === previousAct.capturedState[0]
+    && previousAct.arg[1] === previousAct.capturedState[1])
       return null
 
     return previousAct
