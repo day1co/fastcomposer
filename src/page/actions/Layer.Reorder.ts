@@ -38,7 +38,6 @@ export default <Action<Page, Path | Paths>>{
     }
   },
   compose(root, self, previousAct, act) {
-    console.log(previousAct.target.type, act.target.type)
     if(previousAct.target.type === 'paths' && act.target.type === 'paths') {
       const pre = previousAct.capturedState.from
       const post = act.capturedState.from
