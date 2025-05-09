@@ -165,6 +165,6 @@ export default class Layer {
     if(value == null)
       delete this.meta[key]
     else
-      this.meta[key] = value
+      this.meta = Object.assign({}, this.meta, { [key]: value })
   }
 }
