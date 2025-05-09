@@ -4,6 +4,14 @@
     <figcaption class="fcc-layout-info__label">
       <strong class="fcc-layout-info__id"> {{ layout.id }} </strong>
       <span class="fcc-layout-info__index" v-if="index != null"> #{{ index }} </span>
+      <span class="fcc-layout-info__indicators">
+        <i
+          v-for="(icon, index) in validIndicators"
+          :key="index"
+          class="material-icons">
+          {{ icon }}
+        </i>
+      </span>
       <br />
       <span
         v-if="!isEditing"
@@ -36,7 +44,8 @@ export default {
       required: true
     },
     index: Number,
-    label: String
+    label: String,
+    indicators: [Array, Object]
   },
   data() {
     return {
@@ -47,6 +56,14 @@ export default {
   computed: {
     icon() {
       return iconToUri(this.layout.meta.icon)
+    },
+    validIndicators() {
+      if(Array.isArray(this.indicators))
+        return this.indicators.filter(_ => _)
+      else if(typeof this.indicators === 'object')
+        return Object.entries(this.indicators)
+          .filter(([ k, v ]) => v)
+          .map(([ k, v ]) => k)
     },
     canEdit() {
       return this.label !== null && this.label !== undefined
@@ -108,6 +125,12 @@ export default {
 
   &__index {
     opacity: 0.5;
+  }
+  &__indicators {
+    > i {
+      font-size: inherit;
+      vertical-align: -0.5ex;
+    }
   }
   &__label {
     line-height: 2.2rem;
