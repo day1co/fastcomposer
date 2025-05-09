@@ -19,6 +19,7 @@ export default <Action<Page, Path>>{
     if(!layer)
       throw new ReferenceError('attempted to edit meta of nonexistent layer')
 
+    act.meta = self.describe(path) + ' ' + key
     act.remember([key, layer.meta[key]])
     if(act.remembered)
       self.setFocus(path)
