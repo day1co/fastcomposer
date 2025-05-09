@@ -92,10 +92,13 @@
             <i class="material-icons">{{ checked[layer.id]? 'check_box' : 'check_box_outline_blank' }}</i>
           </label>
           <layout-info
+            class="small"
             :layout="layer.layout"
             :index="index"
-            class="small"
             :label="layer.meta.label"
+            :indicators="{
+              'schedule': layer.meta.visibleSince || layer.meta.visibleUntil
+            }"
             @update:label="v => state.act('layer.edit.meta', layer.path, ['label', v])"></layout-info>
         </div>
         <div class="fcc-layer-buttons">
