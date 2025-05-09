@@ -12,8 +12,8 @@ import * as util from './util'
 export type LayerMeta = {
   hidden: boolean,
   label: string,
-  visibleSince?: number,
-  visibleUntil?: number
+  visibleSince?: string,
+  visibleUntil?: string
 }
 /**
  * Stores temporal states of layer. This won't be saved.
