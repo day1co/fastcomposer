@@ -29,15 +29,13 @@ export default <Action<Page, Path>>{
     return act
   },
   compose(root, self, previousAct, act) {
-    console.log(previousAct.arg[0], act.arg[0])
-    if(previousAct.arg[0] === act.arg[0])
-      previousAct.update(act.arg)
+    if(act.arg[0] === previousAct.arg[0])
+      if(act.arg[1] === previousAct.capturedState[1])
+        return null
+      else
+        previousAct.update(act.arg)
     else
       return act
-
-    if(previousAct.arg[0] === previousAct.capturedState[0]
-    && previousAct.arg[1] === previousAct.capturedState[1])
-      return null
 
     return previousAct
   },
