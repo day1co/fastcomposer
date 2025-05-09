@@ -84,11 +84,17 @@ export default class State {
     if(action.compose && !doNotCompose && this.lastAct?.isComposableWith(act)) {
       action.perform(this, module, act)
 
-      const shouldDiscardCurrentAct = !action.compose(this, module, this.lastAct, act)
-      if(shouldDiscardCurrentAct)
+      const updatedAct = action.compose(this, module, this.lastAct, act)
+      // if nothing returned, consider act has been 'nullified'
+      if(!updatedAct)
         this._discardPast()
+      // if new act (instead of updated lastAct) returned, consider it uncomposable and write present
+      else if(Object.is(act, updatedAct) && !action.doNotRemember && !isRedo) {
+        act.meta ||= module.describe?.(act.target)
+        this._writePresent(act)
+      }
 
-      return this.lastAct
+      return updatedAct
     } else {
       act.meta ||= module.describe?.(act.target)
       action.perform(this, module, act)
