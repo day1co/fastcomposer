@@ -4,7 +4,7 @@
   "type": "module",
   "files": [
     "dist",
-    "*.ts"
+    "*.d.ts"
   ],
   "main": "./dist/index.js",
   "scripts": {
