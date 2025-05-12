@@ -1,4 +1,4 @@
-import type { LayoutOptions } from '..'
+import type { LayoutOptions } from '../index.ts'
 
 import renderToString from 'preact-render-to-string'
 import * as preact from 'preact'

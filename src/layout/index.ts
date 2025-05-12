@@ -75,8 +75,8 @@ export default LayoutBase
 
 ///
 
-export interface DynamicLayoutBase extends LayoutBase {
-  template: (opt: any, ctx: any) => any
+export abstract class DynamicLayoutBase extends LayoutBase {
+  template: (opt: any, ctx: any) => any = null
 
   // hydrate above
   hydrate?(el: HTMLElement, opt: any): void
