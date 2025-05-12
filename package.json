@@ -1,6 +1,6 @@
 {
   "name": "@day1co/fastcomposer",
-  "version": "2.1.7",
+  "version": "2.2.0",
   "author": "fastcampus",
   "main": "./dist/fastcomposer.js",
   "workspaces": [
