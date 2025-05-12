@@ -4,8 +4,6 @@
   "type": "module",
   "files": [
     "dist",
-    "layouts",
-    "structs",
     "*.d.ts"
   ],
   "main": "./dist/index.js",

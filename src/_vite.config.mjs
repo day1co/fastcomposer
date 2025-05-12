@@ -6,7 +6,9 @@ import viteRawPlugin from 'vite-plugin-raw'
 export default dirname => defineConfig({
   root: dirname,
   plugins: [
-    dts(),
+    dts({
+      entryRoot: dirname
+    }),
     viteRawPlugin({
       match: /\.(ejs|svg)$/i
     })

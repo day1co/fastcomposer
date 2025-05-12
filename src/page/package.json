@@ -4,7 +4,6 @@
   "type": "module",
   "files": [
     "dist",
-    "actions",
     "*.d.ts"
   ],
   "main": "./dist/index.js",
