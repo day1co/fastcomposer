@@ -48,6 +48,7 @@ export default class Layer {
       void 0 // TODO: assert given layout is same…? shud I?
 
     return new Layer(id ?? uniqueId, layout, values, {
+      ...meta,
       hidden: meta?.hidden ?? hidden,
       label: meta?.label ?? ''
     })
