@@ -2,7 +2,7 @@
   "name": "@day1co/fastcomposer",
   "version": "2.2.0",
   "author": "fastcampus",
-  "main": "./dist/fastcomposer.js",
+  "main": "./dist/fastcomposer.cjs",
   "workspaces": [
     "./src/layout",
     "./src/page",
@@ -11,8 +11,8 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/fastcomposer.mjs",
-      "require": "./dist/fastcomposer.js"
+      "import": "./dist/fastcomposer.js",
+      "require": "./dist/fastcomposer.cjs"
     },
     "./dist/style.css": "./dist/style.css"
   },
