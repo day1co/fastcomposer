@@ -1,6 +1,18 @@
 <template>
   <div class="fcc-changelog">
     <section>
+      <h4> 2.2.1 <time>2025/05/16</time> </h4>
+      <ul>
+        <li> 표시 기간이 저장만 되고 불러와지지 않는 문제 수정 </li>
+      </ul>
+    </section>
+    <section>
+      <h4> 2.2.0 <time>2025/05/15</time> </h4>
+      <ul>
+        <li> (마이라이트 한정) 레이어 표시 기간 설정 추가 </li>
+      </ul>
+    </section>
+    <section>
       <h4> 2.1.7 <time>2025/05/07</time> </h4>
       <ul>
         <li> 레이어에 메모 적는 기능 추가 (더블클릭해보세요) </li>
