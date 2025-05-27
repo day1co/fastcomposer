@@ -50,30 +50,33 @@ export default class Page extends Module {
 
   // save/load
 
-  static fromDump(state: Array<any>, providedLayouts?: LooseLayoutMap) {
+  static fromDump(state: Array<any>, providedLayouts?: LooseLayoutMap, unsafe: boolean = false) {
     const layouts = providedLayouts != null
       ? Page.tightenLooseLayouts(providedLayouts)
       : <LayoutMap>new Map()
 
     const page = new Page(layouts)
-    page.replaceState(state)
+    page.replaceState(state, unsafe)
     return page
   }
-  replaceState(state: Array<any>) {
+  replaceState(state: Array<any>, unsafe: boolean = false) {
     const result = state.map(layerdef => {
       const { id, layout } = layerdef
       const layoutId = typeof layout === 'string'? layout : layout.id
       const foundLayout = <LegacyLayout>this.getLayout(layoutId) // FIXME: will not work with non-legacy layout
       const recoveredLayout = layout.id? LegacyLayout.fromDefinition(layout) : null
 
-      // TODO: reconsider recover level; now using lv1
+      // TODO: reconsider recover level; now using lv1 (lv2 when unsafe)
       // lv0: throw
       // lv1: use layout from layer, or throw
-      // lv2: use 'broken' layout even for worst case
+      // lv2: use 'broken' layout even for worst case (or skip)
 
       if(!recoveredLayout && !foundLayout) {
-        throw new ReferenceError(`layout '${layoutId}' of layer '${id}' `
-          + `couldn't be found from provided layout list`)
+        const error = `layout '${layoutId}' of layer '${id}' couldn't be found from provided layout list`
+        if(unsafe)
+          console.warn(error)
+        else
+          throw new ReferenceError(error)
       }
 
       // foundLayout will automatically fill missing layout definitions
