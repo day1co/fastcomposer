@@ -59,7 +59,7 @@ export default class Page extends Module {
     page.replaceState(state)
     return page
   }
-  replaceState(state: Array<any>, providedLayouts?: LooseLayoutMap) {
+  replaceState(state: Array<any>) {
     const result = state.map(layerdef => {
       const { id, layout } = layerdef
       const layoutId = typeof layout === 'string'? layout : layout.id
@@ -71,7 +71,7 @@ export default class Page extends Module {
       // lv1: use layout from layer, or throw
       // lv2: use 'broken' layout even for worst case
 
-      if(!recoveredLayout && (providedLayouts && !foundLayout)) {
+      if(!recoveredLayout && !foundLayout) {
         throw new ReferenceError(`layout '${layoutId}' of layer '${id}' `
           + `couldn't be found from provided layout list`)
       }
