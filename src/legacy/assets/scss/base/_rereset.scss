@@ -5,7 +5,7 @@
   label {
     margin-bottom: unset;
   }
-  button {
+  button, input {
     appearance: none;
     border: none;
     border-radius: 0;
@@ -14,6 +14,7 @@
 
     background: unset;
     color: inherit;
+    font: inherit;
   }
   .btn ~ .btn {
     margin: unset;
