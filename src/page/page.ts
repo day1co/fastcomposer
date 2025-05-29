@@ -77,6 +77,8 @@ export default class Page extends Module {
           console.warn(error)
         else
           throw new ReferenceError(error)
+
+        return null
       }
 
       // foundLayout will automatically fill missing layout definitions
@@ -88,7 +90,7 @@ export default class Page extends Module {
         this._layouts.set(layer.layout.id, recoveredLayout)
 
       return layer
-    })
+    }).filter(layer => layer)
 
     this.state = result
   }
