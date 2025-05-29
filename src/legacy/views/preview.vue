@@ -19,7 +19,7 @@
           </div>
         </div>
         <div
-          class="fcc-block__container"
+          class="fcc-block__container fc-block fc-layout"
           :id="block.id"
           :class="'fc-layout-' + block.layout.id"
           v-html="parserToHTML(block)"
