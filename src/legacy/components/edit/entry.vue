@@ -123,7 +123,7 @@ export default {
 
 .fcc-edit-input.fcc-edit-input.fcc-edit-input {
 
-  input, textarea, select, &__selection {
+  > input, .input, > textarea, > select, &__selection {
     @include readable-font-features;
     font-family: inherit;
     box-sizing: border-box;
@@ -154,11 +154,11 @@ export default {
     }
   }
 
-  > input, > textarea, > select {
+  > input, .input, > textarea, > select {
     width: 100%;
   }
 
-  > input, > select, &__selection {
+  > input, .input, > select, &__selection {
     height: 2.5em;
     line-height: 2.5em;
   }

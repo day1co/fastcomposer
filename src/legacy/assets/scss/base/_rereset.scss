@@ -6,7 +6,6 @@
     margin-bottom: unset;
   }
   button, input {
-    appearance: none;
     border: none;
     border-radius: 0;
     margin: 0;
@@ -15,6 +14,9 @@
     background: unset;
     color: inherit;
     font: inherit;
+  }
+  button, input[type=text], input[type=number], input[type^=date], input[type=time] {
+    appearance: none;
   }
   .btn ~ .btn {
     margin: unset;
