@@ -14,6 +14,9 @@ abstract class LayoutBase {
 
   constructor(layout: LayoutOptions) {
     Object.assign(this, layout)
+    if(!(layout.params instanceof Map)) {
+      this.params = new Map(Object.entries(layout.params))
+    }
   }
 
   getDefaultValues(key?: string) {
