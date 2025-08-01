@@ -105,7 +105,7 @@ export default class Layer {
   }
 
   clone(id = util.uniqueId()) {
-    return new Layer(id, this.layout, structuredClone(this.values))
+    return new Layer(id, this.layout, structuredClone(this.values), structuredClone(this.meta))
   }
 
   _getDef(key: string) {
