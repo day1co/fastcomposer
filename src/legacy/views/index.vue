@@ -232,6 +232,14 @@
           return [];
         }
       },
+      features: {
+        type: Object,
+        default () {
+          return {
+            visibleTimings: false,
+          };
+        }
+      }
     },
     data() {
       return {
@@ -265,6 +273,11 @@
           }
         },
       };
+    },
+    provide() {
+      return {
+        features: this.features,
+      }
     },
     methods: {
       onAddFavoriteLayout(layoutId) {

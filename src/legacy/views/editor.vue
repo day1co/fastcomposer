@@ -3,7 +3,7 @@
     <layout-info :layout="layer.layout" />
 
     <focus-loop is-visible>
-      <section class="fcc-editor__duration fcc-edit-row">
+      <section class="fcc-editor__duration fcc-edit-row" v-if="features?.visibleTimings">
         <label class="fcc-edit-row-label--text label">
           <strong class="name"> 표시 기간 </strong>
           <small class="type">
@@ -80,6 +80,7 @@ export default {
       state: this.state
     }
   },
+  inject: ['features'],
   data() {
     return {
       accept: {
