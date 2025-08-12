@@ -1,6 +1,6 @@
 {
   "name": "@day1co/fastcomposer-page",
-  "version": "2.2.3",
+  "version": "2.2.6",
   "type": "module",
   "files": [
     "dist",
