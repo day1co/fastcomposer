@@ -42,7 +42,7 @@ export default {
   data: () => ({
     accept: {
       image: 'image/*',
-      video: 'video/mp4'
+      video: 'video/mp4, video/webm',
     },
     uploadState: 'READY',
     statePercent: 0,
