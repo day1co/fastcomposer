@@ -85,7 +85,7 @@ export default {
     return {
       accept: {
         image: 'image/*',
-        video: 'video/mp4',
+        video: 'video/mp4, video/webm',
       },
     };
   },
